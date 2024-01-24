@@ -809,8 +809,8 @@ GameObject:
   - component: {fileID: 6792527267096620608}
   - component: {fileID: 375383702667273299}
   - component: {fileID: 6542260475394990794}
-  - component: {fileID: 5181769611838044691}
   - component: {fileID: 8177122613777497126}
+  - component: {fileID: 5181769611838044691}
   m_Layer: 0
   m_Name: HoverTank01
   m_TagString: Untagged
@@ -826,7 +826,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5457443141662773192}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10, y: 1, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -839,7 +839,7 @@ Transform:
   - {fileID: 8764990460912458775}
   - {fileID: 7290461689601997088}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6792527267096620608
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -912,28 +912,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43299669584678830, guid: 5e52bc9bebe4e5641b8cd44b0e5ba354, type: 2}
---- !u!114 &5181769611838044691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5457443141662773192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc1807d8d51a1f74a836ba829a0ed882, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TurretTransform: {fileID: 7290461689601997088}
-  BarrelTransform: {fileID: 563859778148770948}
-  TankMissilePrefab: {fileID: 8185435972388194219, guid: abcc50d46fe59134aa718b31e896387a, type: 3}
-  TankRestHeight: 1.5
-  TurnRate: 1
-  MinBarrelAngle: -7
-  TankMissileLaunchOffset: 5
-  TankMissileSpeed: 30
-  TankMissileFireDelay: 3
-  BarrelShootingAngleRange: 15
 --- !u!54 &8177122613777497126
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -961,6 +939,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 42
   m_CollisionDetection: 0
+--- !u!114 &5181769611838044691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5457443141662773192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1807d8d51a1f74a836ba829a0ed882, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TurretTransform: {fileID: 7290461689601997088}
+  BarrelTransform: {fileID: 563859778148770948}
+  TankMissilePrefab: {fileID: 8185435972388194219, guid: abcc50d46fe59134aa718b31e896387a, type: 3}
+  TankRestHeight: 1.5
+  TankControlFactor: 3
+  TurnRate: 1
+  MinBarrelAngle: -7
+  TankMissileLaunchOffset: 5
+  TankMissileSpeed: 30
+  TankMissileFireDelay: 3
+  BarrelShootingAngleRange: 15
 --- !u!1 &6657567229857210585
 GameObject:
   m_ObjectHideFlags: 0

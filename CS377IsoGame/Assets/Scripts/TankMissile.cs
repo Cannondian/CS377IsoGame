@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class TankMissile : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Rigidbody rb;
+
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        // Rotate missile to velocity direction
+        transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.forward);
     }
 
     void OnCollisionEnter(Collision col)
