@@ -6,29 +6,36 @@ public class Tank01Controller : MonoBehaviour
 {
     [SerializeField] Transform TurretTransform;
     [SerializeField] Transform BarrelTransform;
+    [SerializeField] GameObject TankMissilePrefab;
 
-    [SerializeField] public float TurnRate;
-    [SerializeField] public float MinBarrelAngle;
+    public float TankRestHeight = 1f;            // target height position for tank
 
+    public float TurnRate = 1f;                  // modifier for turret and barrel quaternion slerp
+    public float MinBarrelAngle = -7f;           // lowest angle tank barrel can be at
+
+    public float TankMissileLaunchOffset = 5f;   // distance missile is launched from the front of the barrel
+    public float TankMissileSpeed = 25f;         // launch speed of missile
+    public float TankMissileFireDelay = 3f;      // minimum time between missile fire
+    public float BarrelShootingAngleRange = 15f; // Tank shoots iff barrel is within X deg off vector to character posn
+    private float TankMissileLastFireTime;
+
+    public Rigidbody BarrelRigidbody;
+
+    private Rigidbody TankRigidbody;
     private Quaternion CurrentTurretAngles;
     private Quaternion CurrentBarrelAngles;
 
     // We could create an Enemy parent class to store basic enemy functionality...
     // This could be part of the Enemy parent class
-    GameObject Player;
-    public void GetPlayer()
+    Transform PlayerTransform;
+    public void GetPlayerTransform()
     {
-        Player = GameObject.FindWithTag("Player");
+        PlayerTransform = GameObject.FindWithTag("Player").transform;
     }
 
-    void Start()
+    void AimTurret()
     {
-        GetPlayer();
-    }
-
-    void Update()
-    {
-        Vector3 playerPosn = Player.transform.position;
+        Vector3 playerPosn = PlayerTransform.position;
         Vector3 toPlayer = playerPosn - TurretTransform.position; // vector from turret to player
 
         // Determine the left/right angle to the player from current tank body orientation
@@ -44,5 +51,46 @@ public class Tank01Controller : MonoBehaviour
         if (-barrelAngle < MinBarrelAngle) { barrelAngle = -MinBarrelAngle; }
         CurrentBarrelAngles = Quaternion.Slerp(BarrelTransform.localRotation, Quaternion.Euler(barrelAngle, 0f, 0f), TurnRate * Time.deltaTime);
         BarrelTransform.localRotation = CurrentBarrelAngles;
+    }
+
+    void MaybeFire()
+    {
+        Vector3 playerPosn = PlayerTransform.position;
+        Vector3 toPlayer = playerPosn - BarrelTransform.position; // vector from barrel to player
+
+        // Determine the left/right angle to the player from current turret orientation
+        float turretAngle = Mathf.Abs(Vector3.SignedAngle(BarrelTransform.rotation * Vector3.forward, toPlayer, BarrelTransform.rotation * Vector3.up));
+
+        if (turretAngle < BarrelShootingAngleRange && Time.time - TankMissileLastFireTime > TankMissileFireDelay)
+        {
+            var Missile = Instantiate(
+                TankMissilePrefab,
+                BarrelTransform.position + BarrelTransform.forward * TankMissileLaunchOffset,
+                BarrelTransform.rotation);
+
+            var MissileRB = Missile.GetComponent<Rigidbody>();
+            MissileRB.velocity = BarrelTransform.forward * TankMissileSpeed;
+
+            BarrelRigidbody.AddForce(-BarrelTransform.forward * TankMissileSpeed * MissileRB.mass, ForceMode.Impulse);
+
+            TankMissileLastFireTime = Time.time;
+        }
+    }
+
+    void Start()
+    {
+        TankRigidbody = GetComponent<Rigidbody>();
+        GetPlayerTransform();
+        TankMissileLastFireTime = Time.time;
+    }
+
+    void Update()
+    {
+        AimTurret();
+    }
+
+    void FixedUpdate()
+    {
+        MaybeFire();
     }
 }
