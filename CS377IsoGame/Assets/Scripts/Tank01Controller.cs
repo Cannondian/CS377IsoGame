@@ -8,7 +8,8 @@ public class Tank01Controller : MonoBehaviour
     [SerializeField] Transform BarrelTransform;
     [SerializeField] GameObject TankMissilePrefab;
 
-    public float TankRestHeight = 1f;            // target height position for tank
+    public float TankRestHeight = 1.5f;          // target height position for tank
+    public float TankControlFactor = 1f;         // controls how quickly the thrusters travel between their min and max thrust based on current tank height
 
     public float TurnRate = 1f;                  // modifier for turret and barrel quaternion slerp
     public float MinBarrelAngle = -7f;           // lowest angle tank barrel can be at
@@ -18,8 +19,6 @@ public class Tank01Controller : MonoBehaviour
     public float TankMissileFireDelay = 3f;      // minimum time between missile fire
     public float BarrelShootingAngleRange = 15f; // Tank shoots iff barrel is within X deg off vector to character posn
     private float TankMissileLastFireTime;
-
-    public Rigidbody BarrelRigidbody;
 
     private Rigidbody TankRigidbody;
     private Quaternion CurrentTurretAngles;
@@ -63,15 +62,21 @@ public class Tank01Controller : MonoBehaviour
 
         if (turretAngle < BarrelShootingAngleRange && Time.time - TankMissileLastFireTime > TankMissileFireDelay)
         {
+            // Create missile instance
             var Missile = Instantiate(
                 TankMissilePrefab,
                 BarrelTransform.position + BarrelTransform.forward * TankMissileLaunchOffset,
                 BarrelTransform.rotation);
 
+            // Set missile velocity
             var MissileRB = Missile.GetComponent<Rigidbody>();
             MissileRB.velocity = BarrelTransform.forward * TankMissileSpeed;
 
-            BarrelRigidbody.AddForce(-BarrelTransform.forward * TankMissileSpeed * MissileRB.mass, ForceMode.Impulse);
+            // Add a "kick back" force at the end of the tank's barrel
+            TankRigidbody.AddForceAtPosition(
+                -BarrelTransform.forward * TankMissileSpeed * MissileRB.mass, // force
+                BarrelTransform.position - 2 * BarrelTransform.forward, // apply force to end of barrel
+                ForceMode.Impulse); // we want an instantaneous "pulse" to be applied
 
             TankMissileLastFireTime = Time.time;
         }
@@ -86,6 +91,7 @@ public class Tank01Controller : MonoBehaviour
 
     void Update()
     {
+        //base.Update();
         AimTurret();
     }
 
