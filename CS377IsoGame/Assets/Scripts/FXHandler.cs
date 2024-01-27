@@ -59,11 +59,13 @@ namespace RPGCharacterAnims.Actions
 
         }
 
-        private void InitializeFX(string color, Vector3 pos, FXList.FXlist effect, float duration)
+        private void InitializeFX(Color color, Vector3 pos, FXList.FXlist effect, float duration)
         {
             Debug.Log(FindObjectsOfType(typeof(FXHandler)));
 
             var ActualArtilleryStrike = Instantiate(ArtilleryStrikePrefab, pos, quaternion.identity);
+            ParticleSystem.MainModule particleSettings = ActualArtilleryStrike.GetComponent<ParticleSystem>().main;
+            particleSettings.startColor = new ParticleSystem.MinMaxGradient(color);
             StartCoroutine(TerminateFX(duration, ActualArtilleryStrike));
             
             

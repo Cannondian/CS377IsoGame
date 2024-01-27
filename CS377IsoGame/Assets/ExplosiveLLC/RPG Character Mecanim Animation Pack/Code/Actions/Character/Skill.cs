@@ -8,7 +8,7 @@ namespace RPGCharacterAnims.Actions
 	public class Skill:BaseActionHandler<SkillContext>
 	{
 		
-		public static event System.Action<string, Vector3, FXList.FXlist, float> OnParticleEffectTriggered;
+		public static event System.Action<Color, Vector3, FXList.FXlist, float> OnParticleEffectTriggered;
 
 		public override bool CanStartAction(RPGCharacterController controller)
 		{
@@ -28,7 +28,7 @@ namespace RPGCharacterAnims.Actions
 			switch (terrain) {
 				case CustomTerrain.Terrains.Grass:
 					
-					OnParticleEffectTriggered("placeholder", position, FXList.FXlist.ArtilleryStrike, 2.8f);
+					OnParticleEffectTriggered(Color.green, position, FXList.FXlist.ArtilleryStrike, 2.8f);
 					Debug.Log("it gets here33");
 					break;
 				
