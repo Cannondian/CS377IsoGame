@@ -1,12 +1,14 @@
 // To switch your project to using the new InputSystem:
 // Edit>Project Settings>Player>Active Input Handling change to "Input System Package (New)".
 
+using System.Linq;
 using UnityEngine;
 using RPGCharacterAnims.Actions;
 using RPGCharacterAnims.Extensions;
 using RPGCharacterAnims.Lookups;
 // Requires installing the InputSystem Package from the Package Manager: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.5/manual/Installation.html
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 namespace RPGCharacterAnims
 {
@@ -21,6 +23,7 @@ namespace RPGCharacterAnims
 
 		// Inputs.
 		private bool inputJump;
+		private bool inputSkill;
         private bool inputLightHit;
         private bool inputDeath;
         private bool inputAttackL;
@@ -47,7 +50,14 @@ namespace RPGCharacterAnims
 		private bool blockToggle;
 		private float inputPauseTimeout = 0;
 		private bool inputPaused = false;
+		
+		
+		
+		// TO BE REPLACED 
 
+		
+
+		private Characters activeCharacter = Characters.Jisa;
 		private void Awake()
         {
             rpgCharacterController = GetComponent<RPGCharacterController>();
@@ -91,6 +101,8 @@ namespace RPGCharacterAnims
 				Aiming();
 				Rolling();
 				Attacking();
+				
+				UsingSKill();
 			}
 		}
 
@@ -112,6 +124,7 @@ namespace RPGCharacterAnims
             try {
 				inputAttackL = rpgInputs.RPGCharacter.AttackL.WasPressedThisFrame();
 				inputAttackR = rpgInputs.RPGCharacter.AttackR.WasPressedThisFrame();
+				inputSkill = rpgInputs.RPGCharacter.Skill.WasPressedThisFrame();
 				inputBlock = rpgInputs.RPGCharacter.Block.IsPressed();
 				inputCastL = rpgInputs.RPGCharacter.CastL.WasPressedThisFrame();
 				inputCastR = rpgInputs.RPGCharacter.CastR.WasPressedThisFrame();
@@ -276,6 +289,37 @@ namespace RPGCharacterAnims
 			}
 		}
 
+		//just like Attacking() but instead for skill casts
+		private void UsingSKill()
+		{
+			
+			if (!rpgCharacterController.HandlerExists(HandlerTypes.Skill)) { return; }
+			
+			if (!rpgCharacterController.CanStartAction(HandlerTypes.Skill)) {Debug.Log("can't start"); return; }
+
+			if (activeCharacter == Characters.Jisa && inputSkill)
+			{
+				
+				//same logic from the facing function to get mouse position and convert to world position
+				//also keep in mind that this is a good way to get screen coordinates on a surface the player stand on
+				Plane playerPlane = new Plane(Vector3.up, transform.position);
+				Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+				RaycastHit hitInfo;
+				if (Physics.Raycast(ray, out hitInfo)) {
+					Vector3 targetPoint = hitInfo.point;
+					 //this doesn't seem correct within our context
+					rpgCharacterController.StartAction(HandlerTypes.Skill, new SkillContext(HandlerTypes.Skill, targetPoint, CustomTerrain.Terrains.Grass, 2));
+				}
+				
+			}
+			/* else if (inputAttackR)
+			{ rpgCharacterController.StartAction(HandlerTypes.Attack, new AttackContext(HandlerTypes.Attack, Side.Right)); }
+			else if (inputCastL)
+			{ rpgCharacterController.StartAction(HandlerTypes.AttackCast, new AttackCastContext(AnimationVariations.AttackCast.TakeRandom(), Side.Left)); }
+			else if (inputCastR)
+			{ rpgCharacterController.StartAction(HandlerTypes.AttackCast, new AttackCastContext(AnimationVariations.AttackCast.TakeRandom(), Side.Right)); } */
+			
+		}
 		private void Attacking()
 		{
 			// Check to make sure Attack and Cast Actions exist.

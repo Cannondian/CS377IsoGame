@@ -36,6 +36,10 @@ namespace RPGCharacterAnims
         /// </summary>
         public event System.Action OnUnlockMovement = delegate { };
 
+        
+
+        
+        
 		#endregion
 
 		#region Components
@@ -138,6 +142,11 @@ namespace RPGCharacterAnims
 		public bool isAttacking => _isAttacking;
 		private bool _isAttacking;
 
+		/// <summary>
+		/// Returns whether the Skill action is active.
+		/// </summary>
+		public bool isUsingSkill => _isUsingSkill;
+		private bool _isUsingSkill;
         /// <summary>
 		/// Returns whether the Block action is active.
 		/// </summary>
@@ -334,7 +343,7 @@ namespace RPGCharacterAnims
 		/// Integer weapon number for the right hand. See the Weapon enum in AnimationData.cs for a
 		/// full list.
 		/// </summary>
-		[HideInInspector] public Weapon rightWeapon = Weapon.Unarmed;
+		[HideInInspector] public Weapon rightWeapon = Weapon.RightSpear;
 
 		/// <summary>
 		/// Integer weapon number for the left hand. See the Weapon enum in AnimationData.cs for a
@@ -418,6 +427,7 @@ namespace RPGCharacterAnims
 
             SetHandler(HandlerTypes.Aim, new SimpleActionHandler(() => { }, StopAim));
             SetHandler(HandlerTypes.Attack, new Attack());
+            SetHandler(HandlerTypes.Skill, new Skill());
             SetHandler(HandlerTypes.Block, new SimpleActionHandler(StartBlock, EndBlock));
             SetHandler(HandlerTypes.Cast, new Cast());
             SetHandler(HandlerTypes.AttackCast, new AttackCast());
@@ -890,6 +900,32 @@ namespace RPGCharacterAnims
         /// <param name="leftWeapon">Left side weapon. See Weapon enum in AnimationData.cs.</param>
         /// <param name="rightWeapon">Right-hand weapon. See Weapon enum in AnimationData.cs.</param>
         /// <param name="duration">Duration in seconds that animation is locked.</param>
+
+        //ISC leads to RCC which leads to the handler which finally call RCC again
+        //so, before you start working on the handler, first write the last point in the RCC
+        //that way you know what you need from the handler
+
+        public void Skill(Characters character, float duration)
+        {
+	       
+	        switch (character)
+	        {
+		        case (Characters.Jisa):
+			        _isUsingSkill = true;
+			        StartCast(AttackCastType.Cast1, Side.Left );
+			        
+			        break;
+			        /*
+			        var skillTriggerType = AnimatorTrigger.CastTrigger;
+			        animator.SetSide(Side.Dual);
+			        var attackNumber = 1;
+			        animator.SetActionTrigger(skillTriggerType, attackNumber);
+			        break;*/
+	        }
+	         
+	        
+        }
+        
         public void Attack(int attackNumber, Side attackSide, Weapon leftWeapon, Weapon rightWeapon, float duration)
         {
 	        animator.SetSide(attackSide);
@@ -921,6 +957,7 @@ namespace RPGCharacterAnims
         /// <param name="twoHandedWeapon">If wielding a two-handed weapon.</param>
         public void RunningAttack(Side side, bool leftWeapon, bool rightWeapon, bool dualWeapon, bool twoHandedWeapon)
         {
+	        Debug.Log("heya");
 			if (side == Side.Left && leftWeapon || twoHandedWeapon)
 			{ animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 1); }
 			else if (side == Side.Right && rightWeapon)
@@ -928,6 +965,7 @@ namespace RPGCharacterAnims
 			else if (side == Side.Dual && dualWeapon)
 			{ animator.SetActionTrigger(AnimatorTrigger.AttackDualTrigger, 1); }
 			else if (hasNoWeapon) {
+				Debug.Log(side);
 				animator.SetSide(side);
 				animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 1);
 			}
@@ -986,6 +1024,18 @@ namespace RPGCharacterAnims
         }
 
         /// <summary>
+        /// End a skill.
+        ///
+        /// Use the "Skill" action for a friendly interface.
+        /// </summary>
+        public void EndSkill()
+        {
+	        animator.SetAnimatorTrigger(AnimatorTrigger.SpecialEndTrigger);
+	        _isUsingSkill = false;
+	        Lock(true, true, true, 0, 0.6f);
+	        Unlock(true, true);
+        }
+        /// <summary>
         /// Cast a spell.
         ///
         /// Use the "Cast" action for a friendly interface.
@@ -1002,9 +1052,14 @@ namespace RPGCharacterAnims
         public void StartCast(AttackCastType attackCastType, Side attackSide)
         {
 	        animator.SetSide(attackSide);
-	        animator.TriggerAttackCast(attackCastType);
-			_isAttacking = true;
-	        Lock(true, true, false, 0, 0.8f);
+	        
+	        animator.SetActionTrigger(AnimatorTrigger.AttackCastTrigger ,1);
+	        _isAttacking = true;
+			if (_isUsingSkill)
+			{
+				LockForSkill(false, false, true, 0, 0.5f);
+			}
+			
         }
 
         /// <summary>
@@ -1014,8 +1069,10 @@ namespace RPGCharacterAnims
         /// </summary>
         public void EndCast()
         {
-            animator.SetAnimatorTrigger(AnimatorTrigger.CastEndTrigger);
-            Lock(true, true, true, 0, 0.1f);
+            Debug.Log("do we get here?");
+            _isAttacking = false;
+			animator.SetActionTrigger(AnimatorTrigger.CastEndTrigger, 1);
+            //Lock(true, true, true, 0, 0.1f);
         }
 
         /// <summary>
@@ -1405,10 +1462,42 @@ namespace RPGCharacterAnims
             }
             if (timed) {
                 if (lockTime > 0) { yield return new WaitForSeconds(lockTime); }
+                
                 Unlock(lockMovement, lockAction);
             }
         }
 
+        public void LockForSkill(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
+        {
+	        StopCoroutine("_LockForSKill");
+	        StartCoroutine(_LockForSKill(lockMovement, lockAction, timed, delayTime, lockTime));
+        }
+        private IEnumerator _LockForSKill(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
+        {
+	        if (delayTime > 0) { yield return new WaitForSeconds(delayTime); }
+
+	        if (lockMovement) {
+		        
+		        _canMove = false;
+		        OnLockMovement();
+	        }
+	        if (lockAction) {
+		        _canAction = false;
+		        OnLockActions();
+	        }
+	        if (timed) {
+		        if (lockTime > 0) { yield return new WaitForSeconds(lockTime); }
+		        _isUsingSkill = false;
+		        
+		        EndCast();
+		        Unlock(lockMovement, lockAction);
+		        
+		        
+		        //animator.Rebind();
+	        }
+        }
+        
+        
         /// <summary>
         /// Let character move and act again.
         /// </summary>

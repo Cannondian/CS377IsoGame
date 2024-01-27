@@ -1,5 +1,6 @@
 using RPGCharacterAnims.Extensions;
 using RPGCharacterAnims.Lookups;
+using UnityEngine;
 
 namespace RPGCharacterAnims.Actions
 {
@@ -57,6 +58,7 @@ namespace RPGCharacterAnims.Actions
 				EndAction(controller);
 			}
 			else if (controller.isMoving) {
+				
 				controller.RunningAttack(
 					attackSide,
 					controller.hasLeftWeapon,

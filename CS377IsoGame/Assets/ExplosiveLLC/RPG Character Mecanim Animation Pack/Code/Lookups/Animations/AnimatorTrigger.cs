@@ -3,6 +3,7 @@ namespace RPGCharacterAnims.Lookups
     /// <summary>
     /// Enum to use with the "TriggerNumber" parameter of the animator. Convert to (int) to set.
     /// </summary>
+    // Attack cast trigger as used for Jisa's skill
     public enum AnimatorTrigger
     {
         NoTrigger = 0,
@@ -35,5 +36,6 @@ namespace RPGCharacterAnims.Lookups
         KnockdownTrigger = 27,
         DiveRollTrigger = 28,
         CrawlTrigger = 29
+        
     }
 }
