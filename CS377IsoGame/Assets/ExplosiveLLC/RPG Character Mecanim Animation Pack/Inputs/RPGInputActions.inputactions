@@ -11,7 +11,8 @@
                     "id": "12f351ba-2710-419f-bda3-bf2abf737ff4",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "AttackR",
@@ -19,7 +20,8 @@
                     "id": "01a71673-bab7-492e-8129-87f3109d7a58",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Block",
@@ -27,7 +29,8 @@
                     "id": "f6a094d5-bf2c-432a-be73-f32274a37dbd",
                     "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "CastL",
@@ -35,7 +38,8 @@
                     "id": "8adf7ca3-6cd8-41b2-b282-20a4241f0a00",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "CastR",
@@ -43,7 +47,8 @@
                     "id": "5dff7773-c15e-405f-beac-d8ef7acba2f1",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Death",
@@ -51,7 +56,8 @@
                     "id": "8fbfea2e-d59e-48dc-ae84-73e9c0d479f6",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Face",
@@ -59,7 +65,8 @@
                     "id": "787a80ae-a794-4ad0-8aad-2e110194e427",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Facing",
@@ -67,7 +74,8 @@
                     "id": "dd5a4ce2-a4d1-4d8a-bee7-3759c067ffd6",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jump",
@@ -75,7 +83,8 @@
                     "id": "5679467b-966e-49db-b5a9-aa9e28fc90d2",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "LightHit",
@@ -83,7 +92,8 @@
                     "id": "c6381ffb-3d89-4857-b599-53b47c05849c",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Move",
@@ -91,7 +101,8 @@
                     "id": "43308ce0-cc64-42b2-a9dd-3295b6ef9f15",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Relax",
@@ -99,7 +110,8 @@
                     "id": "2636d27b-b1c1-4d92-a1e9-29c6e7207dcd",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Roll",
@@ -107,7 +119,8 @@
                     "id": "9b8a647f-12ad-455b-bc4e-d14bc34f084e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Shield",
@@ -115,7 +128,8 @@
                     "id": "772f991d-0937-4372-b419-8d5bebd81c90",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Aim",
@@ -123,7 +137,8 @@
                     "id": "aafb5408-6a4f-4fd7-a596-caf6387fc87e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "WeaponDown",
@@ -131,7 +146,8 @@
                     "id": "ebe77173-3d6b-449e-9552-b29a4d28a382",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "WeaponLeft",
@@ -139,7 +155,8 @@
                     "id": "24b09064-1bea-48ae-b9bd-5f4b46615fff",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "WeaponRight",
@@ -147,7 +164,8 @@
                     "id": "962e1d87-138c-4796-a086-8fce83fa0bd9",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "WeaponUp",
@@ -155,7 +173,8 @@
                     "id": "ae0d5111-b008-4443-8ac0-8b971ad35b20",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "ToggleHeadLook",
@@ -163,7 +182,8 @@
                     "id": "f9135b14-6916-42a3-ba7f-2639bdbbb5ad",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "ToggleInjury",
@@ -171,7 +191,8 @@
                     "id": "b1e62319-76f6-4c75-bb73-b4d3c22be002",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "TogglePause",
@@ -179,7 +200,8 @@
                     "id": "8528269b-f08a-4bd4-bf6f-2da3be0766cc",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "ToggleSlowTime",
@@ -187,7 +209,17 @@
                     "id": "785691c1-ec9a-4a36-837b-40c8d79a418e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skill",
+                    "type": "Button",
+                    "id": "2484c214-aa45-4678-8397-7b1c59c24e32",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -303,11 +335,33 @@
                 },
                 {
                     "name": "",
+                    "id": "914fa91d-5e79-44be-981a-b2057849bafc",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "AttackL",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f0acae91-204f-447c-9ff5-24d26ff3cee5",
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "AttackR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd8e2b73-bd35-47c4-baad-2faa61e5608f",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
                     "action": "AttackR",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -518,6 +572,17 @@
                     "processors": "",
                     "groups": "Mouse and Keyboard;Gamepad",
                     "action": "ToggleSlowTime",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb81bfe0-9079-44d2-83de-a12f44ef3ce5",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "Skill",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

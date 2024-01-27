@@ -235,6 +235,15 @@ namespace RPGCharacterAnims
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill"",
+                    ""type"": ""Button"",
+                    ""id"": ""2484c214-aa45-4678-8397-7b1c59c24e32"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -350,11 +359,33 @@ namespace RPGCharacterAnims
                 },
                 {
                     ""name"": """",
+                    ""id"": ""914fa91d-5e79-44be-981a-b2057849bafc"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""AttackL"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""f0acae91-204f-447c-9ff5-24d26ff3cee5"",
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
+                    ""action"": ""AttackR"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fd8e2b73-bd35-47c4-baad-2faa61e5608f"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""AttackR"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -567,6 +598,17 @@ namespace RPGCharacterAnims
                     ""action"": ""ToggleSlowTime"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bb81bfe0-9079-44d2-83de-a12f44ef3ce5"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Skill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -620,6 +662,7 @@ namespace RPGCharacterAnims
             m_RPGCharacter_ToggleInjury = m_RPGCharacter.FindAction("ToggleInjury", throwIfNotFound: true);
             m_RPGCharacter_TogglePause = m_RPGCharacter.FindAction("TogglePause", throwIfNotFound: true);
             m_RPGCharacter_ToggleSlowTime = m_RPGCharacter.FindAction("ToggleSlowTime", throwIfNotFound: true);
+            m_RPGCharacter_Skill = m_RPGCharacter.FindAction("Skill", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -704,6 +747,7 @@ namespace RPGCharacterAnims
         private readonly InputAction m_RPGCharacter_ToggleInjury;
         private readonly InputAction m_RPGCharacter_TogglePause;
         private readonly InputAction m_RPGCharacter_ToggleSlowTime;
+        private readonly InputAction m_RPGCharacter_Skill;
         public struct RPGCharacterActions
         {
             private @RPGInputs m_Wrapper;
@@ -731,6 +775,7 @@ namespace RPGCharacterAnims
             public InputAction @ToggleInjury => m_Wrapper.m_RPGCharacter_ToggleInjury;
             public InputAction @TogglePause => m_Wrapper.m_RPGCharacter_TogglePause;
             public InputAction @ToggleSlowTime => m_Wrapper.m_RPGCharacter_ToggleSlowTime;
+            public InputAction @Skill => m_Wrapper.m_RPGCharacter_Skill;
             public InputActionMap Get() { return m_Wrapper.m_RPGCharacter; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -809,6 +854,9 @@ namespace RPGCharacterAnims
                 @ToggleSlowTime.started += instance.OnToggleSlowTime;
                 @ToggleSlowTime.performed += instance.OnToggleSlowTime;
                 @ToggleSlowTime.canceled += instance.OnToggleSlowTime;
+                @Skill.started += instance.OnSkill;
+                @Skill.performed += instance.OnSkill;
+                @Skill.canceled += instance.OnSkill;
             }
 
             private void UnregisterCallbacks(IRPGCharacterActions instance)
@@ -882,6 +930,9 @@ namespace RPGCharacterAnims
                 @ToggleSlowTime.started -= instance.OnToggleSlowTime;
                 @ToggleSlowTime.performed -= instance.OnToggleSlowTime;
                 @ToggleSlowTime.canceled -= instance.OnToggleSlowTime;
+                @Skill.started -= instance.OnSkill;
+                @Skill.performed -= instance.OnSkill;
+                @Skill.canceled -= instance.OnSkill;
             }
 
             public void RemoveCallbacks(IRPGCharacterActions instance)
@@ -942,6 +993,7 @@ namespace RPGCharacterAnims
             void OnToggleInjury(InputAction.CallbackContext context);
             void OnTogglePause(InputAction.CallbackContext context);
             void OnToggleSlowTime(InputAction.CallbackContext context);
+            void OnSkill(InputAction.CallbackContext context);
         }
     }
 }
