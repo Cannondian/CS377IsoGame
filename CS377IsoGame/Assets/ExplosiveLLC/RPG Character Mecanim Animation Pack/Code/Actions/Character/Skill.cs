@@ -7,11 +7,12 @@ namespace RPGCharacterAnims.Actions
 	
 	public class Skill:BaseActionHandler<SkillContext>
 	{
-		
-		public static event System.Action<Color, Vector3, FXList.FXlist, float> OnParticleEffectTriggered;
 
 		public override bool CanStartAction(RPGCharacterController controller)
 		{
+			Debug.Log(controller.isRelaxed);
+			Debug.Log(active);
+			Debug.Log(controller.isCasting);
 			return !controller.isRelaxed && !active && !controller.isCasting && controller.canAction; }
 
 		public override bool CanEndAction(RPGCharacterController controller)
@@ -28,7 +29,8 @@ namespace RPGCharacterAnims.Actions
 			switch (terrain) {
 				case CustomTerrain.Terrains.Grass:
 					
-					OnParticleEffectTriggered(Color.green, position, FXList.FXlist.ArtilleryStrike, 2.8f);
+					EventBus.TriggerEvent(EventTypes.Events.ON_PARTICLE_FX_TRIGGER, 
+						new EventTypes.Event1Param(Color.green, position, FXList.FXlist.ArtilleryStrike, 0.2f,2.8f));
 					Debug.Log("it gets here33");
 					break;
 				

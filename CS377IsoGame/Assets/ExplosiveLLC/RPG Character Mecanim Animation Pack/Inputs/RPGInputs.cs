@@ -243,7 +243,16 @@ namespace RPGCharacterAnims
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Ultimate"",
+                    ""type"": ""Button"",
+                    ""id"": ""a6e9a4db-e13f-4832-9c4b-a3417188ad7e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -609,6 +618,17 @@ namespace RPGCharacterAnims
                     ""action"": ""Skill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""60184a28-f38e-44bc-8354-d1deed3f366c"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Ultimate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -663,6 +683,7 @@ namespace RPGCharacterAnims
             m_RPGCharacter_TogglePause = m_RPGCharacter.FindAction("TogglePause", throwIfNotFound: true);
             m_RPGCharacter_ToggleSlowTime = m_RPGCharacter.FindAction("ToggleSlowTime", throwIfNotFound: true);
             m_RPGCharacter_Skill = m_RPGCharacter.FindAction("Skill", throwIfNotFound: true);
+            m_RPGCharacter_Ultimate = m_RPGCharacter.FindAction("Ultimate", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -748,6 +769,7 @@ namespace RPGCharacterAnims
         private readonly InputAction m_RPGCharacter_TogglePause;
         private readonly InputAction m_RPGCharacter_ToggleSlowTime;
         private readonly InputAction m_RPGCharacter_Skill;
+        private readonly InputAction m_RPGCharacter_Ultimate;
         public struct RPGCharacterActions
         {
             private @RPGInputs m_Wrapper;
@@ -776,6 +798,7 @@ namespace RPGCharacterAnims
             public InputAction @TogglePause => m_Wrapper.m_RPGCharacter_TogglePause;
             public InputAction @ToggleSlowTime => m_Wrapper.m_RPGCharacter_ToggleSlowTime;
             public InputAction @Skill => m_Wrapper.m_RPGCharacter_Skill;
+            public InputAction @Ultimate => m_Wrapper.m_RPGCharacter_Ultimate;
             public InputActionMap Get() { return m_Wrapper.m_RPGCharacter; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -857,6 +880,9 @@ namespace RPGCharacterAnims
                 @Skill.started += instance.OnSkill;
                 @Skill.performed += instance.OnSkill;
                 @Skill.canceled += instance.OnSkill;
+                @Ultimate.started += instance.OnUltimate;
+                @Ultimate.performed += instance.OnUltimate;
+                @Ultimate.canceled += instance.OnUltimate;
             }
 
             private void UnregisterCallbacks(IRPGCharacterActions instance)
@@ -933,6 +959,9 @@ namespace RPGCharacterAnims
                 @Skill.started -= instance.OnSkill;
                 @Skill.performed -= instance.OnSkill;
                 @Skill.canceled -= instance.OnSkill;
+                @Ultimate.started -= instance.OnUltimate;
+                @Ultimate.performed -= instance.OnUltimate;
+                @Ultimate.canceled -= instance.OnUltimate;
             }
 
             public void RemoveCallbacks(IRPGCharacterActions instance)
@@ -994,6 +1023,7 @@ namespace RPGCharacterAnims
             void OnTogglePause(InputAction.CallbackContext context);
             void OnToggleSlowTime(InputAction.CallbackContext context);
             void OnSkill(InputAction.CallbackContext context);
+            void OnUltimate(InputAction.CallbackContext context);
         }
     }
 }

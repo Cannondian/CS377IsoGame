@@ -5,6 +5,7 @@ namespace RPGCharacterAnims.Lookups
         public static readonly string Aim = "Aim";
         public static readonly string Attack = "Attack";
         public static readonly string Skill = "Skill";
+        public static readonly string Ultimate = "Ultimate";
         public static readonly string Block = "Block";
         public static readonly string Cast = "Cast";
         public static readonly string AttackCast = "AttackCast";
