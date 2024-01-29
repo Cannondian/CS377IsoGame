@@ -147,6 +147,14 @@ namespace RPGCharacterAnims
 		/// </summary>
 		public bool isUsingSkill => _isUsingSkill;
 		private bool _isUsingSkill;
+
+		/// <summary>
+		/// Returns whether the Ultimate action is active.
+		/// </summary>
+		public bool isUsingUltimate => _isUsingUltimate;
+		private bool _isUsingUltimate;
+		
+		
         /// <summary>
 		/// Returns whether the Block action is active.
 		/// </summary>
@@ -403,7 +411,7 @@ namespace RPGCharacterAnims
         {
             // Setup Animator, add AnimationEvents script.
             animator = GetComponentInChildren<Animator>();
-
+	
             if (!animator) {
                 Debug.LogError("ERROR: There is no Animator Component on child of character.");
                 Debug.Break();
@@ -428,6 +436,7 @@ namespace RPGCharacterAnims
             SetHandler(HandlerTypes.Aim, new SimpleActionHandler(() => { }, StopAim));
             SetHandler(HandlerTypes.Attack, new Attack());
             SetHandler(HandlerTypes.Skill, new Skill());
+            SetHandler(HandlerTypes.Ultimate, new Ultimate());
             SetHandler(HandlerTypes.Block, new SimpleActionHandler(StartBlock, EndBlock));
             SetHandler(HandlerTypes.Cast, new Cast());
             SetHandler(HandlerTypes.AttackCast, new AttackCast());
@@ -447,7 +456,11 @@ namespace RPGCharacterAnims
             SetHandler(HandlerTypes.Sprint, new SimpleActionHandler(StartSprint, EndSprint));
             SetHandler(HandlerTypes.Strafe, new SimpleActionHandler(StartStrafe, EndStrafe));
             SetHandler(HandlerTypes.Turn, new Turn());
-
+			
+            //weapon change test is here, don't forget to change that and put it somewhere else
+            animator.SetWeapons(AnimatorWeapon.STAFF, -2, Weapon.Unarmed, Weapon.TwoHandStaff, Side.Right);
+            
+            Debug.Log("this is a reminder to find a better place to add weapon change");
             OnLockActions += LockHeadlook;
             OnUnlockActions += UnlockHeadlook;
 
@@ -890,16 +903,20 @@ namespace RPGCharacterAnims
             if (isRelaxed) { EndAction(HandlerTypes.Relax); }
         }
 
-        /// <summary>
-        /// Trigger an attack animation.
-        ///
-        /// Use the "Attack" action for a friendly interface.
-        /// </summary>
-        /// <param name="attackNumber">Animation number to play. See AnimationData.RandomAttackNumber for details.</param>
-        /// <param name="attackSide">Side of the attack: 0- None, 1- Left, 2- Right, 3- Dual.</param>
-        /// <param name="leftWeapon">Left side weapon. See Weapon enum in AnimationData.cs.</param>
-        /// <param name="rightWeapon">Right-hand weapon. See Weapon enum in AnimationData.cs.</param>
-        /// <param name="duration">Duration in seconds that animation is locked.</param>
+        public void Ultimate(Characters character, float animationDuration)
+        {
+	        switch (character)
+	        {
+		        case(Characters.Jisa):
+			        _isUsingUltimate = true;
+			        StartCast(CastType.Buff2, Side.Left);
+			        break;
+			        
+	        }
+	        
+	        
+	        
+        }
 
         //ISC leads to RCC which leads to the handler which finally call RCC again
         //so, before you start working on the handler, first write the last point in the RCC
@@ -912,8 +929,8 @@ namespace RPGCharacterAnims
 	        {
 		        case (Characters.Jisa):
 			        _isUsingSkill = true;
-			        StartCast(AttackCastType.Cast1, Side.Left );
-			        
+			        StartCast(AttackCastType.Cast2, Side.Left );
+			        //StartCast(CastType.Buff2, Side.Left);
 			        break;
 			        /*
 			        var skillTriggerType = AnimatorTrigger.CastTrigger;
@@ -926,6 +943,16 @@ namespace RPGCharacterAnims
 	        
         }
         
+        /// <summary>
+        /// Trigger an attack animation.
+        ///
+        /// Use the "Attack" action for a friendly interface.
+        /// </summary>
+        /// <param name="attackNumber">Animation number to play. See AnimationData.RandomAttackNumber for details.</param>
+        /// <param name="attackSide">Side of the attack: 0- None, 1- Left, 2- Right, 3- Dual.</param>
+        /// <param name="leftWeapon">Left side weapon. See Weapon enum in AnimationData.cs.</param>
+        /// <param name="rightWeapon">Right-hand weapon. See Weapon enum in AnimationData.cs.</param>
+        /// <param name="duration">Duration in seconds that animation is locked.</param>
         public void Attack(int attackNumber, Side attackSide, Weapon leftWeapon, Weapon rightWeapon, float duration)
         {
 	        animator.SetSide(attackSide);
@@ -1042,22 +1069,25 @@ namespace RPGCharacterAnims
         /// </summary>
         /// <param name="attackSide">0- None, 1- Left, 2- Right, 3- Dual.</param>
         /// <param name="castType">Type of spell to cast: Cast | AOE | Summon | Buff.</param>
+        public void StartCast(AttackCastType attackCastType, Side attackSide)
+        {
+	        animator.SetSide(attackSide);
+	        animator.TriggerAttackCast(attackCastType);
+	        if (isUsingSkill)
+	        {
+		        LockForSkillAndUltimate(false, false, true, 0, 0.5f);
+	        }
+        }
+
         public void StartCast(CastType castType, Side attackSide)
         {
 	        animator.SetSide(attackSide);
 	        animator.TriggerCast(castType);
-	        Lock(true, true, false, 0, 0.8f);
-        }
-
-        public void StartCast(AttackCastType attackCastType, Side attackSide)
-        {
-	        animator.SetSide(attackSide);
-	        
-	        animator.SetActionTrigger(AnimatorTrigger.AttackCastTrigger ,1);
+	        //animator.SetActionTrigger(castType ,1);
 	        _isAttacking = true;
-			if (_isUsingSkill)
+			if (_isUsingUltimate)
 			{
-				LockForSkill(false, false, true, 0, 0.5f);
+				LockForSkillAndUltimate(false, false, true, 0, 0.5f);
 			}
 			
         }
@@ -1071,6 +1101,15 @@ namespace RPGCharacterAnims
         {
             Debug.Log("do we get here?");
             _isAttacking = false;
+            if (_isUsingSkill)
+            {
+	            _isUsingSkill = false;
+            }
+
+            if (_isUsingUltimate)
+            {
+	            _isUsingUltimate = false;
+            }
 			animator.SetActionTrigger(AnimatorTrigger.CastEndTrigger, 1);
             //Lock(true, true, true, 0, 0.1f);
         }
@@ -1467,12 +1506,12 @@ namespace RPGCharacterAnims
             }
         }
 
-        public void LockForSkill(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
+        public void LockForSkillAndUltimate(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
         {
 	        StopCoroutine("_LockForSKill");
-	        StartCoroutine(_LockForSKill(lockMovement, lockAction, timed, delayTime, lockTime));
+	        StartCoroutine(_LockForSkillAndUltimate(lockMovement, lockAction, timed, delayTime, lockTime));
         }
-        private IEnumerator _LockForSKill(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
+        private IEnumerator _LockForSkillAndUltimate(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime)
         {
 	        if (delayTime > 0) { yield return new WaitForSeconds(delayTime); }
 
@@ -1487,7 +1526,7 @@ namespace RPGCharacterAnims
 	        }
 	        if (timed) {
 		        if (lockTime > 0) { yield return new WaitForSeconds(lockTime); }
-		        _isUsingSkill = false;
+		        
 		        
 		        EndCast();
 		        Unlock(lockMovement, lockAction);

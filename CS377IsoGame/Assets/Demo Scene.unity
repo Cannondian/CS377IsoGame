@@ -528,8 +528,9 @@ GameObject:
   m_Component:
   - component: {fileID: 620637069}
   - component: {fileID: 620637070}
+  - component: {fileID: 620637071}
   m_Layer: 0
-  m_Name: FXMachine
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -564,6 +565,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _persistent: 1
   ArtilleryStrikePrefab: {fileID: 1352952055292810, guid: d8628f56ce986894a9be0c0fc92627bd, type: 3}
+  ElectricityPrefab1: {fileID: 1251993928265596, guid: c445b201205907b4f90b242a07f4dbc9, type: 3}
+  ElectricityPrefab2: {fileID: 1190131086089332, guid: a22bb852cf433044e8752ea7fe62f570, type: 3}
+--- !u!114 &620637071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620637068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90bf28147fa324909ae9cf71e42c4604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _persistent: 1
 --- !u!1 &884217104
 GameObject:
   m_ObjectHideFlags: 0
