@@ -6,7 +6,9 @@ public class FXList
 {
     public enum FXlist
     {
-        ArtilleryStrike
+        ArtilleryStrike,
+        Electricity
+        
         
     }
 }

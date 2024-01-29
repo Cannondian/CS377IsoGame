@@ -24,6 +24,7 @@ namespace RPGCharacterAnims
 		// Inputs.
 		private bool inputJump;
 		private bool inputSkill;
+		private bool inputUltimate;
         private bool inputLightHit;
         private bool inputDeath;
         private bool inputAttackL;
@@ -63,6 +64,7 @@ namespace RPGCharacterAnims
             rpgCharacterController = GetComponent<RPGCharacterController>();
 			rpgInputs = new @RPGInputs();
 			currentAim = Vector3.zero;
+			
         }
 
 		private void OnEnable()
@@ -101,8 +103,8 @@ namespace RPGCharacterAnims
 				Aiming();
 				Rolling();
 				Attacking();
-				
 				UsingSKill();
+				UsingUltimate();
 			}
 		}
 
@@ -125,6 +127,7 @@ namespace RPGCharacterAnims
 				inputAttackL = rpgInputs.RPGCharacter.AttackL.WasPressedThisFrame();
 				inputAttackR = rpgInputs.RPGCharacter.AttackR.WasPressedThisFrame();
 				inputSkill = rpgInputs.RPGCharacter.Skill.WasPressedThisFrame();
+				inputUltimate = rpgInputs.RPGCharacter.Ultimate.WasPressedThisFrame();
 				inputBlock = rpgInputs.RPGCharacter.Block.IsPressed();
 				inputCastL = rpgInputs.RPGCharacter.CastL.WasPressedThisFrame();
 				inputCastR = rpgInputs.RPGCharacter.CastR.WasPressedThisFrame();
@@ -299,7 +302,9 @@ namespace RPGCharacterAnims
 
 			if (activeCharacter == Characters.Jisa && inputSkill)
 			{
-				
+				//inputFace = true;
+				//Facing();
+				//Debug.Log("you are testing the facing for the skill");
 				//same logic from the facing function to get mouse position and convert to world position
 				//also keep in mind that this is a good way to get screen coordinates on a surface the player stand on
 				Plane playerPlane = new Plane(Vector3.up, transform.position);
@@ -319,6 +324,24 @@ namespace RPGCharacterAnims
 			else if (inputCastR)
 			{ rpgCharacterController.StartAction(HandlerTypes.AttackCast, new AttackCastContext(AnimationVariations.AttackCast.TakeRandom(), Side.Right)); } */
 			
+		}
+
+		private void UsingUltimate()
+		{
+			if (!rpgCharacterController.HandlerExists(HandlerTypes.Ultimate))
+			{
+				return;
+			}
+
+			if (!rpgCharacterController.CanStartAction(HandlerTypes.Ultimate))
+			{
+				return;
+			}
+			if (activeCharacter == Characters.Jisa && inputUltimate)
+		    {
+		        
+			    rpgCharacterController.StartAction(HandlerTypes.Ultimate, new UltimateContext(HandlerTypes.Ultimate, transform, CustomTerrain.Terrains.Grass));
+		    }
 		}
 		private void Attacking()
 		{
