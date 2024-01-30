@@ -1,40 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public abstract class EnemyAI : MonoBehaviour
 {
-    public NavMeshAgent agent;
-
+    public float Health { get; protected set; }
+    public float AttackDamage { get; protected set; }
+    protected NavMeshAgent agent;
     public Transform player;
-
     public LayerMask Walkable, whatIsPlayer;
-
-    private Renderer enemyRenderer;
 
     // Patrolling
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
 
-    // Attacking
-    public float timeBetweenAttacks;
-    bool alreadyAttacked;
-
     // States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
-
-    private void Awake()
+    protected virtual void Awake()
     {
-        player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
-        enemyRenderer = GetComponent<Renderer>();
+        player = GameObject.FindWithTag("Player").transform;
     }
 
-    private void Update()
+    public void TakeDamage(float amount)
+    {
+        Health -= amount;
+        if (Health <= 0)
+        {
+            Die();
+        }
+    }
+
+    protected virtual void Die()
+    {
+        // Simple destroy for now
+        Destroy(gameObject);
+    }
+
+    protected virtual void FixedUpdate()
     {
         // Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
@@ -43,12 +48,12 @@ public class EnemyAI : MonoBehaviour
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInSightRange && playerInAttackRange) AttackPlayer();
+
     }
 
-    private void Patroling()
-    {
-        ChangeColor(Color.blue);
 
+    protected virtual void Patroling()
+    {
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
@@ -63,7 +68,6 @@ public class EnemyAI : MonoBehaviour
 
     private void SearchWalkPoint()
     {
-        // Calculate random point in range
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
@@ -75,49 +79,14 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void ChasePlayer()
+    protected virtual void ChasePlayer()
     {
-        Debug.Log("Patroling");
-        ChangeColor(Color.yellow);
         agent.SetDestination(player.position);
     }
 
-    private void AttackPlayer()
-    {
-        Debug.Log("Attacking");
+    protected abstract void AttackPlayer();
 
-        ChangeColor(Color.red);
-        // For now enemy stops when in attack range
-        agent.SetDestination(transform.position);
-
-        transform.LookAt(player);
-
-        if (!alreadyAttacked)
-        {
-            // attack code here
-
-
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        }
-    }
-
-    private void ResetAttack()
-    {
-        alreadyAttacked = false;
-    }
-
-    // Method to change the color of the enemy
-    private void ChangeColor(Color color)
-    {
-        if (enemyRenderer != null)
-        {
-            enemyRenderer.material.color = color;
-        }
-    }
-
-    // Draw attack and sight range with gizmos
-    private void OnDrawGizmosSelected()
+    protected void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);

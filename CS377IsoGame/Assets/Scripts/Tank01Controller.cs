@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tank01Controller : MonoBehaviour
+public class Tank01Controller : EnemyAI
 {
     [SerializeField] Transform TurretTransform;
     [SerializeField] Transform BarrelTransform;
@@ -24,12 +24,33 @@ public class Tank01Controller : MonoBehaviour
     private Quaternion CurrentTurretAngles;
     private Quaternion CurrentBarrelAngles;
 
-    // We could create an Enemy parent class to store basic enemy functionality...
-    // This could be part of the Enemy parent class
+    [SerializeField] private LineRenderer attackLineRenderer;
+    [SerializeField] private float lineDisplayTime = 1f;
+
+    private bool isFiring = false;
+
     Transform PlayerTransform;
-    public void GetPlayerTransform()
+
+    protected override void Awake()
     {
-        PlayerTransform = GameObject.FindWithTag("Player").transform;
+        base.Awake();
+        TankRigidbody = GetComponent<Rigidbody>();
+        TankMissileLastFireTime = Time.time;
+
+        PlayerTransform = player;
+
+        // Initialize tank-specific properties
+        Health = 200f;
+        AttackDamage = 30f; 
+    }
+
+    protected override void AttackPlayer()
+    {
+        // stop before attacking
+        agent.SetDestination(transform.position);
+
+        AimTurret();
+        MaybeFire();
     }
 
     void AimTurret()
@@ -60,43 +81,66 @@ public class Tank01Controller : MonoBehaviour
         // Determine the left/right angle to the player from current turret orientation
         float turretAngle = Mathf.Abs(Vector3.SignedAngle(BarrelTransform.rotation * Vector3.forward, toPlayer, BarrelTransform.rotation * Vector3.up));
 
-        if (turretAngle < BarrelShootingAngleRange && Time.time - TankMissileLastFireTime > TankMissileFireDelay)
+        if (turretAngle < BarrelShootingAngleRange && Time.time - TankMissileLastFireTime > TankMissileFireDelay && !isFiring)
         {
-            // Create missile instance
-            var Missile = Instantiate(
-                TankMissilePrefab,
-                BarrelTransform.position + BarrelTransform.forward * TankMissileLaunchOffset,
-                BarrelTransform.rotation);
-
-            // Set missile velocity
-            var MissileRB = Missile.GetComponent<Rigidbody>();
-            MissileRB.velocity = BarrelTransform.forward * TankMissileSpeed;
-
-            // Add a "kick back" force at the end of the tank's barrel
-            TankRigidbody.AddForceAtPosition(
-                -BarrelTransform.forward * TankMissileSpeed * MissileRB.mass, // force
-                BarrelTransform.position - 2 * BarrelTransform.forward, // apply force to end of barrel
-                ForceMode.Impulse); // we want an instantaneous "pulse" to be applied
-
-            TankMissileLastFireTime = Time.time;
+            StartCoroutine(FireSequence());
         }
     }
 
-    void Start()
+    private IEnumerator FireSequence()
     {
-        TankRigidbody = GetComponent<Rigidbody>();
-        GetPlayerTransform();
+        isFiring = true;
+
+        // Show the attack line
+        ShowAttackLine();
+
+        // Wait for the specified delay time
+        yield return new WaitForSeconds(lineDisplayTime);
+
+        // Hide the attack line
+        HideAttackLine();
+
+        // Create missile instance
+        var Missile = Instantiate(
+            TankMissilePrefab,
+            BarrelTransform.position + BarrelTransform.forward * TankMissileLaunchOffset,
+            BarrelTransform.rotation);
+
+        // Set missile velocity
+        var MissileRB = Missile.GetComponent<Rigidbody>();
+        MissileRB.velocity = BarrelTransform.forward * TankMissileSpeed;
+
+        // Add a "kick back" force at the end of the tank's barrel
+        TankRigidbody.AddForceAtPosition(
+            -BarrelTransform.forward * TankMissileSpeed * MissileRB.mass, // force
+            BarrelTransform.position - 2 * BarrelTransform.forward, // apply force to end of barrel
+            ForceMode.Impulse); // we want an instantaneous "pulse" to be applied
         TankMissileLastFireTime = Time.time;
+
+        // Wait for the remainder of the fire delay
+        yield return new WaitForSeconds(TankMissileFireDelay - lineDisplayTime);
+        isFiring = false;
+        
     }
 
-    void Update()
+    private void ShowAttackLine()
     {
-        //base.Update();
-        AimTurret();
+        if (attackLineRenderer != null)
+        {
+            attackLineRenderer.SetPosition(0, BarrelTransform.position);
+            attackLineRenderer.SetPosition(1, PlayerTransform.position);
+
+            attackLineRenderer.enabled = true;
+
+            Invoke("HideAttackLine", lineDisplayTime);
+        }
     }
 
-    void FixedUpdate()
+    private void HideAttackLine()
     {
-        MaybeFire();
+        if (attackLineRenderer != null)
+        {
+            attackLineRenderer.enabled = false;
+        }
     }
 }
