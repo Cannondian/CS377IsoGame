@@ -6,6 +6,8 @@ namespace RPGCharacterAnims.Actions
 {
 	public class Attack:BaseActionHandler<AttackContext>
 	{
+		
+		
 		public override bool CanStartAction(RPGCharacterController controller)
 		{ return !controller.isRelaxed && !active && !controller.isCasting && controller.canAction; }
 
@@ -64,7 +66,8 @@ namespace RPGCharacterAnims.Actions
 					controller.hasLeftWeapon,
 					controller.hasRightWeapon,
 					controller.hasDualWeapons,
-					controller.hasTwoHandedWeapon
+					controller.hasTwoHandedWeapon, 
+					duration
 				);
 				EndAction(controller);
 			}
@@ -74,7 +77,7 @@ namespace RPGCharacterAnims.Actions
 			}
 			else if (context.type == "Attack") {
 				controller.Attack(
-					attackNumber,
+					
 					attackSide,
 					controller.leftWeapon,
 					controller.rightWeapon,
@@ -88,6 +91,7 @@ namespace RPGCharacterAnims.Actions
 			}
 		}
 
+		
 		protected override void _EndAction(RPGCharacterController controller)
 		{
 			if (controller.isSpecial) {

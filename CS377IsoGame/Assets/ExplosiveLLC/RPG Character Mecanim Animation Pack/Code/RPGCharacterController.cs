@@ -401,6 +401,9 @@ namespace RPGCharacterAnims
 		/// </summary>
 		public bool hasCastableWeapon => rightWeapon.IsCastableWeapon() && leftWeapon.IsCastableWeapon();
 
+		public int comboIndex;
+		public bool resettingCombos;
+		
 		#endregion
 
 		private Dictionary<string, IActionHandler> actionHandlers = new Dictionary<string, IActionHandler>();
@@ -459,6 +462,7 @@ namespace RPGCharacterAnims
 			
             //weapon change test is here, don't forget to change that and put it somewhere else
             animator.SetWeapons(AnimatorWeapon.STAFF, -2, Weapon.Unarmed, Weapon.TwoHandStaff, Side.Right);
+            comboIndex = 0;
             
             Debug.Log("this is a reminder to find a better place to add weapon change");
             OnLockActions += LockHeadlook;
@@ -912,10 +916,36 @@ namespace RPGCharacterAnims
 			        StartCast(CastType.Buff2, Side.Left);
 			        break;
 			        
+	        } 
+	        
+	         
+        }
+        private void ControlCombos()
+        {
+	        if (resettingCombos)
+	        {
+				StopCoroutine("ResetCombos");
+				
 	        }
-	        
-	        
-	        
+	        if (comboIndex < 4)
+	        {
+		        comboIndex++;
+	        }
+	        else
+	        {
+		        comboIndex = 1;
+	        }
+
+	        StartCoroutine("ResetCombos");
+        }
+
+        private IEnumerator ResetCombos()
+        {
+	        resettingCombos = true;
+	        yield return new WaitForSeconds(2);
+
+	        comboIndex = 0;
+	        resettingCombos = false;
         }
 
         //ISC leads to RCC which leads to the handler which finally call RCC again
@@ -953,12 +983,13 @@ namespace RPGCharacterAnims
         /// <param name="leftWeapon">Left side weapon. See Weapon enum in AnimationData.cs.</param>
         /// <param name="rightWeapon">Right-hand weapon. See Weapon enum in AnimationData.cs.</param>
         /// <param name="duration">Duration in seconds that animation is locked.</param>
-        public void Attack(int attackNumber, Side attackSide, Weapon leftWeapon, Weapon rightWeapon, float duration)
+        public void Attack(Side attackSide, Weapon leftWeapon, Weapon rightWeapon, float duration)
         {
 	        animator.SetSide(attackSide);
 			_isAttacking = true;
+			ControlCombos();
             Lock(true, true, true, 0, duration);
-
+            int attackNumber = comboIndex;
 			// If shooting, use regular or hipshooting attack.
 			if (rightWeapon == Weapon.Rifle) {
 				if (attackSide == Side.None) {
@@ -982,15 +1013,19 @@ namespace RPGCharacterAnims
         /// <param name="rightWeapon">Whether to attack on the right side.</param>
         /// <param name="dualWeapon">Whether to attack on both sides.</param>
         /// <param name="twoHandedWeapon">If wielding a two-handed weapon.</param>
-        public void RunningAttack(Side side, bool leftWeapon, bool rightWeapon, bool dualWeapon, bool twoHandedWeapon)
+        public void RunningAttack(Side side, bool leftWeapon, bool rightWeapon, bool dualWeapon, bool twoHandedWeapon, float duration)
         {
+	        
+	        _isAttacking = true;
+	        
+	        Lock(false, true, true, 0, duration- 0.3f);
 	        Debug.Log("heya");
 			if (side == Side.Left && leftWeapon || twoHandedWeapon)
 			{ animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 1); }
 			else if (side == Side.Right && rightWeapon)
-			{ animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 4); }
+			{ animator.SetActionTrigger(AnimatorTrigger.AttackTrigger,1); }
 			else if (side == Side.Dual && dualWeapon)
-			{ animator.SetActionTrigger(AnimatorTrigger.AttackDualTrigger, 1); }
+			{ animator.SetActionTrigger(AnimatorTrigger.AttackDualTrigger, 4); }
 			else if (hasNoWeapon) {
 				Debug.Log(side);
 				animator.SetSide(side);
