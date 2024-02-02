@@ -472,6 +472,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7336443153004887908, guid: d3b293530a5a04d418bfc051b391d786, type: 3}
+      propertyPath: ShapeModule.arc.mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7336443153004887908, guid: d3b293530a5a04d418bfc051b391d786, type: 3}
       propertyPath: ShapeModule.m_Scale.x
       value: 1
       objectReference: {fileID: 0}
@@ -532,11 +536,23 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7336443153004887908, guid: d3b293530a5a04d418bfc051b391d786, type: 3}
+      propertyPath: InheritVelocityModule.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7336443153004887908, guid: d3b293530a5a04d418bfc051b391d786, type: 3}
       propertyPath: ShapeModule.alignToDirection
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7336443153004887908, guid: d3b293530a5a04d418bfc051b391d786, type: 3}
+      propertyPath: TrailModule.dieWithParticles
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7336443153004887908, guid: d3b293530a5a04d418bfc051b391d786, type: 3}
       propertyPath: TrailModule.sizeAffectsWidth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7336443153004887908, guid: d3b293530a5a04d418bfc051b391d786, type: 3}
+      propertyPath: InheritVelocityModule.enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7336443153004887908, guid: d3b293530a5a04d418bfc051b391d786, type: 3}
