@@ -99,6 +99,7 @@ namespace RPGCharacterAnims
 
 			if (!rpgCharacterController.IsActive("Relax")) {
 				Strafing();
+				UsingSKill();
 				Facing();
 				Aiming();
 				Rolling();
@@ -307,6 +308,8 @@ namespace RPGCharacterAnims
 				//Debug.Log("you are testing the facing for the skill");
 				//same logic from the facing function to get mouse position and convert to world position
 				//also keep in mind that this is a good way to get screen coordinates on a surface the player stand on
+
+				inputFace = true;
 				Plane playerPlane = new Plane(Vector3.up, transform.position);
 				Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 				RaycastHit hitInfo;
