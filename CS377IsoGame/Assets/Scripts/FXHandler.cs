@@ -19,22 +19,30 @@ namespace RPGCharacterAnims.Actions
 
         private UnityAction<EventTypes.Event1Param> InitializeFXListener;
         private UnityAction<EventTypes.Event2Param> ContinousFXListener;
+        private UnityAction<EventTypes.Event8Param> VariableFXListener;
+        
 
         #endregion
         
         #region Fields
 
-        
+        public int coreChargeParticleLevel;
 
         #endregion
 
-        #region FXInstances
+        #region FXIPrefabs
 
         public GameObject ArtilleryStrikePrefab;
         public GameObject ElectricityPrefab1;
         public GameObject ElectricityPrefab2;
+        public GameObject ElectricityPrefab3;
         
-        
+        #endregion
+
+        #region FXInstances
+
+        public GameObject coreChargeParticles;
+
         #endregion
 
         // Start is called before the first frame update
@@ -61,11 +69,13 @@ namespace RPGCharacterAnims.Actions
             ContinousFXListener += InitializeElectricityFX;
             EventBus.StartListening(EventTypes.Events.ON_CONTINOUS_PACRTICLE_FX_TRIGGER,
                 ContinousFXListener);
+            VariableFXListener += UpdateCoreChargeFX;
+            EventBus.StartListening(EventTypes.Events.ON_UPDATE_CORE_CHARGE_PARTICLES, VariableFXListener);
         }
 
         private void OnDisable()
         {
-           EventBus.StopListening(EventTypes.Events.ON_PARTICLE_FX_TRIGGER, InitializeFXListener);
+           EventBus.StopListeningAll<EventTypes.Events>();
         }
         // PH is for placeholder
         private void SetFlags(string color, Vector3 pos, FXList.FXlist effect, float duration)
@@ -73,6 +83,64 @@ namespace RPGCharacterAnims.Actions
 
         }
 
+        private void UpdateCoreChargeFX(EventTypes.Event8Param context)
+        {
+            var particlesToEdit = coreChargeParticles.GetComponent<ParticleSystem>().limitVelocityOverLifetime;
+            var particlesToEdit2 = coreChargeParticles.GetComponent<ParticleSystem>().velocityOverLifetime;
+            var particlesToEdit3 = coreChargeParticles.GetComponent<ParticleSystem>().main;
+            if (context.coreCharge == 0)
+            {
+                particlesToEdit.dragMultiplier = 5;
+                coreChargeParticleLevel = 0;
+            }
+            else if (context.coreCharge <= 10)
+            {
+                particlesToEdit.dragMultiplier = 1.4f;
+                coreChargeParticleLevel = 1;
+            }
+            else if (context.coreCharge <= 20)
+            {
+                particlesToEdit.dragMultiplier = 1.2f;
+                particlesToEdit2.orbitalXMultiplier = 3;
+                particlesToEdit2.orbitalYMultiplier = 3;
+                particlesToEdit2.orbitalZMultiplier = 3;
+                particlesToEdit3.startLifetimeMultiplier = 1.2f;
+                particlesToEdit3.simulationSpeed = 1.3f;
+                coreChargeParticleLevel = 2;
+            }
+            else if (context.coreCharge <= 30)
+            {
+                particlesToEdit.dragMultiplier = 1;
+                particlesToEdit2.orbitalXMultiplier = 5;
+                particlesToEdit2.orbitalYMultiplier = 5;
+                particlesToEdit2.orbitalZMultiplier = 5;
+                particlesToEdit3.startLifetimeMultiplier = 1.4f;
+                particlesToEdit3.simulationSpeed = 1.5f;
+                coreChargeParticleLevel = 3;
+                
+            }
+            else if (context.coreCharge <= 40)
+            {
+                particlesToEdit.dragMultiplier = 0.9f;
+                particlesToEdit2.orbitalXMultiplier = 8;
+                particlesToEdit2.orbitalYMultiplier = 8;
+                particlesToEdit2.orbitalZMultiplier = 8;
+                particlesToEdit3.startLifetimeMultiplier = 1.6f;
+                particlesToEdit3.simulationSpeed = 1.8f;
+                coreChargeParticleLevel = 4;
+            }
+            else
+            {
+                particlesToEdit.dragMultiplier = 0.8f;
+                particlesToEdit2.orbitalXMultiplier = 10;
+                particlesToEdit2.orbitalYMultiplier = 10;
+                particlesToEdit2.orbitalZMultiplier = 10;
+                particlesToEdit3.startLifetimeMultiplier = 2;
+                particlesToEdit3.simulationSpeed = 2;
+                coreChargeParticleLevel = 5;
+            }
+            
+        }
         private void InitializeArtilleryStrikeFX(EventTypes.Event1Param context)
         {
             
@@ -84,7 +152,7 @@ namespace RPGCharacterAnims.Actions
                     StartCoroutine(DelayedStart(context.color, context.position, context.delay, context.duration, ArtilleryStrikePrefab));
                     
                     break;
-                case FXList.FXlist.Electricity:
+                case FXList.FXlist.Electricity1:
                     break;
                 //var ActualElectricity = Instantiate(ElectricityPrefab, pos, quaternion.identity);
             }       

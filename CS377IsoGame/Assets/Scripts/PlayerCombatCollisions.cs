@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerCombatCollisions : MonoBehaviour
 {
 
-    public MeshCollider weaponCollider;
+    public CapsuleCollider weaponCollider;
 
     private RPGCharacterController controller;
 
@@ -25,7 +25,7 @@ public class PlayerCombatCollisions : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("I got called");
+        
         Collider myCollider = collision.GetContact(0).thisCollider;
         int attackNumber = controller.comboIndex;
         if (controller.isAttacking && myCollider == weaponCollider)

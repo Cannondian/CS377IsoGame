@@ -7,7 +7,10 @@ public class FXList
     public enum FXlist
     {
         ArtilleryStrike,
-        Electricity
+        Electricity1,
+        Electricity2,
+        Electricity3
+        
         
         
     }

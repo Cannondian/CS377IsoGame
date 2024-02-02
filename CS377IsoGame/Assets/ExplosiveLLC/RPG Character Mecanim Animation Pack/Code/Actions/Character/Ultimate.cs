@@ -52,7 +52,7 @@ namespace RPGCharacterAnims.Actions
                 case CustomTerrain.Terrains.Grass:
 
                     EventBus.TriggerEvent(EventTypes.Events.ON_CONTINOUS_PACRTICLE_FX_TRIGGER, 
-                        new EventTypes.Event2Param(Color.green, playerTransform, FXList.FXlist.Electricity, 5, 0.3f));
+                        new EventTypes.Event2Param(Color.green, playerTransform, FXList.FXlist.Electricity1, 5, 0.3f));
                     controller.Ultimate(
                         Characters.Jisa,
                         0.1f);

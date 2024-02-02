@@ -1021,7 +1021,7 @@ namespace RPGCharacterAnims
 		        }
 		        else
 		        {
-			        int currentELC = ExpendableLifeCurrentManager.Instance.ELCState;
+			        int currentELC = CoreChargeManager.Instance.coreChargeState;
 			        animator.SetSide(attackSide);
 			        _isAttacking = true;
 			        ControlCombos();
@@ -1064,21 +1064,42 @@ namespace RPGCharacterAnims
 	        public void RunningAttack(Side side, bool leftWeapon, bool rightWeapon, bool dualWeapon, bool twoHandedWeapon, float duration)
 	        {
 		        
-		        _isAttacking = true;
-		        
-		        Lock(false, true, true, 0, duration- 0.3f);
-		        Debug.Log("heya");
-				if (side == Side.Left && leftWeapon || twoHandedWeapon)
-				{ animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 1); }
-				else if (side == Side.Right && rightWeapon)
-				{ animator.SetActionTrigger(AnimatorTrigger.AttackTrigger,1); }
-				else if (side == Side.Dual && dualWeapon)
-				{ animator.SetActionTrigger(AnimatorTrigger.AttackDualTrigger, 4); }
-				else if (hasNoWeapon) {
-					Debug.Log(side);
-					animator.SetSide(side);
-					animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 1);
-				}
+		        if (enhancedAttackIsReady)
+		        {
+			        Lock(false, true, true, 0, duration);
+			        comboIndex = 4;
+			        animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, comboIndex);
+			        _isAttacking = true;
+			        EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK, true);
+			        Debug.Log("ready!!");
+			        
+		        }
+		        else
+		        {
+
+			        _isAttacking = true;
+			        int currentELC = CoreChargeManager.Instance.coreChargeState;
+			        Lock(false, true, true, 0, duration - 0.1f - currentELC * 0.008f);
+			        Debug.Log("heya");
+			        if (side == Side.Left && leftWeapon || twoHandedWeapon)
+			        {
+				        animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 1);
+			        }
+			        else if (side == Side.Right && rightWeapon)
+			        {
+				        animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 1);
+			        }
+			        else if (side == Side.Dual && dualWeapon)
+			        {
+				        animator.SetActionTrigger(AnimatorTrigger.AttackDualTrigger, 4);
+			        }
+			        else if (hasNoWeapon)
+			        {
+				        Debug.Log(side);
+				        animator.SetSide(side);
+				        animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 1);
+			        }
+		        }
 	        }
 
 	        /// <summary>
