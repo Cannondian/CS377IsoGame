@@ -17,11 +17,13 @@ public abstract class EnemyAI : MonoBehaviour
     // States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
+    public bool stunned;
 
     protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
+        stunned = false;
     }
 
     public void TakeDamage(float amount)
@@ -45,9 +47,17 @@ public abstract class EnemyAI : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInSightRange && playerInAttackRange) AttackPlayer();
+        if (!stunned)
+        {
+            agent.isStopped = false;
+            if (!playerInSightRange && !playerInAttackRange) Patroling();
+            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+            if (playerInSightRange && playerInAttackRange) AttackPlayer();
+        }
+        else
+        {
+            agent.isStopped = true;
+        }
 
     }
 

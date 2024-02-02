@@ -10,9 +10,9 @@ namespace RPGCharacterAnims.Actions
 
 		public override bool CanStartAction(RPGCharacterController controller)
 		{
-			Debug.Log(controller.isRelaxed);
-			Debug.Log(active);
-			Debug.Log(controller.isCasting);
+			//Debug.Log(controller.isRelaxed);
+			//Debug.Log(active);
+			//Debug.Log(controller.isCasting);
 			return !controller.isRelaxed && !active && !controller.isCasting && controller.canAction; }
 
 		public override bool CanEndAction(RPGCharacterController controller)

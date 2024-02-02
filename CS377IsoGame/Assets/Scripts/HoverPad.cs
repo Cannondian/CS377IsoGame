@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Tank hover pad mechanic not currently being used
+/*
 public class HoverPad : MonoBehaviour
 {
     private Rigidbody HoverPadRigidbody;
@@ -28,3 +30,4 @@ public class HoverPad : MonoBehaviour
         HoverPadRigidbody.AddForce(UpwardThrust, ForceMode.Force);
     }
 }
+*/

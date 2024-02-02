@@ -389,7 +389,6 @@ GameObject:
   - component: {fileID: 3462470379391367342}
   - component: {fileID: 1109102610292306575}
   - component: {fileID: 8676653448032864188}
-  - component: {fileID: 4356375748120712098}
   - component: {fileID: 6616552271364918493}
   - component: {fileID: 524918226547843216}
   m_Layer: 0
@@ -493,33 +492,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43299669584678830, guid: 5e52bc9bebe4e5641b8cd44b0e5ba354, type: 2}
---- !u!54 &4356375748120712098
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3970376611852105374}
-  serializedVersion: 4
-  m_Mass: 10000
-  m_Drag: 0.75
-  m_AngularDrag: 0.75
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 42
-  m_CollisionDetection: 0
 --- !u!114 &6616552271364918493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,17 +517,16 @@ MonoBehaviour:
   attackRange: 10
   playerInSightRange: 0
   playerInAttackRange: 0
+  stunned: 0
   TurretTransform: {fileID: 315008170596973564}
   BarrelTransform: {fileID: 5299010704426474370}
   TankMissilePrefab: {fileID: 8185435972388194219, guid: 50e5a052a853e4685a9554984e5d7c80, type: 3}
-  TankRestHeight: 1.5
-  TankControlFactor: 3
-  TurnRate: 5
+  TurnRate: 10
   MinBarrelAngle: -7
   TankMissileLaunchOffset: 5
   TankMissileSpeed: 30
   TankMissileFireDelay: 3
-  BarrelShootingAngleRange: 15
+  BarrelShootingAngleRange: 10
   attackLineRenderer: {fileID: 4795621559244799915}
   lineDisplayTime: 0.5
 --- !u!195 &524918226547843216
