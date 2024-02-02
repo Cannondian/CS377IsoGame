@@ -9,7 +9,10 @@ public class EventTypes
       ON_PARTICLE_FX_TRIGGER,
       ON_CONTINOUS_PACRTICLE_FX_TRIGGER,
       ON_ENERGY_GAIN,
-      ON_ULTIMATE_READY
+      ON_ULTIMATE_READY,
+      ON_LIFE_CURRENT_GAIN,
+      ON_JISA_ENHANCED_ATTACK_READY,
+      ON_JISA_ENHANCED_ATTACK
    }
 
    public class Event1Param
@@ -45,5 +48,17 @@ public class EventTypes
            duration = p4;
            delay = p5;
        }
+   }
+
+   public class Event5Param
+   {
+      public float multiplier;
+      public int attackNumber;
+
+      public Event5Param(int actionNumber, float buffs)
+      {
+         multiplier = buffs;
+         attackNumber = actionNumber;
+      }
    }
 }
