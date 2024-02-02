@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretController : MonoBehaviour
+public class GrenadierTurretController : MonoBehaviour
 {
 
     [SerializeField] Transform Arm1Transform;
@@ -104,6 +104,7 @@ public class TurretController : MonoBehaviour
 
     void LockBarrelsToLocal()
     {
+        // Lock barrels to only move along local z axis
         Barrel1Transform.localPosition = new Vector3(Barrel1InitPosn.x, Barrel1InitPosn.y, Barrel1Transform.localPosition.z);
         Barrel2Transform.localPosition = new Vector3(Barrel2InitPosn.x, Barrel2InitPosn.y, Barrel2Transform.localPosition.z);
     }

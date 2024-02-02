@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tank01Controller : EnemyAI
+public class SmallTankController : EnemyAI
 {
     [SerializeField] Transform TurretTransform;
     [SerializeField] Transform BarrelTransform;
@@ -44,7 +44,7 @@ public class Tank01Controller : EnemyAI
     protected override void AttackPlayer()
     {
         // stop before attacking
-        agent.SetDestination(transform.position);
+        agent.SetDestination(transform.position); // this may be redundant now with stunned implementation
 
         if (!isFiring) { AimTurret(); }
         MaybeFire();

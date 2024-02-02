@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretMissile : MonoBehaviour
+public class GrenadierMissile : MonoBehaviour
 {
     private Rigidbody rb;
     private MeshCollider col1;

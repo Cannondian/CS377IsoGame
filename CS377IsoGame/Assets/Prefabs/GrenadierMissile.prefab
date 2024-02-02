@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 5611567064232868963}
   - component: {fileID: 1899620674736109251}
   m_Layer: 0
-  m_Name: TurretMissile
+  m_Name: GrenadierMissile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
