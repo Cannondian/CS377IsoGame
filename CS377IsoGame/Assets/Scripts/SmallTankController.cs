@@ -41,10 +41,16 @@ public class SmallTankController : EnemyAI
         AttackDamage = 30f; 
     }
 
+    protected override void ChasePlayer()
+    {
+        base.ChasePlayer();
+        AimTurret();
+    }
+
     protected override void AttackPlayer()
     {
         // stop before attacking
-        agent.SetDestination(transform.position); // this may be redundant now with stunned implementation
+        agent.SetDestination(transform.position);
 
         if (!isFiring) { AimTurret(); }
         MaybeFire();

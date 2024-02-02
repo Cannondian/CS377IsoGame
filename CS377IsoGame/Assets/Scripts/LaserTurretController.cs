@@ -12,7 +12,6 @@ public class LaserTurretController : EnemyAI
     public float SpinUpTime; // Turret barrel rotation speeds up for this time before firing.
     public float MaxSpinRate; // Max spin rate in degrees/update
     public float MinFireSpinRate; // Min spin rate required to start firing as a proportion of MaxSpinRate [0,1] 
-    public float MaxLaserDistance; // Maximum extent of laser
     public float MaxFireTime; // Max time before laser turns off
     public float CooldownTime;
 
@@ -34,6 +33,7 @@ public class LaserTurretController : EnemyAI
 
     protected override void ChasePlayer()
     {
+        base.ChasePlayer();
         AimTurret();
     }
 
@@ -111,7 +111,7 @@ public class LaserTurretController : EnemyAI
             if (Laser != null)
             {
                 Laser.SetPosition(0, BarrelTransform.position);
-                Laser.SetPosition(1, BarrelTransform.position + BarrelTransform.forward * MaxLaserDistance);
+                Laser.SetPosition(1, BarrelTransform.position + BarrelTransform.forward * attackRange);
                 Laser.enabled = true;
             }
         }
