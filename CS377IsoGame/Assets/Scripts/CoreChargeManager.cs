@@ -5,6 +5,8 @@ using RPGCharacterAnims;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
+
 
 //reminder that the name for this resource will be changed to "Core Charge"
 
@@ -23,10 +25,11 @@ using UnityEngine.Events;
         private float countdownToDrain;
         private UnityAction<EventTypes.Event5Param> UpdateCoreChargeListener;
         private UnityAction<bool> CoreChargeAttackListener;
-
+        public Slider coreChargeSlider;
         // Start is called before the first frame update
         void Start()
         {
+            
             coreChargeState = 0;
             coreChargeDrain = 2;
             previousUpdateSentAt = 0;
@@ -38,6 +41,7 @@ using UnityEngine.Events;
         // Update is called once per frame
         void Update()
         {
+            coreChargeSlider.value = coreChargeState;
             if (!atBaseValue)
             {
                 if (countdownToDrain == drainThresholdTime)
@@ -133,6 +137,7 @@ using UnityEngine.Events;
                 countdownToDrain = drainThresholdTime;
                 coreChargeDrain = 2;
                 EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK_READY, false);
+                UpdateCoreChargeParticles();
             }
         }
 
