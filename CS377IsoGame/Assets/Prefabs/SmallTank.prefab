@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7105639984879151435}
   - component: {fileID: 8644748029823469395}
   - component: {fileID: 184966310073340425}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_HoverTank_01_HoverPad_rl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5509091527611822814}
   - component: {fileID: 2116676518285113881}
   - component: {fileID: 4980575224390301944}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_HoverTank_01_HoverPad_mr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 370941421195654714}
   - component: {fileID: 5483304147074243535}
   - component: {fileID: 4795621559244799915}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_HoverTank_01_Barrell_01 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 6616552271364918493}
   - component: {fileID: 524918226547843216}
   - component: {fileID: -8734818892270498078}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SmallTank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -594,7 +594,7 @@ GameObject:
   - component: {fileID: 8431207482017019663}
   - component: {fileID: 1081711486014009790}
   - component: {fileID: 8214178650543692745}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_HoverTank_01_Turret_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -723,7 +723,7 @@ GameObject:
   - component: {fileID: 851449253040739039}
   - component: {fileID: 7853389593629234693}
   - component: {fileID: 9222563539295228070}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_HoverTank_01_HoverPad_fl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -806,7 +806,7 @@ GameObject:
   - component: {fileID: 6475752288331268626}
   - component: {fileID: 6240464054149354487}
   - component: {fileID: 5129007757239682948}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_HoverTank_01_Hatch_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -889,7 +889,7 @@ GameObject:
   - component: {fileID: 8398887538122842744}
   - component: {fileID: 8421624665355580098}
   - component: {fileID: 8115099911295355798}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_HoverTank_01_HoverPad_ml
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -973,7 +973,7 @@ GameObject:
   - component: {fileID: 5276503539816650292}
   - component: {fileID: 7900217342289296109}
   - component: {fileID: 5329775891160901779}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_HoverTank_01_Barrell_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1079,7 +1079,7 @@ GameObject:
   - component: {fileID: 4018228462495143505}
   - component: {fileID: 7504427940986242650}
   - component: {fileID: 7674999493930996223}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_HoverTank_01_HoverPad_fr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1162,7 +1162,7 @@ GameObject:
   - component: {fileID: 1312757270885261258}
   - component: {fileID: 8017216026354627866}
   - component: {fileID: 1637834748398423060}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_HoverTank_01_HoverPad_rr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1245,6 +1245,10 @@ PrefabInstance:
     - target: {fileID: 1925684596469524, guid: f3d42f2f939bf9246bb8f56d42cec38c, type: 3}
       propertyPath: m_Name
       value: Attack_Indicator
+      objectReference: {fileID: 0}
+    - target: {fileID: 1925684596469524, guid: f3d42f2f939bf9246bb8f56d42cec38c, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4203172183805426, guid: f3d42f2f939bf9246bb8f56d42cec38c, type: 3}
       propertyPath: m_LocalScale.x

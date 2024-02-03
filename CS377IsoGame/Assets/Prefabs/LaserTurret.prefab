@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 403444081333781352}
   - component: {fileID: 8117580006312408090}
   - component: {fileID: 7068856391587154109}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_Turret_Medium_01_Barrell_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 5369784538034734330}
   - component: {fileID: 1483341563834832669}
   - component: {fileID: 7595890966343275931}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: LaserTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,7 +418,7 @@ GameObject:
   - component: {fileID: 5117321181603828792}
   - component: {fileID: 5868952311846023065}
   - component: {fileID: 3687961633604510233}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_Turret_Medium_01_Gun_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7565711870208773343}
   - component: {fileID: 9060675622356973477}
   - component: {fileID: 2888543985379708560}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_Turret_Large_01_TurrerArm_l_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 716967003357260130}
   - component: {fileID: 4742413781391891540}
   - component: {fileID: 5849150757863103065}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_Turret_Large_01_Barrel_l_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 2563891599227225720}
   - component: {fileID: 1178588604048017271}
   - component: {fileID: 8944939093065771106}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_Turret_Large_01_Barrel_r_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 284016193042296220}
   - component: {fileID: 7938294097401743929}
   - component: {fileID: 5816457489146813618}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Veh_Turret_Large_01_TurrerArm_r_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -602,7 +602,7 @@ GameObject:
   - component: {fileID: 6799839855121957263}
   - component: {fileID: 5332739617988067744}
   - component: {fileID: 7027102486980391774}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: GrenadierTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
