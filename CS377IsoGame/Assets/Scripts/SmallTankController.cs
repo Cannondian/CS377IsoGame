@@ -7,6 +7,7 @@ public class SmallTankController : EnemyAI
     [SerializeField] Transform TurretTransform;
     [SerializeField] Transform BarrelTransform;
     [SerializeField] GameObject TankMissilePrefab;
+    [SerializeField] private GameObject attackIndicator;
 
     /// Tank hover controls no longer being used for this enemy
     //public float TankRestHeight = 1.5f;          // target height position for tank
@@ -35,6 +36,7 @@ public class SmallTankController : EnemyAI
         base.Awake();
         //TankRigidbody = GetComponent<Rigidbody>();
         TankMissileLastFireTime = Time.time;
+        attackIndicator.SetActive(false);
 
         // Initialize tank-specific properties
         Health = 200f;
@@ -71,7 +73,9 @@ public class SmallTankController : EnemyAI
         // Determine the up/down angle to the player from the current *turret* orientation
         float barrelAngle = Vector3.SignedAngle(TurretTransform.rotation * Vector3.forward, toPlayer, TurretTransform.rotation * Vector3.right);
         // Limit bottom angle of barrel (note down for this model's barrel is positive, hence the sign flips!)
-        if (-barrelAngle < MinBarrelAngle) { barrelAngle = -MinBarrelAngle; }
+        if (-barrelAngle < MinBarrelAngle) {
+            barrelAngle = -MinBarrelAngle;
+        }
         CurrentBarrelAngles = Quaternion.Slerp(BarrelTransform.localRotation, Quaternion.Euler(barrelAngle, 0f, 0f), TurnRate * Time.deltaTime);
         BarrelTransform.localRotation = CurrentBarrelAngles;
     }
@@ -79,10 +83,13 @@ public class SmallTankController : EnemyAI
     void MaybeFire()
     {
         Vector3 playerPosn = player.position;
-        Vector3 toPlayer = playerPosn - BarrelTransform.position; // vector from barrel to player
+        Vector3 toPlayerFlat = new Vector3(playerPosn.x, TurretTransform.position.y, playerPosn.z) - TurretTransform.position; // Flat vector from turret to player
 
         // Determine the left/right angle to the player from current turret orientation
-        float turretAngle = Mathf.Abs(Vector3.SignedAngle(BarrelTransform.rotation * Vector3.forward, toPlayer, BarrelTransform.rotation * Vector3.up));
+        float turretAngle = Mathf.Abs(Vector3.SignedAngle(TurretTransform.forward, toPlayerFlat, Vector3.up));
+
+        // Debug log to check the calculated angle
+        // Debug.Log("Turret Angle to Player: " + turretAngle);
 
         if (turretAngle < BarrelShootingAngleRange && Time.time - TankMissileLastFireTime > TankMissileFireDelay && !isFiring)
         {
@@ -95,14 +102,20 @@ public class SmallTankController : EnemyAI
         isFiring = true;
         stunned = true; // tank cannot move during firing sequence
 
-        // Show the attack line
-        ShowAttackLine();
+        // Show the attack indicator
+        if (attackIndicator != null)
+        {
+            attackIndicator.SetActive(true);
+        }
 
         // Wait for the specified delay time
         yield return new WaitForSeconds(lineDisplayTime);
 
-        // Hide the attack line
-        HideAttackLine();
+        // Show the attack indicator
+        if (attackIndicator != null)
+        {
+            attackIndicator.SetActive(false);
+        }
 
         // Create missile instance
         var Missile = Instantiate(
@@ -112,7 +125,8 @@ public class SmallTankController : EnemyAI
 
         // Set missile velocity
         var MissileRB = Missile.GetComponent<Rigidbody>();
-        MissileRB.velocity = BarrelTransform.forward * TankMissileSpeed;
+        Vector3 horizontalVelocity = new Vector3(BarrelTransform.forward.x, 0f, BarrelTransform.forward.z).normalized * TankMissileSpeed;
+        MissileRB.velocity = horizontalVelocity;
 
         TankMissileLastFireTime = Time.time;
 

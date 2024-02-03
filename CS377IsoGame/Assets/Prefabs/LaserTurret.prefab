@@ -225,6 +225,7 @@ GameObject:
   - component: {fileID: 4315804247085353010}
   - component: {fileID: 5369784538034734330}
   - component: {fileID: 1483341563834832669}
+  - component: {fileID: 7595890966343275931}
   m_Layer: 0
   m_Name: LaserTurret
   m_TagString: Untagged
@@ -338,7 +339,7 @@ MonoBehaviour:
     m_Bits: 2048
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8256
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 0
   sightRange: 30
@@ -353,7 +354,6 @@ MonoBehaviour:
   SpinUpTime: 1
   MaxSpinRate: 20
   MinFireSpinRate: 0.5
-  MaxLaserDistance: 20
   MaxFireTime: 3
   CooldownTime: 5
   Laser: {fileID: 7068856391587154109}
@@ -379,6 +379,33 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!54 &7595890966343275931
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5189145857469810394}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7145631521545139212
 GameObject:
   m_ObjectHideFlags: 0
