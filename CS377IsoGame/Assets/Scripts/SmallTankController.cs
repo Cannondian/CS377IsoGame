@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SmallTankController : EnemyAI
 {
@@ -26,6 +27,7 @@ public class SmallTankController : EnemyAI
     private Quaternion CurrentTurretAngles;
     private Quaternion CurrentBarrelAngles;
 
+    // Attack indicator fields
     [SerializeField] private LineRenderer attackLineRenderer;
     [SerializeField] private float attackIndicatorDisplayTime = 1f;
 
@@ -142,6 +144,11 @@ public class SmallTankController : EnemyAI
         // Wait for the remainder of the fire delay
         //yield return new WaitForSeconds(TankMissileFireDelay - lineDisplayTime);
         
+    }
+
+    protected override void UpdateCanvas()
+    {
+        healthBar.value = Health;
     }
 
     // No longer used, displayed line to player position

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public abstract class EnemyAI : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public abstract class EnemyAI : MonoBehaviour
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
     public bool stunned;
+
+    // UI elements
+    public Slider healthBar;
 
     protected virtual void Awake()
     {
@@ -59,6 +63,8 @@ public abstract class EnemyAI : MonoBehaviour
             agent.isStopped = true;
         }
 
+        UpdateCanvas();
+
     }
 
 
@@ -95,6 +101,8 @@ public abstract class EnemyAI : MonoBehaviour
     }
 
     protected abstract void AttackPlayer();
+
+    protected abstract void UpdateCanvas();
 
     protected void OnDrawGizmosSelected()
     {
