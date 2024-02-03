@@ -16,7 +16,7 @@ public class SmallTankController : EnemyAI
     public float TurnRate = 1f;                  // modifier for turret and barrel quaternion slerp
     public float MinBarrelAngle = -7f;           // lowest angle tank barrel can be at
 
-    public float TankMissileLaunchOffset = 5f;   // distance missile is launched from the front of the barrel (in local coords)
+    public float TankMissileLaunchOffset = 2f;   // distance missile is launched from the front of the barrel (in local coords)
     public float TankMissileSpeed = 25f;         // launch speed of missile
     public float TankMissileFireDelay = 3f;      // minimum time between missile fire
     public float BarrelShootingAngleRange = 15f; // Tank shoots iff barrel is within X deg off vector to character posn
@@ -27,7 +27,7 @@ public class SmallTankController : EnemyAI
     private Quaternion CurrentBarrelAngles;
 
     [SerializeField] private LineRenderer attackLineRenderer;
-    [SerializeField] private float lineDisplayTime = 1f;
+    [SerializeField] private float attackIndicatorDisplayTime = 1f;
 
     private bool isFiring = false;
 
@@ -109,7 +109,7 @@ public class SmallTankController : EnemyAI
         }
 
         // Wait for the specified delay time
-        yield return new WaitForSeconds(lineDisplayTime);
+        yield return new WaitForSeconds(attackIndicatorDisplayTime);
 
         // Show the attack indicator
         if (attackIndicator != null)
@@ -147,20 +147,21 @@ public class SmallTankController : EnemyAI
         
     }
 
-    private void ShowAttackLine()
-    {
-        if (attackLineRenderer != null)
-        {
-            Vector3 startPosn = BarrelTransform.position + BarrelTransform.forward * 1f;
-            float distToPlayer = (player.position - startPosn).magnitude;
-            attackLineRenderer.SetPosition(0, BarrelTransform.position + BarrelTransform.forward * 1f);
-            attackLineRenderer.SetPosition(1, BarrelTransform.position + BarrelTransform.forward * distToPlayer);
+    // No longer used, displayed line to player position
+    //private void ShowAttackLine()
+    //{
+    //    if (attackLineRenderer != null)
+    //    {
+    //        Vector3 startPosn = BarrelTransform.position + BarrelTransform.forward * 1f;
+    //        float distToPlayer = (player.position - startPosn).magnitude;
+    //        attackLineRenderer.SetPosition(0, BarrelTransform.position + BarrelTransform.forward * 1f);
+    //        attackLineRenderer.SetPosition(1, BarrelTransform.position + BarrelTransform.forward * distToPlayer);
 
-            attackLineRenderer.enabled = true;
+    //        attackLineRenderer.enabled = true;
 
-            Invoke("HideAttackLine", lineDisplayTime);
-        }
-    }
+    //        Invoke("HideAttackLine", attackIndicatorDisplayTime);
+    //    }
+    //}
 
     private void HideAttackLine()
     {

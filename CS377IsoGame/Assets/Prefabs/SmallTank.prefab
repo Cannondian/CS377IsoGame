@@ -526,12 +526,12 @@ MonoBehaviour:
   attackIndicator: {fileID: 2570928028950377440}
   TurnRate: 10
   MinBarrelAngle: -7
-  TankMissileLaunchOffset: 5
+  TankMissileLaunchOffset: 2
   TankMissileSpeed: 30
-  TankMissileFireDelay: 3
+  TankMissileFireDelay: 2
   BarrelShootingAngleRange: 10
   attackLineRenderer: {fileID: 4795621559244799915}
-  lineDisplayTime: 0.5
+  attackIndicatorDisplayTime: 1
 --- !u!195 &524918226547843216
 NavMeshAgent:
   m_ObjectHideFlags: 0
