@@ -59,10 +59,10 @@ public class LaserTurretController : EnemyAI
     void MaybeFire()
     {
         Vector3 playerPosn = player.position;
-        Vector3 toPlayer = playerPosn - BarrelTransform.position; // vector from barrel to player
+        Vector3 toPlayerFlat = new Vector3(playerPosn.x, TurretTransform.position.y, playerPosn.z) - TurretTransform.position; // Flat vector from turret to player
 
         // Determine the left/right angle to the player from current turret orientation
-        float turretAngle = Mathf.Abs(Vector3.SignedAngle(BarrelTransform.rotation * Vector3.forward, toPlayer, BarrelTransform.rotation * Vector3.up));
+        float turretAngle = Mathf.Abs(Vector3.SignedAngle(BarrelTransform.forward, toPlayerFlat, Vector3.up));
 
         if (!InCooldown)
         {

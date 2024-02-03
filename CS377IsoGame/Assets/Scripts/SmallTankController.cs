@@ -88,9 +88,6 @@ public class SmallTankController : EnemyAI
         // Determine the left/right angle to the player from current turret orientation
         float turretAngle = Mathf.Abs(Vector3.SignedAngle(TurretTransform.forward, toPlayerFlat, Vector3.up));
 
-        // Debug log to check the calculated angle
-        // Debug.Log("Turret Angle to Player: " + turretAngle);
-
         if (turretAngle < BarrelShootingAngleRange && Time.time - TankMissileLastFireTime > TankMissileFireDelay && !isFiring)
         {
             StartCoroutine(FireSequence());
@@ -163,11 +160,11 @@ public class SmallTankController : EnemyAI
     //    }
     //}
 
-    private void HideAttackLine()
-    {
-        if (attackLineRenderer != null)
-        {
-            attackLineRenderer.enabled = false;
-        }
-    }
+    //private void HideAttackLine()
+    //{
+    //    if (attackLineRenderer != null)
+    //    {
+    //        attackLineRenderer.enabled = false;
+    //    }
+    //}
 }
