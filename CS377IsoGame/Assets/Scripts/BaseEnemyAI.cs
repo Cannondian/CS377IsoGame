@@ -61,4 +61,9 @@ public class BaseEnemyAI : EnemyAI
             enemyRenderer.material.color = color;
         }
     }
+
+    protected override void UpdateCanvas()
+    {
+        healthBar.value = Health;
+    }
 }

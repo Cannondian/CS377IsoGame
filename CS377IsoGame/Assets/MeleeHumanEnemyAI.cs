@@ -50,6 +50,8 @@ public class MeleeHumanEnemyAI : EnemyAI
         alreadyAttacked = false;
     }
 
+    
+
     // Method to change the color of the enemy
     private void ChangeColor(Color color)
     {
@@ -57,5 +59,10 @@ public class MeleeHumanEnemyAI : EnemyAI
         {
             enemyRenderer.material.color = color;
         }
+    }
+
+    protected override void UpdateCanvas()
+    {
+        healthBar.value = Health;
     }
 }

@@ -146,4 +146,9 @@ public class LaserTurretController : EnemyAI
             CurrentFireTime -= Time.deltaTime;
         }
     }
+
+    protected override void UpdateCanvas()
+    {
+        healthBar.value = Health;
+    }
 }
