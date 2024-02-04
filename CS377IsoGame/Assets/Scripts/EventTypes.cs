@@ -13,7 +13,9 @@ public class EventTypes
       ON_LIFE_CURRENT_GAIN,
       ON_JISA_ENHANCED_ATTACK_READY,
       ON_JISA_ENHANCED_ATTACK,
-      ON_UPDATE_CORE_CHARGE_PARTICLES
+      ON_UPDATE_CORE_CHARGE_PARTICLES,
+
+      ON_PLAYER_DAMAGE_TAKEN
    }
 
    public class Event1Param
@@ -50,6 +52,16 @@ public class EventTypes
            delay = p5;
        }
    }
+
+    public class Event3Param
+    {
+        public float damageToTake;
+
+        public Event3Param(float damage)
+        {
+            damageToTake = damage;
+        }
+    }
 
    public class Event5Param
    {

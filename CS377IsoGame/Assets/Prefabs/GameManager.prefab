@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1016025182632943439}
   - component: {fileID: 6339497940934831006}
   - component: {fileID: 2364655385078758518}
+  - component: {fileID: 2288766912282010190}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -51,7 +52,7 @@ MonoBehaviour:
   ArtilleryStrikePrefab: {fileID: 1352952055292810, guid: d8628f56ce986894a9be0c0fc92627bd, type: 3}
   ElectricityPrefab1: {fileID: 1251993928265596, guid: c445b201205907b4f90b242a07f4dbc9, type: 3}
   ElectricityPrefab2: {fileID: 1190131086089332, guid: a22bb852cf433044e8752ea7fe62f570, type: 3}
-  ElectricityPrefab3: {fileID: 0}
+  ElectricityPrefab3: {fileID: 7426929527967869844, guid: d3b293530a5a04d418bfc051b391d786, type: 3}
   coreChargeParticles: {fileID: 0}
 --- !u!114 &6339497940934831006
 MonoBehaviour:
@@ -79,3 +80,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistent: 1
+  coreChargeSlider: {fileID: 0}
+--- !u!114 &2288766912282010190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6587876314677731624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb7c8998e638154391d51a6e6c6a9c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _persistent: 1
+  currentHealth: 0
+  maxHealth: 100
