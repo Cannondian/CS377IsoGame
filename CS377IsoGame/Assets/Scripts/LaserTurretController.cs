@@ -6,16 +6,17 @@ public class LaserTurretController : EnemyAI
 {
     [SerializeField] Transform TurretTransform;
     [SerializeField] Transform BarrelTransform;
+    [SerializeField] CapsuleCollider LaserCollider;
+    [SerializeField] LineRenderer LaserRenderer;
 
     public float TurnRate;
     public float BarrelShootingAngleRange; // Turret shoots iff barrel is within X deg off vector to character posn
     public float SpinUpTime; // Turret barrel rotation speeds up for this time before firing.
     public float MaxSpinRate; // Max spin rate in degrees/update
-    public float MinFireSpinRate; // Min spin rate required to start firing as a proportion of MaxSpinRate [0,1] 
+    public float MinFireSpinPercent; // Min spin rate required to start firing as a proportion of MaxSpinRate [0,1] 
     public float MaxFireTime; // Max time before laser turns off
     public float CooldownTime;
 
-    [SerializeField] private LineRenderer Laser;
 
     private Quaternion CurrentTurretAngles;
     private float CurrentSpinRate;
@@ -27,8 +28,20 @@ public class LaserTurretController : EnemyAI
     {
         base.Awake();
 
+        if (LaserRenderer != null && LaserCollider != null)
+        {
+            LaserRenderer.enabled = false;
+            LaserCollider.enabled = false;
+        }
+        else
+        {
+            Debug.Log("Missing Laser Renderer or Laser Collider!");
+        }
+
         Health = 100f;
-        AttackDamage = 5f;
+        AttackDamage = 0.5f;
+
+        LaserCollider.GetComponentInParent<EnemyLaser>().DamagePerTick = AttackDamage;
     }
 
     protected override void ChasePlayer()
@@ -103,24 +116,25 @@ public class LaserTurretController : EnemyAI
     {
         WindUp();
 
-        if (CurrentSpinRate > MinFireSpinRate * MaxSpinRate)
+        if (CurrentSpinRate > MinFireSpinPercent * MaxSpinRate)
         {
             // Only add fire time if laser is actively on
             CurrentFireTime += Time.deltaTime;
 
-            if (Laser != null)
-            {
-                Laser.SetPosition(0, BarrelTransform.position);
-                Laser.SetPosition(1, BarrelTransform.position + BarrelTransform.forward * attackRange);
-                Laser.enabled = true;
-            }
+            // Turn on and set laser renderer and collider
+            LaserRenderer.SetPosition(0, BarrelTransform.position);
+            LaserRenderer.SetPosition(1, BarrelTransform.position + BarrelTransform.forward * attackRange);
+            LaserRenderer.enabled = true;
+
+            // Alternatively, we could set the collider size on, say, awake. But, in case we want to change the laser length mid-game...
+            LaserCollider.height = 2f * (attackRange + 5f); // 5f is to account for barrel length
+            LaserCollider.center = new Vector3(0f, LaserCollider.center.y, LaserCollider.height/2f);
+            LaserCollider.enabled = true;
         }
         else
         {
-            if (Laser != null)
-            {
-                Laser.enabled = false;
-            }
+            LaserRenderer.enabled = false;
+            LaserCollider.enabled = false;
         }
     }
 
@@ -135,10 +149,8 @@ public class LaserTurretController : EnemyAI
         CurrentSpinRate = Mathf.Lerp(CurrentSpinRate, 0f, SpinUpTime / 100f);
         BarrelTransform.Rotate(0f, 0f, CurrentSpinRate, Space.Self);
 
-        if (Laser != null)
-        {
-            Laser.enabled = false;
-        }
+        LaserRenderer.enabled = false;
+        LaserCollider.enabled = false;
 
         // If not actively firing, cooldown without entering full cooldown
         if (CurrentFireTime > 0f)
