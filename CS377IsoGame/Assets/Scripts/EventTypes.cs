@@ -53,16 +53,6 @@ public class EventTypes
        }
    }
 
-    public class Event3Param
-    {
-        public float damageToTake;
-
-        public Event3Param(float damage)
-        {
-            damageToTake = damage;
-        }
-    }
-
    public class Event5Param
    {
       public float multiplier;

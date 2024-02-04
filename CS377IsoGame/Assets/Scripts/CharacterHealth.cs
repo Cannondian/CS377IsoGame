@@ -9,9 +9,9 @@ public class CharacterHealth : Singleton<CharacterHealth>
     public float currentHealth;
     public float maxHealth;
 
-    public Slider healthSlider;
+    public UnityEngine.UI.Slider healthSlider;
 
-    private UnityAction<EventTypes.Event3Param> UpdateCharacterHealthListener;
+    private UnityAction<float> UpdateCharacterHealthListener;
 
     void Start()
     {
@@ -20,13 +20,12 @@ public class CharacterHealth : Singleton<CharacterHealth>
 
     void Update()
     {
-        healthSlider.value = 100f * currentHealth / maxHealth;
+        healthSlider.value = currentHealth / maxHealth;
     }
 
-    public void TakeDamage(EventTypes.Event3Param context)
+    public void TakeDamage(float damage)
     {
-        Debug.Log("Triggered! Taking damage...");
-        currentHealth -= context.damageToTake;
+        currentHealth -= damage;
     }
 
     private void OnEnable()
