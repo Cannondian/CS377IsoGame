@@ -41,16 +41,14 @@ namespace RPGCharacterAnims.Actions
                 EndAction(controller);
                 return;
             }*/
-            
+
             var playerTransform = context.location;
             var terrain = context.terrain;
-            
 
-
-            switch (terrain)
+            if (CharacterEnergy.Instance.ultimateIsReady)
             {
-                case CustomTerrain.Terrains.Grass:
 
+<<<<<<< Updated upstream
                     EventBus.TriggerEvent(EventTypes.Events.ON_CONTINOUS_PACRTICLE_FX_TRIGGER, 
                         new EventTypes.Event2Param(Color.green, playerTransform, FXList.FXlist.Electricity, 5, 0.3f));
                     controller.Ultimate(
@@ -59,8 +57,25 @@ namespace RPGCharacterAnims.Actions
                     EndAction(controller);
                     Debug.Log("it gets here33");
                     break;
+=======
+                switch (terrain)
+                {
+                    case CustomTerrain.Terrains.Grass:
+>>>>>>> Stashed changes
 
+                        EventBus.TriggerEvent(EventTypes.Events.ON_CONTINOUS_PACRTICLE_FX_TRIGGER,
+                            new EventTypes.Event2Param(Color.green, playerTransform, FXList.FXlist.Electricity1, 5,
+                                0.3f));
+                        controller.Ultimate(
+                            Characters.Jisa,
+                            0.1f);
+                        EndAction(controller);
+                        Debug.Log("it gets here33");
+                        break;
+
+                }
             }
+
             /*
             if (attackNumber == -1) {
                 switch (context.type) {

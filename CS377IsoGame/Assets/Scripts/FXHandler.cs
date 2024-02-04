@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.IO;
 using Unity.Mathematics;
 using UnityEditor;
@@ -19,11 +20,40 @@ namespace RPGCharacterAnims.Actions
 
         private UnityAction<EventTypes.Event1Param> InitializeFXListener;
         private UnityAction<EventTypes.Event2Param> ContinousFXListener;
+<<<<<<< Updated upstream
+=======
+        private UnityAction<EventTypes.Event8Param> VariableFXListener;
+        private UnityAction<EventTypes.Event9Param> HitFXListener;
+        
+>>>>>>> Stashed changes
 
         #endregion
         
         #region Fields
 
+<<<<<<< Updated upstream
+=======
+        public int coreChargeParticleLevel;
+
+        #endregion
+
+        #region FXIPrefabs
+
+        public GameObject ArtilleryStrikePrefab;
+        public GameObject ElectricityPrefab1;
+        public GameObject ElectricityPrefab2;
+        public GameObject ElectricityPrefab3;
+        public GameObject RedHitLinePrefab;
+        public GameObject BlueHitLinePrefab;
+        public GameObject Slash1Prefab;
+        public GameObject Slash3Prefab;
+        public GameObject BasicHitPrefab;
+        public GameObject BasicHit2Prefab;
+        public GameObject BasicHit3Prefab;
+        public GameObject EnhancedBasicHit;
+        public GameObject EnhancedBasicHit2;
+        public GameObject EnhancedBasicHit3;
+>>>>>>> Stashed changes
         
 
         #endregion
@@ -37,11 +67,12 @@ namespace RPGCharacterAnims.Actions
         
         #endregion
 
+        public bool alreadyPlaying;
         // Start is called before the first frame update
         void Start()
         {
             
-            OnEnable();
+            
             Debug.Log("we are many");
             
             
@@ -56,11 +87,19 @@ namespace RPGCharacterAnims.Actions
 
         private void OnEnable()
         {
+            Debug.Log("are there multiple listeners?");
             InitializeFXListener += InitializeArtilleryStrikeFX;
             EventBus.StartListening(EventTypes.Events.ON_PARTICLE_FX_TRIGGER, InitializeFXListener);
             ContinousFXListener += InitializeElectricityFX;
             EventBus.StartListening(EventTypes.Events.ON_CONTINOUS_PACRTICLE_FX_TRIGGER,
                 ContinousFXListener);
+<<<<<<< Updated upstream
+=======
+            VariableFXListener += UpdateCoreChargeFX;
+            EventBus.StartListening(EventTypes.Events.ON_UPDATE_CORE_CHARGE_PARTICLES, VariableFXListener);
+            HitFXListener += InitializeHitFX;
+            EventBus.StartListening(EventTypes.Events.ON_BASIC_ATTACK_HIT, HitFXListener);
+>>>>>>> Stashed changes
         }
 
         private void OnDisable()
@@ -73,6 +112,80 @@ namespace RPGCharacterAnims.Actions
 
         }
 
+<<<<<<< Updated upstream
+=======
+        private void UpdateCoreChargeFX(EventTypes.Event8Param context)
+        {
+            var particlesToEdit = coreChargeParticles.GetComponent<ParticleSystem>().limitVelocityOverLifetime;
+            var particlesToEdit2 = coreChargeParticles.GetComponent<ParticleSystem>().velocityOverLifetime;
+            var particlesToEdit3 = coreChargeParticles.GetComponent<ParticleSystem>().main;
+            var particlesToEdit4 = coreChargeParticles.GetComponent<ParticleSystem>().emission;
+            if (context.coreCharge == 0)
+            {
+                particlesToEdit.dragMultiplier = 5;
+                coreChargeParticleLevel = 0;
+            }
+            else if (context.coreCharge <= 10)
+            {
+                particlesToEdit.dragMultiplier = 1.4f;
+                coreChargeParticleLevel = 1;
+                var burst = particlesToEdit4.GetBurst(0);
+                burst.count = new ParticleSystem.MinMaxCurve(0, 8);
+            }
+            else if (context.coreCharge <= 20)
+            {
+                particlesToEdit.dragMultiplier = 1.2f;
+                particlesToEdit2.orbitalXMultiplier = 3;
+                particlesToEdit2.orbitalYMultiplier = 3;
+                particlesToEdit2.orbitalZMultiplier = 3;
+                particlesToEdit3.startLifetimeMultiplier = 1.2f;
+                particlesToEdit3.simulationSpeed = 1.3f;
+                coreChargeParticleLevel = 2;
+                var burst = particlesToEdit4.GetBurst(0);
+                burst.count = new ParticleSystem.MinMaxCurve(0, 12);
+            }
+            else if (context.coreCharge <= 30)
+            {
+                particlesToEdit.dragMultiplier = 1;
+                particlesToEdit2.orbitalXMultiplier = 5;
+                particlesToEdit2.orbitalYMultiplier = 5;
+                particlesToEdit2.orbitalZMultiplier = 5;
+                particlesToEdit3.startLifetimeMultiplier = 1.4f;
+                particlesToEdit3.simulationSpeed = 1.5f;
+                coreChargeParticleLevel = 3;
+                var burst = particlesToEdit4.GetBurst(0);
+                burst.count = new ParticleSystem.MinMaxCurve(0, 16);
+                
+            }
+            else if (context.coreCharge <= 40)
+            {
+                particlesToEdit.dragMultiplier = 0.7f;
+                particlesToEdit2.orbitalXMultiplier = 8;
+                particlesToEdit2.orbitalYMultiplier = 8;
+                particlesToEdit2.orbitalZMultiplier = 8;
+                particlesToEdit3.startLifetimeMultiplier = 1.6f;
+                particlesToEdit3.simulationSpeed = 1.8f;
+                coreChargeParticleLevel = 4;
+                var burst = particlesToEdit4.GetBurst(0);
+                burst.count = new ParticleSystem.MinMaxCurve(6, 24);
+                
+            }
+            else
+            {
+                particlesToEdit.dragMultiplier = 0.6f;
+                particlesToEdit2.orbitalXMultiplier = 10;
+                particlesToEdit2.orbitalYMultiplier = 10;
+                particlesToEdit2.orbitalZMultiplier = 10;
+                particlesToEdit3.startLifetimeMultiplier = 2;
+                particlesToEdit3.simulationSpeed = 2;
+                coreChargeParticleLevel = 5;
+                var burst = particlesToEdit4.GetBurst(0);
+                burst.count = new ParticleSystem.MinMaxCurve(10, 30);
+                
+            }
+            
+        }
+>>>>>>> Stashed changes
         private void InitializeArtilleryStrikeFX(EventTypes.Event1Param context)
         {
             
@@ -146,15 +259,36 @@ namespace RPGCharacterAnims.Actions
             particleSettings2.simulationSpeed = 2;
             
             StartCoroutine(TerminateFX(context.duration, realFXObject2));
-        } 
+        }
+
+        private void InitializeHitFX(EventTypes.Event9Param context)
+        {
+            switch (context.fx)
+            {
+                case FXList.FXlist.BasicHit:
+                   
+                        var hitObject = Instantiate(BasicHit3Prefab, context.hitPosition, context.quaternion);
+                        
+                        TerminateFX(0.5f, hitObject);
+                    
+
+                    break;
+                case FXList.FXlist.ElectricHit:
+                    var hitObject2 = Instantiate(EnhancedBasicHit2, context.hitPosition, context.quaternion);
+                    TerminateFX(0.3f, hitObject2);
+                    break;
+            }
+        }
+        
         private IEnumerator TerminateFX(float duration, GameObject particles) 
         {
             
                 if (duration > 0) { yield return new WaitForSeconds(duration); }
 
                 Destroy(particles);
-                
-                
+                alreadyPlaying = false;
+
+
 
         }
     }

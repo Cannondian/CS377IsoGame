@@ -10,10 +10,18 @@ namespace RPGCharacterAnims.Actions
 
 		public override bool CanStartAction(RPGCharacterController controller)
 		{
+<<<<<<< Updated upstream
 			Debug.Log(controller.isRelaxed);
 			Debug.Log(active);
 			Debug.Log(controller.isCasting);
 			return !controller.isRelaxed && !active && !controller.isCasting && controller.canAction; }
+=======
+			//Debug.Log(controller.isRelaxed);
+			//Debug.Log(active);
+			//Debug.Log(controller.isCasting);
+			return !controller.isRelaxed && !active && !controller.isCasting &&
+			       controller.canAction && CharacterEnergy.Instance.skillIsReady; }
+>>>>>>> Stashed changes
 
 		public override bool CanEndAction(RPGCharacterController controller)
 		{ return active; }
@@ -25,7 +33,7 @@ namespace RPGCharacterAnims.Actions
 			var terrain = context.terrainType;
 			var duration = 0f;
 			
-		
+			
 			switch (terrain) {
 				case CustomTerrain.Terrains.Grass:
 					

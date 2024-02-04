@@ -12,7 +12,16 @@ public class EventTypes
       ON_ULTIMATE_READY,
       ON_LIFE_CURRENT_GAIN,
       ON_JISA_ENHANCED_ATTACK_READY,
+<<<<<<< Updated upstream
       ON_JISA_ENHANCED_ATTACK
+=======
+      ON_JISA_ENHANCED_ATTACK,
+      ON_UPDATE_CORE_CHARGE_PARTICLES,
+      ON_BASIC_ATTACK_HIT,
+      ON_SKILL_USED,
+      ON_ULTIMATE_USED
+      
+>>>>>>> Stashed changes
    }
 
    public class Event1Param
@@ -61,4 +70,36 @@ public class EventTypes
          attackNumber = actionNumber;
       }
    }
+<<<<<<< Updated upstream
+=======
+
+   public class Event8Param
+   {
+      public int coreCharge;
+      public bool isSuperCharged;
+      public FXList.FXlist fx;
+
+      public Event8Param(int charge, bool isSuper, FXList.FXlist FX)
+      {
+         coreCharge = charge;
+         isSuperCharged = isSuper;
+         fx = FX;
+      }
+   }
+
+   public class Event9Param
+   {
+      //what if we also sent damage and info for the enemy that is being hit withing the same event?
+      public Vector3 hitPosition;
+      public FXList.FXlist fx;
+      public Quaternion quaternion;
+
+      public Event9Param(Vector3 pos, FXList.FXlist particles, Quaternion q)
+      {
+         hitPosition = pos;
+         fx = particles;
+         quaternion = q;
+      }
+   }
+>>>>>>> Stashed changes
 }

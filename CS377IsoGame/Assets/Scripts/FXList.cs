@@ -7,7 +7,22 @@ public class FXList
     public enum FXlist
     {
         ArtilleryStrike,
+<<<<<<< Updated upstream
         Electricity
+=======
+        Electricity1,
+        Electricity2,
+        Electricity3,
+        RedHitLine,
+        BlueHitLine,
+        Slash1,
+        Slash3,
+        BasicHit,
+        BasicHit2,
+        ElectricHit
+        
+        
+>>>>>>> Stashed changes
         
         
     }

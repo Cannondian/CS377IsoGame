@@ -353,6 +353,8 @@ namespace RPGCharacterAnims
 	        public float bowPull => _bowPull;
 	        private float _bowPull;
 
+	        public float coreChargeValue;
+
 			/// <summary>
 			/// Integer weapon number for the right hand. See the Weapon enum in AnimationData.cs for a
 			/// full list.
@@ -487,7 +489,7 @@ namespace RPGCharacterAnims
 			{
 				animator.SetWeapons(AnimatorWeapon.STAFF, -2, Weapon.Unarmed, Weapon.TwoHandStaff, Side.Right);
 				comboIndex = 0;
-				OnEnable();
+				
 
 			}
 
@@ -598,6 +600,8 @@ namespace RPGCharacterAnims
 	        {
 	            // Update Animator animation speed.
 	            animator.SetFloat(AnimationParameters.AnimationSpeed, animationSpeed);
+	            animator.SetFloat(AnimationParameters.CustomAnimationSpeed, 1.3f);
+	            animator.SetFloat(AnimationParameters.AttackSpeed, 1 + coreChargeValue * 1/90);
 
 				// Aiming.
 	            if (isAiming) { Aim(isAiming, aimInput, _bowPull); }
@@ -793,8 +797,8 @@ namespace RPGCharacterAnims
 	        public void DiveRoll(DiveRollType rollType)
 	        {
 		        animator.TriggerDiveRoll(rollType);
-	            Lock(true, true, true, 0, 1f);
-				SetIKPause(1.05f);
+	            Lock(true, true, true, 0, 0.7f);
+				SetIKPause(0.705f);
 	        }
 
 	        /// <summary>
@@ -805,7 +809,9 @@ namespace RPGCharacterAnims
 	        /// <param name="rollNumber">1- Forward, 2- Right, 3- Backward, 4- Left.</param>
 	        public void Roll(RollType rollNumber)
 	        {
-		        animator.TriggerRoll(rollNumber);
+		       
+		        
+		        animator.TriggerRoll(RollType.Forward);
 	            Lock(true, true, true, 0, 0.5f);
 				SetIKPause(0.75f);
 			}
@@ -938,6 +944,7 @@ namespace RPGCharacterAnims
 			        case(Characters.Jisa):
 				        _isUsingUltimate = true;
 				        StartCast(CastType.Buff2, Side.Left);
+				        EventBus.TriggerEvent(EventTypes.Events.ON_ULTIMATE_USED, 0f);
 				        break;
 				        
 		        } 
@@ -951,9 +958,14 @@ namespace RPGCharacterAnims
 					StopCoroutine("ResetCombos");
 					
 		        }
-		        if (comboIndex < 3)
+
+		        if (comboIndex == 1)
 		        {
-			        comboIndex++;
+			        comboIndex ++;
+		        }
+		        else if (comboIndex == 2)
+		        {
+			        comboIndex = 5;
 		        }
 		        else
 		        {
@@ -979,22 +991,24 @@ namespace RPGCharacterAnims
 	        public void Skill(Characters character, float duration)
 	        {
 		       
-		        switch (character)
-		        {
-			        case (Characters.Jisa):
-				        _isUsingSkill = true;
-				        StartCast(AttackCastType.Cast2, Side.Left );
-				        //StartCast(CastType.Buff2, Side.Left);
-				        break;
+			        switch (character)
+			        {
+				        case (Characters.Jisa):
+					        _isUsingSkill = true;
+					        StartCast(AttackCastType.Cast2, Side.Left);
+					        EventBus.TriggerEvent(EventTypes.Events.ON_SKILL_USED, 0f);
+					        Debug.Log("skill used");
+					        //StartCast(CastType.Buff2, Side.Left);
+					        break;
 				        /*
 				        var skillTriggerType = AnimatorTrigger.CastTrigger;
 				        animator.SetSide(Side.Dual);
 				        var attackNumber = 1;
 				        animator.SetActionTrigger(skillTriggerType, attackNumber);
 				        break;*/
-		        }
-		         
+			        }
 		        
+
 	        }
 	        
 	        /// <summary>
@@ -1009,46 +1023,72 @@ namespace RPGCharacterAnims
 	        /// <param name="duration">Duration in seconds that animation is locked.</param>
 	        public void Attack(Side attackSide, Weapon leftWeapon, Weapon rightWeapon, float duration)
 	        {
-		        if (enhancedAttackIsReady)
+		        if (CoreChargeManager.Instance.coreChargeState >= 45)
 		        {
-			        Lock(true, true, true, 0, duration);
-			        comboIndex = 4;
-			        animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, comboIndex);
-			        _isAttacking = true;
-			        EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK, true);
-			        Debug.Log("ready!!");
+			       
+			        StartCoroutine(DelayForEnhancedAttack(AnimatorTrigger.AttackTrigger, 3, 0.15f, duration));
+			        
 			        
 		        }
 		        else
 		        {
+<<<<<<< Updated upstream
 			        int currentELC = ExpendableLifeCurrentManager.Instance.ELCState;
 			        animator.SetSide(attackSide);
 			        _isAttacking = true;
+=======
+>>>>>>> Stashed changes
 			        ControlCombos();
-			        Lock(true, true, true, 0, duration-currentELC * 0.008f);
+			        //Lock(true, true, true, 0, duration);
 			        int attackNumber = comboIndex;
-			        // If shooting, use regular or hipshooting attack.
-			        if (rightWeapon == Weapon.Rifle)
+			        if (comboIndex == 5)
 			        {
-				        if (attackSide == Side.None)
+				        AttackKick(2);
+			        }
+			        else
+			        {
+
+				        coreChargeValue = CoreChargeManager.Instance.coreChargeState;
+				        var coreChargeSpeedUp = coreChargeValue * 1 / 90;
+				        Lock(false, true, true, 0, duration - duration * coreChargeSpeedUp);
+				        ;
+				        animator.SetSide(attackSide);
+				        _isAttacking = true;
+
+				        // If shooting, use regular or hipshooting attack.
+				        if (rightWeapon == Weapon.Rifle)
 				        {
-					        if (isHipShooting)
+					        if (attackSide == Side.None)
 					        {
-						        attackNumber = 2;
-					        }
-					        else
-					        {
-						        attackNumber = 1;
+						        if (isHipShooting)
+						        {
+							        attackNumber = 2;
+						        }
+						        else
+						        {
+							        attackNumber = 1;
+						        }
 					        }
 				        }
-			        }
 
-			        // Trigger the animation.
-			        var attackTriggerType = attackSide == Side.Dual
-				        ? AnimatorTrigger.AttackDualTrigger
-				        : AnimatorTrigger.AttackTrigger;
-			        animator.SetActionTrigger(attackTriggerType, attackNumber);
+				        // Trigger the animation.
+				        var attackTriggerType = attackSide == Side.Dual
+					        ? AnimatorTrigger.AttackDualTrigger
+					        : AnimatorTrigger.AttackTrigger;
+				        animator.SetActionTrigger(attackTriggerType, attackNumber);
+			        }
 		        }
+	        }
+
+	        public IEnumerator DelayForEnhancedAttack(AnimatorTrigger trigger, int attackComboIndex, float delay, float duration)
+	        {
+		        yield return new WaitForSeconds(delay);
+		        animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 3);
+		        _isAttacking = true;
+		        EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK, true);
+		        Debug.Log("ready!!");
+		        Lock(true, true, true, 0, duration + 0.3f);
+		        
 	        }
 
 	        /// <summary>
@@ -1064,6 +1104,7 @@ namespace RPGCharacterAnims
 	        public void RunningAttack(Side side, bool leftWeapon, bool rightWeapon, bool dualWeapon, bool twoHandedWeapon, float duration)
 	        {
 		        
+<<<<<<< Updated upstream
 		        _isAttacking = true;
 		        
 		        Lock(false, true, true, 0, duration- 0.3f);
@@ -1079,6 +1120,48 @@ namespace RPGCharacterAnims
 					animator.SetSide(side);
 					animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 1);
 				}
+=======
+		        if (enhancedAttackIsReady)
+		        {
+			        
+			        comboIndex = 3;
+			        animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, comboIndex);
+			        _isAttacking = true;
+			        EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK, true);
+			        Debug.Log("ready!!");
+			        Lock(false, true, true, 0, duration);
+			        
+		        }
+		        else
+		        {
+
+			        _isAttacking = true;
+			        coreChargeValue = CoreChargeManager.Instance.coreChargeState;
+			        var coreChargeSpeedUp = coreChargeValue * 1 / 90;
+			        Lock(false, true, true, 0, duration - duration * coreChargeSpeedUp);
+			        Debug.Log("heya");
+			        if (side == Side.Left && leftWeapon || twoHandedWeapon)
+			        {
+				        animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 1);
+				        animator.SetSide(Side.Right);
+			        }
+			        else if (side == Side.Right && rightWeapon)
+			        {
+				        animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 1);
+				        animator.SetSide(Side.Left);
+			        }
+			        else if (side == Side.Dual && dualWeapon)
+			        {
+				        animator.SetActionTrigger(AnimatorTrigger.AttackDualTrigger, 4);
+			        }
+			        else if (hasNoWeapon)
+			        {
+				        Debug.Log(side);
+				        animator.SetSide(side);
+				        animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 1);
+			        }
+		        }
+>>>>>>> Stashed changes
 	        }
 
 	        /// <summary>
@@ -1101,9 +1184,9 @@ namespace RPGCharacterAnims
 	        /// <param name="kickSide">1- Left, 2- Right.</param>
 	        public void AttackKick(int kickSide)
 	        {
-	            animator.SetActionTrigger(AnimatorTrigger.AttackKickTrigger, kickSide);
+	            animator.SetActionTrigger(AnimatorTrigger.AttackKickTrigger, 3);
 				_isAttacking = true;
-	            Lock(true, true, true, 0, 0.9f);
+	            Lock(true, true, true, 0, 0.9f - 0.01f * coreChargeValue);
 	        }
 
 	        public void EnhancedAttack(bool message)
