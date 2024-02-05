@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrenadierTurretController : MonoBehaviour
+public class GrenadierTurretController : EnemyAI
 {
 
     [SerializeField] Transform Arm1Transform;
@@ -17,11 +17,6 @@ public class GrenadierTurretController : MonoBehaviour
     public float HorizontalMissileVelocity = 10f;
     public float FireDelay = 3f;
 
-    private Rigidbody Barrel1RB;
-    private Rigidbody Barrel2RB;
-    private Vector3 Barrel1InitPosn;
-    private Vector3 Barrel2InitPosn;
-
     private Quaternion CurrentTurretAngles;
     private Quaternion CurrentArmAngles;
 
@@ -30,16 +25,9 @@ public class GrenadierTurretController : MonoBehaviour
     private float LaunchVelocity;
     private float TimeToPlayer;
 
-    Transform PlayerTransform;
-    public void GetPlayerTransform()
-    {
-        PlayerTransform = GameObject.FindWithTag("Player").transform;
-    }
-
-    // Similar to tank's aim turret but with a different shooting method
     void AimTurret()
     {
-        Vector3 playerPosn = PlayerTransform.position;
+        Vector3 playerPosn = player.position;
         Vector3 toPlayer = playerPosn - transform.position; // vector from turret to player
 
         // Determine the left/right angle to the player
@@ -63,11 +51,13 @@ public class GrenadierTurretController : MonoBehaviour
 
     void MaybeFire()
     {
-
+        // If past cooldown, fire next grenade at player
         if (Time.time - LastFireTime > FireDelay)
         {
             // Create missile instance
             Transform Missile;
+
+            // Determine which barrel to fire from
             if (WhichBarrel)
             {
                 Missile = Instantiate(
@@ -75,9 +65,7 @@ public class GrenadierTurretController : MonoBehaviour
                     Barrel1Transform.position + Barrel1Transform.forward * MissileLaunchOffset,
                     Barrel1Transform.rotation);
 
-                Barrel1RB.AddForce(
-                    -Barrel1Transform.forward,
-                    ForceMode.Impulse);
+                // TODO: barrel recoil animation
             }
             else
             {
@@ -86,50 +74,42 @@ public class GrenadierTurretController : MonoBehaviour
                     Barrel2Transform.position + Barrel2Transform.forward * MissileLaunchOffset,
                     Barrel2Transform.rotation);
 
-                Barrel2RB.AddForce(
-                    -Barrel2Transform.forward,
-                    ForceMode.Impulse);
+                // TODO: barrel recoil animation
             }
 
             // Set missile velocity
             var MissileRB = Missile.GetComponent<Rigidbody>();
             MissileRB.velocity = Barrel1Transform.forward * LaunchVelocity;
 
-            
-
             LastFireTime = Time.time;
             WhichBarrel = !WhichBarrel;
         }
     }
 
-    void LockBarrelsToLocal()
+    protected override void ChasePlayer()
     {
-        // Lock barrels to only move along local z axis
-        Barrel1Transform.localPosition = new Vector3(Barrel1InitPosn.x, Barrel1InitPosn.y, Barrel1Transform.localPosition.z);
-        Barrel2Transform.localPosition = new Vector3(Barrel2InitPosn.x, Barrel2InitPosn.y, Barrel2Transform.localPosition.z);
+        base.ChasePlayer();
+        AimTurret();
     }
 
-    void Start()
-    {
-        LastFireTime = Time.time;
-        GetPlayerTransform();
-
-        Barrel1RB = Barrel1Transform.GetComponent<Rigidbody>();
-        Barrel2RB = Barrel2Transform.GetComponent<Rigidbody>();
-
-        Barrel1InitPosn = Barrel1Transform.localPosition;
-        Barrel2InitPosn = Barrel2Transform.localPosition;
-    }
-
-    void Update()
+    protected override void AttackPlayer()
     {
         AimTurret();
-        LockBarrelsToLocal();
-    }
-
-    void FixedUpdate()
-    {
         MaybeFire();
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        LastFireTime = Time.time;
+
+        Health = 100f;
+        AttackDamage = 10f;
+    }
+
+    protected override void UpdateCanvas()
+    {
+        healthBar.value = Health;
+    }
 }
