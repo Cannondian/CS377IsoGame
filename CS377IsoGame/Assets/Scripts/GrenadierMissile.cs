@@ -31,6 +31,7 @@ public class GrenadierMissile : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Explode if past lifespan or if player proximity detector is triggered
         if (Time.time - LaunchTime > MaxLifeSpan || prox.Collided)
         {
             Explode();
