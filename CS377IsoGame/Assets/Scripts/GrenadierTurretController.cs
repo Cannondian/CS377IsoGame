@@ -25,6 +25,32 @@ public class GrenadierTurretController : EnemyAI
     private float LaunchVelocity;
     private float TimeToPlayer;
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        LastFireTime = Time.time;
+
+        Health = 100f;
+        AttackDamage = 10f;
+    }
+
+    protected override void UpdateCanvas()
+    {
+        healthBar.value = Health;
+    }
+
+    protected override void ChasePlayer()
+    {
+        AimTurret();
+    }
+
+    protected override void AttackPlayer()
+    {
+        AimTurret();
+        MaybeFire();
+    }
+
     void AimTurret()
     {
         Vector3 playerPosn = player.position;
@@ -37,6 +63,8 @@ public class GrenadierTurretController : EnemyAI
         CurrentTurretAngles = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0f, turretAngle, 0f), TurnRate * Time.deltaTime);
         transform.rotation = CurrentTurretAngles;
 
+        // Determine barrel angle and launch velocity based on current horizontal distance to player
+        // ~magic~ -3*offset seems to make it work close enough to account for height difference of launch point and player posn
         float HorizontalDistanceToPlayer = new Vector2(toPlayer.x, toPlayer.z).magnitude - 3f * MissileLaunchOffset;
         TimeToPlayer = HorizontalDistanceToPlayer / HorizontalMissileVelocity;
         float InitialVerticalMissileVelocity = 0.5f * Physics.gravity.y * TimeToPlayer;
@@ -82,34 +110,7 @@ public class GrenadierTurretController : EnemyAI
             MissileRB.velocity = Barrel1Transform.forward * LaunchVelocity;
 
             LastFireTime = Time.time;
-            WhichBarrel = !WhichBarrel;
+            WhichBarrel = !WhichBarrel; // Alternate barrel
         }
-    }
-
-    protected override void ChasePlayer()
-    {
-        base.ChasePlayer();
-        AimTurret();
-    }
-
-    protected override void AttackPlayer()
-    {
-        AimTurret();
-        MaybeFire();
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        LastFireTime = Time.time;
-
-        Health = 100f;
-        AttackDamage = 10f;
-    }
-
-    protected override void UpdateCanvas()
-    {
-        healthBar.value = Health;
     }
 }

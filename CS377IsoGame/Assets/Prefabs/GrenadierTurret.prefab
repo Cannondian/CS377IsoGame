@@ -867,10 +867,10 @@ MonoBehaviour:
   player: {fileID: 0}
   Walkable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8256
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 0
   sightRange: 20
