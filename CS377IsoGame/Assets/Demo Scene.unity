@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1226,7 +1226,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 26624
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 2
@@ -1234,6 +1234,18 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0.0000005955772, y: 0.0043169134, z: 0.00000017949006}
+--- !u!114 &1082651126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082651117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fa81d300321e45f18b505087210086c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &1143065618 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 3613585148435976524, guid: 4a43dda877c7a49cebb73490a644c877, type: 3}
@@ -1826,7 +1838,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 1.3333334
+  m_VoxelSize: 0.33333334
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 5a5afd23d5e694cf4b4edd80b4f3c785, type: 2}
   m_BuildHeightMesh: 0
@@ -1863,6 +1875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponCollider: {fileID: 1082651122}
+  legCollider: {fileID: 0}
 --- !u!1 &2014751153 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2520003853463268762, guid: 86f9466154982de47a8bb3ad0ffd64b0, type: 3}
@@ -2593,6 +2606,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3517418248502277907, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1082651122}
+    - targetCorrespondingSourceObject: {fileID: 3517418248502277907, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1082651126}
   m_SourcePrefab: {fileID: 100100000, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
 --- !u!1001 &8020730242228183489
 PrefabInstance:
