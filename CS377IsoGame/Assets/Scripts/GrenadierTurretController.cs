@@ -16,6 +16,7 @@ public class GrenadierTurretController : EnemyAI
 
     public float HorizontalMissileVelocity = 10f;
     public float FireDelay = 3f;
+    public float MissileMaxLifeSpan = 10f;
 
     private Quaternion CurrentTurretAngles;
     private Quaternion CurrentArmAngles;
@@ -108,6 +109,11 @@ public class GrenadierTurretController : EnemyAI
             // Set missile velocity
             var MissileRB = Missile.GetComponent<Rigidbody>();
             MissileRB.velocity = Barrel1Transform.forward * LaunchVelocity;
+
+            // Set missile damage and lifespan
+            GrenadierMissile GM = Missile.GetComponent<GrenadierMissile>();
+            GM.Damage = AttackDamage;
+            GM.MaxLifeSpan = MissileMaxLifeSpan; 
 
             LastFireTime = Time.time;
             WhichBarrel = !WhichBarrel; // Alternate barrel
