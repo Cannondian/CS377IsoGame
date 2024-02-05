@@ -12,10 +12,19 @@ public class EventTypes
       ON_ULTIMATE_READY,
       ON_LIFE_CURRENT_GAIN,
       ON_JISA_ENHANCED_ATTACK_READY,
+
+      
+
+      ON_PLAYER_DAMAGE_TAKEN,
+
+
       ON_JISA_ENHANCED_ATTACK,
       ON_UPDATE_CORE_CHARGE_PARTICLES,
+      ON_BASIC_ATTACK_HIT,
+      ON_SKILL_USED,
+      ON_ULTIMATE_USED,
 
-      ON_PLAYER_DAMAGE_TAKEN
+      
    }
 
    public class Event1Param
@@ -76,6 +85,20 @@ public class EventTypes
          coreCharge = charge;
          isSuperCharged = isSuper;
          fx = FX;
+      }
+   }
+   public class Event9Param
+   {
+      //what if we also sent damage and info for the enemy that is being hit withing the same event?
+      public Vector3 hitPosition;
+      public FXList.FXlist fx;
+      public Quaternion quaternion;
+
+      public Event9Param(Vector3 pos, FXList.FXlist particles, Quaternion q)
+      {
+         hitPosition = pos;
+         fx = particles;
+         quaternion = q;
       }
    }
 }

@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 
+
 //reminder that the name for this resource will be changed to "Core Charge"
 
     public class CoreChargeManager : Singleton<CoreChargeManager>
@@ -15,21 +16,26 @@ using UnityEngine.UI;
 
         public int coreChargeState { get; set; }
         private int coreChargeDrain;
-        private int previousUpdateSentAt;
-        private bool enhancedAttackUsed;
+
+
+        public int previousUpdateSentAt;
+        public bool enhancedAttackReady;
+
         private bool atBaseValue;
         private bool isDraining;
         private bool recentlyAttacked;
         private float timerStarted;
         private float drainThresholdTime = 8;
         private float countdownToDrain;
+
         private UnityAction<EventTypes.Event5Param> UpdateCoreChargeListener;
         private UnityAction<bool> CoreChargeAttackListener;
+
         public Slider coreChargeSlider;
+
         // Start is called before the first frame update
         void Start()
         {
-            
             coreChargeState = 0;
             coreChargeDrain = 2;
             previousUpdateSentAt = 0;
@@ -60,7 +66,10 @@ using UnityEngine.UI;
                         atBaseValue = true;
                         countdownToDrain = drainThresholdTime;
                         coreChargeDrain = 2;
+
                         UpdateCoreChargeParticles();
+
+
                     }
                     else if (recentlyAttacked)
                     {
@@ -73,7 +82,10 @@ using UnityEngine.UI;
                         timerStarted += 2;
                         coreChargeState -= coreChargeDrain;
                         coreChargeDrain = 2 * coreChargeDrain;
+
                         UpdateCoreChargeParticles();
+
+
 
                     }
                 }
@@ -81,8 +93,10 @@ using UnityEngine.UI;
                 {
                     timerStarted = Time.time;
                     isDraining = true;
-                    EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK_READY, false);
-                    
+
+
+
+
                 }
                 else if (Time.time - timerStarted > 1)
                 {
@@ -92,7 +106,7 @@ using UnityEngine.UI;
 
             }
 
-            
+
         }
 
         private void UpdateCoreCharge(EventTypes.Event5Param context)
@@ -112,32 +126,44 @@ using UnityEngine.UI;
                 case 3:
                     coreChargeState += 7;
                     break;
-                
+
             }
+
             UpdateCoreChargeParticles();
+
+
+            if (coreChargeState >= 45)
+            {
+                enhancedAttackReady = true;
+            }
+
+
             if (atBaseValue)
             {
                 atBaseValue = false;
             }
 
-            if (coreChargeState >= 45)
-            {
-                EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK_READY, true);
-            }
+
         }
 
         public void CoreChargeAttack(bool isTriggered)
         {
             if (isTriggered)
             {
-                enhancedAttackUsed = isTriggered;
+
+
+
+                enhancedAttackReady = !isTriggered;
+
                 coreChargeState = 0;
                 isDraining = false;
                 atBaseValue = true;
                 countdownToDrain = drainThresholdTime;
                 coreChargeDrain = 2;
-                EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK_READY, false);
+
+
                 UpdateCoreChargeParticles();
+
             }
         }
 
@@ -145,24 +171,31 @@ using UnityEngine.UI;
         {
             if (Mathf.Abs(coreChargeState - previousUpdateSentAt) >= 10 || coreChargeState == 0)
             {
+                previousUpdateSentAt = coreChargeState;
                 EventBus.TriggerEvent(EventTypes.Events.ON_UPDATE_CORE_CHARGE_PARTICLES,
                     new EventTypes.Event8Param(coreChargeState, false, FXList.FXlist.Electricity3));
             }
         }
-        
+
 
         private void OnEnable()
         {
+
             UpdateCoreChargeListener += UpdateCoreCharge;
             EventBus.StartListening(EventTypes.Events.ON_LIFE_CURRENT_GAIN, UpdateCoreChargeListener);
             CoreChargeAttackListener += CoreChargeAttack;
             EventBus.StartListening(EventTypes.Events.ON_JISA_ENHANCED_ATTACK, CoreChargeAttackListener);
+
+
+
         }
 
         private void OnDisable()
         {
+
             EventBus.StopListening(EventTypes.Events.ON_LIFE_CURRENT_GAIN, UpdateCoreChargeListener);
             EventBus.StopListening(EventTypes.Events.ON_JISA_ENHANCED_ATTACK, CoreChargeAttackListener);
+
 
         }
 

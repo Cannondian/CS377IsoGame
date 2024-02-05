@@ -13,7 +13,8 @@ namespace RPGCharacterAnims.Actions
 			//Debug.Log(controller.isRelaxed);
 			//Debug.Log(active);
 			//Debug.Log(controller.isCasting);
-			return !controller.isRelaxed && !active && !controller.isCasting && controller.canAction; }
+			return !controller.isRelaxed && !active && !controller.isCasting &&
+			       controller.canAction && CharacterEnergy.Instance.skillIsReady; }
 
 		public override bool CanEndAction(RPGCharacterController controller)
 		{ return active; }
@@ -25,7 +26,7 @@ namespace RPGCharacterAnims.Actions
 			var terrain = context.terrainType;
 			var duration = 0f;
 			
-		
+			
 			switch (terrain) {
 				case CustomTerrain.Terrains.Grass:
 					

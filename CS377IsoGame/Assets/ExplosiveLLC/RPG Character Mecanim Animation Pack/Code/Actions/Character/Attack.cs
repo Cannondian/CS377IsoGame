@@ -59,7 +59,7 @@ namespace RPGCharacterAnims.Actions
 				controller.AirAttack();
 				EndAction(controller);
 			}
-			else if (controller.isMoving) {
+			/*else if (controller.isMoving) {
 				
 				controller.RunningAttack(
 					attackSide,
@@ -70,7 +70,7 @@ namespace RPGCharacterAnims.Actions
 					duration
 				);
 				EndAction(controller);
-			}
+			}*/
 			else if (context.type == "Kick") {
 				controller.AttackKick(attackNumber);
 				EndAction(controller);

@@ -435,7 +435,7 @@ namespace RPGCharacterAnims
                 {
                     ""name"": """",
                     ""id"": ""63104a7a-9566-435a-be44-cab8f87e4ab2"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
@@ -468,7 +468,7 @@ namespace RPGCharacterAnims
                 {
                     ""name"": """",
                     ""id"": ""f11c46ab-cc0b-4bff-8583-9afa124803f9"",
-                    ""path"": ""<Keyboard>/p"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
@@ -512,10 +512,10 @@ namespace RPGCharacterAnims
                 {
                     ""name"": """",
                     ""id"": ""2c1b111f-b14e-4638-95be-9154e3b9b55e"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Mouse and Keyboard"",
+                    ""groups"": ""Gamepad;Mouse and Keyboard"",
                     ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
