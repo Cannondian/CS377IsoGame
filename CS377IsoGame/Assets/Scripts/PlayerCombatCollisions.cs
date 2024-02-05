@@ -15,51 +15,51 @@ namespace EgeCode
 
         void Start()
         {
-            controller = GetComponent<RPGCharacterController>();
+            controller = FindObjectOfType<RPGCharacterController>();
             Debug.Log("Started!");
         }
 
         private void OnTriggerEnter(Collider other)
         {
             // This assumes that the script is attached to the object with the weaponCollider and legCollider
-            Collider myCollider = GetComponent<Collider>();
+            //make this trigger once per collision
             int attackNumber = controller.comboIndex;
+            
+        
+            if (controller.isAttacking && attackNumber == 3)
+            {
+                Debug.Log("collided");
+                EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
+                    new EventTypes.Event9Param(transform.position, FXList.FXlist.ElectricHit, transform.rotation));
 
-            Debug.Log("Enemy hit:" + other.name);
+                EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
+                    CharacterEnergy.Instance.energyFromEnhancedBasic);
+
+                EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK, true);
+
+                DamageEnemy(other, 30f);
+            }
+
+            else if (controller.isAttacking)
+            {
+                EventBus.TriggerEvent(EventTypes.Events.ON_LIFE_CURRENT_GAIN,
+                   new EventTypes.Event5Param(attackNumber, 0));
+
+                EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
+                    new EventTypes.Event9Param(transform.position, FXList.FXlist.BasicHit2, transform.rotation));
+
+                DamageEnemy(other, 10f);
+            }
+       }
+
+         
+        void DamageEnemy(Collider other, float damage)
+        {
+            var enemyScript = other.gameObject.GetComponent<EnemyAI>();
+            if (enemyScript != null)
+            {
+                enemyScript.TakeDamage(damage);
+            }
         }
-        //    if (controller.isAttacking && myCollider == weaponCollider && attackNumber == 3)
-        //    {
-        //        EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
-        //            new EventTypes.Event9Param(other.transform.position, FXList.FXlist.ElectricHit, myCollider.transform.rotation));
-
-        //        EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
-        //            CharacterEnergy.Instance.energyFromEnhancedBasic);
-
-        //        EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK, true);
-
-        //        DamageEnemy(other, 10f);
-        //    }
-
-        //    else if (controller.isAttacking && (myCollider == weaponCollider || (myCollider == legCollider && attackNumber == 5)))
-        //    {
-        //        EventBus.TriggerEvent(EventTypes.Events.ON_LIFE_CURRENT_GAIN,
-        //            new EventTypes.Event5Param(attackNumber, 0));
-
-        //        EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
-        //            new EventTypes.Event9Param(other.transform.position, FXList.FXlist.BasicHit2, myCollider.transform.rotation));
-
-        //        DamageEnemy(other, 10f);
-        //    }
-        //}
-
-        //// Updated to use Collider parameter
-        //void DamageEnemy(Collider other, float damage)
-        //{
-        //    var enemyScript = other.GetComponent<EnemyAI>();
-        //    if (enemyScript != null)
-        //    {
-        //        enemyScript.TakeDamage(damage);
-        //    }
-        //}
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 
-public class WeaponTrigger : MonoBehaviour
+/*public class WeaponTrigger : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -29,4 +29,4 @@ public class WeaponTrigger : MonoBehaviour
             enemyScript.TakeDamage(damage);
         }
     }
-}
+}*/
