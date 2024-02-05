@@ -10,6 +10,8 @@ public class GrenadierMissile : MonoBehaviour
     private float LaunchTime;
     private CharacterProximityDetector prox;
 
+    // These values should be set by the caller
+    public float Damage = 10f;
     public float MaxLifeSpan = 10f;
 
     void Start()
@@ -40,14 +42,14 @@ public class GrenadierMissile : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
+        if (col.gameObject.tag == "Player")
+        {
+            EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, Damage);
+        }
+
         // TODO: smarter collision detection with ground. Checking for collision with object in "Walkable" layer
         // creates a bunch of performance issues so this instead should be fine for now
         Explode();
-
-        // if (col.gameObject.tag == "Player" || col.gameObject.tag == "Collide")
-        // {
-        //     Explode();
-        // }
     }
 
     void Explode()

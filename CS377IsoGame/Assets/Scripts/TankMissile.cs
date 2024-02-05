@@ -6,11 +6,12 @@ using UnityEngine.Events;
 
 public class TankMissile : MonoBehaviour
 {
-    public float MaxLifeSpan = 5f;
-    public float MissileDamage = 10f;
-
     private Rigidbody rb;
     private float SpawnTime;
+
+    // These values should be set by the caller
+    public float MaxLifeSpan = 5f;
+    public float Damage = 10f;
 
     void Start()
     {
@@ -39,7 +40,7 @@ public class TankMissile : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             Explode();
-            EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, MissileDamage);
+            EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, Damage);
         }
 
         else if (col.gameObject.tag == "Collide")
