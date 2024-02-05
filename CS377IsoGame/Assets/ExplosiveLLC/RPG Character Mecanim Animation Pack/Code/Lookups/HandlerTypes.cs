@@ -45,5 +45,6 @@ namespace RPGCharacterAnims.Lookups
         public static readonly string Jump = "Jump";
         public static readonly string DoubleJump = "DoubleJump";
         public static readonly string Talk = "Talk";
+        public static readonly string EnhancedAttack = "EnhancedAttack";
     }
 }

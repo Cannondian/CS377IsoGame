@@ -361,10 +361,10 @@ namespace RPGCharacterAnims
 			// Check to make character can Attack.
 			if (!rpgCharacterController.CanStartAction(HandlerTypes.Attack)) { return; }
 
-			if (inputAttackL)
+			if (inputAttackR && CoreChargeManager.Instance.enhancedAttackReady)
+			{ rpgCharacterController.StartAction(HandlerTypes.Attack, new AttackContext(HandlerTypes.EnhancedAttack, Side.Left)); }
+			else if (inputAttackL)
 			{ rpgCharacterController.StartAction(HandlerTypes.Attack, new AttackContext(HandlerTypes.Attack, Side.Left)); }
-			else if (inputAttackR)
-			{ rpgCharacterController.StartAction(HandlerTypes.Attack, new AttackContext(HandlerTypes.Attack, Side.Right)); }
 			else if (inputCastL)
 			{ rpgCharacterController.StartAction(HandlerTypes.AttackCast, new AttackCastContext(AnimationVariations.AttackCast.TakeRandom(), Side.Left)); }
 			else if (inputCastR)

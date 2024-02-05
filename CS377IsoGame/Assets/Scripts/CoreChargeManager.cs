@@ -112,30 +112,38 @@ using UnityEngine.UI;
         private void UpdateCoreCharge(EventTypes.Event5Param context)
         {
             recentlyAttacked = true;
-            switch (context.attackNumber)
+            
+            if (coreChargeState >= 45)
             {
-                case 0:
-                    coreChargeState += 2;
-                    break;
-                case 1:
-                    coreChargeState += 3;
-                    break;
-                case 2:
-                    coreChargeState += 4;
-                    break;
-                case 3:
-                    coreChargeState += 7;
-                    break;
+                enhancedAttackReady = true;
+            }
+            else
+            {
 
+
+
+                switch (context.attackNumber)
+                {
+                    case 0:
+                        coreChargeState += 2;
+                        break;
+                    case 1:
+                        coreChargeState += 3;
+                        break;
+                    case 2:
+                        coreChargeState += 4;
+                        break;
+                    case 3:
+                        coreChargeState += 7;
+                        break;
+
+                }
             }
 
             UpdateCoreChargeParticles();
 
 
-            if (coreChargeState >= 45)
-            {
-                enhancedAttackReady = true;
-            }
+            
 
 
             if (atBaseValue)
@@ -150,9 +158,7 @@ using UnityEngine.UI;
         {
             if (isTriggered)
             {
-
-
-
+                
                 enhancedAttackReady = !isTriggered;
 
                 coreChargeState = 0;

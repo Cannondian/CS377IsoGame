@@ -85,9 +85,10 @@ namespace RPGCharacterAnims.Actions
 				);
 				EndAction(controller);
 			}
-			else if (context.type == "Special") {
-				controller.isSpecial = true;
-				controller.StartSpecial(attackNumber);
+			else if (context.type == "EnhancedAttack") {
+				
+				controller.EnhancedAttack();
+				EndAction(controller);
 			}
 		}
 

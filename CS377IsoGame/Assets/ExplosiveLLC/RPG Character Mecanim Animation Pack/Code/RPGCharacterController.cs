@@ -530,8 +530,8 @@ using Null = RPGCharacterAnims.Actions.Null;
 
 			private void OnEnable()
 			{
-				EnhancedAttackListener += EnhancedAttack;
-				EventBus.StartListening(EventTypes.Events.ON_JISA_ENHANCED_ATTACK_READY, EnhancedAttackListener);
+				
+				
 			}
 
 			private void OnDisable()
@@ -903,8 +903,8 @@ using Null = RPGCharacterAnims.Actions.Null;
 			public void DiveRoll(DiveRollType rollType)
 			{
 				animator.TriggerDiveRoll(rollType);
-				Lock(true, true, true, 0, 0.7f);
-				SetIKPause(0.705f);
+				Lock(true, true, true, 0, 0.55f);
+				SetIKPause(0.6f);
 			}
 
 			/// <summary>
@@ -1145,14 +1145,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 			/// <param name="duration">Duration in seconds that animation is locked.</param>
 			public void Attack(Side attackSide, Weapon leftWeapon, Weapon rightWeapon, float duration)
 			{
-				if (CoreChargeManager.Instance.coreChargeState >= 45)
-				{
-
-					StartCoroutine(DelayForEnhancedAttack(AnimatorTrigger.AttackTrigger, 3, 0.15f, duration));
-
-
-				}
-				else
+				
 				{
 
 					ControlCombos();
@@ -1203,9 +1196,10 @@ using Null = RPGCharacterAnims.Actions.Null;
 				yield return new WaitForSeconds(delay);
 				animator.SetActionTrigger(AnimatorTrigger.AttackTrigger, 3);
 				_isAttacking = true;
+				comboIndex = attackComboIndex;
 				EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK, true);
 				Debug.Log("ready!!");
-				Lock(true, true, true, 0, duration + 0.3f);
+				Lock(true, true, true, 0, duration);
 
 			}
 
@@ -1292,9 +1286,14 @@ using Null = RPGCharacterAnims.Actions.Null;
 				Lock(true, true, true, 0, 0.9f - 0.01f * coreChargeValue);
 			}
 
-			public void EnhancedAttack(bool message)
+			public void EnhancedAttack()
 			{
-				enhancedAttackIsReady = message;
+
+				_isAttacking = true;
+				StartCoroutine(DelayForEnhancedAttack(AnimatorTrigger.AttackTrigger, 3, 0.15f, 0.5f));
+
+
+				
 			}
 
 			/// <summary>

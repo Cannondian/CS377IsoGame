@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace EgeCode
 {
-    
+
 
 
     public class PlayerCombatCollisions : MonoBehaviour
@@ -38,8 +38,7 @@ namespace EgeCode
 
             Collider myCollider = collision.GetContact(0).thisCollider;
             int attackNumber = controller.comboIndex;
-            if (controller.isAttacking && myCollider == weaponCollider ||
-                myCollider == legCollider && CoreChargeManager.Instance.coreChargeState >= 45)
+            if (controller.isAttacking && myCollider == weaponCollider && attackNumber == 3)
             {
                 EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
                     new EventTypes.Event9Param(collision.contacts[0].point, FXList.FXlist.ElectricHit,
@@ -48,7 +47,7 @@ namespace EgeCode
                     CharacterEnergy.Instance.energyFromEnhancedBasic);
                 EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK, true);
             }
-            else if (controller.isAttacking && (myCollider == weaponCollider || myCollider == legCollider))
+            else if (controller.isAttacking && (myCollider == weaponCollider || (myCollider == legCollider && attackNumber == 5)))
 
             {
                 EventBus.TriggerEvent(EventTypes.Events.ON_LIFE_CURRENT_GAIN,

@@ -78,7 +78,6 @@ namespace RPGCharacterAnims.Actions
         // Update is called once per frame
         void LateUpdate()
         {
-            
             ActiveFX();
         }
 
@@ -264,9 +263,9 @@ namespace RPGCharacterAnims.Actions
             {
                 case FXList.FXlist.BasicHit2:
                    
-                        var hitObject = Instantiate(BasicHit2Prefab, context.hitPosition, context.quaternion);
+                    var hitObject = Instantiate(BasicHit2Prefab, context.hitPosition, context.quaternion);
                         
-                        TerminateFX(0.5f, hitObject);
+                    TerminateFX(0.5f, hitObject);
                     
 
                     break;
