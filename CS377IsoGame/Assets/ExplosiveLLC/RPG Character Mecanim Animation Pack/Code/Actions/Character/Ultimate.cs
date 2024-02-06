@@ -17,8 +17,8 @@ namespace RPGCharacterAnims.Actions
         
         public Ultimate()
         {
-            OnUltimateReadyListener += IsUltimateReadyUpdate;
-            OnEnable();
+           
+            
             
         }
         
@@ -26,7 +26,7 @@ namespace RPGCharacterAnims.Actions
         
         public override bool CanStartAction(RPGCharacterController controller)
         {
-            return !controller.isRelaxed && !active && !controller.isCasting && controller.canAction && isUltimateReady;
+            return !controller.isRelaxed && !active && !controller.isCasting && controller.canAction && CharacterEnergy.Instance.ultimateIsReady;
         }
 
         public override bool CanEndAction(RPGCharacterController controller)
@@ -45,17 +45,16 @@ namespace RPGCharacterAnims.Actions
             var playerTransform = context.location;
             var terrain = context.terrain;
 
-            if (CharacterEnergy.Instance.ultimateIsReady)
-            {
+           
                     EventBus.TriggerEvent(EventTypes.Events.ON_CONTINOUS_PACRTICLE_FX_TRIGGER, 
-                        new EventTypes.Event2Param(Color.green, playerTransform, FXList.FXlist.Electricity1, 5, 0.3f));
+                        new EventTypes.Event2Param(Color.green, playerTransform, FXList.FXlist.Electricity1, 10, 0.3f));
                     controller.Ultimate(
                         Characters.Jisa,
                         0.1f);
                     EndAction(controller);
                     Debug.Log("it gets here33");
                     
-            }
+            
 
             /*
             if (attackNumber == -1) {
@@ -104,12 +103,12 @@ namespace RPGCharacterAnims.Actions
 
         private void OnEnable()
         {
-            EventBus.StartListening(EventTypes.Events.ON_ULTIMATE_READY, OnUltimateReadyListener);
+            
         }
 
         private void OnDisable()
         {
-            EventBus.StopListening(EventTypes.Events.ON_ULTIMATE_READY, OnUltimateReadyListener);
+           
         }
     }
 }

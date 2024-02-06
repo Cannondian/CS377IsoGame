@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class TileElement : MonoBehaviour
 {
+    #region Brainstorm
+
+    //how do we design the tile system? Tiles have a component called tileElement, but since these components
+    //exist for all tiles, it might slow down the system to have this component do the work to apply status on entities
+    //we should have a component on the entities check for element tiles, and if they are standing on one, a component should apply
+    //status conditions as they are appropriate
+
+    #endregion
+    
+    
+    
     enum ElementType {Mech,Plant,Fire,Ice,Blob,Dust,Radioactive}
     [SerializeField] private ElementType elementType;
 
@@ -15,8 +26,11 @@ public class TileElement : MonoBehaviour
     }
 
     // Update is called once per frame
+    
     void Update()
     {
+        //good design to have this in the update, this way we can change tile in response to player actions,
+        //that being said, maybe we can have a switch statement?
         if (elementType == ElementType.Mech)
         {
             tileRender.material.color = Color.black;
@@ -31,11 +45,11 @@ public class TileElement : MonoBehaviour
         }
         else if (elementType == ElementType.Ice)
         {
-            tileRender.material.color = Color.cyan;
+            tileRender.material.color = Color.white;
         }
         else if (elementType == ElementType.Blob)
         {
-            tileRender.material.color = Color.white;
+            tileRender.material.color = Color.cyan;
         }
         else if (elementType == ElementType.Dust)
         {
@@ -46,17 +60,6 @@ public class TileElement : MonoBehaviour
             tileRender.material.color = Color.yellow;
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == GameObject.Find("Player"))
-        {
-            if (elementType == ElementType.Mech)
-            {
-                //
-            }
-            
-        }
-    }
+    
 }
 

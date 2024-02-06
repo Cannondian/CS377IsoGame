@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class JisaSkillCollision : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private bool isDamageDealt;
+    
+   //ensure that damage is dealt only once
+    private void Awake()
     {
-        
+        isDamageDealt = false;
     }
 
     // Update is called once per frame
@@ -19,7 +22,12 @@ public class JisaSkillCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        DamageEnemy(other, 50);
+        if (!isDamageDealt)
+        {
+            DamageEnemy(other, 100);
+            isDamageDealt = true;
+        }
+        
     }
     void DamageEnemy(Collider other, float damage)
     {

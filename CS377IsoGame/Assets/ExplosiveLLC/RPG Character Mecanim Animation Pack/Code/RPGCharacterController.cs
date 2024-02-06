@@ -668,7 +668,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 			{
 				// Update Animator animation speed.
 				animator.SetFloat(AnimationParameters.AnimationSpeed, animationSpeed);
-				animator.SetFloat(AnimationParameters.CustomAnimationSpeed, 1.3f);
+				animator.SetFloat(AnimationParameters.CustomAnimationSpeed, 1.4f);
 				animator.SetFloat(AnimationParameters.AttackSpeed, 1 + coreChargeValue * 1 / 90);
 
 				// Aiming.
@@ -903,8 +903,8 @@ using Null = RPGCharacterAnims.Actions.Null;
 			public void DiveRoll(DiveRollType rollType)
 			{
 				animator.TriggerDiveRoll(rollType);
-				Lock(true, true, true, 0, 0.55f);
-				SetIKPause(0.6f);
+				Lock(true, true, true, 0, 0.40f);
+				SetIKPause(0.45f);
 			}
 
 			/// <summary>
