@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using RPGCharacterAnims;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace EgeCode
@@ -32,8 +33,7 @@ namespace EgeCode
                 EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
                     new EventTypes.Event9Param(transform.position, FXList.FXlist.ElectricHit, transform.rotation));
 
-                EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
-                    CharacterEnergy.Instance.energyFromEnhancedBasic);
+                EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN, CharacterEnergy.Instance.energyFromEnhancedBasic);
 
                 EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK, true);
 
@@ -47,6 +47,7 @@ namespace EgeCode
 
                 EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
                     new EventTypes.Event9Param(transform.position, FXList.FXlist.BasicHit2, transform.rotation));
+                EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN, CharacterEnergy.Instance.energyFromBasic);
 
                 DamageEnemy(other, 10f);
             }
