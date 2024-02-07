@@ -9,7 +9,7 @@ public class CharacterHealth : Singleton<CharacterHealth>
     public float currentHealth;
     public float maxHealth;
 
-    public UnityEngine.UI.Slider healthSlider;
+    [SerializeField] public UnityEngine.UI.Slider healthSlider;
 
     private UnityAction<float> UpdateCharacterHealthListener;
 

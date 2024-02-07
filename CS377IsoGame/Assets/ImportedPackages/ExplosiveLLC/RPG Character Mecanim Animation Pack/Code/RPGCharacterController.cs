@@ -76,7 +76,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 			/// <summary>
 			/// Target for Aiming/Strafing.
 			/// </summary>
-			public Transform target;
+			[SerializeField] public Transform target; // TODO: Do we need this anymore? (Currently set to Target prefab in archive)
 
 			private PerfectLookAt headLookController;
 

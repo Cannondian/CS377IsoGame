@@ -12,8 +12,8 @@ public class CharacterEnergy : Singleton<CharacterEnergy>
     private UnityAction<float> SkillIsUsedListener;
     private UnityAction<float> IncrementEenergyListener;
 
-    public Slider skillSlider;
-    public Slider ultimateSlider;
+    [SerializeField] public Slider skillSlider;
+    [SerializeField] public Slider ultimateSlider;
     
     private float ultimateEnergyState;
     private float skillEnergyState;
