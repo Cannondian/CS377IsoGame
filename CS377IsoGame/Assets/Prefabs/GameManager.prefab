@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6228713917074163442
+--- !u!1 &8092230475332279579
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,11 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3037193693723402660}
-  - component: {fileID: 5504197826944238314}
-  - component: {fileID: 4683695922651799706}
-  - component: {fileID: 222147172677648759}
-  - component: {fileID: 985032032100087733}
+  - component: {fileID: 7832651123080769849}
+  - component: {fileID: 1988613076621279971}
+  - component: {fileID: 7973075161341344649}
+  - component: {fileID: 7724083383661400374}
+  - component: {fileID: 303611559715645414}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -20,13 +20,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3037193693723402660
+--- !u!4 &7832651123080769849
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6228713917074163442}
+  m_GameObject: {fileID: 8092230475332279579}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -35,13 +35,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5504197826944238314
+--- !u!114 &1988613076621279971
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6228713917074163442}
+  m_GameObject: {fileID: 8092230475332279579}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b68477130a2845519590b44e74e1d74, type: 3}
@@ -51,13 +51,13 @@ MonoBehaviour:
   previousUpdateSentAt: 0
   enhancedAttackReady: 0
   coreChargeSlider: {fileID: 0}
---- !u!114 &4683695922651799706
+--- !u!114 &7973075161341344649
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6228713917074163442}
+  m_GameObject: {fileID: 8092230475332279579}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec986792b05e84c5884c41a0b3e4a734, type: 3}
@@ -81,13 +81,13 @@ MonoBehaviour:
   EnhancedBasicHit3: {fileID: 3635571269192305790, guid: 61f789503d5e34143a812fb1bff9e2fd, type: 3}
   coreChargeParticles: {fileID: 0}
   alreadyPlaying: 0
---- !u!114 &222147172677648759
+--- !u!114 &7724083383661400374
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6228713917074163442}
+  m_GameObject: {fileID: 8092230475332279579}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90bf28147fa324909ae9cf71e42c4604, type: 3}
@@ -104,13 +104,13 @@ MonoBehaviour:
   energyFromKill: 5
   energyFromHit: 1
   energyModifier: 0
---- !u!114 &985032032100087733
+--- !u!114 &303611559715645414
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6228713917074163442}
+  m_GameObject: {fileID: 8092230475332279579}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: afb7c8998e638154391d51a6e6c6a9c0, type: 3}
