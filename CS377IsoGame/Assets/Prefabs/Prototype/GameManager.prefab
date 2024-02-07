@@ -79,7 +79,7 @@ MonoBehaviour:
   EnhancedBasicHit: {fileID: 0}
   EnhancedBasicHit2: {fileID: 3635571269192305790, guid: 61f789503d5e34143a812fb1bff9e2fd, type: 3}
   EnhancedBasicHit3: {fileID: 3635571269192305790, guid: 61f789503d5e34143a812fb1bff9e2fd, type: 3}
-  coreChargeParticles: {fileID: 0}
+  coreChargeParticles: {fileID: 1065394818169530, guid: c801875a71819469bbf6eff75e76db42, type: 3}
   alreadyPlaying: 0
 --- !u!114 &709505195963040084
 MonoBehaviour:
