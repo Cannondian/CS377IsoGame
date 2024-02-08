@@ -127,7 +127,8 @@ public class LaserTurretController : EnemyAI
             LaserRenderer.enabled = true;
 
             // Check if laser hits player using a raycast
-            if (Physics.Raycast(transform.position, transform.forward, attackRange, playerLayerMask))
+            // Note: For some reason, we need to set origin to transform.position since BarrelTransform.position causes laser to miss.
+            if (Physics.Raycast(transform.position, BarrelTransform.forward, attackRange, playerLayerMask))
             {
                 // Call the player's take damage event, deal damage per physics tick if it hits player
                 EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, AttackDamage);
