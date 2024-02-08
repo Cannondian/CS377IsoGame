@@ -35,7 +35,7 @@ public class LaserTurretController : EnemyAI
         }
         else
         {
-            Debug.Log("Missing Laser Renderer!");
+            Debug.LogError("Missing Laser Renderer!");
         }
 
         playerLayerMask = LayerMask.GetMask("Player");
@@ -65,8 +65,8 @@ public class LaserTurretController : EnemyAI
         float turretAngle = Vector3.SignedAngle(Vector3.forward, toPlayer, Vector3.up);
 
         // Smooth rotation from current angle to desired angle
-        CurrentTurretAngles = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0f, turretAngle, 0f), TurnRate * Time.deltaTime);
-        transform.rotation = CurrentTurretAngles;
+        CurrentTurretAngles = Quaternion.Slerp(TurretTransform.rotation, Quaternion.Euler(0f, turretAngle, 0f), TurnRate * Time.deltaTime);
+        TurretTransform.rotation = CurrentTurretAngles;
     }
 
     void MaybeFire()
