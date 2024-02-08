@@ -6,7 +6,6 @@ public class LaserTurretController : EnemyAI
 {
     [SerializeField] Transform TurretTransform;
     [SerializeField] Transform BarrelTransform;
-    [SerializeField] CapsuleCollider LaserCollider;
     [SerializeField] LineRenderer LaserRenderer;
 
     public float TurnRate;
@@ -24,24 +23,25 @@ public class LaserTurretController : EnemyAI
     private float CurrentCooldownTime;
     private bool InCooldown;
 
+    private LayerMask playerLayerMask;
+
     protected override void Awake()
     {
         base.Awake();
 
-        if (LaserRenderer != null && LaserCollider != null)
+        if (LaserRenderer != null)
         {
             LaserRenderer.enabled = false;
-            LaserCollider.enabled = false;
         }
         else
         {
-            Debug.Log("Missing Laser Renderer or Laser Collider!");
+            Debug.Log("Missing Laser Renderer!");
         }
+
+        playerLayerMask = LayerMask.GetMask("Player");
 
         Health = 100f;
         AttackDamage = 0.5f;
-
-        LaserCollider.GetComponentInParent<EnemyLaser>().DamagePerTick = AttackDamage;
     }
 
     protected override void ChasePlayer()
@@ -121,20 +121,21 @@ public class LaserTurretController : EnemyAI
             // Only add fire time if laser is actively on
             CurrentFireTime += Time.deltaTime;
 
-            // Turn on and set laser renderer and collider
+            // Turn on and set laser renderer
             LaserRenderer.SetPosition(0, BarrelTransform.position);
             LaserRenderer.SetPosition(1, BarrelTransform.position + BarrelTransform.forward * attackRange);
             LaserRenderer.enabled = true;
 
-            // Alternatively, we could set the collider size on, say, awake. But, in case we want to change the laser length mid-game...
-            LaserCollider.height = 2f * (attackRange + 5f); // 5f is to account for barrel length
-            LaserCollider.center = new Vector3(0f, LaserCollider.center.y, LaserCollider.height/2f);
-            LaserCollider.enabled = true;
+            // Check if laser hits player using a raycast
+            if (Physics.Raycast(transform.position, transform.forward, attackRange, playerLayerMask))
+            {
+                // Call the player's take damage event, deal damage per physics tick if it hits player
+                EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, AttackDamage);
+            }
         }
         else
         {
             LaserRenderer.enabled = false;
-            LaserCollider.enabled = false;
         }
     }
 
@@ -150,7 +151,6 @@ public class LaserTurretController : EnemyAI
         BarrelTransform.Rotate(0f, 0f, CurrentSpinRate, Space.Self);
 
         LaserRenderer.enabled = false;
-        LaserCollider.enabled = false;
 
         // If not actively firing, cooldown without entering full cooldown
         if (CurrentFireTime > 0f)
