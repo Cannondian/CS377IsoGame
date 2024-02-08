@@ -70,10 +70,10 @@ public class ConditionState : MonoBehaviour
         {
             case StatusConditions.statusList.Burning:
                 burning = true;
-                if (duration > burningDuration) burningDuration = duration;
+                if (duration > burningDuration) burningDuration = duration; //refresh duration 
                 break;
             case StatusConditions.statusList.Corrosive:
-                // handle Corrosive condition
+                
                 break;
             case StatusConditions.statusList.Bleeding:
                 // handle Bleeding condition
