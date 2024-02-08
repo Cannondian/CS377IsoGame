@@ -126,6 +126,9 @@ public class ConditionState : MonoBehaviour
             case StatusConditions.statusList.Glowing:
                 // handle Glowing condition
                 break;
+            case StatusConditions.statusList.DefensiveTerrain:
+                // handle Glowing condition
+                break;
         }
     }
 
