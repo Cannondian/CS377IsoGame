@@ -17,7 +17,7 @@ public class ConditionState : MonoBehaviour
     private bool bleeding;
     private bool confused;
     private bool stunned;
-    private bool slow;
+    private bool slowed;
     private bool exhausted;
     private bool blinded;
     private bool hacked;
@@ -37,19 +37,144 @@ public class ConditionState : MonoBehaviour
     private bool unstoppable;
     private bool mutating;
     private bool glowing;
+    private bool defensiveTerrain;
 
     #endregion
-
+    
+    #region JisaStatusFlags
+    
+    
+    
+    #endregion
+    
     #region BurningData
 
     private float burningDuration;
 
     #endregion
+
+    #region CorrosiveData
+
+    private float corrosiveDuration;
+    private int corrosiveIntensity;
+
+    #endregion
     
+    #region BleedingData
+
+    private float bleedingDuration;
+    private int bleedingStackCount;
+    
+    #endregion
+    
+    #region ConfusedData
+
+    private float confusedDuration;
+    
+    #endregion
+
+    #region StunnedData
+
+    private float stunnedDuration;
+
+    #endregion
+
+    #region SlowedData
+
+    public struct Slow
+    {
+        public readonly int slowIntensity;
+        public readonly float slowDuration;
+
+        public Slow(int i, float d)
+        {
+            slowIntensity = i;
+            slowDuration = d;
+        }
+    }
+
+    private Slow[] activeSlows;
+    
+    #endregion
+
+    #region ExhaustedData
+
+    private float exhaustedDuration;
+
+    #endregion
+
+    #region  RejuvenationData
+
+    public struct Rejuvenation
+    {
+        public float duration;
+        public int intensity;
+
+        public Rejuvenation(float d, int i)
+        {
+            duration = d;
+            intensity = i;
+        }
+
+    }
+
+    private Rejuvenation[] activeRejuvenations;
+
+    #endregion
+
+    #region EnergizedData
+
+    private float energizedDuration;
+
+    #endregion
+
+    #region SlipperyStepsData
+
+    private float slipperyStepsDuration;
+    private int slipperyStepsIntensity;
+
+    #endregion
+
+    #region SmolderingStrikesData
+
+    private float smolderingStrikesDuration;
+
+    #endregion
+    
+    #region EvasiveData
+
+    private float evasiveDuration;
+    
+    #endregion
+    
+    #region DefensiveTerrainData
+
+    private float defensiveTerrainDuration;
+    
+    #endregion
+
+    #region MutatingData
+
+    private float mutatingDuration;
+
+    #endregion
+
+    #region RadiationPoisoningData
+
+    private float radiationPoisoningDuration;
+
+    #endregion
+
+    #region GlowingData
+
+    private float glowingDuration;
+
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
-        
+        activeSlows = new Slow[10];
+        activeRejuvenations = new Rejuvenation[4];
     }
 
     // Update is called once per frame
@@ -70,40 +195,87 @@ public class ConditionState : MonoBehaviour
         {
             case StatusConditions.statusList.Burning:
                 burning = true;
-                if (duration > burningDuration) burningDuration = duration; //refresh duration 
+                if (duration > burningDuration) burningDuration = duration; //refresh duration
                 break;
-            case StatusConditions.statusList.Corrosive:
-                
+            case StatusConditions.statusList.Corrosive: //intensity levels are 1, 2 and 3
+                corrosive = true;
+                if (duration > corrosiveDuration) //doesn't stack, but if a higher intensity version is applied, it inherits the longer duration from among the two
+                {
+                    corrosiveDuration = duration;
+                }
+
+                if (intensity > corrosiveIntensity)
+                {
+                    corrosiveIntensity = intensity;
+                }
                 break;
             case StatusConditions.statusList.Bleeding:
-                // handle Bleeding condition
+                bleeding = true;
+                bleedingStackCount++;
+                if (duration > bleedingDuration)
+                {
+                    bleedingDuration = duration;
+                }
                 break;
             case StatusConditions.statusList.Confused:
-                // handle Confused condition
+                confused = true;
+                if (duration > confusedDuration)
+                {
+                    confusedDuration = duration;
+                }
                 break;
             case StatusConditions.statusList.Stunned:
-                // handle Stunned condition
+                if (!glowing)
+                {
+                    stunned = true;
+                    stunnedDuration = duration;
+                }
                 break;
-            case StatusConditions.statusList.Slow:
-                // handle Slow condition
+            case StatusConditions.statusList.Slow: //intensity level between 1-18, corresponding to scaled multiples of 5%. 
+                slowed = true;            //this is an additive debuff, which means consecutive different intensity applications stack, 
+                if (activeSlows.Length <= 10)  //however, only the current active debuff with the greatest intensity actually affects the player
+                {
+                    activeSlows[activeSlows.Length - 1] = new Slow(intensity, duration);
+                }
                 break;
             case StatusConditions.statusList.Exhausted:
-                // handle Exhausted condition
+                exhausted = true;
+                if(exhaustedDuration < duration) exhaustedDuration = duration;
                 break;
-            case StatusConditions.statusList.Rejuvenation:
-                // handle Rejuvenation condition
+            case StatusConditions.statusList.Rejuvenation: //intensity level between 1-4, works the same way as slow
+                rejuvenation = true;
+                if (activeRejuvenations.Length <=4)
+                {
+                    activeRejuvenations[activeRejuvenations.Length - 1] = new Rejuvenation(duration, intensity);
+                }
                 break;
             case StatusConditions.statusList.Energized:
-                // handle Energized condition
+                energized = true;
+                if (energizedDuration < duration) energizedDuration = duration;
                 break;
-            case StatusConditions.statusList.SlipperySteps:
-                // handle SlipperySteps condition
+            case StatusConditions.statusList.SlipperySteps: //buff with the highest intensity is used. Duration is constant for every application and is always reset
+                slipperySteps = true;                       //intensity between 1-3;
+                                                            //at intensity 3, also increases attack speed
+                if (intensity > slipperyStepsIntensity)
+                {
+                    slipperyStepsIntensity = intensity;
+                    slipperyStepsDuration = duration;
+                }
+                else
+                {
+                    slipperyStepsDuration = duration;
+                }
                 break;
-            case StatusConditions.statusList.SmolderingStrikes:
-                // handle SmolderingStrikes condition
+            case StatusConditions.statusList.SmolderingStrikes: //scales with attack but has fixed intensity
+                smolderingStrikes = true;
+                if (smolderingStrikesDuration < duration)
+                {
+                    smolderingStrikesDuration = duration;
+                }
                 break;
             case StatusConditions.statusList.Evasive:
-                // handle Evasive condition
+                evasive = true;
+                if (evasiveDuration < duration) evasiveDuration = duration;
                 break;
             case StatusConditions.statusList.Blinded:
                 // handle Blinded condition
@@ -118,16 +290,20 @@ public class ConditionState : MonoBehaviour
                 // handle Unstoppable condition
                 break;
             case StatusConditions.statusList.RadiationPoisoning:
-                // handle RadiationPoisoning condition
+                radiationPoisoning = true;
+                if (radiationPoisoningDuration < duration) radiationPoisoningDuration = duration;
                 break;
             case StatusConditions.statusList.Mutating:
-                // handle Mutating condition
+                mutating = true;
+                if (mutatingDuration < duration) mutatingDuration = duration;
                 break;
             case StatusConditions.statusList.Glowing:
-                // handle Glowing condition
+                glowing = true;
+                if (glowingDuration < duration) glowingDuration = duration;
                 break;
-            case StatusConditions.statusList.DefensiveTerrain:
-                // handle Glowing condition
+            case StatusConditions.statusList.DefensiveTerrain: //fixed intensity, scales with defense
+                defensiveTerrain = true;
+                if (defensiveTerrainDuration < duration) defensiveTerrainDuration = duration;
                 break;
         }
     }
