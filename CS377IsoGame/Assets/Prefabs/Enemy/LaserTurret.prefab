@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 672865481727543182}
   - component: {fileID: 4984614034356776836}
   - component: {fileID: 5103525452556988543}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: EnemyCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 5482388557896981660}
   - component: {fileID: 5430994516524831932}
   - component: {fileID: 1164143871068752202}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Turret_Medium_01_Gun_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 5559296747474508091}
   - component: {fileID: 7745773334606793645}
   - component: {fileID: 7928083915730370731}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Turret_Medium_01_Pivot_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2207806813919833658}
   - component: {fileID: 5465502576255269825}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -432,7 +432,7 @@ GameObject:
   - component: {fileID: 8983493854181388072}
   - component: {fileID: 8209002257798234674}
   - component: {fileID: 5960566213668016564}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: LaserTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -598,7 +598,7 @@ GameObject:
   - component: {fileID: 3532599648300979771}
   - component: {fileID: 1244618307855032710}
   - component: {fileID: 4261862252533162994}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -673,7 +673,7 @@ GameObject:
   - component: {fileID: 2916059628453049774}
   - component: {fileID: 8884333438749656654}
   - component: {fileID: 7911386881189403681}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -746,7 +746,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6004524414137769871}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -786,7 +786,7 @@ GameObject:
   - component: {fileID: 2146142261560246807}
   - component: {fileID: 3711119619321734376}
   - component: {fileID: 8989169434501977155}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Turret_Medium_01_Barrell_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
