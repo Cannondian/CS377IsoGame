@@ -16,7 +16,6 @@ public class LaserTurretController : EnemyAI
     public float MaxFireTime; // Max time before laser turns off
     public float CooldownTime;
 
-
     private Quaternion CurrentTurretAngles;
     private float CurrentSpinRate;
     private float CurrentFireTime;
@@ -24,6 +23,7 @@ public class LaserTurretController : EnemyAI
     private bool InCooldown;
 
     private LayerMask playerLayerMask;
+
 
     protected override void Awake()
     {
