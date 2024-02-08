@@ -8,14 +8,14 @@ using UnityEngine;
 public class PlayerCombatCollisions : MonoBehaviour
 {
 
-    //one idea to make thes ebetter would be to turn on their colliders at the end of the attack animation
+    //one idea to make this better would be to turn on their colliders at the end of the attack animation
         private RPGCharacterController controller;
         private int attackNumber;
         private bool isNewAttack;
         void Start()
         {
             controller = FindObjectOfType<RPGCharacterController>();
-            Debug.Log("Started!");
+            
             attackNumber = -1;
             
 
@@ -74,7 +74,7 @@ public class PlayerCombatCollisions : MonoBehaviour
                                 transform.rotation));
                         EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
                             CharacterEnergy.Instance.energyFromBasic);
-
+                        
                         DamageEnemy(other, 6f);
                     }
                 }
@@ -86,6 +86,7 @@ public class PlayerCombatCollisions : MonoBehaviour
         void DamageEnemy(Collider other, float damage)
         {
             var enemyScript = other.gameObject.GetComponent<EnemyAI>();
+            
             if (enemyScript != null)
             {
                 enemyScript.TakeDamage(damage);

@@ -33,6 +33,8 @@ public abstract class EnemyAI : MonoBehaviour
     public void TakeDamage(float amount)
     {
         Health -= amount;
+        Debug.Log("damaged");
+        UpdateCanvas();
         if (Health <= 0)
         {
             Die();

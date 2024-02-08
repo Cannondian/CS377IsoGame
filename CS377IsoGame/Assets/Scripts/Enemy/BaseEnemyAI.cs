@@ -65,5 +65,6 @@ public class BaseEnemyAI : EnemyAI
     protected override void UpdateCanvas()
     {
         healthBar.value = Health;
+        
     }
 }
