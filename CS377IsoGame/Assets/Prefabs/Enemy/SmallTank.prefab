@@ -1270,6 +1270,8 @@ GameObject:
   - component: {fileID: 739271350479255581}
   - component: {fileID: -6462754791197078523}
   - component: {fileID: 7657220417883237292}
+  - component: {fileID: 7713871945318501067}
+  - component: {fileID: 5825425988576240823}
   m_Layer: 15
   m_Name: SmallTank
   m_TagString: Untagged
@@ -1481,6 +1483,60 @@ MonoBehaviour:
   amIEnemy: 0
   healthSlider: {fileID: 0}
 --- !u!114 &7657220417883237292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249467750170484920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHP: 0
+  baseSpeed: 0
+  baseAttack: 0
+  baseDefense: 0
+  baseAttackSpeed: 0
+  baseResistance: 0
+  baseRRR: 0
+  baseTalent: 0
+  ceHP: 200
+  ceSpeed: 0
+  ceAttack: 0
+  ceDefense: 0
+  ceAttackSpeed: 0
+  ceResistance: 0
+  ceRRR: 0
+  ceTalent: 0
+  tHP: 0
+  tSpeed: 0
+  tAttack: 0
+  tDefense: 0
+  tAttackSpeed: 0
+  tResistance: 0
+  tRRR: 0
+  tTalent: 0
+--- !u!114 &7713871945318501067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249467750170484920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb7c8998e638154391d51a6e6c6a9c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myStats: {fileID: 5825425988576240823}
+  currentHealth: 0
+  maxHealth: 0
+  myEnemyAI: {fileID: 0}
+  amIEnemy: 0
+  healthSlider: {fileID: 0}
+--- !u!114 &5825425988576240823
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

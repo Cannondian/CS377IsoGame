@@ -755,6 +755,8 @@ GameObject:
   - component: {fileID: 6799839855121957263}
   - component: {fileID: 6795237310042002662}
   - component: {fileID: 586934099303329781}
+  - component: {fileID: -4856829011407229531}
+  - component: {fileID: 5834155264996016191}
   m_Layer: 15
   m_Name: GrenadierTurret
   m_TagString: Untagged
@@ -864,6 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293558879df9d084a87b5fc806cf37be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHealth: {fileID: 0}
   player: {fileID: 0}
   Walkable:
     serializedVersion: 2
@@ -888,6 +891,7 @@ MonoBehaviour:
   MissileLaunchOffset: 2
   HorizontalMissileVelocity: 10
   FireDelay: 3
+  MissileMaxLifeSpan: 10
 --- !u!195 &586934099303329781
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -910,6 +914,60 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-4856829011407229531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8282471175162880380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb7c8998e638154391d51a6e6c6a9c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myStats: {fileID: 5834155264996016191}
+  currentHealth: 0
+  maxHealth: 0
+  myEnemyAI: {fileID: 0}
+  amIEnemy: 0
+  healthSlider: {fileID: 0}
+--- !u!114 &5834155264996016191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8282471175162880380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHP: 0
+  baseSpeed: 0
+  baseAttack: 0
+  baseDefense: 0
+  baseAttackSpeed: 0
+  baseResistance: 0
+  baseRRR: 0
+  baseTalent: 0
+  ceHP: 200
+  ceSpeed: 0
+  ceAttack: 0
+  ceDefense: 0
+  ceAttackSpeed: 0
+  ceResistance: 0
+  ceRRR: 0
+  ceTalent: 0
+  tHP: 0
+  tSpeed: 0
+  tAttack: 0
+  tDefense: 0
+  tAttackSpeed: 0
+  tResistance: 0
+  tRRR: 0
+  tTalent: 0
 --- !u!1 &8361992720485582721
 GameObject:
   m_ObjectHideFlags: 0
