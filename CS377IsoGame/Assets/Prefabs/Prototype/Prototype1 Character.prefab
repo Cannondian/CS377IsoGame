@@ -614,6 +614,12 @@ PrefabInstance:
       insertIndex: 0
       addedObject: {fileID: 2357456992364016474}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 814506524793027058, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7013306702040076005}
+    - targetCorrespondingSourceObject: {fileID: 814506524793027058, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7158238824673921091}
     - targetCorrespondingSourceObject: {fileID: 3517418248502277907, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1090439974771012981}
@@ -722,6 +728,62 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &1679471075052826140 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 814506524793027058, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
+  m_PrefabInstance: {fileID: 2018487110055991278}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7013306702040076005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679471075052826140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHP: 0
+  baseSpeed: 0
+  baseAttack: 0
+  baseDefense: 0
+  baseAttackSpeed: 0
+  baseResistance: 0
+  baseRRR: 0
+  baseTalent: 0
+  ceHP: 0
+  ceSpeed: 0
+  ceAttack: 0
+  ceDefense: 0
+  ceAttackSpeed: 0
+  ceResistance: 0
+  ceRRR: 0
+  ceTalent: 0
+  tHP: 0
+  tSpeed: 0
+  tAttack: 0
+  tDefense: 0
+  tAttackSpeed: 0
+  tResistance: 0
+  tRRR: 0
+  tTalent: 0
+--- !u!114 &-7158238824673921091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679471075052826140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480d3ece0d8b243b081b8e1f49c56c42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amIEnemy: 0
+  theSoulOfTheEnemy: {fileID: 0}
+  burning: 0
 --- !u!1 &2589302061621585758 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4606082720705261744, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}

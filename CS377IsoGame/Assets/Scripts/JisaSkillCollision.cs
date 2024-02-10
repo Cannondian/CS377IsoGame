@@ -31,10 +31,10 @@ public class JisaSkillCollision : MonoBehaviour
     }
     void DamageEnemy(Collider other, float damage)
     {
-        var enemyScript = other.gameObject.GetComponent<EnemyAI>();
-        if (enemyScript != null)
+        var enemyHealth = other.gameObject.GetComponent<Health>();
+        if (enemyHealth.amIEnemy)
         {
-            enemyScript.TakeDamage(damage);
+            enemyHealth.TakeDamage(damage);
         }
     }
 }

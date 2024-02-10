@@ -27,7 +27,8 @@ namespace RPGCharacterAnims.Actions
         private UnityAction<EventTypes.Event8Param> VariableFXListener;
         private UnityAction<EventTypes.Event9Param> HitFXListener;
 
-
+        private UnityAction<EventTypes.StatusConditionFXParam> NewStatusFXListener;
+        private UnityAction<EventTypes.StatusConditionFXParam> ExpiredStatusFXListener;
 
         #endregion
 
@@ -80,11 +81,8 @@ namespace RPGCharacterAnims.Actions
         #endregion
 
         public bool alreadyPlaying;
-        // Start is called before the first frame update
-        public void Awake()
-        {
-            
-        }
+        
+        
 
         // Update is called once per frame
         void LateUpdate()
@@ -94,7 +92,7 @@ namespace RPGCharacterAnims.Actions
 
         private void OnEnable()
         {
-            Debug.Log("are there multiple listeners?");
+            
             InitializeFXListener += InitializeArtilleryStrikeFX;
             EventBus.StartListening(EventTypes.Events.ON_PARTICLE_FX_TRIGGER, InitializeFXListener);
             ContinousFXListener += InitializeElectricityFX;
@@ -105,6 +103,10 @@ namespace RPGCharacterAnims.Actions
             EventBus.StartListening(EventTypes.Events.ON_UPDATE_CORE_CHARGE_PARTICLES, VariableFXListener);
             HitFXListener += InitializeHitFX;
             EventBus.StartListening(EventTypes.Events.ON_BASIC_ATTACK_HIT, HitFXListener);
+            NewStatusFXListener += InitializeStatusConditionFX;
+            EventBus.StartListening(EventTypes.Events.ON_NEW_STATUS_CONDITION, NewStatusFXListener);
+            ExpiredStatusFXListener += TerminateStatusConditionFX;
+            EventBus.StartListening(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION, ExpiredStatusFXListener);
 
         }
 
@@ -221,19 +223,21 @@ namespace RPGCharacterAnims.Actions
         {
             //invariant here is that the StatusConditionState class doesn't send duplicates for any given effect
             //before removing the previous one
-            
+           
             if (ActiveStatusEffectsDict.TryGetValue(context.caller, out var activeStatusFX))
             {
+                
                 if (activeStatusFX.Count < 3)
                 {
+                    
                     GameObject statusConditionFX = Instantiate(context.condition, context.caller.transform);
-                    statusConditionFX.name = context.name;
+                    statusConditionFX.name = context.myName;
                     activeStatusFX.Add(statusConditionFX);
                 }
                 else if (StatusEffectsOnQueue.TryGetValue(context.caller, out var queuedStatusFX)) //is the game object in the dictionary for queued status FX?
                 {
                     GameObject FXtoPutOnQueue = Instantiate(context.condition, context.caller.transform);
-                    FXtoPutOnQueue.name = context.name;
+                    FXtoPutOnQueue.name = context.myName;
                     FXtoPutOnQueue.SetActive(false);
                     queuedStatusFX.Add(FXtoPutOnQueue);
                 }
@@ -241,7 +245,7 @@ namespace RPGCharacterAnims.Actions
                 {
                     List<GameObject> objectQueuedStatusFX = new List<GameObject>();
                     GameObject FXtoPutOnQueue = Instantiate(context.condition, context.caller.transform);
-                    FXtoPutOnQueue.name = context.name;
+                    FXtoPutOnQueue.name = context.myName;
                     FXtoPutOnQueue.SetActive(false);
                     objectQueuedStatusFX.Add(FXtoPutOnQueue);
                     StatusEffectsOnQueue.Add(context.caller, objectQueuedStatusFX);
@@ -249,8 +253,11 @@ namespace RPGCharacterAnims.Actions
             }
             else
             {
-                GameObject statusConditionFX = Instantiate(context.condition, context.caller.transform);
-                statusConditionFX.name = context.name;
+                Debug.Log("this is called");
+                GameObject statusConditionFX = Instantiate(context.condition, context.caller.transform.position, 
+                    quaternion.identity, context.caller.transform );
+                statusConditionFX.transform.localPosition = new Vector3(0, -0.2f, 0);
+                statusConditionFX.name = context.myName;
                 List<GameObject> objectActiveStatusFX = new List<GameObject> { statusConditionFX };
                 ActiveStatusEffectsDict.Add(context.caller, objectActiveStatusFX);
             }
@@ -271,11 +278,11 @@ namespace RPGCharacterAnims.Actions
         {
             if (ActiveStatusEffectsDict.TryGetValue(context.caller, out var activeFX))
             {
-                GameObject FXtoTerminate = activeFX.Find(x => x.name == context.name);
+                GameObject FXtoTerminate = activeFX.Find(x => x.name == context.myName);
                 if (FXtoTerminate == null)
                 {
                     List<GameObject> FXonQueueForCaller = StatusEffectsOnQueue[context.caller];
-                    FXtoTerminate = FXonQueueForCaller.Find(x => x.name == context.name);
+                    FXtoTerminate = FXonQueueForCaller.Find(x => x.name == context.myName);
                     FXonQueueForCaller.Remove(FXtoTerminate);
                     Destroy(FXtoTerminate);
                     if (FXonQueueForCaller.Count == 0)

@@ -107,12 +107,13 @@ public class EventTypes
       public GameObject condition;
       public int intensity;
       public GameObject caller;
-      public string name;
+      public string myName;
       
-      public StatusConditionFXParam(GameObject prefab, GameObject callerObject, int intensity = 1)
+      public StatusConditionFXParam(GameObject prefab, GameObject callerObject, string name, int intensity = 1)
        {
            this.condition = prefab;
            this.intensity = intensity;
+           myName = name;
            caller = callerObject;
        }
    }

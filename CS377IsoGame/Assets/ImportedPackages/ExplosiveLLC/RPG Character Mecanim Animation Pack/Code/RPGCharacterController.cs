@@ -524,6 +524,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 			{
 				animator.SetWeapons(AnimatorWeapon.STAFF, -2, Weapon.Unarmed, Weapon.TwoHandStaff, Side.Right);
 				comboIndex = 0;
+				
 
 
 			}

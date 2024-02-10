@@ -4,7 +4,9 @@ using UnityEngine.UI;
 
 public abstract class EnemyAI : MonoBehaviour
 {
+    
     public float Health { get; protected set; }
+    [SerializeField] public Health myHealth;
     public float AttackDamage { get; protected set; }
     protected NavMeshAgent agent;
     public Transform player;
@@ -19,7 +21,7 @@ public abstract class EnemyAI : MonoBehaviour
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
     public bool stunned;
-
+    
     // UI elements
     public Slider healthBar;
 
@@ -28,16 +30,10 @@ public abstract class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         stunned = false;
+        
+        
     }
-
-    public void TakeDamage(float amount)
-    {
-        Health -= amount;
-        if (Health <= 0)
-        {
-            Die();
-        }
-    }
+    
 
     protected virtual void Die()
     {
@@ -50,7 +46,7 @@ public abstract class EnemyAI : MonoBehaviour
         // Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-
+        
         if (!stunned)
         {
             agent.isStopped = false;
@@ -63,8 +59,12 @@ public abstract class EnemyAI : MonoBehaviour
             agent.isStopped = true;
         }
 
+        Health = myHealth.currentHealth;
         UpdateCanvas();
-
+        if (Health < 0)
+        {
+            Die();
+        }
     }
 
 

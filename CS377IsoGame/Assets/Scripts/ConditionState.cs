@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using RPGCharacterAnims.Actions;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class ConditionState : MonoBehaviour
 {
+   
+    public Health mySoul;
+    
     #region Components
 
     private StatsTemplate myStats;
@@ -12,7 +17,7 @@ public class ConditionState : MonoBehaviour
     
     #region DebuffStatusFlags
 
-    private bool burning;
+    public bool burning;
     private bool corrosive;
     private bool bleeding;
     private bool confused;
@@ -180,15 +185,15 @@ public class ConditionState : MonoBehaviour
     {
         activeSlows = new Slow[10];
         activeRejuvenations = new Rejuvenation[4];
+        myStats = GetComponent<StatsTemplate>();
+        mySoul = GetComponent<Health>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (burning)
-        {
-            ApplyBurning();
-        }
+        
         if (burning)
         {
             ApplyBurning();
@@ -304,12 +309,20 @@ public class ConditionState : MonoBehaviour
         switch (condition)
         {
             case StatusConditions.statusList.Burning:
-                burning = true;
-                if (duration > burningDuration) burningDuration = duration; //refresh duration
-               /* if (!ongoingFX)
+                if (burning)
                 {
-                    
-                }*/
+                    if (duration > burningDuration) burningDuration = duration; //refresh duration
+                }
+                else
+                {
+                    burning = true;
+                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION, 
+                        new EventTypes.StatusConditionFXParam(FXHandler.Instance.BurningFXPrefab, gameObject,  nameof(StatusConditions.statusList.Burning)));
+                    burningDuration = duration;
+                }
+                //ui trigger will go here
+                
+               
                 break;
             case StatusConditions.statusList.Corrosive: //intensity levels are 1, 2 and 3
                 corrosive = true;
@@ -459,7 +472,7 @@ public class ConditionState : MonoBehaviour
         if (burningDuration % 1 == 0)
         {
             var tickDamage = myStats.tHP * 0.02f;
-            CharacterHealth.Instance.TakeDamage(tickDamage);
+            mySoul.TakeDamage(tickDamage);
         }
        
     }
