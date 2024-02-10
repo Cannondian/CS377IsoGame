@@ -188,6 +188,7 @@ public class StatsTemplate : MonoBehaviour
         }
     }
 
+    
     public void CalculateCES() //calculate and store current effective stat when stats change by sources other than buffs and debuffs
     {
         //the invariant must hold that there should be no temporary modifiers in the list of stat modifiers when this function is called

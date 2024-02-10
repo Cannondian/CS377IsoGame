@@ -53,7 +53,7 @@ public class PlayerCombatCollisions : MonoBehaviour
                     {
                         Debug.Log("collided");
                         EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
-                            new EventTypes.Event9Param(transform.position, FXList.FXlist.ElectricHit,
+                            new EventTypes.Event9Param(transform.position, FXList.FXlist.EnhancedHitFX,
                                 transform.rotation));
 
                         EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
@@ -70,7 +70,7 @@ public class PlayerCombatCollisions : MonoBehaviour
                             new EventTypes.Event5Param(attackNumber, 0));
 
                         EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
-                            new EventTypes.Event9Param(transform.position, FXList.FXlist.BasicHit2,
+                            new EventTypes.Event9Param(transform.position, FXList.FXlist.BasicHitFX,
                                 transform.rotation));
                         EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
                             CharacterEnergy.Instance.energyFromBasic);

@@ -179,7 +179,7 @@ using UnityEngine.UI;
             {
                 previousUpdateSentAt = coreChargeState;
                 EventBus.TriggerEvent(EventTypes.Events.ON_UPDATE_CORE_CHARGE_PARTICLES,
-                    new EventTypes.Event8Param(coreChargeState, false, FXList.FXlist.Electricity3));
+                    new EventTypes.Event8Param(coreChargeState, false, FXList.FXlist.ElectricityFX2));
             }
         }
 

@@ -12,8 +12,8 @@ public class EventTypes
       ON_ULTIMATE_READY,
       ON_LIFE_CURRENT_GAIN,
       ON_JISA_ENHANCED_ATTACK_READY,
-
-      
+      ON_NEW_STATUS_CONDITION,
+      ON_EXPIRED_STATUS_CONDITION,
 
       ON_PLAYER_DAMAGE_TAKEN,
 
@@ -100,5 +100,20 @@ public class EventTypes
          fx = particles;
          quaternion = q;
       }
+   }
+
+   public class StatusConditionFXParam
+   {
+      public GameObject condition;
+      public int intensity;
+      public GameObject caller;
+      public string name;
+      
+      public StatusConditionFXParam(GameObject prefab, GameObject callerObject, int intensity = 1)
+       {
+           this.condition = prefab;
+           this.intensity = intensity;
+           caller = callerObject;
+       }
    }
 }

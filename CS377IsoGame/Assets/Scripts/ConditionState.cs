@@ -6,7 +6,7 @@ public class ConditionState : MonoBehaviour
 {
     #region Components
 
-    
+    private StatsTemplate myStats;
 
     #endregion
     
@@ -50,6 +50,7 @@ public class ConditionState : MonoBehaviour
     #region BurningData
 
     private float burningDuration;
+    
 
     #endregion
 
@@ -57,6 +58,7 @@ public class ConditionState : MonoBehaviour
 
     private float corrosiveDuration;
     private int corrosiveIntensity;
+   
 
     #endregion
     
@@ -64,6 +66,7 @@ public class ConditionState : MonoBehaviour
 
     private float bleedingDuration;
     private int bleedingStackCount;
+   
     
     #endregion
     
@@ -71,11 +74,13 @@ public class ConditionState : MonoBehaviour
 
     private float confusedDuration;
     
+    
     #endregion
 
     #region StunnedData
 
     private float stunnedDuration;
+    
 
     #endregion
 
@@ -180,6 +185,111 @@ public class ConditionState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (burning)
+        {
+            ApplyBurning();
+        }
+        if (burning)
+        {
+            ApplyBurning();
+        }
+
+        if (corrosive)
+        {
+            ApplyCorrosive();
+        }
+
+        if (bleeding)
+        {
+            ApplyBleeding();
+        }
+    
+        if (confused)
+        {
+            ApplyConfused();
+        }
+    
+        if (stunned)
+        {
+            ApplyStunned();
+        }
+    
+        if (slowed)
+        {
+            ApplySlowed();
+        }
+
+        if (exhausted)
+        {
+            ApplyExhausted();
+        }
+    
+        if (blinded)
+        {
+            ApplyBlinded();
+        }
+
+        if (hacked)
+        {
+            ApplyHacked();
+        }
+    
+        if (radiationPoisoning)
+        {
+            ApplyRadiationPoisoning();
+        }
+
+// -- Buff status flags
+
+        if (rejuvenation)
+        {
+            ApplyRejuvenation();
+        }
+
+        if (energized)
+        {
+            ApplyEnergized();
+        }
+
+        if (slipperySteps)
+        {
+            ApplySlipperySteps();
+        }
+
+        if (smolderingStrikes)
+        {
+            ApplySmolderingStrikes();
+        }
+
+        if (evasive)
+        {
+            ApplyEvasive();
+        }
+
+        if (oneWithTheWorld)
+        {
+            ApplyOneWithTheWorld();
+        }
+
+        if (unstoppable)
+        {
+            ApplyUnstoppable();
+        }
+
+        if (mutating)
+        {
+            ApplyMutating();
+        }
+
+        if (glowing)
+        {
+            ApplyGlowing();
+        }
+
+        if (defensiveTerrain)
+        {
+            ApplyDefensiveTerrain();
+        }
         
     }
 /// <summary>
@@ -196,10 +306,15 @@ public class ConditionState : MonoBehaviour
             case StatusConditions.statusList.Burning:
                 burning = true;
                 if (duration > burningDuration) burningDuration = duration; //refresh duration
+               /* if (!ongoingFX)
+                {
+                    
+                }*/
                 break;
             case StatusConditions.statusList.Corrosive: //intensity levels are 1, 2 and 3
                 corrosive = true;
-                if (duration > corrosiveDuration) //doesn't stack, but if a higher intensity version is applied, it inherits the longer duration from among the two
+                if (duration >
+                    corrosiveDuration) //doesn't stack, but if a higher intensity version is applied, it inherits the longer duration from among the two
                 {
                     corrosiveDuration = duration;
                 }
@@ -208,6 +323,7 @@ public class ConditionState : MonoBehaviour
                 {
                     corrosiveIntensity = intensity;
                 }
+
                 break;
             case StatusConditions.statusList.Bleeding:
                 bleeding = true;
@@ -216,13 +332,19 @@ public class ConditionState : MonoBehaviour
                 {
                     bleedingDuration = duration;
                 }
+
                 break;
             case StatusConditions.statusList.Confused:
-                confused = true;
-                if (duration > confusedDuration)
+                if (!glowing)
                 {
-                    confusedDuration = duration;
+                    confused = true;
+
+                    if (duration > confusedDuration)
+                    {
+                        confusedDuration = duration;
+                    }
                 }
+
                 break;
             case StatusConditions.statusList.Stunned:
                 if (!glowing)
@@ -230,13 +352,21 @@ public class ConditionState : MonoBehaviour
                     stunned = true;
                     stunnedDuration = duration;
                 }
+
                 break;
             case StatusConditions.statusList.Slow: //intensity level between 1-18, corresponding to scaled multiples of 5%. 
-                slowed = true;            //this is an additive debuff, which means consecutive different intensity applications stack, 
-                if (activeSlows.Length <= 10)  //however, only the current active debuff with the greatest intensity actually affects the player
+                if (!glowing)
                 {
-                    activeSlows[activeSlows.Length - 1] = new Slow(intensity, duration);
+                    
+                    slowed = true; //this is an additive debuff, which means consecutive different intensity applications stack, 
+
+                    if (activeSlows.Length <=
+                        10) //however, only the current active debuff with the greatest intensity actually affects the player
+                    {
+                        activeSlows[activeSlows.Length - 1] = new Slow(intensity, duration);
+                    }
                 }
+
                 break;
             case StatusConditions.statusList.Exhausted:
                 exhausted = true;
@@ -318,8 +448,114 @@ public class ConditionState : MonoBehaviour
         
     }
 
-    public void ApplyConditionEffects()
+    private void ApplyBurning()
     {
-        
+        burningDuration =- Time.deltaTime;
+        if (burningDuration <= 0)
+        {
+            RemoveCondition(StatusConditions.statusList.Burning);
+        }
+
+        if (burningDuration % 1 == 0)
+        {
+            var tickDamage = myStats.tHP * 0.02f;
+            CharacterHealth.Instance.TakeDamage(tickDamage);
+        }
+       
+    }
+
+    private void ApplyCorrosive()
+    {
+        // Insert logic for 'Corrosive' state here
+    }
+
+    private void ApplyBleeding()
+    {
+        // Insert logic for 'Bleeding' state here
+    }
+
+    private void ApplyConfused()
+    {
+        // Insert logic for 'Confused' state here
+    }
+
+    private void ApplyStunned()
+    {
+        // Insert logic for 'Stunned' state here
+    }
+
+    private void ApplySlowed()
+    {
+        // Insert logic for 'Slowed' state here
+    }
+
+    private void ApplyExhausted()
+    {
+        // Insert logic for 'Exhausted' state here
+    }
+
+    private void ApplyBlinded()
+    {
+        // Insert logic for 'Blinded' state here
+    }
+
+    private void ApplyHacked()
+    {
+        // Insert logic for 'Hacked' state here
+    }
+
+    private void ApplyRadiationPoisoning()
+    {
+        // Insert logic for 'RadiationPoisoning' state here
+    }
+
+    private void ApplyRejuvenation()
+    {
+        // Insert logic for 'Rejuvenation' state here
+    }
+
+    private void ApplyEnergized()
+    {
+        // Insert logic for 'Energized' state here
+    }
+
+    private void ApplySlipperySteps()
+    {
+        // Insert logic for 'SlipperySteps' state here
+    }
+
+    private void ApplySmolderingStrikes()
+    {
+        // Insert logic for 'SmolderingStrikes' state here
+    }
+
+    private void ApplyEvasive()
+    {
+        // Insert logic for 'Evasive' state here
+    }
+
+    private void ApplyOneWithTheWorld()
+    {
+        // Insert logic for 'OneWithTheWorld' state here
+    }
+
+    private void ApplyUnstoppable()
+    {
+        // Insert logic for 'Unstoppable' state here
+    }
+
+    private void ApplyMutating()
+    {
+        // Insert logic for 'Mutating' state here
+    }
+
+    private void ApplyGlowing()
+    {
+        // Insert logic for 'Glowing' state here
+    }
+
+    private void ApplyDefensiveTerrain()
+    {
+        // Insert logic for 'DefensiveTerrain' state here
     }
 }

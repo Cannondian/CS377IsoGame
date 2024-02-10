@@ -6,14 +6,16 @@ using System.IO;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEditor.Rendering;
+
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 
 
 namespace RPGCharacterAnims.Actions
 {
-    
+
     public class FXHandler : Singleton<FXHandler>
     {
         #region Delegates
@@ -24,34 +26,47 @@ namespace RPGCharacterAnims.Actions
 
         private UnityAction<EventTypes.Event8Param> VariableFXListener;
         private UnityAction<EventTypes.Event9Param> HitFXListener;
-        
+
 
 
         #endregion
-        
+
         #region Fields
 
 
         public int coreChargeParticleLevel;
 
-        #endregion
+        public Dictionary<GameObject, List<GameObject>> ActiveStatusEffectsDict =
+            new Dictionary<GameObject, List<GameObject>>();
+
+        public Dictionary<GameObject, List<GameObject>> StatusEffectsOnQueue =
+            new Dictionary<GameObject, List<GameObject>>();
+
+    #endregion
 
         #region FXIPrefabs
 
         public GameObject ArtilleryStrikePrefab;
         public GameObject ElectricityPrefab1;
-        public GameObject ElectricityPrefab2;
-        public GameObject ElectricityPrefab3;
-        public GameObject RedHitLinePrefab;
-        public GameObject BlueHitLinePrefab;
-        public GameObject Slash1Prefab;
-        public GameObject Slash3Prefab;
-        public GameObject BasicHitPrefab;
-        public GameObject BasicHit2Prefab;
-        public GameObject BasicHit3Prefab;
-        public GameObject EnhancedBasicHit;
-        public GameObject EnhancedBasicHit2;
-        public GameObject EnhancedBasicHit3;
+        [FormerlySerializedAs("BasicHit2Prefab")] public GameObject BasicHitPrefab;
+        [FormerlySerializedAs("EnhancedBasicHit2")] public GameObject EnhancedBasicHitPrefab;
+        public GameObject BurningFXPrefab;
+        public GameObject CorrosiveFXPrefab;
+        public GameObject BleedingFXPrefab;
+        public GameObject ConfusedFXPrefab;
+        public GameObject StunnedFXPrefab;
+        public GameObject SlowFXPrefab;
+        public GameObject ExhaustedFXPrefab;
+        public GameObject RejuvenationFXPrefab;
+        public GameObject EnergizedFXPrefab;
+        public GameObject SlipperyStepsFXPrefab;
+        public GameObject SmolderingStrikesFXPrefab;
+        public GameObject EvasiveFXPrefab;
+        public GameObject DefensiveTerrainFXPrefab;
+        public GameObject RadiationPoisoningFXPrefab;
+        public GameObject MutatingFXPrefab;
+        public GameObject GlowingFXPrefab; 
+        
 
         
 
@@ -66,19 +81,15 @@ namespace RPGCharacterAnims.Actions
 
         public bool alreadyPlaying;
         // Start is called before the first frame update
-        void Start()
+        public void Awake()
         {
-            
-            
-            Debug.Log("we are many");
-            
             
         }
 
         // Update is called once per frame
         void LateUpdate()
         {
-            ActiveFX();
+            
         }
 
         private void OnEnable()
@@ -193,21 +204,111 @@ namespace RPGCharacterAnims.Actions
                     StartCoroutine(DelayedStart(context.color, context.position, context.delay, context.duration, ArtilleryStrikePrefab));
                     
                     break;
-                case FXList.FXlist.Electricity1:
+                case FXList.FXlist.ElectricityFX1:
                     break;
                 //var ActualElectricity = Instantiate(ElectricityPrefab, pos, quaternion.identity);
             }       
             
         }
 
+        /// <summary>
+        /// checks to see if the game object has 3 active particle effects on it, if not instantiates it and adds it to the active FX list
+        /// if so, adds the prefab to the queue of uninstantiated yet active particle effects. If there is queue for the object yet, makes one.
+        /// if the game object has no status conditions on it yet, adds a list of activeFX for it to the activeFX dictionary
+        /// </summary>
+        /// <param name="context"></param>
+        private void InitializeStatusConditionFX(EventTypes.StatusConditionFXParam context)
+        {
+            //invariant here is that the StatusConditionState class doesn't send duplicates for any given effect
+            //before removing the previous one
+            
+            if (ActiveStatusEffectsDict.TryGetValue(context.caller, out var activeStatusFX))
+            {
+                if (activeStatusFX.Count < 3)
+                {
+                    GameObject statusConditionFX = Instantiate(context.condition, context.caller.transform);
+                    statusConditionFX.name = context.name;
+                    activeStatusFX.Add(statusConditionFX);
+                }
+                else if (StatusEffectsOnQueue.TryGetValue(context.caller, out var queuedStatusFX)) //is the game object in the dictionary for queued status FX?
+                {
+                    GameObject FXtoPutOnQueue = Instantiate(context.condition, context.caller.transform);
+                    FXtoPutOnQueue.name = context.name;
+                    FXtoPutOnQueue.SetActive(false);
+                    queuedStatusFX.Add(FXtoPutOnQueue);
+                }
+                else
+                {
+                    List<GameObject> objectQueuedStatusFX = new List<GameObject>();
+                    GameObject FXtoPutOnQueue = Instantiate(context.condition, context.caller.transform);
+                    FXtoPutOnQueue.name = context.name;
+                    FXtoPutOnQueue.SetActive(false);
+                    objectQueuedStatusFX.Add(FXtoPutOnQueue);
+                    StatusEffectsOnQueue.Add(context.caller, objectQueuedStatusFX);
+                }
+            }
+            else
+            {
+                GameObject statusConditionFX = Instantiate(context.condition, context.caller.transform);
+                statusConditionFX.name = context.name;
+                List<GameObject> objectActiveStatusFX = new List<GameObject> { statusConditionFX };
+                ActiveStatusEffectsDict.Add(context.caller, objectActiveStatusFX);
+            }
+        }
+        
+        /// <summary>
+        /// looks for the status condition by first indexing at the active status FX dictionary with the caller game object
+        /// if it finds the particle effect its searching for there, it removes it from the list and destroys it
+        /// then looks for the next status effect to be instantiated as a visual FX in the queued status effects,
+        /// if it finds one, it removes the prefab for the effects from the queue, instantiates it as a new game object,
+        /// and adds it to the active status effects list for the given object.
+        /// if there is mo status condition on queue, stops.
+        /// if the status condition being searched for is not in the active status FX dictionary,
+        /// searches for it in the queued status conditions dictionary. If it is there, which it must be, removes it and destroys it.
+        /// </summary>
+        /// <param name="context"></param>
+        private void TerminateStatusConditionFX(EventTypes.StatusConditionFXParam context) 
+        {
+            if (ActiveStatusEffectsDict.TryGetValue(context.caller, out var activeFX))
+            {
+                GameObject FXtoTerminate = activeFX.Find(x => x.name == context.name);
+                if (FXtoTerminate == null)
+                {
+                    List<GameObject> FXonQueueForCaller = StatusEffectsOnQueue[context.caller];
+                    FXtoTerminate = FXonQueueForCaller.Find(x => x.name == context.name);
+                    FXonQueueForCaller.Remove(FXtoTerminate);
+                    Destroy(FXtoTerminate);
+                    if (FXonQueueForCaller.Count == 0)
+                    {
+                        StatusEffectsOnQueue.Remove(context.caller);
+                    }
+                }
+                else
+                {
+                    activeFX.Remove(FXtoTerminate);
+                    Destroy(FXtoTerminate);
+                    List<GameObject> FXonQueueForCaller = StatusEffectsOnQueue[context.caller];
+                    if (FXonQueueForCaller.Count != 0)
+                    {
+                        GameObject nextFX = FXonQueueForCaller[0];
+                        nextFX.SetActive(true);
+                        activeFX.Add(nextFX);
+                        
+                    }
+
+                }
+            }
+            else
+            {
+                Debug.Log("something went wrong, you are trying to remove an FX that's not there!");
+            }
+        }
+
         private void InitializeElectricityFX(EventTypes.Event2Param context)
         {
             StartCoroutine(DelayedStart(context));
         }
-        private void ActiveFX()
-        {
-            
-        }
+        
         /// <summary>
         /// DelayedStart for ArtilleryStrikeFX
         /// </summary>
@@ -261,16 +362,16 @@ namespace RPGCharacterAnims.Actions
         {
             switch (context.fx)
             {
-                case FXList.FXlist.BasicHit2:
+                case FXList.FXlist.BasicHitFX:
                    
-                    var hitObject = Instantiate(BasicHit2Prefab, context.hitPosition, context.quaternion);
+                    var hitObject = Instantiate(BasicHitPrefab, context.hitPosition, context.quaternion);
                         
                     TerminateFX(0.5f, hitObject);
                     
 
                     break;
-                case FXList.FXlist.ElectricHit:
-                    var hitObject2 = Instantiate(EnhancedBasicHit2, context.hitPosition, context.quaternion);
+                case FXList.FXlist.EnhancedHitFX:
+                    var hitObject2 = Instantiate(EnhancedBasicHitPrefab, context.hitPosition, context.quaternion);
                     TerminateFX(0.3f, hitObject2);
                     break;
             }

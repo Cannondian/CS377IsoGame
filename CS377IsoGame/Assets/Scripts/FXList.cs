@@ -10,16 +10,31 @@ public class FXList
 
         
 
-        Electricity1,
-        Electricity2,
-        Electricity3,
-        RedHitLine,
-        BlueHitLine,
-        Slash1,
-        Slash3,
-        BasicHit,
-        BasicHit2,
-        ElectricHit
+        ElectricityFX1,
+        ElectricityFX2,
+        BasicHitFX,
+        EnhancedHitFX,
+        BurningFX, 
+        CorrosiveFX, 
+        BleedingFX, 
+        ConfusedFX, 
+        StunnedFX, 
+        SlowFX, 
+        ExhaustedFX, 
+        RejuvenationFX, 
+        EnergizedFX, 
+        SlipperyStepsFX, 
+        SmolderingStrikesFX, 
+        EvasiveFX, 
+        DefensiveTerrainFX, 
+        RadiationPoisoningFX, 
+        MutatingFX, 
+        GlowingFX, 
+        OneWithTheWorld, //TBD
+        Unstoppable, //TBD
+        Hacked, //TBD
+        Blinded //TBD
+        
         
         
 

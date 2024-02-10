@@ -47,7 +47,7 @@ namespace RPGCharacterAnims.Actions
 
            
                     EventBus.TriggerEvent(EventTypes.Events.ON_CONTINOUS_PACRTICLE_FX_TRIGGER, 
-                        new EventTypes.Event2Param(Color.green, playerTransform, FXList.FXlist.Electricity1, 10, 0.3f));
+                        new EventTypes.Event2Param(Color.green, playerTransform, FXList.FXlist.ElectricityFX1, 10, 0.3f));
                     controller.Ultimate(
                         Characters.Jisa,
                         0.1f);
