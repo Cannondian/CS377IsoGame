@@ -308,6 +308,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7955863836108199618, guid: 23600eaff1766c845a8f95b9b792d373, type: 3}
+      propertyPath: BlinkInterval
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7955863836108199618, guid: 23600eaff1766c845a8f95b9b792d373, type: 3}
+      propertyPath: MaxBlinkCount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7955863836108199618, guid: 23600eaff1766c845a8f95b9b792d373, type: 3}
+      propertyPath: LaunchVariationMaximum
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 8397594445929497977, guid: 23600eaff1766c845a8f95b9b792d373, type: 3}
       propertyPath: m_Name
       value: JumpingGrenadier
