@@ -1418,7 +1418,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 53314997}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: layer6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1822,7 +1822,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 74114176}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: layer2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5635,7 +5635,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 239539512}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: layer4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8270,7 +8270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 356522575}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: YuME_MapData
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8591,7 +8591,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 380268022}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: layer5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9408,6 +9408,69 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 413476, guid: 4322256955695a94a84fec782ec10d7a, type: 3}
   m_PrefabInstance: {fileID: 312369055}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &431464938
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 431464940}
+  - component: {fileID: 431464939}
+  m_Layer: 0
+  m_Name: NavMesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &431464939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431464938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: -1372625422
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.33333334
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: bc5983635895a41a1bce9f2b5e3699f0, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!4 &431464940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431464938}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5, y: -1, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &434081566
 GameObject:
   m_ObjectHideFlags: 0
@@ -9417,7 +9480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 434081567}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: layer7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37984,7 +38047,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1803930783}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: layer3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40459,7 +40522,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1921867529}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: layer8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46018,3 +46081,4 @@ SceneRoots:
   - {fileID: 27976354}
   - {fileID: 90435936}
   - {fileID: 356522575}
+  - {fileID: 431464940}
