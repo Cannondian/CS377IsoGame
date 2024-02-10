@@ -4,40 +4,24 @@ using UnityEngine;
 
 public class GrenadierMissile : MonoBehaviour
 {
-    private Rigidbody rb;
-    private MeshCollider col1;
-    private SphereCollider col2;
-    private float LaunchTime;
-    private CharacterProximityDetector prox;
+    [SerializeField] GameObject ExplosionFX;
 
-    // These values should be set by the caller
+    // These values should be set by whoever instantiates the prefab
     public float Damage = 10f;
-    public float MaxLifeSpan = 10f;
+
+    private Rigidbody rb;
+    private float LaunchTime;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        col1 = GetComponent<MeshCollider>();
-        col2 = GetComponent<SphereCollider>();
-
         LaunchTime = Time.time;
-
-        prox = transform.GetChild(0).gameObject.GetComponent<CharacterProximityDetector>();
     }
 
     void Update()
     {
         // Rotate missile to velocity direction
-        transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.forward);
-    }
-
-    void FixedUpdate()
-    {
-        // Explode if past lifespan or if player proximity detector is triggered
-        if (Time.time - LaunchTime > MaxLifeSpan || prox.Collided)
-        {
-            Explode();
-        }
+        // transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.forward);
     }
 
     void OnCollisionEnter(Collision col)
@@ -46,15 +30,21 @@ public class GrenadierMissile : MonoBehaviour
         {
             EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, Damage);
         }
-
-        // TODO: smarter collision detection with ground. Checking for collision with object in "Walkable" layer
-        // creates a bunch of performance issues so this instead should be fine for now
         Explode();
     }
 
     void Explode()
     {
         // TODO: SoundFX, animations, etc.
+
+        Destroy(
+            Instantiate(
+                ExplosionFX, 
+                transform.position, 
+                Quaternion.identity
+            ),
+            1f // Destroy FX after 1 second
+        );
 
         Destroy(gameObject);
     }

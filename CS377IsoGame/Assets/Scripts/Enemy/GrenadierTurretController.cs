@@ -113,7 +113,7 @@ public class GrenadierTurretController : EnemyAI
             // Set missile damage and lifespan
             GrenadierMissile GM = Missile.GetComponent<GrenadierMissile>();
             GM.Damage = AttackDamage;
-            GM.MaxLifeSpan = MissileMaxLifeSpan; 
+            // GM.MaxLifeSpan = MissileMaxLifeSpan; 
 
             LastFireTime = Time.time;
             WhichBarrel = !WhichBarrel; // Alternate barrel

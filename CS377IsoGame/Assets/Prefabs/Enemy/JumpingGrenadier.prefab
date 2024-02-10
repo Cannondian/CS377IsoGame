@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1016122534356264170}
   - component: {fileID: 8621133556816828140}
   - component: {fileID: 5650953814509216222}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Drill_01_Hinge_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 2289667727282878251}
   - component: {fileID: 2215917173841618266}
   - component: {fileID: 8479193946554212873}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Drill_01_Hinge_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 2584878848521254071}
   - component: {fileID: 7886208193404186969}
   - component: {fileID: 8181759002896843516}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Drill_01_Hinge_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 4598691101419180418}
   - component: {fileID: 1189093393817658094}
   - component: {fileID: 1047861425578609464}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Drill_01_Hinge_03_Leg_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 5184134016927378932}
   - component: {fileID: 4857277227896043084}
   - component: {fileID: 3071066593132220513}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Drill_01_Hinge_02_Leg_01_Foot_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 4010105916399415715}
   - component: {fileID: 2840936536265601392}
   - component: {fileID: 5782031752735237235}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Drill_01_Hinge_04_Leg_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -695,7 +695,7 @@ GameObject:
   - component: {fileID: 8960953746263159105}
   - component: {fileID: 3174051098822630382}
   - component: {fileID: 8477751978127950797}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Drill_01_Hinge_03_Leg_01_Foot_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -916,7 +916,7 @@ GameObject:
   - component: {fileID: 5400147918021467899}
   - component: {fileID: 8553653681653919631}
   - component: {fileID: 715031412433178951}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Drill_01_Hinge_02_Leg_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1023,7 +1023,7 @@ GameObject:
   - component: {fileID: 5585806212150474826}
   - component: {fileID: 5328452513200287651}
   - component: {fileID: 4076167794477477427}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Drill_01_Hinge_01_Leg_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1130,7 +1130,7 @@ GameObject:
   - component: {fileID: 2127032894877236388}
   - component: {fileID: 8832596862383993533}
   - component: {fileID: 2519017807744945919}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Drill_01_Hinge_04_Leg_01_Foot_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1400,7 +1400,7 @@ GameObject:
   - component: {fileID: 8607951573136196038}
   - component: {fileID: 1636905365490370206}
   - component: {fileID: 279368888784811853}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Drill_01_Hinge_01_Leg_01_Foot_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1505,7 +1505,7 @@ GameObject:
   - component: {fileID: 8848218800836250749}
   - component: {fileID: 3245952637066633668}
   - component: {fileID: 7057688558621671166}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Prop_Drill_01_Hinge_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1592,7 +1592,7 @@ GameObject:
   - component: {fileID: 7011643656817576825}
   - component: {fileID: 7955863836108199618}
   - component: {fileID: 3504392170668483664}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: JumpingGrenadier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1707,22 +1707,29 @@ MonoBehaviour:
   player: {fileID: 0}
   Walkable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8256
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 0
-  sightRange: 0
-  attackRange: 0
+  sightRange: 20
+  attackRange: 15
   playerInSightRange: 0
   playerInAttackRange: 0
   stunned: 0
   healthBar: {fileID: 1026345408276430088}
   TurretTransform: {fileID: 6979692312672148716}
   TurretBottomTransform: {fileID: 6972271809414180872}
-  MissilePrefab: {fileID: 5728736409327431386, guid: 5dc49086b58f07b4f918cbcc9533e716, type: 3}
-  TurnRate: 0
+  GrenadePrefab: {fileID: 5728736409327431386, guid: 5dc49086b58f07b4f918cbcc9533e716, type: 3}
+  MuzzleFX: {fileID: 1173262663564242, guid: 7ebc41044c604504c901a63cdb9481e9, type: 3}
+  TurnRate: 2
+  BurstCount: 5
+  BurstInterval: 0.25
+  CooldownTime: 2
+  VerticalLaunchVelocity: 10
+  EnableLaunchVariation: 1
+  LaunchVariationMaximum: 0.1
 --- !u!195 &3504392170668483664
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1756,6 +1763,14 @@ PrefabInstance:
     - target: {fileID: 1407700534842682, guid: e1292cfb6851b8e4e9d8cd48c2c96731, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Crate_14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407700534842682, guid: e1292cfb6851b8e4e9d8cd48c2c96731, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1951518557015942, guid: e1292cfb6851b8e4e9d8cd48c2c96731, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4105236021180274, guid: e1292cfb6851b8e4e9d8cd48c2c96731, type: 3}
       propertyPath: m_LocalScale.x
@@ -1816,6 +1831,10 @@ PrefabInstance:
     - target: {fileID: 4243231481545784, guid: e1292cfb6851b8e4e9d8cd48c2c96731, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.372
+      objectReference: {fileID: 0}
+    - target: {fileID: 64273671761126316, guid: e1292cfb6851b8e4e9d8cd48c2c96731, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
