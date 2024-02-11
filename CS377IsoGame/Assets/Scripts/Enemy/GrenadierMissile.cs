@@ -26,18 +26,28 @@ public class GrenadierMissile : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
+        Explode();
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
         if (col.gameObject.tag == "Player")
         {
             EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, Damage);
+        } // We do not explode the grenade here! (Otherwise we'd have grenades exploding mid air)
+    }
+
+    void FixedUpdate()
+    {
+        // For some reason, some collisions are missing. This should ensure it always blows up
+        if (transform.position.y <= 0)
+        {
+            Explode();
         }
-        Debug.LogError("COLLIDED");
-        Explode();
     }
 
     void Explode()
     {
-        // TODO: SoundFX, animations, etc.
-
         Destroy(
             Instantiate(
                 ExplosionFX, 

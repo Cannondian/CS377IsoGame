@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class JumpingGrenadierController : EnemyAI
 {
@@ -8,6 +9,7 @@ public class JumpingGrenadierController : EnemyAI
     [SerializeField] Transform TurretTransform; // I.e., the "head" of the enemy where grenades are launched from
     [SerializeField] Transform TurretBottomTransform;
     [SerializeField] Animator _Animator;
+    [SerializeField] NavMeshAgent Agent;
 
     [SerializeField] GameObject GrenadePrefab;
     [SerializeField] GameObject MuzzleFX;
@@ -16,16 +18,19 @@ public class JumpingGrenadierController : EnemyAI
     public float IndicatorSpeed; // How quickly the target indicator can follow the player
     public int BurstCount; // How many grenades are shot in quick succession for each time the enemy fires
     public float BurstInterval; // Time between grenades within a single burst
-    public float CooldownTime; // Time between burst shot fires
+    public float CooldownTime; // Time between burst shot fires and jumps when patrolling
     public float VerticalLaunchVelocity;
     public float MaxFireDistanceToPlayer; // Maximum allowable distance between indicator and player position to enable firing
     public float JumpProbabilityWhenFiring;
+    public float MinJumpDistance; // Minimum distance of jumps when searching for walkpoints by player
+    public float MaxJumpDistance;
     
     public bool EnableLaunchVariation;
     public float LaunchVariationMaximum; // Max amount of launch velocity variation as a function of distance to player
 
     private Vector3 LaunchOffset = new Vector3(0f, 1.1f, 0f); // Offset from turret origin where grenade is fired
     private float LastBurstFireTime;
+    private float LastPatrolJumpTime;
     private bool Attacking; // Indicates if currently in firing sequence
 
     private bool IsIndicatorOn;
@@ -37,8 +42,9 @@ public class JumpingGrenadierController : EnemyAI
         Indicator.gameObject.SetActive(false);
         ResetIndicator();
 
-        // prevent this enemy from attacking right away
+        // prevent this enemy from attacking/jumping right away
         LastBurstFireTime = Time.time;
+        LastPatrolJumpTime = Time.time;
 
         Health = 100f;
         AttackDamage = 10f;
@@ -87,11 +93,7 @@ public class JumpingGrenadierController : EnemyAI
             // Potentially jump to new position instead of attacking
             if (Random.Range(0f, 1f) < JumpProbabilityWhenFiring)
             {
-                walkPoint = new Vector3(player.position.x + Random.Range(-attackRange, attackRange), 
-                                        player.position.y, 
-                                        player.position.z + Random.Range(-attackRange, attackRange));
-                agent.SetDestination(walkPoint);
-                walkPointSet = true;
+                SearchForJumpLocationByPlayer();
             }
             else
             {
@@ -163,12 +165,13 @@ public class JumpingGrenadierController : EnemyAI
 
     protected override void Patroling()
     {
-        if (!Attacking)
+        if (!Attacking && !walkPointSet && Time.time - LastPatrolJumpTime > CooldownTime)
         {
-            base.Patroling();
+            LastPatrolJumpTime = Time.time;
 
             ResetIndicator();
             DisableIndicator();
+            SearchForPatrollingJumpLocation();
         }
     }
 
@@ -178,26 +181,93 @@ public class JumpingGrenadierController : EnemyAI
         {
             ResetIndicator();
             DisableIndicator();
-
-            // Move to some where within attack range of player
-            walkPoint = new Vector3(player.position.x + Random.Range(-attackRange, attackRange), 
-                                    player.position.y, 
-                                    player.position.z + Random.Range(-attackRange, attackRange));
-            agent.SetDestination(walkPoint);
-            walkPointSet = true;
+            SearchForJumpLocationByPlayer();
         }
-
-        if ((transform.position - walkPoint).magnitude < 1f)
-            walkPointSet = false;
     }
 
     protected override void AttackPlayer()
     {
-        if ((transform.position - walkPoint).magnitude < 1f)
-            walkPointSet = false;
-
         EnableIndicator();
         MaybeFire();
+    }
+
+    void SearchForJumpLocationByPlayer()
+    {
+        int i = 0;
+        while(!walkPointSet || i < 100)
+        {
+            // Similar to SearchWalkPoint but walkPoint is now centered around player and within attack range
+            walkPoint = new Vector3(player.position.x + Random.Range(-attackRange, attackRange), 
+                                    player.position.y, 
+                                    player.position.z + Random.Range(-attackRange, attackRange));
+            
+            float JumpDistance = (walkPoint - transform.position).magnitude;
+
+            if (Physics.Raycast(walkPoint, -transform.up, 2f, Walkable) 
+                && JumpDistance > MinJumpDistance 
+                && JumpDistance < MaxJumpDistance)
+            {
+                walkPointSet = true;
+            }
+
+            i += 1;
+        }
+
+        if (walkPointSet)
+        {
+            StartCoroutine(JumpToWalkPoint());    
+        }
+    }
+
+    void SearchForPatrollingJumpLocation()
+    {
+        int i = 0;
+        while(!walkPointSet || i < 100)
+        {
+            walkPoint = new Vector3(transform.position.x + Random.Range(-attackRange, attackRange), 
+                                    transform.position.y, 
+                                    transform.position.z + Random.Range(-attackRange, attackRange));
+            
+            float JumpDistance = (walkPoint - transform.position).magnitude;
+
+            if (Physics.Raycast(walkPoint, -transform.up, 2f, Walkable) 
+                && JumpDistance > MinJumpDistance 
+                && JumpDistance < MaxJumpDistance)
+            {
+                walkPointSet = true;
+            }
+
+            i += 1;
+        }
+
+        if (walkPointSet)
+        {
+            StartCoroutine(JumpToWalkPoint());    
+        }
+    }
+
+    IEnumerator JumpToWalkPoint()
+    {
+        // Determine distance to target location and the time it will take to get there
+        float DistanceToTarget = (transform.position - walkPoint).magnitude;
+        float TimeToTarget = DistanceToTarget / Agent.speed;
+
+        // Adjust animation speed so that jump animation spans the time to jump
+        _Animator.enabled = true;
+        _Animator.speed = 1f / TimeToTarget;
+        _Animator.Play("JumpingGrenadierJump");
+        
+        // Move the enemy to the walkpoint
+        agent.SetDestination(walkPoint);
+
+        // Wait for animation to complete
+        yield return new WaitForSeconds(TimeToTarget*1.1f);
+
+        // Stop animation, ensure we reset it as well (so the enemy does not end up floating)
+        walkPointSet = false;
+        _Animator.Rebind();
+        _Animator.Update(0f);
+        _Animator.enabled = false;
     }
 
     void ResetIndicator()

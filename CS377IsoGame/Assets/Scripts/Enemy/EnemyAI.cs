@@ -82,7 +82,7 @@ public abstract class EnemyAI : MonoBehaviour
             walkPointSet = false;
     }
 
-    private void SearchWalkPoint()
+    protected virtual void SearchWalkPoint()
     {
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);

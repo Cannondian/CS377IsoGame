@@ -1567,12 +1567,12 @@ MonoBehaviour:
     m_Bits: 2048
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 8256
+    m_Bits: 8192
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
-  walkPointRange: 0
+  walkPointRange: 10
   sightRange: 15
-  attackRange: 15
+  attackRange: 10
   playerInSightRange: 0
   playerInAttackRange: 0
   stunned: 0
@@ -1581,6 +1581,7 @@ MonoBehaviour:
   TurretTransform: {fileID: 1742473605219212574}
   TurretBottomTransform: {fileID: 5440589857984809377}
   _Animator: {fileID: 2377208724962492526}
+  Agent: {fileID: 3743688449965436143}
   GrenadePrefab: {fileID: 5728736409327431386, guid: 5dc49086b58f07b4f918cbcc9533e716, type: 3}
   MuzzleFX: {fileID: 1173262663564242, guid: 7ebc41044c604504c901a63cdb9481e9, type: 3}
   Indicator: {fileID: 3309044221702354634}
@@ -1591,8 +1592,10 @@ MonoBehaviour:
   VerticalLaunchVelocity: 10
   MaxFireDistanceToPlayer: 1
   JumpProbabilityWhenFiring: 0.3333333
+  MinJumpDistance: 5
+  MaxJumpDistance: 10
   EnableLaunchVariation: 1
-  LaunchVariationMaximum: 0.1
+  LaunchVariationMaximum: 0.05
 --- !u!95 &2377208724962492526
 Animator:
   serializedVersion: 5
@@ -1601,7 +1604,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5583388733458509172}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 61b6bd0f2227b394db8b9b75264b564d, type: 2}
   m_CullingMode: 0
@@ -1641,8 +1644,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1372625422
   m_Radius: 12
-  m_Speed: 5
-  m_Acceleration: 8
+  m_Speed: 10
+  m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 0
@@ -1724,12 +1727,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb7c8998e638154391d51a6e6c6a9c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myStats: {fileID: 0}
-  currentHealth: 0
-  maxHealth: 0
-  myEnemyAI: {fileID: 0}
-  amIEnemy: 0
-  healthSlider: {fileID: 0}
+  myStats: {fileID: 7816633478423871631}
+  currentHealth: 200
+  maxHealth: 200
+  myEnemyAI: {fileID: 4736483594225145397}
+  amIEnemy: 1
+  healthSlider: {fileID: 6319317605391711561}
 --- !u!1 &5583869465737827825
 GameObject:
   m_ObjectHideFlags: 0
