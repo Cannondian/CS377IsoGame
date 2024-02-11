@@ -30,6 +30,7 @@ public class GrenadierMissile : MonoBehaviour
         {
             EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, Damage);
         }
+        Debug.LogError("COLLIDED");
         Explode();
     }
 

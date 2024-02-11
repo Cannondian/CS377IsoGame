@@ -64,7 +64,7 @@ public class JumpingGrenadierController : EnemyAI
 
         // Scale indicator size with distance from this enemy to show decrease in accuracy
         float HorizontalDistanceFromBase = new Vector2(Indicator.position.x - transform.position.x, Indicator.position.z - transform.position.z).magnitude;
-        float IndicatorScale = Mathf.Clamp(40f * LaunchVariationMaximum * HorizontalDistanceFromBase / sightRange, 0.5f, 4f) * BodyTransform.localScale.x;
+        float IndicatorScale = Mathf.Clamp(40f * LaunchVariationMaximum * HorizontalDistanceFromBase / sightRange, 0.5f, 4f) * 2f;
         Indicator.localScale = new Vector3(IndicatorScale, IndicatorScale, IndicatorScale);
 
         // Determine the left/right angle to the indicator
