@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class JumpingGrenadierController : EnemyAI
 {
+    [SerializeField] Transform BodyTransform;
     [SerializeField] Transform TurretTransform; // I.e., the "head" of the enemy where grenades are launched from
     [SerializeField] Transform TurretBottomTransform;
+    [SerializeField] Animator _Animator;
 
     [SerializeField] GameObject GrenadePrefab;
     [SerializeField] GameObject MuzzleFX;
@@ -17,6 +19,7 @@ public class JumpingGrenadierController : EnemyAI
     public float CooldownTime; // Time between burst shot fires
     public float VerticalLaunchVelocity;
     public float MaxFireDistanceToPlayer; // Maximum allowable distance between indicator and player position to enable firing
+    public float JumpProbabilityWhenFiring;
     
     public bool EnableLaunchVariation;
     public float LaunchVariationMaximum; // Max amount of launch velocity variation as a function of distance to player
@@ -24,7 +27,6 @@ public class JumpingGrenadierController : EnemyAI
     private Vector3 LaunchOffset = new Vector3(0f, 1.1f, 0f); // Offset from turret origin where grenade is fired
     private float LastBurstFireTime;
     private bool Attacking; // Indicates if currently in firing sequence
-    private Vector3 ToPlayer;
 
     private bool IsIndicatorOn;
 
@@ -53,20 +55,20 @@ public class JumpingGrenadierController : EnemyAI
 
     void AimTurret()
     {
-        ToPlayer = player.position - TurretTransform.position; // vector from turret to player
+        // Smoothly interpolate indicator position to current player position
         Indicator.position = new Vector3(
             Mathf.Lerp(Indicator.position.x, player.position.x, IndicatorSpeed * Time.deltaTime),
             player.position.y,
             Mathf.Lerp(Indicator.position.z, player.position.z, IndicatorSpeed * Time.deltaTime)
         );
 
-        // Scale indicator size with distance to show decrease in accuracy
-        float HorizontalDistanceToPlayer = new Vector2(Indicator.position.x, Indicator.position.z).magnitude;
-        float IndicatorScale = Mathf.Clamp(40f * LaunchVariationMaximum * HorizontalDistanceToPlayer / sightRange, 0.5f, 4f);
+        // Scale indicator size with distance from this enemy to show decrease in accuracy
+        float HorizontalDistanceFromBase = new Vector2(Indicator.position.x - transform.position.x, Indicator.position.z - transform.position.z).magnitude;
+        float IndicatorScale = Mathf.Clamp(40f * LaunchVariationMaximum * HorizontalDistanceFromBase / sightRange, 0.5f, 4f) * BodyTransform.localScale.x;
         Indicator.localScale = new Vector3(IndicatorScale, IndicatorScale, IndicatorScale);
 
         // Determine the left/right angle to the indicator
-        float turretAngle = Vector3.SignedAngle(Vector3.forward, Indicator.position, Vector3.up);
+        float turretAngle = Vector3.SignedAngle(Vector3.forward, Indicator.position - transform.position, Vector3.up);
 
         // The -60f is to keep the green bar facing the indicator
         TurretTransform.rotation = Quaternion.Euler(0f, turretAngle - 60f, 0f);
@@ -77,12 +79,25 @@ public class JumpingGrenadierController : EnemyAI
 
     void MaybeFire()
     {
-        if (Time.time - LastBurstFireTime > CooldownTime
-            && !Attacking 
-            && (player.position - Indicator.position).magnitude < MaxFireDistanceToPlayer)
+        if (!walkPointSet // not moving
+            && !Attacking // not attacking
+            && Time.time - LastBurstFireTime > CooldownTime // past cooldown time
+            && (player.position - Indicator.position).magnitude < MaxFireDistanceToPlayer) // within attack range
         {
-            Attacking = true;
-            StartCoroutine(BurstFire());
+            // Potentially jump to new position instead of attacking
+            if (Random.Range(0f, 1f) < JumpProbabilityWhenFiring)
+            {
+                walkPoint = new Vector3(player.position.x + Random.Range(-attackRange, attackRange), 
+                                        player.position.y, 
+                                        player.position.z + Random.Range(-attackRange, attackRange));
+                agent.SetDestination(walkPoint);
+                walkPointSet = true;
+            }
+            else
+            {
+                Attacking = true;
+                StartCoroutine(BurstFire());
+            }
         }
     }
 
@@ -111,28 +126,29 @@ public class JumpingGrenadierController : EnemyAI
             // Determine launch velocity
             float TimeToApex = VerticalLaunchVelocity / -Physics.gravity.y;
             TimeToGround = TimeToApex + Mathf.Sqrt(2f * (Grenade.transform.position.y + VerticalLaunchVelocity * TimeToApex) / -Physics.gravity.y);
-            float HorizontalDistanceToPlayer = new Vector2(Indicator.position.x, Indicator.position.z).magnitude;
-            float HorizontalLaunchVelocity = (HorizontalDistanceToPlayer / TimeToGround) + HorizontalDistanceToPlayer * 0.05f; // last part is a fudge factor to make sure targeting is perfect
+            float HorizontalDistanceFromBase = new Vector2(Indicator.position.x - transform.position.x, Indicator.position.z - transform.position.z).magnitude;
+            float HorizontalLaunchVelocity = (HorizontalDistanceFromBase / TimeToGround) + HorizontalDistanceFromBase * 0.05f; // last part is a fudge factor to make sure targeting is perfect
 
             // Potentially add variation in horizontal launch velocity
             float LaunchVariationX = 0f;
             float LaunchVariationZ = 0f;
             if (EnableLaunchVariation)
             {
-                LaunchVariationX = Random.Range(-LaunchVariationMaximum, LaunchVariationMaximum) * HorizontalDistanceToPlayer;
-                LaunchVariationZ = Random.Range(-LaunchVariationMaximum, LaunchVariationMaximum) * HorizontalDistanceToPlayer;
+                LaunchVariationX = Random.Range(-LaunchVariationMaximum, LaunchVariationMaximum) * HorizontalDistanceFromBase;
+                LaunchVariationZ = Random.Range(-LaunchVariationMaximum, LaunchVariationMaximum) * HorizontalDistanceFromBase;
             }
 
             GrenadeRB.velocity = new Vector3(
-                HorizontalLaunchVelocity * Indicator.position.x / HorizontalDistanceToPlayer + LaunchVariationX,
+                HorizontalLaunchVelocity * (Indicator.position.x - transform.position.x) / HorizontalDistanceFromBase + LaunchVariationX,
                 VerticalLaunchVelocity,
-                HorizontalLaunchVelocity * Indicator.position.z / HorizontalDistanceToPlayer + LaunchVariationZ
+                HorizontalLaunchVelocity * (Indicator.position.z - transform.position.z) / HorizontalDistanceFromBase + LaunchVariationZ
             );
 
             var settings = Grenade.GetComponent<GrenadierMissile>();
             settings.Damage = AttackDamage;
-            // Todo: any more settings?
+            // Todo: any more settings for grenade?
 
+            // Blink indicator, wait before firing next grenade
             DisableIndicator();
             yield return new WaitForSeconds(BurstInterval);
             EnableIndicator();
@@ -147,23 +163,46 @@ public class JumpingGrenadierController : EnemyAI
 
     protected override void Patroling()
     {
-        ResetIndicator();
-        DisableIndicator();
+        if (!Attacking)
+        {
+            base.Patroling();
+
+            ResetIndicator();
+            DisableIndicator();
+        }
     }
 
     protected override void ChasePlayer()
     {
-        EnableIndicator();
+        if (!Attacking && !walkPointSet)
+        {
+            ResetIndicator();
+            DisableIndicator();
+
+            // Move to some where within attack range of player
+            walkPoint = new Vector3(player.position.x + Random.Range(-attackRange, attackRange), 
+                                    player.position.y, 
+                                    player.position.z + Random.Range(-attackRange, attackRange));
+            agent.SetDestination(walkPoint);
+            walkPointSet = true;
+        }
+
+        if ((transform.position - walkPoint).magnitude < 1f)
+            walkPointSet = false;
     }
 
     protected override void AttackPlayer()
     {
+        if ((transform.position - walkPoint).magnitude < 1f)
+            walkPointSet = false;
+
         EnableIndicator();
         MaybeFire();
     }
 
     void ResetIndicator()
     {
+        // Set indicator position to current enemy position
         Indicator.position = new Vector3(transform.position.x, player.position.y, transform.position.z);
     }
 

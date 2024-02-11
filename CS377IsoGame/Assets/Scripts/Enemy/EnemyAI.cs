@@ -14,7 +14,7 @@ public abstract class EnemyAI : MonoBehaviour
 
     // Patrolling
     public Vector3 walkPoint;
-    bool walkPointSet;
+    public bool walkPointSet;
     public float walkPointRange;
 
     // States
