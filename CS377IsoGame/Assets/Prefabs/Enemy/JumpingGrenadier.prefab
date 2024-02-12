@@ -1520,9 +1520,9 @@ GameObject:
   - component: {fileID: 2377208724962492526}
   - component: {fileID: 1372640591809119730}
   - component: {fileID: 3743688449965436143}
-  - component: {fileID: 494760250115196911}
   - component: {fileID: 7816633478423871631}
   - component: {fileID: 1709549150844895746}
+  - component: {fileID: 1253571964915058017}
   m_Layer: 15
   m_Name: JumpingGrenadier
   m_TagString: Untagged
@@ -1656,29 +1656,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!136 &494760250115196911
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583388733458509172}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 7.5
-  m_Height: 20
-  m_Direction: 1
-  m_Center: {x: 0, y: 7.5, z: 0}
 --- !u!114 &7816633478423871631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1697,6 +1674,7 @@ MonoBehaviour:
   baseDefense: 0
   baseAttackSpeed: 0
   baseResistance: 0
+  baseEvasiveness: 0
   baseRRR: 0
   baseTalent: 0
   ceHP: 200
@@ -1706,6 +1684,7 @@ MonoBehaviour:
   ceAttackSpeed: 0
   ceResistance: 0
   ceRRR: 0
+  ceEvasiveness: 0
   ceTalent: 0
   tHP: 0
   tSpeed: 0
@@ -1714,6 +1693,7 @@ MonoBehaviour:
   tAttackSpeed: 0
   tResistance: 0
   tRRR: 0
+  tEvasiveness: 0
   tTalent: 0
 --- !u!114 &1709549150844895746
 MonoBehaviour:
@@ -1733,6 +1713,27 @@ MonoBehaviour:
   myEnemyAI: {fileID: 4736483594225145397}
   amIEnemy: 1
   healthSlider: {fileID: 6319317605391711561}
+--- !u!65 &1253571964915058017
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583388733458509172}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 15, y: 17, z: 15}
+  m_Center: {x: 0, y: 8.92, z: 0}
 --- !u!1 &5583869465737827825
 GameObject:
   m_ObjectHideFlags: 0
