@@ -352,7 +352,7 @@ namespace RPGCharacterAnims
 		public void CreateRangeIndicator()
 		{
 			var position = transform.position;
-			position.y = 1;
+			position.y = 0.7f;
 			rangeCircle = Instantiate(rangeCirclePrefab, position, transform.rotation, transform);
 		}
 		public IEnumerator TargetingLoop()
@@ -366,12 +366,14 @@ namespace RPGCharacterAnims
 				{
 					Vector3 targetPoint = hitInfo.point;
 					Vector3 direction = targetPoint - transform.position;
+					direction.y = 0;
 					Vector3 range = direction.normalized * 5.5f;
 					
-					targetPoint.y += 0.1f;
+					
+
 					targetingCircle.transform.position =
 						direction.magnitude > range.magnitude
-							? transform.position + range
+							? transform.position + range 
 							: transform.position + direction;
 				}
 				
