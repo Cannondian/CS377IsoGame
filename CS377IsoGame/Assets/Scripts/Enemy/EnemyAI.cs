@@ -30,7 +30,7 @@ public abstract class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         stunned = false;
-        myHealth = GetComponent<Health>();
+        
         
         
     }
