@@ -21,6 +21,7 @@ public class Health : MonoBehaviour
     void Start()
     {
         myEnemyAI = GetComponent<EnemyAI>();
+        
         if (myEnemyAI != null)
         {
             amIEnemy = true;

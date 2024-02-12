@@ -1387,7 +1387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1807d8d51a1f74a836ba829a0ed882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myHealth: {fileID: 0}
+  myHealth: {fileID: -6462754791197078523}
   player: {fileID: 0}
   Walkable:
     serializedVersion: 2
@@ -1396,6 +1396,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8256
   walkPoint: {x: 0, y: 0, z: 0}
+  walkPointSet: 0
   walkPointRange: 20
   sightRange: 25
   attackRange: 10
@@ -1500,6 +1501,7 @@ MonoBehaviour:
   baseDefense: 0
   baseAttackSpeed: 0
   baseResistance: 0
+  baseEvasiveness: 0
   baseRRR: 0
   baseTalent: 0
   ceHP: 200
@@ -1509,6 +1511,7 @@ MonoBehaviour:
   ceAttackSpeed: 0
   ceResistance: 0
   ceRRR: 0
+  ceEvasiveness: 0
   ceTalent: 0
   tHP: 0
   tSpeed: 0
@@ -1517,6 +1520,7 @@ MonoBehaviour:
   tAttackSpeed: 0
   tResistance: 0
   tRRR: 0
+  tEvasiveness: 0
   tTalent: 0
 --- !u!114 &7713871945318501067
 MonoBehaviour:
@@ -1554,6 +1558,7 @@ MonoBehaviour:
   baseDefense: 0
   baseAttackSpeed: 0
   baseResistance: 0
+  baseEvasiveness: 0
   baseRRR: 0
   baseTalent: 0
   ceHP: 200
@@ -1563,6 +1568,7 @@ MonoBehaviour:
   ceAttackSpeed: 0
   ceResistance: 0
   ceRRR: 0
+  ceEvasiveness: 0
   ceTalent: 0
   tHP: 0
   tSpeed: 0
@@ -1571,6 +1577,7 @@ MonoBehaviour:
   tAttackSpeed: 0
   tResistance: 0
   tRRR: 0
+  tEvasiveness: 0
   tTalent: 0
 --- !u!1 &7598195169920495545
 GameObject:
