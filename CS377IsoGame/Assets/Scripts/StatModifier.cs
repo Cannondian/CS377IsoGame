@@ -1,4 +1,4 @@
-public enum StatModiferType
+public enum StatModifierType
 {
    Flat,
    Percent, 
@@ -8,9 +8,9 @@ public enum StatModiferType
 public class StatModifier
 {
    public readonly float value;
-   public readonly StatModiferType myType;
+   public readonly StatModifierType myType;
 
-   public StatModifier(float val, StatModiferType type)
+   public StatModifier(float val, StatModifierType type)
    {
       value = val;
       myType = type;

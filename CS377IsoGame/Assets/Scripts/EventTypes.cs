@@ -6,7 +6,7 @@ public class EventTypes
 {
    public enum Events
    {
-      ON_PARTICLE_FX_TRIGGER,
+      ON_PARTICLE_FX_FOR_SKILL,
       ON_CONTINOUS_PACRTICLE_FX_TRIGGER,
       ON_ENERGY_GAIN,
       ON_ULTIMATE_READY,
@@ -27,7 +27,7 @@ public class EventTypes
       
    }
 
-   public class Event1Param
+   public class SkillUsedParam
    {
       public Color color;
       public Vector3 position;
@@ -35,7 +35,7 @@ public class EventTypes
       public float duration;
       public float delay;
 
-      public Event1Param(Color p1, Vector3 p2, FXList.FXlist p3, float p4, float p5)
+      public SkillUsedParam(Color p1, Vector3 p2, FXList.FXlist p3, float p4, float p5)
       {
          color = p1;
          position = p2;

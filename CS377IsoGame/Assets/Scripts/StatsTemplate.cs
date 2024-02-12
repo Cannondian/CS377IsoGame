@@ -15,6 +15,7 @@ public class StatsTemplate : MonoBehaviour
         AttackSpeed,
         Resistance,
         RRR,
+        Evasiveness,
         Talent
         
     }
@@ -30,6 +31,7 @@ public class StatsTemplate : MonoBehaviour
     public float baseDefense;
     public float baseAttackSpeed;
     public float baseResistance;
+    public float baseEvasiveness;
     public float baseRRR; //resource regeneration rate
     public float baseTalent;
     
@@ -44,6 +46,7 @@ public class StatsTemplate : MonoBehaviour
     public float ceAttackSpeed;
     public float ceResistance;
     public float ceRRR; //resource regeneration rate
+    public float ceEvasiveness;
     public float ceTalent;
     
     #endregion
@@ -59,6 +62,7 @@ public class StatsTemplate : MonoBehaviour
     public float tAttackSpeed;
     public float tResistance;
     public float tRRR; //resource regeneration rate
+    public float tEvasiveness;
     public float tTalent;
     
     #endregion
@@ -72,6 +76,7 @@ public class StatsTemplate : MonoBehaviour
     public List<StatModifier> attackSpeedModifiers;
     public List<StatModifier> resistanceModifiers;
     public List<StatModifier> RRRModifiers; //resource regeneration rate
+    public List<StatModifier> evasivenessModifiers;
     public List<StatModifier> talentModifiers;
     
    
@@ -79,7 +84,7 @@ public class StatsTemplate : MonoBehaviour
     #endregion
 
 
-    public StatsTemplate(float hp, float speed, float attack, float defense, float attackSpeed, float resistance, float RRR, float talent)
+    public StatsTemplate(float hp, float speed, float attack, float defense, float attackSpeed, float resistance, float RRR, float evasiveness, float talent)
     {
         baseHP = hp;
         baseSpeed = speed;
@@ -88,6 +93,7 @@ public class StatsTemplate : MonoBehaviour
         baseAttackSpeed = attackSpeed;
         baseResistance = resistance;
         baseRRR = RRR;
+        baseEvasiveness = evasiveness;
         baseTalent = talent;
     }
     
@@ -101,6 +107,7 @@ public class StatsTemplate : MonoBehaviour
         attackSpeedModifiers = new List<StatModifier>();
         resistanceModifiers = new List<StatModifier>();
         RRRModifiers = new List<StatModifier>();
+        evasivenessModifiers = new List<StatModifier>();
         talentModifiers = new List<StatModifier>();
     }
 
@@ -142,6 +149,10 @@ public class StatsTemplate : MonoBehaviour
                 RRRModifiers.Add(modifier);
                 CalculateTemporaryStats();
                 break;
+            case statsList.Evasiveness:
+                evasivenessModifiers.Add(modifier);
+                CalculateTemporaryStats();
+                break;
             case statsList.Talent:
                 talentModifiers.Add(modifier);
                 CalculateTemporaryStats();
@@ -179,6 +190,10 @@ public class StatsTemplate : MonoBehaviour
                 break;
             case statsList.RRR:
                 RRRModifiers.Remove(modifier);
+                CalculateTemporaryStats();
+                break;
+            case statsList.Evasiveness:
+                evasivenessModifiers.Remove(modifier);
                 CalculateTemporaryStats();
                 break;
             case statsList.Talent:

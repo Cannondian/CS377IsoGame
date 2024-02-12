@@ -20,7 +20,7 @@ namespace RPGCharacterAnims.Actions
     {
         #region Delegates
 
-        private UnityAction<EventTypes.Event1Param> InitializeFXListener;
+        private UnityAction<EventTypes.SkillUsedParam> InitializeFXListener;
         private UnityAction<EventTypes.Event2Param> ContinousFXListener;
 
 
@@ -94,7 +94,7 @@ namespace RPGCharacterAnims.Actions
         {
             
             InitializeFXListener += InitializeArtilleryStrikeFX;
-            EventBus.StartListening(EventTypes.Events.ON_PARTICLE_FX_TRIGGER, InitializeFXListener);
+            EventBus.StartListening(EventTypes.Events.ON_PARTICLE_FX_FOR_SKILL, InitializeFXListener);
             ContinousFXListener += InitializeElectricityFX;
             EventBus.StartListening(EventTypes.Events.ON_CONTINOUS_PACRTICLE_FX_TRIGGER,
                 ContinousFXListener);
@@ -112,7 +112,7 @@ namespace RPGCharacterAnims.Actions
 
         private void OnDisable()
         {
-           EventBus.StopListening(EventTypes.Events.ON_PARTICLE_FX_TRIGGER, InitializeFXListener);
+           EventBus.StopListening(EventTypes.Events.ON_PARTICLE_FX_FOR_SKILL, InitializeFXListener);
         }
         // PH is for placeholder
         private void SetFlags(string color, Vector3 pos, FXList.FXlist effect, float duration)
@@ -195,7 +195,7 @@ namespace RPGCharacterAnims.Actions
             
         }
 
-        private void InitializeArtilleryStrikeFX(EventTypes.Event1Param context)
+        private void InitializeArtilleryStrikeFX(EventTypes.SkillUsedParam context)
         {
             
 

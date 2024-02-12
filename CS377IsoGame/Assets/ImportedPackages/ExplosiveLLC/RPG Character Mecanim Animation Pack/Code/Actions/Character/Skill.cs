@@ -27,15 +27,7 @@ namespace RPGCharacterAnims.Actions
 			var duration = 0f;
 			
 			
-			switch (terrain) {
-				case CustomTerrain.Terrains.Grass:
-					
-					EventBus.TriggerEvent(EventTypes.Events.ON_PARTICLE_FX_TRIGGER, 
-						new EventTypes.Event1Param(Color.green, position, FXList.FXlist.ArtilleryStrike, 0.2f,2.8f));
-					Debug.Log("it gets here33");
-					break;
-				
-			}
+			
 			/*
 			if (attackNumber == -1) {
 				switch (context.type) {
@@ -65,11 +57,17 @@ namespace RPGCharacterAnims.Actions
 				EndAction(controller);
 			}*/
 			if (context.type == "Skill") {
-				controller.Skill(
-					Characters.Jisa,
-					0.1f
+				
+				
+				
+				
+				EventBus.TriggerEvent(EventTypes.Events.ON_PARTICLE_FX_FOR_SKILL, 
+					new EventTypes.SkillUsedParam(Color.green, position, FXList.FXlist.ArtilleryStrike, 0.3f, 2.5f));
+				controller.Skill(Characters.Jisa,
+					0.1f,
+					terrain);
 					
-				);
+				
 				
 						
 				Debug.Log("it gets here");

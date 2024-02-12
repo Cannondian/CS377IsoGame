@@ -1,11 +1,13 @@
 // To switch your project to using the new InputSystem:
 // Edit>Project Settings>Player>Active Input Handling change to "Input System Package (New)".
 
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using RPGCharacterAnims.Actions;
 using RPGCharacterAnims.Extensions;
 using RPGCharacterAnims.Lookups;
+using Unity.Mathematics;
 // Requires installing the InputSystem Package from the Package Manager: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.5/manual/Installation.html
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -17,7 +19,11 @@ namespace RPGCharacterAnims
 	public class RPGCharacterInputSystemController : MonoBehaviour
     {
         RPGCharacterController rpgCharacterController;
+        [SerializeField] private GameObject targetCirclePrefab;
+        [SerializeField] private GameObject rangeCirclePrefab;
 
+        private GameObject targetingCircle;
+        private GameObject rangeCircle;
 		//InputSystem
 		public @RPGInputs rpgInputs;
 
@@ -308,16 +314,10 @@ namespace RPGCharacterAnims
 				//Debug.Log("you are testing the facing for the skill");
 				//same logic from the facing function to get mouse position and convert to world position
 				//also keep in mind that this is a good way to get screen coordinates on a surface the player stand on
-
+				
 				inputFace = true;
-				Plane playerPlane = new Plane(Vector3.up, transform.position);
-				Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-				RaycastHit hitInfo;
-				if (Physics.Raycast(ray, out hitInfo)) {
-					Vector3 targetPoint = hitInfo.point;
-					 //this doesn't seem correct within our context
-					rpgCharacterController.StartAction(HandlerTypes.Skill, new SkillContext(HandlerTypes.Skill, targetPoint, CustomTerrain.Terrains.Grass, 2));
-				}
+				InitializeTargeting();
+				
 				
 			}
 			/* else if (inputAttackR)
@@ -328,6 +328,63 @@ namespace RPGCharacterAnims
 			{ rpgCharacterController.StartAction(HandlerTypes.AttackCast, new AttackCastContext(AnimationVariations.AttackCast.TakeRandom(), Side.Right)); } */
 			
 		}
+		/// <summary>
+		/// changes cursor to targeting indicator and halts skill execution until the player decides the location.
+		/// Once the player left-clicks the location for the skill to be cast, the function communicates that to the caller through a return value. 
+		/// </summary>
+		public void InitializeTargeting()
+		{
+				
+			//Cursor.SetCursor();
+			Plane playerPlane = new Plane(Vector3.up, transform.position);
+			Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+			RaycastHit hitInfo;
+			if (Physics.Raycast(ray, out hitInfo))
+			{
+				Vector3 targetPoint = hitInfo.point;
+				targetingCircle = Instantiate(targetCirclePrefab, targetPoint, quaternion.identity);
+				CreateRangeIndicator();
+			}
+			rpgCharacterController.Lock(false, true, false, 0, 0);
+			StartCoroutine(TargetingLoop());
+		}
+
+		public void CreateRangeIndicator()
+		{
+			var position = transform.position;
+			position.y = 1;
+			rangeCircle = Instantiate(rangeCirclePrefab, position, transform.rotation, transform);
+		}
+		public IEnumerator TargetingLoop()
+		{
+
+			while (!rpgInputs.RPGCharacter.AttackL.IsPressed())
+			{
+				Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+				RaycastHit hitInfo;
+				if (Physics.Raycast(ray, out hitInfo))
+				{
+					Vector3 targetPoint = hitInfo.point;
+					Vector3 direction = targetPoint - transform.position;
+					Vector3 range = direction.normalized * 5.5f;
+					
+					targetPoint.y += 0.1f;
+					targetingCircle.transform.position =
+						direction.magnitude > range.magnitude
+							? transform.position + range
+							: transform.position + direction;
+				}
+				
+				yield return null;
+			}
+
+			Destroy(targetingCircle);
+			Destroy(rangeCircle);
+			rpgCharacterController.Unlock(true, true);
+			rpgCharacterController.StartAction(HandlerTypes.Skill,
+				new SkillContext(HandlerTypes.Skill, targetingCircle.transform.position, CustomTerrain.Terrains.Grass, 2));
+		}
+    
 
 		private void UsingUltimate()
 		{

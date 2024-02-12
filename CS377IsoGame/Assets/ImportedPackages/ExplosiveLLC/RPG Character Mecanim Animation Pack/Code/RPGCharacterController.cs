@@ -48,6 +48,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 
 			#region Components
 
+			
 			/// <summary>
 			/// Unity Animator component.
 			/// </summary>
@@ -669,7 +670,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 			{
 				// Update Animator animation speed.
 				animator.SetFloat(AnimationParameters.AnimationSpeed, animationSpeed);
-				animator.SetFloat(AnimationParameters.CustomAnimationSpeed, 1.4f);
+				animator.SetFloat(AnimationParameters.CustomAnimationSpeed, 1.5f);
 				animator.SetFloat(AnimationParameters.AttackSpeed, 1 + coreChargeValue * 1 / 90);
 
 				// Aiming.
@@ -905,7 +906,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 			{
 				animator.TriggerDiveRoll(rollType);
 				Lock(true, true, true, 0, 0.40f);
-				SetIKPause(0.45f);
+				SetIKPause(0.35f);
 			}
 
 			/// <summary>
@@ -1111,7 +1112,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 			//so, before you start working on the handler, first write the last point in the RCC
 			//that way you know what you need from the handler
 
-			public void Skill(Characters character, float duration)
+			public void Skill(Characters character, float duration, CustomTerrain.Terrains terrain)
 			{
 
 				switch (character)
@@ -1336,7 +1337,8 @@ using Null = RPGCharacterAnims.Actions.Null;
 				Lock(true, true, true, 0, 0.6f);
 				Unlock(true, true);
 			}
-
+			
+			
 			/// <summary>
 			/// Cast a spell.
 			///

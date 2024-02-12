@@ -7,11 +7,12 @@ using UnityEngine;
 public class ConditionState : MonoBehaviour
 {
    
-    public Health mySoul;
+    public Health mySoul; //health component
     
     #region Components
 
     private StatsTemplate myStats;
+    private FXHandler FXhandler;
 
     #endregion
     
@@ -30,6 +31,7 @@ public class ConditionState : MonoBehaviour
    
 
     #endregion
+    
 
     #region BuffStatusFlags
 
@@ -63,7 +65,7 @@ public class ConditionState : MonoBehaviour
 
     private float corrosiveDuration;
     private int corrosiveIntensity;
-   
+    private StatModifier corrosiveModifier;
 
     #endregion
     
@@ -91,11 +93,12 @@ public class ConditionState : MonoBehaviour
 
     #region SlowedData
 
+    public StatModifier slowModifier; //stat modifier that represents all active slow effect on the entity
     public struct Slow
     {
         public readonly int slowIntensity;
         public readonly float slowDuration;
-
+        
         public Slow(int i, float d)
         {
             slowIntensity = i;
@@ -104,17 +107,20 @@ public class ConditionState : MonoBehaviour
     }
 
     private Slow[] activeSlows;
+    private float effectiveSlowIntensity;
     
     #endregion
 
     #region ExhaustedData
 
     private float exhaustedDuration;
+    private StatModifier exhaustedModifier;
 
     #endregion
 
     #region  RejuvenationData
 
+    public int effectiveRejuvenationIntensityforFX;
     public struct Rejuvenation
     {
         public float duration;
@@ -135,6 +141,7 @@ public class ConditionState : MonoBehaviour
     #region EnergizedData
 
     private float energizedDuration;
+    private StatModifier energizedModifier;
 
     #endregion
 
@@ -142,36 +149,44 @@ public class ConditionState : MonoBehaviour
 
     private float slipperyStepsDuration;
     private int slipperyStepsIntensity;
+    private StatModifier slipperyStepsModifier; 
 
     #endregion
 
     #region SmolderingStrikesData
 
     private float smolderingStrikesDuration;
+    private StatModifier smolderingStrikesModifier;
 
     #endregion
     
     #region EvasiveData
 
     private float evasiveDuration;
+    private StatModifier evasiveModifier;
     
     #endregion
     
     #region DefensiveTerrainData
 
     private float defensiveTerrainDuration;
+    private StatModifier defensiveTerrainModifier;
     
     #endregion
 
     #region MutatingData
 
     private float mutatingDuration;
+    private StatModifier mutatingModifier1;
+    private StatModifier mutatingModifier2;
 
     #endregion
 
     #region RadiationPoisoningData
 
     private float radiationPoisoningDuration;
+    private StatModifier radiationPoisoningModifier1;
+    private StatModifier radiationPoisoningModifier2;
 
     #endregion
 
@@ -187,6 +202,13 @@ public class ConditionState : MonoBehaviour
         activeRejuvenations = new Rejuvenation[4];
         myStats = GetComponent<StatsTemplate>();
         mySoul = GetComponent<Health>();
+        FXhandler = FXHandler.Instance;
+        
+        //make modifiers for each of the status conditions.
+        //These modifiers will be sent to the stat template for adjusting of those stats
+        //once the status condition is applied
+        //status conditions that have pure HP increasing/decreasing effects are not represented as 
+        //modifiers in the stat template, unless they alter the max HP of the entity;
         
     }
 
@@ -300,6 +322,14 @@ public class ConditionState : MonoBehaviour
 /// <summary>
 /// Sets, or updates a condition if reapplied. Takes in any and all inputs required for a given status condition.
 /// Most parameters are optional.
+/// Setting a condition consists of a few steps. We update the duration of conditions that are already present.
+/// We set the flags and initialize FX for conditions that were not present previously.
+/// If a condition is applied with a greater intensity than the previous application on the entity,
+/// we also update FX in that case to trigger larger FX.
+/// Then, we create modifiers. If the status was already present before the most recent application,
+/// and it's specifics were not updates, then we keep the current modifier for that status and do not make a new one.
+/// If the status is newly applied, we make modifiers for it, send it to the stat template for the changed to take place,
+/// and save that value so that we can send a message to the stat template fr it to be removed when appropriate.
 /// </summary>
 /// <param name="condition"></param>
 /// <param name="duration"></param>
@@ -325,33 +355,56 @@ public class ConditionState : MonoBehaviour
                
                 break;
             case StatusConditions.statusList.Corrosive: //intensity levels are 1, 2 and 3
+
+                if (corrosiveIntensity < intensity)
+                {
+                    if (corrosive) 
+                    { 
+                        EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION, 
+                        new EventTypes.StatusConditionFXParam(FXhandler.CorrosiveFXPrefab, gameObject,
+                            nameof(StatusConditions.statusList.Corrosive)));
+                    }
+                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                        new EventTypes.StatusConditionFXParam(FXhandler.CorrosiveFXPrefab, gameObject,
+                                                                nameof(StatusConditions.statusList.Corrosive), intensity));
+                    
+                    corrosiveModifier = new StatModifier(intensity * 20, StatModifierType.Percent);
+                    myStats.AddModifier(StatsTemplate.statsList.Defense, corrosiveModifier);
+                }
+
                 corrosive = true;
-                if (duration >
-                    corrosiveDuration) //doesn't stack, but if a higher intensity version is applied, it inherits the longer duration from among the two
+                if (duration > corrosiveDuration)
                 {
                     corrosiveDuration = duration;
                 }
 
-                if (intensity > corrosiveIntensity)
-                {
-                    corrosiveIntensity = intensity;
-                }
-
                 break;
             case StatusConditions.statusList.Bleeding:
-                bleeding = true;
-                bleedingStackCount++;
+                if (!bleeding)
+                {
+                    bleeding = true;
+                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                        new EventTypes.StatusConditionFXParam(FXhandler.BleedingFXPrefab,
+                            gameObject, nameof(StatusConditions.statusList.Bleeding)));
+                }
+
+                if (bleedingStackCount < 10) bleedingStackCount++;
+                
                 if (duration > bleedingDuration)
                 {
                     bleedingDuration = duration;
                 }
-
                 break;
             case StatusConditions.statusList.Confused:
                 if (!glowing)
                 {
-                    confused = true;
-
+                    if (!confused)
+                    {
+                        confused = true;
+                        EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                            new EventTypes.StatusConditionFXParam(FXhandler.ConfusedFXPrefab, gameObject,
+                                nameof(StatusConditions.statusList.Confused)));
+                    }
                     if (duration > confusedDuration)
                     {
                         confusedDuration = duration;
@@ -362,33 +415,81 @@ public class ConditionState : MonoBehaviour
             case StatusConditions.statusList.Stunned:
                 if (!glowing)
                 {
-                    stunned = true;
-                    stunnedDuration = duration;
+                    if (!stunned)
+                    {
+                        stunned = true;
+                        EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                            new EventTypes.StatusConditionFXParam(FXhandler.StunnedFXPrefab, gameObject,
+                                nameof(StatusConditions.statusList.Stunned)));
+                    }
+                    if (duration > stunnedDuration) stunnedDuration = duration;
                 }
 
                 break;
             case StatusConditions.statusList.Slow: //intensity level between 1-18, corresponding to scaled multiples of 5%. 
-                if (!glowing)
+                if (!glowing)                       //modifiers get updated the effective slow value, which is the one with the highest intensity, FX are constant for all levels of intensity
                 {
-                    
-                    slowed = true; //this is an additive debuff, which means consecutive different intensity applications stack, 
-
-                    if (activeSlows.Length <=
-                        10) //however, only the current active debuff with the greatest intensity actually affects the player
+                    if (!slowed)
+                    {
+                        slowed = true;
+                        EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                            new EventTypes.StatusConditionFXParam(FXhandler.SlowFXPrefab, gameObject,
+                                nameof(StatusConditions.statusList.Slow)));
+                        activeSlows[0] = new Slow(intensity, duration);
+                        slowModifier = new StatModifier(intensity * -5, StatModifierType.Percent);
+                        myStats.AddModifier(StatsTemplate.statsList.Speed, slowModifier);
+                    }
+                    //this is an additive debuff, which means consecutive different intensity applications stack, 
+                    if (activeSlows.Length <= 10) //however, only the current active debuff with the greatest intensity actually affects the player
                     {
                         activeSlows[activeSlows.Length - 1] = new Slow(intensity, duration);
+                        if (effectiveSlowIntensity < intensity)
+                        {
+                            effectiveSlowIntensity = intensity;
+                            myStats.RemoveModifier(StatsTemplate.statsList.Speed, slowModifier);
+                            slowModifier = new StatModifier(intensity * -5, StatModifierType.Percent);
+                            myStats.AddModifier(StatsTemplate.statsList.Speed, slowModifier);
+                        }
                     }
                 }
 
                 break;
             case StatusConditions.statusList.Exhausted:
-                exhausted = true;
+                if (!exhausted)
+                {
+                    exhausted = true;
+                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                        new EventTypes.StatusConditionFXParam(FXhandler.ExhaustedFXPrefab, gameObject,
+                            nameof(StatusConditions.statusList.Exhausted)));
+                    exhaustedModifier = new StatModifier(-30, StatModifierType.Percent);
+                    myStats.AddModifier(StatsTemplate.statsList.RRR, exhaustedModifier);
+                }
                 if(exhaustedDuration < duration) exhaustedDuration = duration;
                 break;
-            case StatusConditions.statusList.Rejuvenation: //intensity level between 1-4, works the same way as slow
-                rejuvenation = true;
-                if (activeRejuvenations.Length <=4)
+            case StatusConditions.statusList.Rejuvenation: //intensity level between 1-4, intensity determines FX, yet multiple can be active at once, 
+                if (effectiveRejuvenationIntensityforFX < intensity)
                 {
+                    if (rejuvenation)
+                    {
+                        EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
+                            new EventTypes.StatusConditionFXParam(FXhandler.RejuvenationFXPrefab,
+                            gameObject, nameof(StatusConditions.statusList.Rejuvenation), intensity));
+                    }
+
+                    rejuvenation = true;
+                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                        new EventTypes.StatusConditionFXParam(FXhandler.RejuvenationFXPrefab,
+                            gameObject, nameof(StatusConditions.statusList.Rejuvenation), intensity));
+                    effectiveRejuvenationIntensityforFX = intensity;
+                }
+                if (activeRejuvenations.Length == 4)
+                {
+                    Rejuvenation rejuvenationToRemove;
+                    int lowest;
+                    foreach (Rejuvenation r in activeRejuvenations)
+                    {
+                        
+                    }
                     activeRejuvenations[activeRejuvenations.Length - 1] = new Rejuvenation(duration, intensity);
                 }
                 break;
