@@ -653,7 +653,7 @@ public class ConditionState : MonoBehaviour
                         EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION, 
                             new EventTypes.StatusConditionFXParam(FXhandler.DefensiveTerrainFXPrefab, gameObject,
                                 nameof(StatusConditions.statusList.DefensiveTerrain)));
-                        myStats.RemoveModifier(StatsTemplate.statsList.Defense, corrosiveModifier);
+                        myStats.RemoveModifier(StatsTemplate.statsList.Defense, defensiveTerrainModifier);
                     }
                     EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
                         new EventTypes.StatusConditionFXParam(FXhandler.DefensiveTerrainFXPrefab, gameObject,
@@ -951,72 +951,49 @@ public class ConditionState : MonoBehaviour
             //intensity between 1-3;
             //at intensity 3, also increases attack speed
             //stacks basically
-            /*case StatusConditions.statusList.SlipperySteps:
-                if (intensity > slipperyStepsIntensity)
+            case StatusConditions.statusList.SlipperySteps:
+                if (slipperySteps)
                 {
-                    if (slipperySteps)
+                    EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
+                        new EventTypes.StatusConditionFXParam(FXhandler.SlipperyStepsFXPrefab, this.gameObject,
+                            nameof(StatusConditions.statusList.SlipperySteps)));
+                    if (slipperyStepsIntensity == 3)
                     {
-                        myStats.RemoveModifier(StatsTemplate.statsList.Speed, slipperyStepsSpeedModifier);
-                        EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
-                            new EventTypes.StatusConditionFXParam(FXhandler.SlipperyStepsFXPrefab, this.gameObject,
-                                nameof(StatusConditions.statusList.SlipperySteps)));
+                        myStats.RemoveModifier(StatsTemplate.statsList.Resistance, slipperyStepsResistanceModifier);
                     }
 
-                    slipperyStepsSpeedModifier =
-                        new StatModifier(intensity * 15, StatModifierType.Percent); //add new version
-                    myStats.AddModifier(StatsTemplate.statsList.Speed, slipperyStepsSpeedModifier);
-                    if (intensity == 3)
-                    {
-                        slipperyStepsResistanceModifier = new StatModifier(200, StatModifierType.Flat);
-                        myStats.AddModifier(StatsTemplate.statsList.Resistance, slipperyStepsResistanceModifier);
-                    }
-
-                    EventBus.TriggerEvent(
-                        EventTypes.Events.ON_NEW_STATUS_CONDITION,
-                        new EventTypes.StatusConditionFXParam(
-                            FXhandler.SlipperyStepsFXPrefab,
-                            this.gameObject,
-                            nameof(StatusConditions.statusList
-                                .SlipperySteps)));
+                    myStats.RemoveModifier(StatsTemplate.statsList.Speed, slipperyStepsSpeedModifier);
+                    slipperyStepsDuration = 0;
+                    slipperyStepsIntensity = 0;
+                    slipperySteps = false;
                 }
-
-                slipperySteps = true;
-                slipperyStepsDuration = duration;
 
                 break;
             //scales with attack but has fixed intensity
             //also increases attack minimally
             case StatusConditions.statusList.SmolderingStrikes:
-                if (!smolderingStrikes)
+                if (smolderingStrikes)
                 {
-                  EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                  EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
                       new EventTypes.StatusConditionFXParam(FXhandler.SmolderingStrikesFXPrefab, gameObject,
                           nameof(StatusConditions.statusList.SmolderingStrikes)));
-                  smolderingStrikesModifier = new StatModifier(10, StatModifierType.Percent);
-                  myStats.AddModifier(StatsTemplate.statsList.Attack, smolderingStrikesModifier);
-                  if (!enemy)
-                  {
-                      PlayerHitEffects.Instance.AddHitEffect( );
-                  }
+
+                  myStats.RemoveModifier(StatsTemplate.statsList.Attack, smolderingStrikesModifier);
+                  smolderingStrikes = false;
+                  smolderingStrikesDuration = 0;
                 }
-                smolderingStrikes = true;
-                if (smolderingStrikesDuration < duration)
-                {
-                    smolderingStrikesDuration = duration;
-                }
+                
                 break;
             case StatusConditions.statusList.Evasive:
-                if (!evasive)
+                if (evasive)
                 {
-                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                    EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
                         new EventTypes.StatusConditionFXParam(FXhandler.EvasiveFXPrefab, gameObject,
                             nameof(StatusConditions.statusList.Evasive)));
-                    evasiveModifier = new StatModifier(30, StatModifierType.Percent);
-                    myStats.AddModifier(StatsTemplate.statsList.Evasiveness, evasiveModifier);
+                    myStats.RemoveModifier(StatsTemplate.statsList.Evasiveness, evasiveModifier);
+                    evasive = false;
+                    evasiveDuration = 0;
                 }
-
-                evasive = true;
-                if (evasiveDuration < duration) evasiveDuration = duration;
                 break;
             case StatusConditions.statusList.Blinded:
                 // handle Blinded condition
@@ -1031,74 +1008,65 @@ public class ConditionState : MonoBehaviour
                 // handle Unstoppable condition
                 break;
             case StatusConditions.statusList.RadiationPoisoning:
-                if (!radiationPoisoning)
+                if (radiationPoisoning)
                 {
-                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                    EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
                         new EventTypes.StatusConditionFXParam(FXhandler.RadiationPoisoningFXPrefab, this.gameObject,
                             nameof(StatusConditions.statusList.RadiationPoisoning)));
-                    radiationPoisoning = true;
-                    radiationPoisoningDuration = duration;
-                    SetRandomDebuffs(duration);
+                    radiationPoisoning = false;
+                    radiationPoisoningDuration = 0;
+
 
                 }
 
                 break;
 
             case StatusConditions.statusList.Mutating:
-                if (!mutating)
+                if (mutating)
                 {
-                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                    EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
                         new EventTypes.StatusConditionFXParam(FXhandler.MutatingFXPrefab, this.gameObject,
                             nameof(StatusConditions.statusList.Mutating)));
-                    mutating = true;
-                    mutatingDuration = duration;
-                    SetRandomBuffs(duration);
+                    mutating = false;
+                    mutatingDuration = 0;
 
                 }
 
                 break;
             case StatusConditions.statusList.Glowing:
-                if (!glowing)
+                if (glowing)
                 {
-                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                    EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
                         new EventTypes.StatusConditionFXParam(FXhandler.GlowingFXPrefab, gameObject,
                             nameof(StatusConditions.statusList.Glowing)));
-                    glowingModifier = new StatModifier(15, StatModifierType.Percent);
-                    myStats.AddModifier(StatsTemplate.statsList.AttackSpeed,glowingModifier);
+                    myStats.RemoveModifier(StatsTemplate.statsList.AttackSpeed,glowingModifier);
+                    glowing = false;
+                    glowingDuration = 0;
                 }
-                /* reminder to add HitEffect here*/ /*
-                glowing = true;
-                if (glowingDuration < duration) glowingDuration = duration;
+                /* reminder to add HitEffect here*/ 
+                
                 break;
             case StatusConditions.statusList.DefensiveTerrain: //intensity is determined by the amount of rocks within a given terrain tile, scales with defense.
-                if (defensiveTerrainIntensity < intensity)
+                if (defensiveTerrain)
                 {
-                    if (defensiveTerrain)
-                    {
+                    
                         EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
                             new EventTypes.StatusConditionFXParam(FXhandler.DefensiveTerrainFXPrefab, gameObject,
                                 nameof(StatusConditions.statusList.DefensiveTerrain)));
-                        myStats.RemoveModifier(StatsTemplate.statsList.Defense, corrosiveModifier);
-                    }
-                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
-                        new EventTypes.StatusConditionFXParam(FXhandler.DefensiveTerrainFXPrefab, gameObject,
-                            nameof(StatusConditions.statusList.DefensiveTerrain), intensity));
-
-                    defensiveTerrainModifier = new StatModifier(intensity * 20, StatModifierType.Percent);
-                    myStats.AddModifier(StatsTemplate.statsList.Defense, defensiveTerrainModifier);
-                }
-
-                defensiveTerrain = true;
-                if (duration > defensiveTerrainDuration)
-                {
-                    defensiveTerrainDuration = duration;
+                        myStats.RemoveModifier(StatsTemplate.statsList.Defense, defensiveTerrainModifier);
+                        defensiveTerrain = false;
+                        defensiveTerrainDuration = 0;
+                        defensiveTerrainIntensity = 0;
                 }
                 break;
         }
     }
-} */
-        }
+
+
+    private void AdjustDefensiveTerrain()
+    {
     }
+    
 
     private void ApplyBurning()
     {

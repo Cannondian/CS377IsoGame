@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -12,6 +13,7 @@ public class Health : MonoBehaviour
     public float maxHealth;
     [FormerlySerializedAs("mySoul")] public EnemyAI myEnemyAI;
     public bool amIEnemy;
+    public DamageEffect damageComponent;
     
     
     [SerializeField] public UnityEngine.UI.Slider healthSlider;
@@ -21,7 +23,7 @@ public class Health : MonoBehaviour
     void Start()
     {
         myEnemyAI = GetComponent<EnemyAI>();
-        
+        damageComponent = GetComponentInChildren<DamageEffect>();
         if (myEnemyAI != null)
         {
             amIEnemy = true;
@@ -31,6 +33,7 @@ public class Health : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    
     void Update()
     {
         if (!amIEnemy)

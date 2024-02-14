@@ -417,6 +417,7 @@ namespace RPGCharacterAnims
 				return;
 			}
 
+			
 			// Check to make character can Attack.
 			if (!rpgCharacterController.CanStartAction(HandlerTypes.Attack)) { return; }
 

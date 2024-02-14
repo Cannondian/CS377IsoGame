@@ -14,7 +14,7 @@ public class EventTypes
       ON_JISA_ENHANCED_ATTACK_READY,
       ON_NEW_STATUS_CONDITION,
       ON_EXPIRED_STATUS_CONDITION,
-
+      ON_ENEMY_HIT,
       ON_PLAYER_DAMAGE_TAKEN,
 
 
@@ -115,6 +115,17 @@ public class EventTypes
            this.intensity = intensity;
            myName = name;
            caller = callerObject;
+       }
+   }
+
+   public class FloatingDamageParam
+   {
+      public GameObject target;
+      public float damage;
+      public FloatingDamageParam(GameObject targetObject, float damageValue)
+       {
+           target = targetObject;
+           damage = damageValue;
        }
    }
 }

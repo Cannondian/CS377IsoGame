@@ -7,21 +7,23 @@ using UnityEngine;
 
 public class PlayerCombatCollisions : MonoBehaviour
 {
-
     
-
   
         //one idea to make this better would be to turn on their colliders at the end of the attack animation
         private RPGCharacterController controller;
         private int attackNumber;
         private bool isNewAttack;
-        private 
+        private float attackTimer;
+        
+        
         void Start()
         {
             controller = FindObjectOfType<RPGCharacterController>();
             
             attackNumber = -1;
-            
+            attackTimer = 0;
+
+
 
         }
 
@@ -38,17 +40,23 @@ public class PlayerCombatCollisions : MonoBehaviour
             //we want to ensure that collisions only trigger appropriate effects once per attack
             if (controller.isAttacking)
             {
-
+                
+                //control section to ensure every attack triggers a single collision with every enemy and collisions only trigger
+                //after a certain point in the animation
+                
                 if (attackNumber == controller.comboIndex)
                 {
                     isNewAttack = false;
-                }                                               //checks if the collision occurs for a new attack
-                else
+                }
+                else if (attackTimer > 0.1f)
                 {
                     isNewAttack = true;
                     attackNumber = controller.comboIndex;
+                    
+
                 }
 
+                attackTimer = attackTimer + Time.deltaTime;
 
 
                 if (isNewAttack)
@@ -66,6 +74,8 @@ public class PlayerCombatCollisions : MonoBehaviour
                         EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK, true);
 
                         DamageEnemy(other, 80f);
+                        EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
+                            new EventTypes.FloatingDamageParam(other.gameObject, 80));
                     }
 
                     else
@@ -77,10 +87,13 @@ public class PlayerCombatCollisions : MonoBehaviour
                             new EventTypes.Event9Param(transform.position, FXList.FXlist.BasicHitFX,
                                 transform.rotation));
                         EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
-                            CharacterEnergy.Instance.energyFromBasic);
-                        
+                            CharacterEnergy.Instance.energyFromEnhancedBasic);
+                            EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
+                                new EventTypes.FloatingDamageParam(other.gameObject, 6));
                         DamageEnemy(other, 6f);
                     }
+
+                    attackTimer = 0;
                 }
 
             }
