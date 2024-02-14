@@ -14,6 +14,7 @@ public class PlayerCombatCollisions : MonoBehaviour
         private int attackNumber;
         private bool isNewAttack;
         private float attackTimer;
+        private bool attackDone;
         
         
         void Start()
@@ -22,6 +23,8 @@ public class PlayerCombatCollisions : MonoBehaviour
             
             attackNumber = -1;
             attackTimer = 0;
+            attackDone = false;
+            
 
 
 
@@ -44,19 +47,20 @@ public class PlayerCombatCollisions : MonoBehaviour
                 //control section to ensure every attack triggers a single collision with every enemy and collisions only trigger
                 //after a certain point in the animation
                 
-                if (attackNumber == controller.comboIndex)
+                if (attackNumber != controller.comboIndex)
                 {
-                    isNewAttack = false;
-                }
-                else if (attackTimer > 0.1f)
-                {
-                    isNewAttack = true;
+                    attackDone = false;
                     attackNumber = controller.comboIndex;
                     
+                }
+                else if (!attackDone)
+                {
+                    isNewAttack = true;
 
                 }
-
-                attackTimer = attackTimer + Time.deltaTime;
+                
+                
+                
 
 
                 if (isNewAttack)
@@ -90,9 +94,13 @@ public class PlayerCombatCollisions : MonoBehaviour
                             CharacterEnergy.Instance.energyFromEnhancedBasic);
                             EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
                                 new EventTypes.FloatingDamageParam(other.gameObject, 6));
-                        DamageEnemy(other, 6f);
+                            Debug.Log("collided");
+                            DamageEnemy(other, 6f);
+                        
                     }
 
+                    attackDone = true;
+                    isNewAttack = false;
                     attackTimer = 0;
                 }
 

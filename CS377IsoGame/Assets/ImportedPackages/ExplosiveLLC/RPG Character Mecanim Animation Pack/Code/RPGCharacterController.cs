@@ -1086,14 +1086,17 @@ using Null = RPGCharacterAnims.Actions.Null;
 				if (comboIndex == 1)
 				{
 					comboIndex++;
+					AttackColliders.Instance.TriggerColliderAnimation(comboIndex, 1 + coreChargeValue * 1 / 90);
 				}
 				else if (comboIndex == 2)
 				{
 					comboIndex = 5;
+					AttackColliders.Instance.TriggerColliderAnimation(comboIndex, 1 + coreChargeValue * 1 / 90);
 				}
 				else
 				{
 					comboIndex = 1;
+					AttackColliders.Instance.TriggerColliderAnimation(comboIndex, 1 + coreChargeValue * 1 / 90);
 				}
 
 				StartCoroutine("ResetCombos");
@@ -1162,8 +1165,8 @@ using Null = RPGCharacterAnims.Actions.Null;
 
 						coreChargeValue = CoreChargeManager.Instance.coreChargeState;
 						var coreChargeSpeedUp = coreChargeValue * 1 / 90;
-						Lock(true, true, true, 0, duration - duration * coreChargeSpeedUp);
-						;
+						Lock(true, true, true, 0, 1.15f - 1.15f * coreChargeSpeedUp );
+						Debug.Log(duration +"duration");
 						animator.SetSide(attackSide);
 						_isAttacking = true;
 
@@ -1188,6 +1191,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 							? AnimatorTrigger.AttackDualTrigger
 							: AnimatorTrigger.AttackTrigger;
 						animator.SetActionTrigger(attackTriggerType, attackNumber);
+						AttackColliders.Instance.TriggerColliderAnimation(comboIndex, 1 + coreChargeValue * 1 / 90);
 					}
 				}
 			}

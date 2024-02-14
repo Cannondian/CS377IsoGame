@@ -1060,12 +1060,12 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 40960
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1088,6 +1088,7 @@ MonoBehaviour:
   maxHealth: 0
   myEnemyAI: {fileID: 0}
   amIEnemy: 0
+  damageComponent: {fileID: 0}
   healthSlider: {fileID: 0}
 --- !u!114 &7831747682396266192
 MonoBehaviour:
