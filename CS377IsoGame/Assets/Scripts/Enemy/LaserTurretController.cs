@@ -44,10 +44,16 @@ public class LaserTurretController : EnemyAI
         AttackDamage = 0.5f;
     }
 
+    protected override void Patroling()
+    {
+        WindDown();
+    }
+
     protected override void ChasePlayer()
     {
         base.ChasePlayer();
         AimTurret();
+        WindDown();
     }
 
     protected override void AttackPlayer()
