@@ -8,6 +8,7 @@ public class JumpingGrenadierController : EnemyAI
     [SerializeField] Transform BodyTransform;
     [SerializeField] Transform TurretTransform; // I.e., the "head" of the enemy where grenades are launched from
     [SerializeField] Transform TurretBottomTransform;
+    [SerializeField] LineRenderer LineToIndicator; // A line from the enemy to its indicator to help show which enemy is attacking the player
     [SerializeField] Animator _Animator;
     [SerializeField] NavMeshAgent Agent;
 
@@ -21,10 +22,11 @@ public class JumpingGrenadierController : EnemyAI
     public float CooldownTime; // Time between burst shot fires and jumps when patrolling
     public float VerticalLaunchVelocity;
     public float MaxFireDistanceToPlayer; // Maximum allowable distance between indicator and player position to enable firing
-    public float JumpProbabilityWhenFiring;
+    public float JumpProbabilityWhenAttacking; // Percent change to jump instead of aiming for the player when in attack range
     public float MinJumpDistance; // Minimum distance of jumps when searching for walkpoints by player
     public float MaxJumpDistance;
     
+    public bool WaitForLastGrenadeToLand;
     public bool EnableLaunchVariation;
     public float LaunchVariationMaximum; // Max amount of launch velocity variation as a function of distance to player
 
@@ -32,6 +34,7 @@ public class JumpingGrenadierController : EnemyAI
     private float LastBurstFireTime;
     private float LastPatrolJumpTime;
     private bool Attacking; // Indicates if currently in firing sequence
+    private bool WillAttack; // Used in preventing the grenadier from jumping once its decided whether to jump or attack
 
     private bool IsIndicatorOn;
 
@@ -46,7 +49,7 @@ public class JumpingGrenadierController : EnemyAI
         LastBurstFireTime = Time.time;
         LastPatrolJumpTime = Time.time;
 
-        Health = 100f;
+        Health = 50f;
         AttackDamage = 10f;
     }
 
@@ -76,30 +79,25 @@ public class JumpingGrenadierController : EnemyAI
         // Determine the left/right angle to the indicator
         float turretAngle = Vector3.SignedAngle(Vector3.forward, Indicator.position - transform.position, Vector3.up);
 
-        // The -60f is to keep the green bar facing the indicator
-        TurretTransform.rotation = Quaternion.Euler(0f, turretAngle - 60f, 0f);
+        // The -75f is to keep the green bar facing the indicator
+        TurretTransform.rotation = Quaternion.Euler(0f, turretAngle - 75f, 0f);
 
         // Make the bottom section to spin opposite the "head" (if we want stationary, set it to Quaternion.identity)
         TurretBottomTransform.rotation = Quaternion.Inverse(TurretTransform.rotation);
+
+        UpdateLineToIndicator();
     }
 
     void MaybeFire()
     {
-        if (!walkPointSet // not moving
-            && !Attacking // not attacking
-            && Time.time - LastBurstFireTime > CooldownTime // past cooldown time
-            && (player.position - Indicator.position).magnitude < MaxFireDistanceToPlayer) // within attack range
+        if (Time.time - LastBurstFireTime > CooldownTime // past cooldown time
+            && (player.position - Indicator.position).magnitude < MaxFireDistanceToPlayer) // indicator within attack range
         {
-            // Potentially jump to new position instead of attacking
-            if (Random.Range(0f, 1f) < JumpProbabilityWhenFiring)
-            {
-                SearchForJumpLocationByPlayer();
-            }
-            else
-            {
-                Attacking = true;
-                StartCoroutine(BurstFire());
-            }
+            // Attacking sequence potentially started, so set WillAttack to false
+            WillAttack = false;
+
+            Attacking = true;
+            StartCoroutine(BurstFire());
         }
     }
 
@@ -151,13 +149,17 @@ public class JumpingGrenadierController : EnemyAI
             // Todo: any more settings for grenade?
 
             // Blink indicator, wait before firing next grenade
+            yield return new WaitForSeconds(BurstInterval/2f);
             DisableIndicator();
-            yield return new WaitForSeconds(BurstInterval);
+            yield return new WaitForSeconds(BurstInterval/2f);
             EnableIndicator();
         }
 
-        // wait until last grenade hits ground before aiming again
-        yield return new WaitForSeconds(TimeToGround);
+        if (WaitForLastGrenadeToLand)
+        {
+            // wait until last grenade hits ground before aiming again
+            yield return new WaitForSeconds(TimeToGround);
+        }
 
         Attacking = false;
         LastBurstFireTime = Time.time;
@@ -187,14 +189,26 @@ public class JumpingGrenadierController : EnemyAI
 
     protected override void AttackPlayer()
     {
-        EnableIndicator();
-        MaybeFire();
+        if (!walkPointSet && !Attacking)
+        {
+            // Potentially jump to new position instead of attacking
+            if (Random.Range(0f, 1f) < JumpProbabilityWhenAttacking && !WillAttack)
+            {
+                WillAttack = false;
+                SearchForJumpLocationByPlayer();
+            }
+            else
+            {
+                WillAttack = true;
+                MaybeFire();
+            }
+        }
     }
 
     void SearchForJumpLocationByPlayer()
     {
         int i = 0;
-        while(!walkPointSet || i < 100)
+        while(!walkPointSet && i < 100)
         {
             // Similar to SearchWalkPoint but walkPoint is now centered around player and within attack range
             walkPoint = new Vector3(player.position.x + Random.Range(-attackRange, attackRange), 
@@ -222,7 +236,7 @@ public class JumpingGrenadierController : EnemyAI
     void SearchForPatrollingJumpLocation()
     {
         int i = 0;
-        while(!walkPointSet || i < 100)
+        while(!walkPointSet && i < 100)
         {
             walkPoint = new Vector3(transform.position.x + Random.Range(-attackRange, attackRange), 
                                     transform.position.y, 
@@ -248,32 +262,51 @@ public class JumpingGrenadierController : EnemyAI
 
     IEnumerator JumpToWalkPoint()
     {
+        // Turn off indicator for duration of jump if it would already be on
+        if (playerInSightRange || playerInAttackRange)
+        {
+            DisableIndicator();
+        }
+
         // Determine distance to target location and the time it will take to get there
         float DistanceToTarget = (transform.position - walkPoint).magnitude;
         float TimeToTarget = DistanceToTarget / Agent.speed;
 
         // Adjust animation speed so that jump animation spans the time to jump
         _Animator.enabled = true;
-        _Animator.speed = 1f / TimeToTarget;
+        _Animator.speed = 1f / (TimeToTarget * 1.25f); // scale up time to target to account for startup and stop sections of animation
         _Animator.Play("JumpingGrenadierJump");
+
+        // Wait for first 7/60th of animation (when grenadier is priming its jump)
+        yield return new WaitForSeconds(_Animator.speed * 7f/60f);
         
         // Move the enemy to the walkpoint
         agent.SetDestination(walkPoint);
 
         // Wait for animation to complete
-        yield return new WaitForSeconds(TimeToTarget*1.1f);
+        yield return new WaitForSeconds(TimeToTarget + _Animator.speed * 8f/60f);
 
         // Stop animation, ensure we reset it as well (so the enemy does not end up floating)
         walkPointSet = false;
         _Animator.Rebind();
         _Animator.Update(0f);
         _Animator.enabled = false;
+
+        // Turn indicator back on (if it should be)
+        ResetIndicator();
+        if (playerInSightRange || playerInAttackRange)
+        {
+            EnableIndicator();
+        }
+
+        walkPointSet = false;
     }
 
     void ResetIndicator()
     {
         // Set indicator position to current enemy position
         Indicator.position = new Vector3(transform.position.x, player.position.y, transform.position.z);
+        UpdateLineToIndicator();
     }
 
     void EnableIndicator()
@@ -281,6 +314,7 @@ public class JumpingGrenadierController : EnemyAI
         if (!IsIndicatorOn)
         {            
             Indicator.gameObject.SetActive(true);
+            LineToIndicator.enabled = true;
             IsIndicatorOn = true;
         }
     }
@@ -290,8 +324,15 @@ public class JumpingGrenadierController : EnemyAI
         if (IsIndicatorOn)
         {
             Indicator.gameObject.SetActive(false);
+            LineToIndicator.enabled = false;
             IsIndicatorOn = false;
         }
+    }
+
+    void UpdateLineToIndicator()
+    {
+        LineToIndicator.SetPosition(0, new Vector3(transform.position.x, Indicator.position.y, transform.position.z));
+        LineToIndicator.SetPosition(1, Indicator.position);
     }
 
     protected override void UpdateCanvas()
