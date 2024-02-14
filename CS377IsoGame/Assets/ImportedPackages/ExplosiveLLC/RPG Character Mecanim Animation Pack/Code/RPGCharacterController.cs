@@ -1162,7 +1162,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 
 						coreChargeValue = CoreChargeManager.Instance.coreChargeState;
 						var coreChargeSpeedUp = coreChargeValue * 1 / 90;
-						Lock(false, true, true, 0, duration - duration * coreChargeSpeedUp);
+						Lock(true, true, true, 0, duration - duration * coreChargeSpeedUp);
 						;
 						animator.SetSide(attackSide);
 						_isAttacking = true;
