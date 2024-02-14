@@ -88,7 +88,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 			/// <summary>
 			/// Animation speed control. Doesn't affect lock timing.
 			/// </summary>
-			public float animationSpeed = 1;
+			public float animationSpeed = 1.1f;
 
 			/// <summary>
 			/// Whether to use PerfectLookAt headlook.
@@ -1164,8 +1164,9 @@ using Null = RPGCharacterAnims.Actions.Null;
 					{
 
 						coreChargeValue = CoreChargeManager.Instance.coreChargeState;
-						var coreChargeSpeedUp = coreChargeValue * 1 / 90;
-						Lock(true, true, true, 0, 1.15f - 1.15f * coreChargeSpeedUp );
+						var coreChargeSpeedUp = coreChargeValue * 1 / 100;
+						Lock(true, true, true, 0, 1 - 1 * coreChargeSpeedUp );
+						UnlockEarly(true, false, 0.70f - 0.8f * coreChargeSpeedUp);
 						Debug.Log(duration +"duration");
 						animator.SetSide(attackSide);
 						_isAttacking = true;
@@ -1233,6 +1234,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 					EventBus.TriggerEvent(EventTypes.Events.ON_JISA_ENHANCED_ATTACK, true);
 					Debug.Log("ready!!");
 					Lock(false, true, true, 0, duration);
+					
 
 				}
 				else
@@ -1242,6 +1244,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 					coreChargeValue = CoreChargeManager.Instance.coreChargeState;
 					var coreChargeSpeedUp = coreChargeValue * 1 / 90;
 					Lock(false, true, true, 0, duration - duration * coreChargeSpeedUp);
+					
 					Debug.Log("heya");
 					if (side == Side.Left && leftWeapon || twoHandedWeapon)
 					{
@@ -1915,6 +1918,17 @@ using Null = RPGCharacterAnims.Actions.Null;
 
 					OnUnlockActions();
 				}
+			}
+
+			public void UnlockEarly(bool movement, bool actions, float time)
+			{
+				StartCoroutine(_UnlockEarly(movement, actions, time));
+			}
+
+			public IEnumerator _UnlockEarly(bool movement, bool actions, float time)
+			{
+				yield return new WaitForSeconds(time);
+				Unlock(movement, actions);
 			}
 
 			/// <summary>

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 4317558383485406746}
   - component: {fileID: 709505195963040084}
   - component: {fileID: 1207109408894146304}
+  - component: {fileID: 2802451437868346792}
+  - component: {fileID: 332118856412135980}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -67,18 +69,24 @@ MonoBehaviour:
   coreChargeParticleLevel: 0
   ArtilleryStrikePrefab: {fileID: 4242371694356100040, guid: 4efb5292acd2b4995ac30bd60d398a21, type: 3}
   ElectricityPrefab1: {fileID: 1251993928265596, guid: c445b201205907b4f90b242a07f4dbc9, type: 3}
-  ElectricityPrefab2: {fileID: 1190131086089332, guid: a22bb852cf433044e8752ea7fe62f570, type: 3}
-  ElectricityPrefab3: {fileID: 0}
-  RedHitLinePrefab: {fileID: 0}
-  BlueHitLinePrefab: {fileID: 0}
-  Slash1Prefab: {fileID: 0}
-  Slash3Prefab: {fileID: 0}
   BasicHitPrefab: {fileID: 1602197966606650, guid: 639ffe8a2dcaab14fa53988d89810e9d, type: 3}
-  BasicHit2Prefab: {fileID: 1295152798636446, guid: 36ce92b00d043ba4c859539c4698af88, type: 3}
-  BasicHit3Prefab: {fileID: 1883552001520024, guid: a30cd0ba5c00c6d459196515ec56574a, type: 3}
-  EnhancedBasicHit: {fileID: 0}
-  EnhancedBasicHit2: {fileID: 3635571269192305790, guid: 61f789503d5e34143a812fb1bff9e2fd, type: 3}
-  EnhancedBasicHit3: {fileID: 3635571269192305790, guid: 61f789503d5e34143a812fb1bff9e2fd, type: 3}
+  EnhancedBasicHitPrefab: {fileID: 3635571269192305790, guid: 61f789503d5e34143a812fb1bff9e2fd, type: 3}
+  BurningFXPrefab: {fileID: 201597765812643898, guid: 849eac987e001ad4389565fdc0a823de, type: 3}
+  CorrosiveFXPrefab: {fileID: 4181999254741274469, guid: c887a388662a949818e20b7ad729d8f8, type: 3}
+  BleedingFXPrefab: {fileID: 1639086506678902, guid: 631d19474f303c2438dd37274b631d4c, type: 3}
+  ConfusedFXPrefab: {fileID: 187184980351138327, guid: 1682cac36c5cd4e49836c2b38a76ff2a, type: 3}
+  StunnedFXPrefab: {fileID: 1988196761174057073, guid: 2d58616604aeb1e47a1aebfd332e9f98, type: 3}
+  SlowFXPrefab: {fileID: 1543999481104292, guid: c2466984ed7a2e147a104cacc1deb111, type: 3}
+  ExhaustedFXPrefab: {fileID: 6126188424833946103, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+  RejuvenationFXPrefab: {fileID: 182742645505852390, guid: e36ae4321de896c44a7a854a0e4e2ba4, type: 3}
+  EnergizedFXPrefab: {fileID: 7698442149776196575, guid: cec5ed2ba026b1149bf8b69344f5da3d, type: 3}
+  SlipperyStepsFXPrefab: {fileID: 2183416989660054372, guid: 53d48856a7585a440be28583659e157e, type: 3}
+  SmolderingStrikesFXPrefab: {fileID: 1648978194837340, guid: c3039019fa1c65840b1b35eed158363c, type: 3}
+  EvasiveFXPrefab: {fileID: 1216554707568710, guid: 750731fd8d316314f8378f5829ce4199, type: 3}
+  DefensiveTerrainFXPrefab: {fileID: 1649507879555626, guid: 0a449555a80e9e24eafef71fdefe1aee, type: 3}
+  RadiationPoisoningFXPrefab: {fileID: 8877596331768416466, guid: 23590b8e848e5a644ae05d8b9e003483, type: 3}
+  MutatingFXPrefab: {fileID: 8877596331768416466, guid: 23590b8e848e5a644ae05d8b9e003483, type: 3}
+  GlowingFXPrefab: {fileID: 8823902325820618965, guid: 696b6db4c54441c4bb9405b8291513c2, type: 3}
   coreChargeParticles: {fileID: 1065394818169530, guid: 784cda9c3ade4406389c31f32105fc77, type: 3}
   alreadyPlaying: 0
 --- !u!114 &709505195963040084
@@ -111,12 +119,47 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6369396101182287963}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: afb7c8998e638154391d51a6e6c6a9c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _persistent: 1
+  myStats: {fileID: 0}
   currentHealth: 0
   maxHealth: 100
+  myEnemyAI: {fileID: 0}
+  amIEnemy: 0
+  damageComponent: {fileID: 0}
   healthSlider: {fileID: 0}
+--- !u!114 &2802451437868346792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6369396101182287963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab77e44519be44bd9fffe861e1f56c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _persistent: 1
+  damageTextPrefab: {fileID: 1101202589498805331, guid: 26a0bf881f8db4e3bbe63994d7c52a37, type: 3}
+--- !u!114 &332118856412135980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6369396101182287963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81bbfbe38a54d44af8c69239ecc338d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _persistent: 1
+  shockStaff: {fileID: 0}
+  ultraLeg: {fileID: 0}
+  staffOriginalCollider: {fileID: 0}
+  legOriginalCollider: {fileID: 0}
+  staffAnimator: {fileID: 0}

@@ -2575,7 +2575,7 @@ ParticleSystem:
     drag:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 0.6
       minScalar: 0
       maxCurve:
         serializedVersion: 2

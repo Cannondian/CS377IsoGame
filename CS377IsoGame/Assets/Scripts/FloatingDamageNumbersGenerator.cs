@@ -33,7 +33,7 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
         text.text = context.damage.ToString();
         
         
-        Destroy(damageText, 1.25f);
+        Destroy(damageText, 1.2f);
     }
 
     private Vector3 RandomOffset(Vector3 oldPosition)

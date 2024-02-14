@@ -88,7 +88,8 @@ public class PlayerCombatCollisions : MonoBehaviour
                             new EventTypes.Event5Param(attackNumber, 0));
 
                         EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
-                            new EventTypes.Event9Param(transform.position, FXList.FXlist.BasicHitFX,
+                            new EventTypes.Event9Param(other.ClosestPointOnBounds(transform.position),
+                                FXList.FXlist.BasicHitFX,
                                 transform.rotation));
                         EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
                             CharacterEnergy.Instance.energyFromEnhancedBasic);

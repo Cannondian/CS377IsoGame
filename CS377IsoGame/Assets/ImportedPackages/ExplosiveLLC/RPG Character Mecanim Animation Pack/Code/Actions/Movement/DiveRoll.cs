@@ -9,7 +9,7 @@ namespace RPGCharacterAnims.Actions
         }
 
         public override bool CanStartAction(RPGCharacterController controller)
-        { return controller.canAction && !controller.isRelaxed; }
+        { return (controller.canAction || controller.isAttacking) && !controller.isRelaxed; }
 
         protected override void _StartAction(RPGCharacterController controller, DiveRollType rollType)
         {
