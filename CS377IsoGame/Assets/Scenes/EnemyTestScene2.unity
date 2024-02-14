@@ -442,6 +442,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1074473885
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 189780466059377718, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 189780466059377718, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 189780466059377718, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 189780466059377718, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 189780466059377718, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 189780466059377718, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 189780466059377718, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 189780466059377718, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 189780466059377718, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 189780466059377718, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2916059628453049774, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2916059628453049774, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4293943630410068203, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
+      propertyPath: m_Name
+      value: LaserTurret
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b9b858933c7a38c4485ba1f667aa8ae8, type: 3}
 --- !u!114 &1353088274 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1524462673740774463, guid: 944b4c437fedf3a4ea6c307db857d3a6, type: 3}
@@ -1180,6 +1245,7 @@ MonoBehaviour:
   maxHealth: 0
   myEnemyAI: {fileID: 0}
   amIEnemy: 0
+  damageComponent: {fileID: 0}
   healthSlider: {fileID: 0}
 --- !u!114 &2051360629 stripped
 MonoBehaviour:
@@ -1242,15 +1308,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2614202311764518074, guid: 5cc8c882661611a408214ca5b2e14efa, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.28
       objectReference: {fileID: 0}
     - target: {fileID: 2614202311764518074, guid: 5cc8c882661611a408214ca5b2e14efa, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5583388733458509172, guid: 5cc8c882661611a408214ca5b2e14efa, type: 3}
       propertyPath: m_Name
       value: JumpingGrenadier
+      objectReference: {fileID: 0}
+    - target: {fileID: 5583388733458509172, guid: 5cc8c882661611a408214ca5b2e14efa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1270,3 +1340,4 @@ SceneRoots:
   - {fileID: 1802779477}
   - {fileID: 7997952649762174029}
   - {fileID: 2009873605}
+  - {fileID: 1074473885}
