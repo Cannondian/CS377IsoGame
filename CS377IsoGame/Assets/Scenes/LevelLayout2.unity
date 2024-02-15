@@ -9887,6 +9887,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4322256955695a94a84fec782ec10d7a, type: 3}
+--- !u!95 &322592999 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4055776743156340422, guid: 0b14f5a81c3bffb42b756bc6eb795021, type: 3}
+  m_PrefabInstance: {fileID: 1846949000}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &322593002 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 1090439974771012981, guid: 0b14f5a81c3bffb42b756bc6eb795021, type: 3}
+  m_PrefabInstance: {fileID: 1846949000}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &323251386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60831,6 +60841,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 413476, guid: 4322256955695a94a84fec782ec10d7a, type: 3}
   m_PrefabInstance: {fileID: 1765591352}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &1886889633 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 3083257768708089482, guid: 0b14f5a81c3bffb42b756bc6eb795021, type: 3}
+  m_PrefabInstance: {fileID: 1846949000}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1888617719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68540,6 +68555,18 @@ PrefabInstance:
       propertyPath: coreChargeSlider
       value: 
       objectReference: {fileID: 707274676}
+    - target: {fileID: 332118856412135980, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
+      propertyPath: staffAnimator
+      value: 
+      objectReference: {fileID: 322592999}
+    - target: {fileID: 332118856412135980, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
+      propertyPath: legOriginalCollider
+      value: 
+      objectReference: {fileID: 1886889633}
+    - target: {fileID: 332118856412135980, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
+      propertyPath: staffOriginalCollider
+      value: 
+      objectReference: {fileID: 322593002}
     - target: {fileID: 709505195963040084, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
       propertyPath: skillSlider
       value: 
@@ -68592,10 +68619,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4317558383485406746, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
-      propertyPath: coreChargeParticles
-      value: 
-      objectReference: {fileID: 1065394818169530, guid: 784cda9c3ade4406389c31f32105fc77, type: 3}
     - target: {fileID: 6369396101182287963, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
       propertyPath: m_Name
       value: GameManager
