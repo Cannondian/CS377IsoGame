@@ -6560,6 +6560,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4322256955695a94a84fec782ec10d7a, type: 3}
+--- !u!136 &187710064 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 3083257768708089482, guid: 0b14f5a81c3bffb42b756bc6eb795021, type: 3}
+  m_PrefabInstance: {fileID: 1846949000}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &187817591
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15399,6 +15404,16 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 413476, guid: 4322256955695a94a84fec782ec10d7a, type: 3}
   m_PrefabInstance: {fileID: 286803297}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &507118770 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4055776743156340422, guid: 0b14f5a81c3bffb42b756bc6eb795021, type: 3}
+  m_PrefabInstance: {fileID: 1846949000}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &507118773 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 1090439974771012981, guid: 0b14f5a81c3bffb42b756bc6eb795021, type: 3}
+  m_PrefabInstance: {fileID: 1846949000}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &507583829
 PrefabInstance:
@@ -55391,6 +55406,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 499621608454154126, guid: 0b14f5a81c3bffb42b756bc6eb795021, type: 3}
+      propertyPath: healthSlider
+      value: 
+      objectReference: {fileID: 1211092130}
     - target: {fileID: 1679471075052826140, guid: 0b14f5a81c3bffb42b756bc6eb795021, type: 3}
       propertyPath: m_Name
       value: Prototype1 Character
@@ -63568,6 +63587,18 @@ PrefabInstance:
       propertyPath: coreChargeSlider
       value: 
       objectReference: {fileID: 707274676}
+    - target: {fileID: 332118856412135980, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
+      propertyPath: staffAnimator
+      value: 
+      objectReference: {fileID: 507118770}
+    - target: {fileID: 332118856412135980, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
+      propertyPath: legOriginalCollider
+      value: 
+      objectReference: {fileID: 187710064}
+    - target: {fileID: 332118856412135980, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
+      propertyPath: staffOriginalCollider
+      value: 
+      objectReference: {fileID: 507118773}
     - target: {fileID: 709505195963040084, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
       propertyPath: skillSlider
       value: 
