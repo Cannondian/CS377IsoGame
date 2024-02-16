@@ -30,6 +30,7 @@ namespace RPGCharacterAnims.Actions
         private UnityAction<EventTypes.StatusConditionFXParam> NewStatusFXListener;
         private UnityAction<EventTypes.StatusConditionFXParam> ExpiredStatusFXListener;
 
+        private UnityAction<EventTypes.AttackSwingParam> AttackSwingParam;
         #endregion
 
         #region Fields
@@ -66,8 +67,8 @@ namespace RPGCharacterAnims.Actions
         public GameObject DefensiveTerrainFXPrefab;
         public GameObject RadiationPoisoningFXPrefab;
         public GameObject MutatingFXPrefab;
-        public GameObject GlowingFXPrefab; 
-        
+        public GameObject GlowingFXPrefab;
+        public GameObject AttackArcPrefab;
 
         
 
@@ -80,8 +81,8 @@ namespace RPGCharacterAnims.Actions
         
         #endregion
 
+        [SerializeField] private Rigidbody staffBody;
         public bool alreadyPlaying;
-        
         
 
         // Update is called once per frame
@@ -107,7 +108,8 @@ namespace RPGCharacterAnims.Actions
             EventBus.StartListening(EventTypes.Events.ON_NEW_STATUS_CONDITION, NewStatusFXListener);
             ExpiredStatusFXListener += TerminateStatusConditionFX;
             EventBus.StartListening(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION, ExpiredStatusFXListener);
-
+            AttackSwingParam += EnableAttackSwingFX;
+            EventBus.StartListening(EventTypes.Events.ON_ATTACK_SWING, AttackSwingParam);
         }
 
         private void OnDisable()
@@ -120,8 +122,22 @@ namespace RPGCharacterAnims.Actions
 
         }
 
+        private void EnableAttackSwingFX(EventTypes.AttackSwingParam context)
+        {
+            StartCoroutine(AttackSwingDelay(context));
+        }
 
-
+        private IEnumerator AttackSwingDelay(EventTypes.AttackSwingParam context)
+        {
+            if (context.attackType == 1)
+            {
+                yield return new WaitForSeconds(0.3f / context.attackSpeed);
+                AttackArcPrefab.SetActive(true);
+                AttackArcPrefab.transform.rotation = Quaternion.Euler(staffBody.velocity.normalized);
+                yield return new WaitForSeconds(0.65f / context.attackSpeed);
+                AttackArcPrefab.SetActive(false);
+            }
+        }
         private void UpdateCoreChargeFX(EventTypes.Event8Param context)
         {
             

@@ -16,7 +16,7 @@ public class EventTypes
       ON_EXPIRED_STATUS_CONDITION,
       ON_ENEMY_HIT,
       ON_PLAYER_DAMAGE_TAKEN,
-
+      ON_ATTACK_SWING,
 
       ON_JISA_ENHANCED_ATTACK,
       ON_UPDATE_CORE_CHARGE_PARTICLES,
@@ -127,5 +127,21 @@ public class EventTypes
            target = targetObject;
            damage = damageValue;
        }
+   }
+
+   public class AttackSwingParam
+   {
+      public float attackSpeed;
+      public int attackType;
+      public Rigidbody staffBody;
+
+      public AttackSwingParam(float speed, int type)
+      {
+         attackSpeed = speed;
+          attackType = type;
+          
+
+      }
+      
    }
 }

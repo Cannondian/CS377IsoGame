@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 1207109408894146304}
   - component: {fileID: 2802451437868346792}
   - component: {fileID: 332118856412135980}
+  - component: {fileID: 4281916475523864521}
+  - component: {fileID: 3073577234197913903}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -70,7 +72,7 @@ MonoBehaviour:
   ArtilleryStrikePrefab: {fileID: 4242371694356100040, guid: 4efb5292acd2b4995ac30bd60d398a21, type: 3}
   ElectricityPrefab1: {fileID: 1251993928265596, guid: c445b201205907b4f90b242a07f4dbc9, type: 3}
   BasicHitPrefab: {fileID: 1602197966606650, guid: 639ffe8a2dcaab14fa53988d89810e9d, type: 3}
-  EnhancedBasicHitPrefab: {fileID: 3635571269192305790, guid: 61f789503d5e34143a812fb1bff9e2fd, type: 3}
+  EnhancedBasicHitPrefab: {fileID: 5487650720231781904, guid: f5670dc5930535341a1c3debb5c38405, type: 3}
   BurningFXPrefab: {fileID: 201597765812643898, guid: 849eac987e001ad4389565fdc0a823de, type: 3}
   CorrosiveFXPrefab: {fileID: 4181999254741274469, guid: c887a388662a949818e20b7ad729d8f8, type: 3}
   BleedingFXPrefab: {fileID: 1639086506678902, guid: 631d19474f303c2438dd37274b631d4c, type: 3}
@@ -146,6 +148,38 @@ MonoBehaviour:
   _persistent: 1
   damageTextPrefab: {fileID: 1101202589498805331, guid: 26a0bf881f8db4e3bbe63994d7c52a37, type: 3}
 --- !u!114 &332118856412135980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6369396101182287963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81bbfbe38a54d44af8c69239ecc338d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _persistent: 1
+  shockStaff: {fileID: 0}
+  ultraLeg: {fileID: 0}
+  staffOriginalCollider: {fileID: 0}
+  legOriginalCollider: {fileID: 0}
+  staffAnimator: {fileID: 0}
+--- !u!114 &4281916475523864521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6369396101182287963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab77e44519be44bd9fffe861e1f56c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _persistent: 1
+  damageTextPrefab: {fileID: 1101202589498805331, guid: 26a0bf881f8db4e3bbe63994d7c52a37, type: 3}
+--- !u!114 &3073577234197913903
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -53,7 +53,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4735,7 +4735,6 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 158dc18472d83a54a85afefbd90811df, type: 2}
   - {fileID: 2100000, guid: 158dc18472d83a54a85afefbd90811df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -9467,7 +9466,6 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c15757d766093fc4592641751078d3c0, type: 2}
   - {fileID: 2100000, guid: c15757d766093fc4592641751078d3c0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -14250,7 +14248,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: aa1a4b1fb215b6642b8885a56ebeca3e, type: 2}
-  - {fileID: 2100000, guid: aa1a4b1fb215b6642b8885a56ebeca3e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19005,7 +19002,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: b3b65556cd5aa3d45828b52f4f51c978, type: 2}
-  - {fileID: 2100000, guid: b3b65556cd5aa3d45828b52f4f51c978, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23759,7 +23755,6 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3b65556cd5aa3d45828b52f4f51c978, type: 2}
   - {fileID: 2100000, guid: b3b65556cd5aa3d45828b52f4f51c978, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

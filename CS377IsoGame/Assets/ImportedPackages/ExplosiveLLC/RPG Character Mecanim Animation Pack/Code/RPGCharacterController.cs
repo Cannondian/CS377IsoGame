@@ -1167,6 +1167,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 						var coreChargeSpeedUp = coreChargeValue * 1 / 100;
 						Lock(true, true, true, 0, 1 - 1 * coreChargeSpeedUp );
 						UnlockEarly(true, false, 0.70f - 0.8f * coreChargeSpeedUp);
+						EventBus.TriggerEvent(EventTypes.Events.ON_ATTACK_SWING, new EventTypes.AttackSwingParam(1 + coreChargeValue * 1 / 90, 1));
 						Debug.Log(duration +"duration");
 						animator.SetSide(attackSide);
 						_isAttacking = true;
