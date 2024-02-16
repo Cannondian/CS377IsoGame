@@ -46,8 +46,8 @@ public class LaserTurretController : EnemyAI
         walkableLayerMask = LayerMask.GetMask("Walkable");
 
         Stats = gameObject.GetComponent<StatsTemplate>();
-        // Stats.AddModifier(Stats.statsList.HP, 20f);
-
+        // TODO ... ?
+        
         Health = 20f;
         healthBar.maxValue = Health;
         AttackDamage = 0.5f;
@@ -73,17 +73,6 @@ public class LaserTurretController : EnemyAI
 
     void AimTurret()
     {
-        // Vector3 playerPosn = player.position;
-        // Vector3 toPlayer = playerPosn - TurretTransform.position; // vector from turret to player
-
-        // // Determine the left/right angle to the player
-        // float turretAngle = Vector3.SignedAngle(Vector3.forward, toPlayer, Vector3.up);
-
-        // // Smooth rotation from current angle to desired angle
-        // CurrentTurretAngles = Quaternion.Slerp(TurretTransform.rotation, Quaternion.Euler(0f, turretAngle, 0f), TurnRate * Time.deltaTime);
-        // TurretTransform.rotation = CurrentTurretAngles;
-        // TurretTransform.rotation = CurrentTurretAngles;
-
         Vector3 playerPosn = player.position;
         Vector3 toPlayer = playerPosn - TurretTransform.position; // vector from turret to player
 
@@ -224,7 +213,6 @@ public class LaserTurretController : EnemyAI
             Debug.LogError("Missing tageting line renderer or material!");
         }
         Color color = TargetingRenderer.material.color;
-        // color = new Color(color.r * alpha, color.g * alpha, color.b * alpha, alpha);
         color.a = Mathf.Clamp01(alpha);
         TargetingRenderer.material.color = color;
     }
