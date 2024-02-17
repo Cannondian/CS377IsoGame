@@ -87,18 +87,18 @@ public class EventTypes
          fx = FX;
       }
    }
-   public class Event9Param
+   public class HitFXParam
    {
       //what if we also sent damage and info for the enemy that is being hit withing the same event?
       public Vector3 hitPosition;
       public FXList.FXlist fx;
-      public Quaternion quaternion;
+      public GameObject hitter;
 
-      public Event9Param(Vector3 pos, FXList.FXlist particles, Quaternion q)
+      public HitFXParam(Vector3 pos, FXList.FXlist particles, GameObject weapon)
       {
          hitPosition = pos;
          fx = particles;
-         quaternion = q;
+         hitter = weapon;
       }
    }
 

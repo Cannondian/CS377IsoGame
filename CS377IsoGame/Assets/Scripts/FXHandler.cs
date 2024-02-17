@@ -25,7 +25,7 @@ namespace RPGCharacterAnims.Actions
 
 
         private UnityAction<EventTypes.Event8Param> VariableFXListener;
-        private UnityAction<EventTypes.Event9Param> HitFXListener;
+        private UnityAction<EventTypes.HitFXParam> HitFXListener;
 
         private UnityAction<EventTypes.StatusConditionFXParam> NewStatusFXListener;
         private UnityAction<EventTypes.StatusConditionFXParam> ExpiredStatusFXListener;
@@ -381,20 +381,20 @@ namespace RPGCharacterAnims.Actions
             StartCoroutine(TerminateFX(context.duration, realFXObject2));
         }
 
-        private void InitializeHitFX(EventTypes.Event9Param context)
+        private void InitializeHitFX(EventTypes.HitFXParam context)
         {
             switch (context.fx)
             {
                 case FXList.FXlist.BasicHitFX:
-                   
-                    var hitObject = Instantiate(EnhancedBasicHitPrefab, context.hitPosition, context.quaternion);
-                        
-                    TerminateFX(0.5f, hitObject);
+
+                    var hitObject = Instantiate(EnhancedBasicHitPrefab, context.hitPosition, context.hitter.transform.rotation);
                     
+                    TerminateFX(0.5f, hitObject);
 
                     break;
                 case FXList.FXlist.EnhancedHitFX:
-                    var hitObject2 = Instantiate(EnhancedBasicHitPrefab, context.hitPosition, context.quaternion);
+                    var hitObject2 = Instantiate(EnhancedBasicHitPrefab, context.hitter.transform);
+                    hitObject2.transform.position = context.hitPosition;
                     TerminateFX(0.3f, hitObject2);
                     break;
             }
