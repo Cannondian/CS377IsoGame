@@ -50,8 +50,8 @@ namespace RPGCharacterAnims.Actions
 
         public GameObject ArtilleryStrikePrefab;
         public GameObject ElectricityPrefab1;
-        [FormerlySerializedAs("BasicHit2Prefab")] public GameObject BasicHitPrefab;
-        [FormerlySerializedAs("EnhancedBasicHit2")] public GameObject EnhancedBasicHitPrefab;
+        [FormerlySerializedAs("BasicHitPrefab")] [FormerlySerializedAs("BasicHit2Prefab")] public GameObject StaffSwingHitPrefab;
+        [FormerlySerializedAs("EnhancedBasicHitPrefab")] [FormerlySerializedAs("EnhancedBasicHit2")] public GameObject KickPrefab;
         public GameObject BurningFXPrefab;
         public GameObject CorrosiveFXPrefab;
         public GameObject BleedingFXPrefab;
@@ -383,20 +383,22 @@ namespace RPGCharacterAnims.Actions
 
         private void InitializeHitFX(EventTypes.HitFXParam context)
         {
-            switch (context.fx)
+            if (context.attackType == 1 || context.attackType == 2)
             {
-                case FXList.FXlist.BasicHitFX:
 
-                    var hitObject = Instantiate(EnhancedBasicHitPrefab, context.hitPosition, context.hitter.transform.rotation);
-                    
-                    TerminateFX(0.5f, hitObject);
+                var hitObject = Instantiate(StaffSwingHitPrefab, context.hitPosition,
+                    context.hitter.transform.rotation);
 
-                    break;
-                case FXList.FXlist.EnhancedHitFX:
-                    var hitObject2 = Instantiate(EnhancedBasicHitPrefab, context.hitter.transform);
+                TerminateFX(0.5f, hitObject);
+
+            }
+            else{
+            
+                    var hitObject2 = Instantiate(KickPrefab, context.hitPosition,
+                        context.hitter.transform.rotation);
                     hitObject2.transform.position = context.hitPosition;
-                    TerminateFX(0.3f, hitObject2);
-                    break;
+                    TerminateFX(0.5f, hitObject2);
+                    
             }
         }
         

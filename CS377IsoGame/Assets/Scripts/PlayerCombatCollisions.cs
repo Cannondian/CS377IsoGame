@@ -109,7 +109,7 @@ public class PlayerCombatCollisions : MonoBehaviour
                     {
                         Debug.Log("collided");
                         EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
-                            new EventTypes.HitFXParam(transform.position, FXList.FXlist.EnhancedHitFX,
+                            new EventTypes.HitFXParam(transform.position, attackNumber,
                                 gameObject));
 
                         EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
@@ -128,7 +128,7 @@ public class PlayerCombatCollisions : MonoBehaviour
 
                         EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
                             new EventTypes.HitFXParam(GetHitPoint(other),
-                                FXList.FXlist.BasicHitFX,
+                                attackNumber,
                                 gameObject));
                         EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
                             CharacterEnergy.Instance.energyFromEnhancedBasic);

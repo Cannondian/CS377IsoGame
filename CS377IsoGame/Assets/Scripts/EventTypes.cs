@@ -91,13 +91,13 @@ public class EventTypes
    {
       //what if we also sent damage and info for the enemy that is being hit withing the same event?
       public Vector3 hitPosition;
-      public FXList.FXlist fx;
+      public int attackType;
       public GameObject hitter;
 
-      public HitFXParam(Vector3 pos, FXList.FXlist particles, GameObject weapon)
+      public HitFXParam(Vector3 pos, int number, GameObject weapon)
       {
          hitPosition = pos;
-         fx = particles;
+          attackType = number;
          hitter = weapon;
       }
    }
