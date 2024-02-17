@@ -83,7 +83,7 @@ namespace RPGCharacterAnims.Actions
 
         [SerializeField] private Rigidbody staffBody;
         public bool alreadyPlaying;
-        
+        private int perceivedCoreCharge;
 
         // Update is called once per frame
         void LateUpdate()
@@ -133,14 +133,14 @@ namespace RPGCharacterAnims.Actions
             {
                 yield return new WaitForSeconds(0.3f / context.attackSpeed);
                 AttackArcPrefab.SetActive(true);
-                AttackArcPrefab.transform.rotation = Quaternion.Euler(staffBody.velocity.normalized);
+                AttackArcPrefab.transform.rotation = Quaternion.Euler(staffBody.angularVelocity.normalized);
                 yield return new WaitForSeconds(0.65f / context.attackSpeed);
                 AttackArcPrefab.SetActive(false);
             }
         }
         private void UpdateCoreChargeFX(EventTypes.Event8Param context)
         {
-            
+            perceivedCoreCharge = context.coreCharge;
             var particlesToEdit = coreChargeParticles.GetComponent<ParticleSystem>().limitVelocityOverLifetime;
             var particlesToEdit2 = coreChargeParticles.GetComponent<ParticleSystem>().velocityOverLifetime;
             var particlesToEdit3 = coreChargeParticles.GetComponent<ParticleSystem>().main;
@@ -160,31 +160,31 @@ namespace RPGCharacterAnims.Actions
             else if (context.coreCharge <= 20)
             {
                 particlesToEdit.dragMultiplier = 1.2f;
-                particlesToEdit2.orbitalXMultiplier = 3;
-                particlesToEdit2.orbitalYMultiplier = 3;
-                particlesToEdit2.orbitalZMultiplier = 3;
+                particlesToEdit2.orbitalXMultiplier = 5;
+                particlesToEdit2.orbitalYMultiplier = 5;
+                particlesToEdit2.orbitalZMultiplier = 5;
                 particlesToEdit3.startLifetimeMultiplier = 1.2f;
                 particlesToEdit3.simulationSpeed = 1.3f;
                 coreChargeParticleLevel = 2;
                 var burst = particlesToEdit4.GetBurst(0);
-                burst.count = new ParticleSystem.MinMaxCurve(0, 12);
+                burst.count = new ParticleSystem.MinMaxCurve(2, 12);
             }
             else if (context.coreCharge <= 30)
             {
                 particlesToEdit.dragMultiplier = 1;
-                particlesToEdit2.orbitalXMultiplier = 5;
-                particlesToEdit2.orbitalYMultiplier = 5;
-                particlesToEdit2.orbitalZMultiplier = 5;
+                particlesToEdit2.orbitalXMultiplier = 6;
+                particlesToEdit2.orbitalYMultiplier = 6;
+                particlesToEdit2.orbitalZMultiplier = 6;
                 particlesToEdit3.startLifetimeMultiplier = 1.4f;
                 particlesToEdit3.simulationSpeed = 1.5f;
                 coreChargeParticleLevel = 3;
                 var burst = particlesToEdit4.GetBurst(0);
-                burst.count = new ParticleSystem.MinMaxCurve(0, 16);
+                burst.count = new ParticleSystem.MinMaxCurve(4, 16);
                 
             }
             else if (context.coreCharge <= 40)
             {
-                particlesToEdit.dragMultiplier = 0.7f;
+                particlesToEdit.dragMultiplier = 0.76f;
                 particlesToEdit2.orbitalXMultiplier = 8;
                 particlesToEdit2.orbitalYMultiplier = 8;
                 particlesToEdit2.orbitalZMultiplier = 8;
@@ -197,7 +197,7 @@ namespace RPGCharacterAnims.Actions
             }
             else
             {
-                particlesToEdit.dragMultiplier = 0.6f;
+                particlesToEdit.dragMultiplier = 0.4f;
                 particlesToEdit2.orbitalXMultiplier = 10;
                 particlesToEdit2.orbitalYMultiplier = 10;
                 particlesToEdit2.orbitalZMultiplier = 10;
@@ -387,7 +387,7 @@ namespace RPGCharacterAnims.Actions
             {
                 case FXList.FXlist.BasicHitFX:
                    
-                    var hitObject = Instantiate(BasicHitPrefab, context.hitPosition, context.quaternion);
+                    var hitObject = Instantiate(EnhancedBasicHitPrefab, context.hitPosition, context.quaternion);
                         
                     TerminateFX(0.5f, hitObject);
                     

@@ -4,13 +4,31 @@ using System.Collections.Generic;
 using RPGCharacterAnims;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerCombatCollisions : MonoBehaviour
 {
     
   
         //one idea to make this better would be to turn on their colliders at the end of the attack animation
-        private RPGCharacterController controller;
+        [SerializeField] private RPGCharacterController controller;
+        [SerializeField] private GameObject shockStaff;
+        [SerializeField] private GameObject ultraLeg;
+        [SerializeField] private CapsuleCollider staffOriginalCollider;
+        [SerializeField] private BoxCollider legOriginalCollider;
+        [SerializeField] private Animator staffAnimator;
+        [SerializeField] private Animator legAnimator;
+    
+        
+
+        private bool attacked;
+        private int trigger1;
+        private int trigger2;
+        private int trigger5;
+        private int speed;
+        private int legExtending;
+        private float legExtendingDuration;
+        
         private int attackNumber;
         private bool isNewAttack;
         private float attackTimer;
@@ -19,11 +37,13 @@ public class PlayerCombatCollisions : MonoBehaviour
         
         void Start()
         {
-            controller = FindObjectOfType<RPGCharacterController>();
             
-            attackNumber = -1;
-            attackTimer = 0;
-            attackDone = false;
+            
+            trigger1 = Animator.StringToHash("Attack1");
+            trigger2 = Animator.StringToHash("Attack2");
+            trigger5 = Animator.StringToHash("Attack5");
+            speed = Animator.StringToHash("AttackSpeed");
+            legExtending = Animator.StringToHash("Ongoing");
             
 
 
@@ -36,33 +56,52 @@ public class PlayerCombatCollisions : MonoBehaviour
             
         }
 
-        private void OnTriggerEnter(Collider other)
+        public void TriggerColliderAnimation(int attackNumber, float attackSpeed)
         {
-            // This assumes that the script is attached to the object with the weaponCollider and legCollider
-            //make this trigger once per collision
-            //we want to ensure that collisions only trigger appropriate effects once per attack
-            if (controller.isAttacking)
+            this.attackNumber = attackNumber;
+            isNewAttack = true;
+            if (attackNumber == 1)
             {
-                
-                //control section to ensure every attack triggers a single collision with every enemy and collisions only trigger
-                //after a certain point in the animation
-                
-                if (attackNumber != controller.comboIndex)
-                {
-                    attackDone = false;
-                    attackNumber = controller.comboIndex;
-                    
-                }
-                else if (!attackDone)
-                {
-                    isNewAttack = true;
 
-                }
-                
-                
-                
+                staffAnimator.ResetTrigger(trigger5);
+                staffAnimator.ResetTrigger(trigger2);
+                staffAnimator.SetTrigger(trigger1);
+                staffAnimator.SetFloat(speed, attackSpeed);
+
+            }
+
+            if (attackNumber == 2)
+            {
+                staffAnimator.ResetTrigger(trigger5);
+                staffAnimator.ResetTrigger(trigger1);
+                staffAnimator.SetTrigger(trigger2);
+                staffAnimator.SetFloat(speed, attackSpeed);
+
+            }
+
+            if (attackNumber == 5)
+            {
 
 
+                legAnimator.SetFloat(speed, attackSpeed);
+                legAnimator.SetBool(legExtending, true);
+                StartCoroutine(DisableLegAnimator(attackSpeed));
+                Debug.Log("leg collider ");
+
+            }
+        }
+
+        public IEnumerator DisableLegAnimator(float attackSpeed)
+            {
+                yield return new WaitForSeconds(
+                    1.25f/ attackSpeed);
+                legAnimator.SetBool(legExtending, false);
+
+
+            }
+        
+        private void OnTriggerStay(Collider other)
+        {
                 if (isNewAttack)
                 {
                     if (attackNumber == 3)
@@ -81,7 +120,6 @@ public class PlayerCombatCollisions : MonoBehaviour
                         EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
                             new EventTypes.FloatingDamageParam(other.gameObject, 80));
                     }
-
                     else
                     {
                         EventBus.TriggerEvent(EventTypes.Events.ON_LIFE_CURRENT_GAIN,
@@ -100,13 +138,11 @@ public class PlayerCombatCollisions : MonoBehaviour
                         
                     }
 
-                    attackDone = true;
                     isNewAttack = false;
-                    attackTimer = 0;
                 }
 
             }
-        }
+        
 
          
         void DamageEnemy(Collider other, float damage)

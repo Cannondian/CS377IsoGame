@@ -8,15 +8,19 @@ public class AttackColliders : Singleton<AttackColliders>
     [SerializeField] private GameObject shockStaff;
     [SerializeField] private GameObject ultraLeg;
     [SerializeField] private CapsuleCollider staffOriginalCollider;
-    [SerializeField] private CapsuleCollider legOriginalCollider;
+    [SerializeField] private BoxCollider legOriginalCollider;
     [SerializeField] private Animator staffAnimator;
+    [SerializeField] private Animator legAnimator;
     
 
 
+    private bool attacked;
     private int trigger1;
     private int trigger2;
     private int trigger5;
     private int speed;
+    private int legExtending;
+    private float legExtendingDuration;
     
     public void TriggerColliderAnimation(int attackNumber, float attackSpeed)
     {
@@ -27,7 +31,7 @@ public class AttackColliders : Singleton<AttackColliders>
             staffAnimator.ResetTrigger(trigger2);
             staffAnimator.SetTrigger(trigger1);
             staffAnimator.SetFloat(speed, attackSpeed);
-            staffOriginalCollider.enabled = true;
+            
         }
 
         if (attackNumber == 2)
@@ -36,22 +40,30 @@ public class AttackColliders : Singleton<AttackColliders>
             staffAnimator.ResetTrigger(trigger1);
             staffAnimator.SetTrigger(trigger2);
             staffAnimator.SetFloat(speed, attackSpeed);
-            staffOriginalCollider.enabled = true;
+            
         }
 
         if (attackNumber == 5)
         {
-            staffAnimator.ResetTrigger(trigger1);
-            staffAnimator.ResetTrigger(trigger2);
-            staffAnimator.SetTrigger(trigger5);
-            staffAnimator.SetFloat(speed, attackSpeed);
-            legOriginalCollider.enabled = true;
+            
+            
+            legAnimator.SetFloat(speed, attackSpeed);
+            legAnimator.SetBool(legExtending, true);
+            StartCoroutine(DisableLegAnimator(attackSpeed));
+            Debug.Log("leg collider ");
+            
         }
+
+        
     }
 
-    public void ResetColliders()
+    public IEnumerator DisableLegAnimator(float attackSpeed)
     {
-        
+        yield return new WaitForSeconds(
+            1.25f/ attackSpeed);
+        legAnimator.SetBool(legExtending, false);
+
+
     }
     // Start is called before the first frame update
     void Start()
@@ -60,17 +72,13 @@ public class AttackColliders : Singleton<AttackColliders>
         trigger2 = Animator.StringToHash("Attack2");
         trigger5 = Animator.StringToHash("Attack5");
         speed = Animator.StringToHash("AttackSpeed");
+        legExtending = Animator.StringToHash("Ongoing");
         
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-        legOriginalCollider.enabled = false;
-        staffOriginalCollider.enabled = false;
-        
-    }
+    
 
+    
     
 }

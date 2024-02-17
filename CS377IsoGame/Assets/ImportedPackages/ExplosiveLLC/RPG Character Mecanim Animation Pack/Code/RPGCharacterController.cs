@@ -40,8 +40,12 @@ using Null = RPGCharacterAnims.Actions.Null;
 			/// </summary>
 			public event System.Action OnUnlockMovement = delegate { };
 
+			[System.Serializable] public class InformColliders : UnityEvent<int, float> {};
 
-			private UnityAction<bool> EnhancedAttackListener;
+			public InformColliders informColliders;
+
+
+			public UnityAction<bool> EnhancedAttackListener;
 
 
 			#endregion
@@ -1086,20 +1090,22 @@ using Null = RPGCharacterAnims.Actions.Null;
 				if (comboIndex == 1)
 				{
 					comboIndex++;
-					AttackColliders.Instance.TriggerColliderAnimation(comboIndex, 1 + coreChargeValue * 1 / 90);
+					
 				}
 				else if (comboIndex == 2)
 				{
 					comboIndex = 5;
-					AttackColliders.Instance.TriggerColliderAnimation(comboIndex, 1 + coreChargeValue * 1 / 90);
+					Debug.Log("leg collider ");
+					
 				}
 				else
 				{
 					comboIndex = 1;
-					AttackColliders.Instance.TriggerColliderAnimation(comboIndex, 1 + coreChargeValue * 1 / 90);
+					
 				}
 
 				StartCoroutine("ResetCombos");
+				
 			}
 
 			private IEnumerator ResetCombos()
@@ -1151,11 +1157,14 @@ using Null = RPGCharacterAnims.Actions.Null;
 			public void Attack(Side attackSide, Weapon leftWeapon, Weapon rightWeapon, float duration)
 			{
 				
-				{
+				
 
 					ControlCombos();
-					//Lock(true, true, true, 0, duration);
 					int attackNumber = comboIndex;
+					coreChargeValue = CoreChargeManager.Instance.coreChargeState;
+					var coreChargeSpeedUp = coreChargeValue * 1 / 100;
+					informColliders.Invoke(attackNumber, 1 + coreChargeSpeedUp);
+					
 					if (comboIndex == 5)
 					{
 						AttackKick(2);
@@ -1163,12 +1172,15 @@ using Null = RPGCharacterAnims.Actions.Null;
 					else
 					{
 
-						coreChargeValue = CoreChargeManager.Instance.coreChargeState;
-						var coreChargeSpeedUp = coreChargeValue * 1 / 100;
+						
 						Lock(true, true, true, 0, 1 - 1 * coreChargeSpeedUp );
 						UnlockEarly(true, false, 0.70f - 0.8f * coreChargeSpeedUp);
-						EventBus.TriggerEvent(EventTypes.Events.ON_ATTACK_SWING, new EventTypes.AttackSwingParam(1 + coreChargeValue * 1 / 90, 1));
-						Debug.Log(duration +"duration");
+						EventBus.TriggerEvent(EventTypes.Events.ON_ATTACK_SWING,
+							new EventTypes.AttackSwingParam(1 + coreChargeValue * 1 / 90, 1));
+						
+					
+						
+						
 						animator.SetSide(attackSide);
 						_isAttacking = true;
 
@@ -1193,10 +1205,10 @@ using Null = RPGCharacterAnims.Actions.Null;
 							? AnimatorTrigger.AttackDualTrigger
 							: AnimatorTrigger.AttackTrigger;
 						animator.SetActionTrigger(attackTriggerType, attackNumber);
-						AttackColliders.Instance.TriggerColliderAnimation(comboIndex, 1 + coreChargeValue * 1 / 90);
+						//AttackColliders.Instance.TriggerColliderAnimation(comboIndex, 1 + coreChargeValue * 1 / 90);
 					}
 				}
-			}
+			
 
 			public IEnumerator DelayForEnhancedAttack(AnimatorTrigger trigger, int attackComboIndex, float delay,
 				float duration)
