@@ -6,11 +6,13 @@ public class LaserTurretController : EnemyAI
 {
     [SerializeField] Transform TurretTransform;
     [SerializeField] Transform BarrelTransform;
-    [SerializeField] LineRenderer LaserRenderer;
+    [SerializeField] LineRenderer TargetingRenderer;
+    [SerializeField] GameObject PowerDraw;
+    [SerializeField] GameObject PowerBeam;
 
     public float TurnRate;
     public float BarrelShootingAngleRange; // Turret shoots iff barrel is within X deg off vector to character posn
-    public float SpinUpTime; // Turret barrel rotation speeds up for this time before firing.
+    public float SpinUpRate; // Rate at which turret barrel rotation speeds up
     public float MaxSpinRate; // Max spin rate in degrees/update
     public float MinFireSpinPercent; // Min spin rate required to start firing as a proportion of MaxSpinRate [0,1] 
     public float MaxFireTime; // Max time before laser turns off
@@ -23,24 +25,31 @@ public class LaserTurretController : EnemyAI
     private bool InCooldown;
 
     private LayerMask playerLayerMask;
+    private LayerMask walkableLayerMask; // used to determine collisions with environment
+    private StatsTemplate Stats;
 
 
     protected override void Awake()
     {
         base.Awake();
 
-        if (LaserRenderer != null)
+        if (TargetingRenderer != null)
         {
-            LaserRenderer.enabled = false;
+            TargetingRenderer.enabled = false;
         }
         else
         {
-            Debug.LogError("Missing Laser Renderer!");
+            Debug.LogError("Missing Targeting Renderer!");
         }
 
         playerLayerMask = LayerMask.GetMask("Player");
+        walkableLayerMask = LayerMask.GetMask("Walkable");
 
-        Health = 100f;
+        Stats = gameObject.GetComponent<StatsTemplate>();
+        // TODO ... ?
+        
+        Health = 20f;
+        healthBar.maxValue = Health;
         AttackDamage = 0.5f;
     }
 
@@ -68,11 +77,15 @@ public class LaserTurretController : EnemyAI
         Vector3 toPlayer = playerPosn - TurretTransform.position; // vector from turret to player
 
         // Determine the left/right angle to the player
-        float turretAngle = Vector3.SignedAngle(Vector3.forward, toPlayer, Vector3.up);
+        float targetTurretAngle = Vector3.SignedAngle(Vector3.forward, toPlayer, Vector3.up);
+
+        // Calculate the target rotation
+        Quaternion targetRotation = Quaternion.Euler(0f, targetTurretAngle, 0f);
 
         // Smooth rotation from current angle to desired angle
-        CurrentTurretAngles = Quaternion.Slerp(TurretTransform.rotation, Quaternion.Euler(0f, turretAngle, 0f), TurnRate * Time.deltaTime);
-        TurretTransform.rotation = CurrentTurretAngles;
+        Quaternion newRotation = Quaternion.RotateTowards(TurretTransform.rotation, targetRotation, TurnRate * Time.deltaTime);
+
+        TurretTransform.rotation = newRotation;
     }
 
     void MaybeFire()
@@ -127,43 +140,81 @@ public class LaserTurretController : EnemyAI
             // Only add fire time if laser is actively on
             CurrentFireTime += Time.deltaTime;
 
-            // Turn on and set laser renderer
-            LaserRenderer.SetPosition(0, BarrelTransform.position);
-            LaserRenderer.SetPosition(1, BarrelTransform.position + BarrelTransform.forward * attackRange);
-            LaserRenderer.enabled = true;
+            PowerBeam.SetActive(true);
+            TargetingRenderer.enabled = false; // Turn off targeting while firing
 
             // Check if laser hits player using a raycast
             // Note: For some reason, we need to set origin to transform.position since BarrelTransform.position causes laser to miss.
             if (Physics.Raycast(transform.position, BarrelTransform.forward, attackRange, playerLayerMask))
             {
-                // Call the player's take damage event, deal damage per physics tick if it hits player
-                EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, AttackDamage);
+                float distanceToPlayer = new Vector2(transform.position.x - player.position.x, transform.position.z - player.position.z).magnitude;
+
+                // Do another ray cast to determine if the laser is blocked by something else along the path to the player
+                if (!Physics.Raycast(transform.position, BarrelTransform.forward, distanceToPlayer, walkableLayerMask))
+                {
+                    // Call the player's take damage event, deal damage per physics tick if it hits player
+                    EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, AttackDamage);
+                }
             }
         }
         else
         {
-            LaserRenderer.enabled = false;
+            PowerBeam.SetActive(false);
         }
     }
 
     void WindUp()
     {
-        CurrentSpinRate = Mathf.Lerp(CurrentSpinRate, MaxSpinRate, SpinUpTime / 100f);
+        PowerDraw.SetActive(true);
+
+        CurrentSpinRate = Mathf.Lerp(CurrentSpinRate, MaxSpinRate, SpinUpRate / 100f);
         BarrelTransform.Rotate(0f, 0f, CurrentSpinRate, Space.Self);
+
+        UpdateTargetingRenderer(2f*CurrentSpinRate/MaxSpinRate);
     }
 
     void WindDown()
     {
-        CurrentSpinRate = Mathf.Lerp(CurrentSpinRate, 0f, SpinUpTime / 100f);
+        PowerDraw.SetActive(false);
+        PowerBeam.SetActive(false);
+
+        CurrentSpinRate = Mathf.Lerp(CurrentSpinRate, 0f, SpinUpRate / 100f);
         BarrelTransform.Rotate(0f, 0f, CurrentSpinRate, Space.Self);
 
-        LaserRenderer.enabled = false;
+        UpdateTargetingRenderer(2f*CurrentSpinRate/MaxSpinRate);
 
         // If not actively firing, cooldown without entering full cooldown
         if (CurrentFireTime > 0f)
         {
             CurrentFireTime -= Time.deltaTime;
         }
+    }
+
+    void UpdateTargetingRenderer(float alpha)
+    {
+        RaycastHit hit;
+        Vector3 start = BarrelTransform.position;
+        Vector3 direction = BarrelTransform.forward;
+
+        TargetingRenderer.enabled = true;
+        if (Physics.Raycast(start, direction, out hit, attackRange, walkableLayerMask))
+        {
+            TargetingRenderer.SetPosition(0, start);
+            TargetingRenderer.SetPosition(1, hit.point);
+        }
+        else
+        {
+            TargetingRenderer.SetPosition(0, start);
+            TargetingRenderer.SetPosition(1, start + direction * attackRange);
+        }
+
+        if (TargetingRenderer == null || TargetingRenderer.material == null)
+        {
+            Debug.LogError("Missing tageting line renderer or material!");
+        }
+        Color color = TargetingRenderer.material.color;
+        color.a = Mathf.Clamp01(alpha);
+        TargetingRenderer.material.color = color;
     }
 
     protected override void UpdateCanvas()
