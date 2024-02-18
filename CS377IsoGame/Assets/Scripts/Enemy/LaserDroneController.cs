@@ -12,10 +12,14 @@ public class LaserDroneController : EnemyAI
     private bool SearchForNewWalkPoint = true;
     private GameObject[] OtherLaserDrones;
     private List<GameObject> LaserConnections = new List<GameObject>();
+    private int RandomSeed;
 
     protected override void Awake()
     {
         base.Awake();
+
+        // Create a random seed for this drone which we'll use on each frame
+        RandomSeed = Random.Range(0, 1000);
 
         // Instantiate MaxConnections laser connection containers and store them
         for (int i = 0; i < MaxConnections; i++)
@@ -88,17 +92,30 @@ public class LaserDroneController : EnemyAI
         // Find all other laser drones in the scene
         OtherLaserDrones = GameObject.FindGameObjectsWithTag("LaserDrone");
 
+        // Shuffle the order of the drones in the array
+        ReshuffleDrones();
+
         // Iterate through all drones and remove those out of the range
         int i = 0; // current array index
         int j = 0; // number of valid drones in range
         foreach (var drone in OtherLaserDrones)
         {
+            // No self connections
+            if (drone == OtherLaserDrones[i])
+            {
+                OtherLaserDrones[i] = null;
+                i += 1;
+                continue;
+            }
+
             if ((drone.transform.position - transform.position).magnitude > sightRange)
             {
+                // Remove out of range
                 OtherLaserDrones[i] = null;
             }
             else
             {
+                // In range, so this drone is valid -- iterate valid drones
                 j += 1;
             }
 
@@ -138,6 +155,21 @@ public class LaserDroneController : EnemyAI
             var ThisLaser = LaserConnections[i].GetComponent<LineRenderer>();
             ThisLaser.enabled = false;
             i += 1;
+        }
+    }
+
+    void ReshuffleDrones()
+    {
+        // Set random seed
+        Random.seed = RandomSeed;
+
+        // Knuth shuffle algorithm
+        for (int i = 0; i < OtherLaserDrones.Length; i++)
+        {
+            GameObject tmp = OtherLaserDrones[i];
+            int r = Random.Range(i, OtherLaserDrones.Length);
+            OtherLaserDrones[i] = OtherLaserDrones[r];
+            OtherLaserDrones[r] = tmp;
         }
     }
 }
