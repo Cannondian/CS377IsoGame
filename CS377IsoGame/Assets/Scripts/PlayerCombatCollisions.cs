@@ -18,7 +18,8 @@ public class PlayerCombatCollisions : MonoBehaviour
         [SerializeField] private BoxCollider legOriginalCollider;
         [SerializeField] private Animator staffAnimator;
         [SerializeField] private Animator legAnimator;
-    
+
+        private Rigidbody staffBody;
         
 
         private bool attacked;
@@ -44,7 +45,7 @@ public class PlayerCombatCollisions : MonoBehaviour
             trigger5 = Animator.StringToHash("Attack5");
             speed = Animator.StringToHash("AttackSpeed");
             legExtending = Animator.StringToHash("Ongoing");
-            
+            staffBody = shockStaff.GetComponent<Rigidbody>();
 
 
 
@@ -108,8 +109,8 @@ public class PlayerCombatCollisions : MonoBehaviour
                     {
                         Debug.Log("collided");
                         EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
-                            new EventTypes.Event9Param(transform.position, FXList.FXlist.EnhancedHitFX,
-                                transform.rotation));
+                            new EventTypes.HitFXParam(transform.position, attackNumber,
+                                gameObject));
 
                         EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
                             CharacterEnergy.Instance.energyFromEnhancedBasic);
@@ -126,9 +127,9 @@ public class PlayerCombatCollisions : MonoBehaviour
                             new EventTypes.Event5Param(attackNumber, 0));
 
                         EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
-                            new EventTypes.Event9Param(other.ClosestPointOnBounds(transform.position),
-                                FXList.FXlist.BasicHitFX,
-                                transform.rotation));
+                            new EventTypes.HitFXParam(GetHitPoint(other),
+                                attackNumber,
+                                gameObject));
                         EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
                             CharacterEnergy.Instance.energyFromEnhancedBasic);
                             EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
@@ -142,7 +143,19 @@ public class PlayerCombatCollisions : MonoBehaviour
                 }
 
             }
-        
+
+        Vector3 GetHitPoint(Collider other)
+        {
+            Vector3 dir = (other.ClosestPointOnBounds(transform.position) - transform.position).normalized;
+            RaycastHit hit;
+            Vector3 position = Vector3.zero;
+            if (Physics.Raycast(transform.position, dir, out hit, 10, 1 << 15, QueryTriggerInteraction.Collide))
+            {
+                 position = hit.point;
+            }
+
+            return position;
+        }
 
          
         void DamageEnemy(Collider other, float damage)
