@@ -487,12 +487,12 @@ GameObject:
   - component: {fileID: 5840895709522000616}
   - component: {fileID: 1496245241992477903}
   - component: {fileID: 7516448239959801858}
-  - component: {fileID: 4213194669953673150}
   - component: {fileID: 5638362023901667254}
   - component: {fileID: 6163111961061575989}
   - component: {fileID: 8926394991584352150}
   - component: {fileID: -2652444479010325795}
   - component: {fileID: 7720463648061078641}
+  - component: {fileID: 157308210463696826}
   m_Layer: 15
   m_Name: MeleeDrone
   m_TagString: Untagged
@@ -570,28 +570,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4213194669953673150
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2451309832464529230}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 4cf31b85d7369ea45964033c1052334b, type: 3}
 --- !u!54 &5638362023901667254
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -732,7 +710,29 @@ MonoBehaviour:
   maxHealth: 0
   myEnemyAI: {fileID: 0}
   amIEnemy: 0
+  damageComponent: {fileID: 0}
   healthSlider: {fileID: 0}
+--- !u!65 &157308210463696826
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2451309832464529230}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 73728
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8, y: 1.5, z: 0.8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3684121135795408966
 GameObject:
   m_ObjectHideFlags: 0
