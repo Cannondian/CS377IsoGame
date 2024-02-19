@@ -50,7 +50,7 @@ public class JumpingGrenadierController : EnemyAI
         LastPatrolJumpTime = Time.time;
 
         Health = 50f;
-        AttackDamage = 10f;
+        AttackDamage = 5f;
     }
 
     void Update()

@@ -383,12 +383,12 @@ GameObject:
   - component: {fileID: 6348640362034635074}
   - component: {fileID: 6973798321319163118}
   m_Layer: 15
-  m_Name: Attack_Indicator
+  m_Name: AttackIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5199233758794026771
 Transform:
   m_ObjectHideFlags: 0
@@ -508,7 +508,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2451309832464529230}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.35, y: 1.08, z: 12.75}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
@@ -518,6 +518,7 @@ Transform:
   - {fileID: 2194595952627862448}
   - {fileID: 215867874947462908}
   - {fileID: 5199233758794026771}
+  - {fileID: 6116481958806046795}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1496245241992477903
@@ -629,9 +630,10 @@ MonoBehaviour:
   attackIndicator: {fileID: 1244128769498112392}
   attackIndicatorDisplayTime: 0.3
   timeBetweenAttacks: 1
-  dashSpeed: 22
+  dashSpeed: 10
   overshootDistance: 6
   pauseAfterAttack: 0.5
+  attackBox: {fileID: 8096243711309480078}
 --- !u!195 &8926394991584352150
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -642,7 +644,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1372625422
   m_Radius: 0.5933691
-  m_Speed: 3.5
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 500
@@ -666,6 +668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 0
   baseHP: 0
   baseSpeed: 0
   baseAttack: 0
@@ -5579,3 +5582,70 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8096243711309480078
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6116481958806046795}
+  - component: {fileID: 9172256651339874991}
+  - component: {fileID: 1321566801795295422}
+  m_Layer: 15
+  m_Name: AttackBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6116481958806046795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8096243711309480078}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.685}
+  m_LocalScale: {x: 1.0754724, y: 1, z: 0.47944}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5840895709522000616}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &9172256651339874991
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8096243711309480078}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1321566801795295422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8096243711309480078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378307c6c72054f0597cd3c4102d05c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droneAttackCollider: {fileID: 9172256651339874991}

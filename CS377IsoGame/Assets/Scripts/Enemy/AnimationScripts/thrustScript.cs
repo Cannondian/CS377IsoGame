@@ -8,12 +8,16 @@ public class ThrustBehaviour : StateMachineBehaviour
     private AgroRobotEnemy enemyAI;
     private float dashSpeed;
     private float overshootDistance;
+    private GameObject thrustAttackIndicator;
+
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // Get the enemy AI script
+        // Get the enemy AI script and Weapon Indicator
         enemyAI = animator.GetComponent<AgroRobotEnemy>();
+        thrustAttackIndicator = enemyAI.ThrustAttackIndicator;
+
 
         // Get the player transform
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -46,5 +50,6 @@ public class ThrustBehaviour : StateMachineBehaviour
         // Re-enable the NavMeshAgent
         NavMeshAgent agent = animator.GetComponent<NavMeshAgent>();
         if (agent != null) agent.enabled = true;
+        thrustAttackIndicator.SetActive(false);
     }
 }

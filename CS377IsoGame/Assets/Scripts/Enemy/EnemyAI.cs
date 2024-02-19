@@ -32,9 +32,7 @@ public abstract class EnemyAI : MonoBehaviour
         Debug.Log(agent);
         player = GameObject.FindWithTag("Player").transform;
         stunned = false;
-        
-        
-        
+ 
     }
     
 

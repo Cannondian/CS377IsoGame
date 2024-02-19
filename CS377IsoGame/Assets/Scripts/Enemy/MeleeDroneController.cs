@@ -17,6 +17,9 @@ public class MeleeDroneController : EnemyAI
     private Vector3 attackTarget;
     public float pauseAfterAttack = 0.5f;
 
+    // Attack box
+    public GameObject attackBox;
+
     protected override void Awake()
     {
         base.Awake();
@@ -24,7 +27,7 @@ public class MeleeDroneController : EnemyAI
 
         // Initialize health and attack damage for this specific enemy
         Health = 30f;
-        AttackDamage = 10f;
+        AttackDamage = 5f;
     }
 
     protected override void AttackPlayer()
@@ -49,6 +52,7 @@ public class MeleeDroneController : EnemyAI
     private IEnumerator DashTowardsTarget(Vector3 target)
     {
         stunned = true;
+        attackBox.SetActive(true);
 
         // handle strange cases
         float dashStartTime = Time.time;
@@ -76,6 +80,7 @@ public class MeleeDroneController : EnemyAI
             if (Time.time - dashStartTime > dashMaxDuration)
             {
                 Debug.Log("Dash timeout reached");
+                attackBox.SetActive(false);
                 break;
             }
 
@@ -84,6 +89,9 @@ public class MeleeDroneController : EnemyAI
 
             yield return null;
         }
+
+        attackBox.SetActive(false);
+
 
         // Pause briefly at the target point
         yield return new WaitForSeconds(pauseAfterAttack);
