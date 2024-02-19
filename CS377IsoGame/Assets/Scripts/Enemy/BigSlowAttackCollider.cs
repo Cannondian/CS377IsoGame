@@ -20,7 +20,7 @@ public class AttackIndicator : MonoBehaviour
         yield return new WaitForSeconds(2f);
         GameObject explosionInstance = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         attackCollider.enabled = true;
-
+        Debug.Log("HAPPENED");
         // Optionally, deactivate the indicator and collider after a short duration
         yield return new WaitForSeconds(0.5f); // Adjust based on the desired visibility duration
         gameObject.SetActive(false);

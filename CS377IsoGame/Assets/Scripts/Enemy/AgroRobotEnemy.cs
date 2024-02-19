@@ -11,6 +11,8 @@ public class AgroRobotEnemy : EnemyAI
     public float dashSpeed = 30f; // Speed of the dash
     public float overshootDistance = 5f; // How far past the player the dash should go
     public float originalSpeed; // used for storing the speed
+    public GameObject SlashAttackIndicator;
+    public GameObject ThrustAttackIndicator;
 
     protected override void Awake()
     {

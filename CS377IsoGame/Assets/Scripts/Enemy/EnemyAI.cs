@@ -30,9 +30,7 @@ public abstract class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         stunned = false;
-        
-        
-        
+ 
     }
     
 
@@ -47,9 +45,9 @@ public abstract class EnemyAI : MonoBehaviour
         
         // Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        Debug.Log("Player in Sight range" + playerInSightRange);
+        //Debug.Log("Player in Sight range" + playerInSightRange);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-        Debug.Log("Player in attack range" + playerInAttackRange);
+        //Debug.Log("Player in attack range" + playerInAttackRange);
 
         if (!stunned)
         {
