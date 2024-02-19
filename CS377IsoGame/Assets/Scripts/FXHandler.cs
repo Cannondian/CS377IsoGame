@@ -21,8 +21,8 @@ namespace RPGCharacterAnims.Actions
         #region Delegates
 
         private UnityAction<EventTypes.SkillUsedParam> InitializeFXListener;
-        private UnityAction<EventTypes.Event2Param> ContinousFXListener;
-
+        private UnityAction<EventTypes.FlamethrowerStartFXParam> FlamethrowerFXListener;
+        private UnityAction<FXList.FXlist> FlamethrowerFXEndListener;
 
         private UnityAction<EventTypes.Event8Param> VariableFXListener;
         private UnityAction<EventTypes.HitFXParam> HitFXListener;
@@ -69,21 +69,22 @@ namespace RPGCharacterAnims.Actions
         public GameObject MutatingFXPrefab;
         public GameObject GlowingFXPrefab;
         public GameObject AttackArcPrefab;
+        public GameObject FlamethrowerPrefab;
 
         
 
         #endregion
 
         #region FXInstances
-
-
+        
         public GameObject coreChargeParticles;
+        public GameObject flamethrowerInstance;
         
         #endregion
 
         [SerializeField] private Rigidbody staffBody;
         public bool alreadyPlaying;
-        private int perceivedCoreCharge;
+        
 
         // Update is called once per frame
         void LateUpdate()
@@ -96,10 +97,11 @@ namespace RPGCharacterAnims.Actions
             
             InitializeFXListener += InitializeArtilleryStrikeFX;
             EventBus.StartListening(EventTypes.Events.ON_PARTICLE_FX_FOR_SKILL, InitializeFXListener);
-            ContinousFXListener += InitializeElectricityFX;
-            EventBus.StartListening(EventTypes.Events.ON_CONTINOUS_PACRTICLE_FX_TRIGGER,
-                ContinousFXListener);
-
+            FlamethrowerFXListener += InitializeFlamethrowerFX;
+            EventBus.StartListening(EventTypes.Events.ON_FLAMETHROWER_SKILL_START,
+                FlamethrowerFXListener);
+            FlamethrowerFXEndListener += TerminateFX;
+            EventBus.StartListening(EventTypes.Events.ON_FLAMETHROWER_SKILL_END, FlamethrowerFXEndListener) ;
             VariableFXListener += UpdateCoreChargeFX;
             EventBus.StartListening(EventTypes.Events.ON_UPDATE_CORE_CHARGE_PARTICLES, VariableFXListener);
             HitFXListener += InitializeHitFX;
@@ -140,7 +142,7 @@ namespace RPGCharacterAnims.Actions
         }
         private void UpdateCoreChargeFX(EventTypes.Event8Param context)
         {
-            perceivedCoreCharge = context.coreCharge;
+            
             var particlesToEdit = coreChargeParticles.GetComponent<ParticleSystem>().limitVelocityOverLifetime;
             var particlesToEdit2 = coreChargeParticles.GetComponent<ParticleSystem>().velocityOverLifetime;
             var particlesToEdit3 = coreChargeParticles.GetComponent<ParticleSystem>().main;
@@ -327,10 +329,7 @@ namespace RPGCharacterAnims.Actions
             }
         }
 
-        private void InitializeElectricityFX(EventTypes.Event2Param context)
-        {
-            StartCoroutine(DelayedStart(context));
-        }
+        
         
         /// <summary>
         /// DelayedStart for ArtilleryStrikeFX
@@ -351,7 +350,7 @@ namespace RPGCharacterAnims.Actions
             var realFXObject = Instantiate(FX, pos, quaternion.identity);
             ParticleSystem.MainModule particleSettings = realFXObject.GetComponent<ParticleSystem>().main;
             particleSettings.startColor = new ParticleSystem.MinMaxGradient(color);
-            StartCoroutine(TerminateFX(duration, realFXObject));
+            StartCoroutine(DelayedTerminateFX(duration, realFXObject));
         } 
         
         /// <summary>
@@ -359,27 +358,7 @@ namespace RPGCharacterAnims.Actions
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        private IEnumerator DelayedStart(EventTypes.Event2Param context)
-        {
-            if (context.delay > 0)
-            {
-                yield return new WaitForSeconds(context.delay); 
-            }
-            
-            var realFXObject = Instantiate(ElectricityPrefab1, context.transform);
-            ParticleSystem.MainModule particleSettings = realFXObject.GetComponent<ParticleSystem>().main;
-            particleSettings.startColor = new ParticleSystem.MinMaxGradient(context.color);
-            
-            StartCoroutine(TerminateFX(context.duration, realFXObject));
-            
-            var realFXObject2 = Instantiate(ElectricityPrefab1, context.transform);
-            ParticleSystem.MainModule particleSettings2 = realFXObject2.GetComponent<ParticleSystem>().main;
-            particleSettings2.startColor = new ParticleSystem.MinMaxGradient(context.color);
-            particleSettings2.startSpeed = 2;
-            particleSettings2.simulationSpeed = 2;
-            
-            StartCoroutine(TerminateFX(context.duration, realFXObject2));
-        }
+        
 
         private void InitializeHitFX(EventTypes.HitFXParam context)
         {
@@ -389,7 +368,7 @@ namespace RPGCharacterAnims.Actions
                 var hitObject = Instantiate(StaffSwingHitPrefab, context.hitPosition,
                     context.hitter.transform.rotation);
 
-                TerminateFX(0.5f, hitObject);
+                DelayedTerminateFX(0.5f, hitObject);
 
             }
             else{
@@ -397,12 +376,24 @@ namespace RPGCharacterAnims.Actions
                     var hitObject2 = Instantiate(KickPrefab, context.hitPosition,
                         context.hitter.transform.rotation);
                     hitObject2.transform.position = context.hitPosition;
-                    TerminateFX(0.5f, hitObject2);
+                    DelayedTerminateFX(0.5f, hitObject2);
                     
             }
         }
-        
-        private IEnumerator TerminateFX(float duration, GameObject particles) 
+
+        private void InitializeFlamethrowerFX(EventTypes.FlamethrowerStartFXParam context)
+        {
+            flamethrowerInstance = Instantiate(FlamethrowerPrefab, context.transform);
+        }
+
+        private void TerminateFX(FXList.FXlist fx)
+        {
+            if (fx == FXList.FXlist.Flamethrower)
+            {
+                Destroy(flamethrowerInstance);
+            }
+        }
+        private IEnumerator DelayedTerminateFX(float duration, GameObject particles) 
         {
             
                 if (duration > 0) { yield return new WaitForSeconds(duration); }

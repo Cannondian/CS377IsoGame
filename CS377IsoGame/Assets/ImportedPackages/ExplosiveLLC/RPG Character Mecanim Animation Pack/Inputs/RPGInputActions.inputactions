@@ -213,7 +213,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Skill",
+                    "name": "Skill1",
                     "type": "Button",
                     "id": "2484c214-aa45-4678-8397-7b1c59c24e32",
                     "expectedControlType": "Button",
@@ -222,7 +222,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Ultimate",
+                    "name": "Skill2",
                     "type": "Button",
                     "id": "a6e9a4db-e13f-4832-9c4b-a3417188ad7e",
                     "expectedControlType": "Button",
@@ -591,7 +591,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Mouse and Keyboard",
-                    "action": "Skill",
+                    "action": "Skill1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -602,7 +602,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Mouse and Keyboard",
-                    "action": "Ultimate",
+                    "action": "Skill2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

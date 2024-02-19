@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using RPGCharacterAnims;
 using UnityEngine;
 
 public class EventTypes 
@@ -17,7 +18,9 @@ public class EventTypes
       ON_ENEMY_HIT,
       ON_PLAYER_DAMAGE_TAKEN,
       ON_ATTACK_SWING,
-
+      ON_FLAMETHROWER_SKILL_START,
+      ON_FLAMETHROWER_SKILL_END,
+      ON_CONTINOUS_ENERGY_DRAIN_START,
       ON_JISA_ENHANCED_ATTACK,
       ON_UPDATE_CORE_CHARGE_PARTICLES,
       ON_BASIC_ATTACK_HIT,
@@ -45,20 +48,17 @@ public class EventTypes
       }
    }
 
-   public class Event2Param
+   public class FlamethrowerStartFXParam
    {
-      public FXList.FXlist fx;
-      public float duration;
-      public float delay;
+      public Vector3 direction;
       public Color color;
       public Transform transform;
-       public Event2Param(Color p1, Transform p2, FXList.FXlist p3, float p4, float p5)
+       public FlamethrowerStartFXParam(Color p1, Transform p2, Vector3 dir)
        {
            color = p1;
            transform = p2;
-           fx = p3;
-           duration = p4;
-           delay = p5;
+           direction = dir;
+           
        }
    }
 

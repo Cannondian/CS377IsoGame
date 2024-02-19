@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class StatsTemplate : MonoBehaviour
 {
+
+    public int level;
+    
     #region statsList
 
     public enum statsList
@@ -69,15 +72,25 @@ public class StatsTemplate : MonoBehaviour
     
     #region statModifiers
     
-    public List<StatModifier> HPModifiers;
-    public List<StatModifier> speedModifiers;
-    public List<StatModifier> attackModifiers;
-    public List<StatModifier> defenseModifiers;
-    public List<StatModifier> attackSpeedModifiers;
-    public List<StatModifier> resistanceModifiers;
-    public List<StatModifier> RRRModifiers; //resource regeneration rate
-    public List<StatModifier> evasivenessModifiers;
-    public List<StatModifier> talentModifiers;
+    public List<StatModifier> tHPModifiers;
+    public List<StatModifier> tSpeedModifiers;
+    public List<StatModifier> tAttackModifiers;
+    public List<StatModifier> tDefenseModifiers;
+    public List<StatModifier> tAttackSpeedModifiers;
+    public List<StatModifier> tResistanceModifiers;
+    public List<StatModifier> tRRRModifiers; //resource regeneration rate
+    public List<StatModifier> tEvasivenessModifiers;
+    public List<StatModifier> tTalentModifiers;
+    
+    public List<StatModifier> pHPModifiers;
+    public List<StatModifier> pSpeedModifiers;
+    public List<StatModifier> pAttackModifiers;
+    public List<StatModifier> pDefenseModifiers;
+    public List<StatModifier> pAttackSpeedModifiers;
+    public List<StatModifier> pResistanceModifiers;
+    public List<StatModifier> pRRRModifiers; //resource regeneration rate
+    public List<StatModifier> pEvasivenessModifiers;
+    public List<StatModifier> pTalentModifiers;
     
     #endregion
 
@@ -112,15 +125,25 @@ public class StatsTemplate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HPModifiers = new List<StatModifier>();
-        speedModifiers = new List<StatModifier>();
-        attackModifiers = new List<StatModifier>();
-        defenseModifiers = new List<StatModifier>();
-        attackSpeedModifiers = new List<StatModifier>();
-        resistanceModifiers = new List<StatModifier>();
-        RRRModifiers = new List<StatModifier>();
-        evasivenessModifiers = new List<StatModifier>();
-        talentModifiers = new List<StatModifier>();
+        tHPModifiers = new List<StatModifier>();
+        tSpeedModifiers = new List<StatModifier>();
+        tAttackModifiers = new List<StatModifier>();
+        tDefenseModifiers = new List<StatModifier>();
+        tAttackSpeedModifiers = new List<StatModifier>();
+        tResistanceModifiers = new List<StatModifier>();
+        tRRRModifiers = new List<StatModifier>();
+        tEvasivenessModifiers = new List<StatModifier>();
+        tTalentModifiers = new List<StatModifier>();
+        
+        pHPModifiers = new List<StatModifier>();
+        pSpeedModifiers = new List<StatModifier>();
+        pAttackModifiers = new List<StatModifier>();
+        pDefenseModifiers = new List<StatModifier>();
+        pAttackSpeedModifiers = new List<StatModifier>();
+        pResistanceModifiers = new List<StatModifier>();
+        pRRRModifiers = new List<StatModifier>();
+        pEvasivenessModifiers = new List<StatModifier>();
+        pTalentModifiers = new List<StatModifier>();
     }
 
     // Update is called once per frame
@@ -134,39 +157,39 @@ public class StatsTemplate : MonoBehaviour
         switch (stat)
         {
             case statsList.HP:
-                HPModifiers.Add(modifier);
+                tHPModifiers.Add(modifier);
                 CalculateTemporaryStats(statsList.HP);
                 break;
             case statsList.Speed:
-                speedModifiers.Add(modifier);
+                tSpeedModifiers.Add(modifier);
                 CalculateTemporaryStats(statsList.Speed);
                 break;
             case statsList.Attack:
-                attackModifiers.Add(modifier);
+                tAttackModifiers.Add(modifier);
                 CalculateTemporaryStats(statsList.Attack);
                 break;
             case statsList.Defense:
-               defenseModifiers.Add(modifier);
+               tDefenseModifiers.Add(modifier);
                CalculateTemporaryStats(statsList.Defense);
                 break;
             case statsList.AttackSpeed:
-                attackSpeedModifiers.Add(modifier);
+                tAttackSpeedModifiers.Add(modifier);
                 CalculateTemporaryStats(statsList.AttackSpeed);
                 break;
             case statsList.Resistance:
-                resistanceModifiers.Add(modifier);
+                tResistanceModifiers.Add(modifier);
                 CalculateTemporaryStats(statsList.Resistance);
                 break;
             case statsList.RRR:
-                RRRModifiers.Add(modifier);
+                tRRRModifiers.Add(modifier);
                 CalculateTemporaryStats(statsList.Resistance);
                 break;
             case statsList.Evasiveness:
-                evasivenessModifiers.Add(modifier);
+                tEvasivenessModifiers.Add(modifier);
                 CalculateTemporaryStats(statsList.Evasiveness);
                 break;
             case statsList.Talent:
-                talentModifiers.Add(modifier);
+                tTalentModifiers.Add(modifier);
                 CalculateTemporaryStats(statsList.Talent);
                 break;
         }
@@ -177,39 +200,39 @@ public class StatsTemplate : MonoBehaviour
         switch (stat)
         {
             case statsList.HP:
-                HPModifiers.Remove(modifier);
+                tHPModifiers.Remove(modifier);
                 CalculateTemporaryStats(statsList.HP);
                 break;
             case statsList.Speed:
-                speedModifiers.Remove(modifier);
+                tSpeedModifiers.Remove(modifier);
                 CalculateTemporaryStats(statsList.Speed);
                 break;
             case statsList.Attack:
-                attackModifiers.Remove(modifier);
+                tAttackModifiers.Remove(modifier);
                 CalculateTemporaryStats(statsList.Attack);
                 break;
             case statsList.Defense:
-                defenseModifiers.Remove(modifier);
+                tDefenseModifiers.Remove(modifier);
                 CalculateTemporaryStats(statsList.Defense);
                 break;
             case statsList.AttackSpeed:
-                attackSpeedModifiers.Remove(modifier);
+                tAttackSpeedModifiers.Remove(modifier);
                 CalculateTemporaryStats(statsList.AttackSpeed);
                 break;
             case statsList.Resistance:
-                resistanceModifiers.Remove(modifier);
+                tResistanceModifiers.Remove(modifier);
                 CalculateTemporaryStats(statsList.Resistance);
                 break;
             case statsList.RRR:
-                RRRModifiers.Remove(modifier);
+                tRRRModifiers.Remove(modifier);
                 CalculateTemporaryStats(statsList.RRR);
                 break;
             case statsList.Evasiveness:
-                evasivenessModifiers.Remove(modifier);
+                tEvasivenessModifiers.Remove(modifier);
                 CalculateTemporaryStats(statsList.Evasiveness);
                 break;
             case statsList.Talent:
-                talentModifiers.Remove(modifier);
+                tTalentModifiers.Remove(modifier);
                 CalculateTemporaryStats(statsList.Talent);
                 break;
         }
@@ -218,8 +241,129 @@ public class StatsTemplate : MonoBehaviour
     
     public void CalculateCES() //calculate and store current effective stat when stats change by sources other than buffs and debuffs
     {
-        //the invariant must hold that there should be no temporary modifiers in the list of stat modifiers when this function is called
+        float delta = 0;
+        foreach (StatModifier mod in pHPModifiers)
+        {
+            if (mod.myType == StatModifierType.Percent)
+            {
+                delta += baseHP * mod.value / 100;
+            }
+            else
+            {
+                delta += mod.value;
+            }
+        }
+        ceHP += delta;
+
+        delta = 0;
+        foreach (StatModifier mod in pAttackModifiers)
+        {
+            if (mod.myType == StatModifierType.Percent)
+            {
+                delta += baseAttack * mod.value / 100;
+            }
+            else
+            {
+                delta += mod.value;
+            }
+        }
+        ceAttack += delta;
         
+        delta = 0;
+        foreach (StatModifier mod in pDefenseModifiers)
+        {
+            if (mod.myType == StatModifierType.Percent)
+            {
+                delta += baseDefense * mod.value / 100;
+            }
+            else
+            {
+                delta += mod.value;
+            }
+        }
+        ceDefense += delta;
+        
+        delta = 0;
+        foreach (StatModifier mod in pSpeedModifiers)
+        {
+            if (mod.myType == StatModifierType.Percent)
+            {
+                delta += baseSpeed * mod.value / 100;
+            }
+            else
+            {
+                delta += mod.value;
+            }
+        }
+        ceSpeed += delta;
+        
+        delta = 0;
+        foreach (StatModifier mod in pAttackSpeedModifiers)
+        {
+            if (mod.myType == StatModifierType.Percent)
+            {
+                delta += baseAttackSpeed * mod.value / 100;
+            }
+            else
+            {
+                delta += mod.value;
+            }
+        }
+        ceAttackSpeed += delta;
+        
+        delta = 0;
+        foreach (StatModifier mod in pResistanceModifiers)
+        {
+            if (mod.myType == StatModifierType.Percent)
+            {
+                delta += baseResistance * mod.value / 100;
+            }
+            else
+            {
+                delta += mod.value;
+            }
+        }
+        ceResistance += delta;
+        delta = 0;
+        foreach (StatModifier mod in pRRRModifiers)
+        {
+            if (mod.myType == StatModifierType.Percent)
+            {
+                delta += baseRRR * mod.value / 100;
+            }
+            else
+            {
+                delta += mod.value;
+            }
+        }
+        ceRRR += delta;
+        delta = 0;
+        foreach (StatModifier mod in pEvasivenessModifiers)
+        {
+            if (mod.myType == StatModifierType.Percent)
+            {
+                delta += baseEvasiveness * mod.value / 100;
+            }
+            else
+            {
+                delta += mod.value;
+            }
+        }
+        ceEvasiveness += delta;
+        delta = 0;
+        foreach (StatModifier mod in pTalentModifiers)
+        {
+            if (mod.myType == StatModifierType.Percent)
+            {
+                delta += baseTalent * mod.value / 100;
+            }
+            else
+            {
+                delta += mod.value;
+            }
+        }
+        ceTalent += delta;
+
     }
 
     public void
@@ -231,7 +375,7 @@ public class StatsTemplate : MonoBehaviour
         {
             case statsList.HP:
 
-                foreach (StatModifier mod in HPModifiers)
+                foreach (StatModifier mod in tHPModifiers)
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
@@ -247,7 +391,7 @@ public class StatsTemplate : MonoBehaviour
                 break;
             case statsList.Speed:
 
-                foreach (StatModifier mod in speedModifiers)
+                foreach (StatModifier mod in tSpeedModifiers)
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
@@ -262,7 +406,7 @@ public class StatsTemplate : MonoBehaviour
                 tSpeed = ceSpeed + delta;
                 break;
             case statsList.Attack:
-                foreach (StatModifier mod in attackModifiers)
+                foreach (StatModifier mod in tAttackModifiers)
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
@@ -278,7 +422,7 @@ public class StatsTemplate : MonoBehaviour
                 break;
             case statsList.Defense:
 
-                foreach (StatModifier mod in defenseModifiers)
+                foreach (StatModifier mod in tDefenseModifiers)
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
@@ -293,7 +437,7 @@ public class StatsTemplate : MonoBehaviour
                 tDefense = ceDefense + delta;
                 break;
             case statsList.AttackSpeed:
-                foreach (StatModifier mod in attackSpeedModifiers)
+                foreach (StatModifier mod in tAttackSpeedModifiers)
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
@@ -308,7 +452,7 @@ public class StatsTemplate : MonoBehaviour
                 tAttackSpeed = ceAttackSpeed + delta;
                 break;
             case statsList.Resistance:
-                foreach (StatModifier mod in resistanceModifiers)
+                foreach (StatModifier mod in tResistanceModifiers)
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
@@ -323,7 +467,7 @@ public class StatsTemplate : MonoBehaviour
                 tResistance = ceResistance + delta;
                 break;
             case statsList.RRR:
-                foreach (StatModifier mod in RRRModifiers)
+                foreach (StatModifier mod in tRRRModifiers)
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
@@ -338,7 +482,7 @@ public class StatsTemplate : MonoBehaviour
                 tRRR = ceRRR + delta;
                 break;
             case statsList.Evasiveness:
-                foreach (StatModifier mod in evasivenessModifiers)
+                foreach (StatModifier mod in tEvasivenessModifiers)
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
@@ -353,7 +497,7 @@ public class StatsTemplate : MonoBehaviour
                 tEvasiveness = ceEvasiveness + delta;
                 break;
             case statsList.Talent:
-                foreach (StatModifier mod in talentModifiers)
+                foreach (StatModifier mod in tTalentModifiers)
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {

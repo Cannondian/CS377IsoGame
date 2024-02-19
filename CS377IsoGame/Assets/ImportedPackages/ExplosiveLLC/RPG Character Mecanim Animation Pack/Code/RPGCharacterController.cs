@@ -52,7 +52,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 
 			#region Components
 
-			
+			public RPGCharacterWeaponController weaponController;
 			/// <summary>
 			/// Unity Animator component.
 			/// </summary>
@@ -94,6 +94,9 @@ using Null = RPGCharacterAnims.Actions.Null;
 			/// </summary>
 			public float animationSpeed = 1.1f;
 
+
+			public SkillsAndWeapons.Skills skill1 = SkillsAndWeapons.Skills.TerrainMine;
+			public SkillsAndWeapons.Skills skill2 = SkillsAndWeapons.Skills.Flamethrower;
 			/// <summary>
 			/// Whether to use PerfectLookAt headlook.
 			/// </summary>
@@ -165,11 +168,11 @@ using Null = RPGCharacterAnims.Actions.Null;
 			private bool _isUsingSkill;
 
 			/// <summary>
-			/// Returns whether the Ultimate action is active.
+			/// Returns whether the FlamethrowerSKill action is active.
 			/// </summary>
-			public bool isUsingUltimate => _isUsingUltimate;
+			public bool isUsingFlamethrowerSkill => _isUsingFlamethrowerSkill;
 
-			private bool _isUsingUltimate;
+			private bool _isUsingFlamethrowerSkill;
 
 
 			/// <summary>
@@ -480,8 +483,8 @@ using Null = RPGCharacterAnims.Actions.Null;
 
 				SetHandler(HandlerTypes.Aim, new SimpleActionHandler(() => { }, StopAim));
 				SetHandler(HandlerTypes.Attack, new Attack());
-				SetHandler(HandlerTypes.Skill, new Skill());
-				SetHandler(HandlerTypes.Ultimate, new Ultimate());
+				SetHandler(HandlerTypes.TerrainMineSkill, new TerrainMineSkill());
+				SetHandler(HandlerTypes.FlamethrowerSkill, new FlamethrowerSkill());
 				SetHandler(HandlerTypes.Block, new SimpleActionHandler(StartBlock, EndBlock));
 				SetHandler(HandlerTypes.Cast, new Cast());
 				SetHandler(HandlerTypes.AttackCast, new AttackCast());
@@ -527,8 +530,10 @@ using Null = RPGCharacterAnims.Actions.Null;
 
 			private void Start()
 			{
+				
 				animator.SetWeapons(AnimatorWeapon.STAFF, -2, Weapon.Unarmed, Weapon.TwoHandStaff, Side.Right);
 				comboIndex = 0;
+				
 				
 
 
@@ -1064,19 +1069,21 @@ using Null = RPGCharacterAnims.Actions.Null;
 				}
 			}
 
-			public void Ultimate(Characters character, float animationDuration)
+			public void FlamethrowerSKill()
 			{
-				switch (character)
-				{
-					case (Characters.Jisa):
-						_isUsingUltimate = true;
-						StartCast(CastType.Buff2, Side.Left);
-						EventBus.TriggerEvent(EventTypes.Events.ON_ULTIMATE_USED, 0f);
-						break;
-
-				}
+				animator.SetWeapons(AnimatorWeapon.RIFLE, -2, Weapon.Rifle, Weapon.Unarmed, Side.Left);
+						_isUsingFlamethrowerSkill = true;
+						Lock(false, false, false, 0, 0);
+						EventBus.TriggerEvent(EventTypes.Events.ON_CONTINOUS_ENERGY_DRAIN_START, 0f);
+				
 
 
+			}
+
+			public void StopFlamethrowerSkill()
+			{
+				animator.SetWeapons(AnimatorWeapon.STAFF, -2, Weapon.Unarmed, Weapon.TwoHandStaff, Side.Right);
+				//unity event
 			}
 
 			private void ControlCombos()
@@ -1121,7 +1128,9 @@ using Null = RPGCharacterAnims.Actions.Null;
 			//so, before you start working on the handler, first write the last point in the RCC
 			//that way you know what you need from the handler
 
-			public void Skill(Characters character, float duration, CustomTerrain.Terrains terrain)
+			
+			
+			public void MineSkill(Characters character, float duration, CustomTerrain.Terrains terrain)
 			{
 
 				switch (character)
@@ -1382,7 +1391,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 				animator.TriggerCast(castType);
 				//animator.SetActionTrigger(castType ,1);
 				_isAttacking = true;
-				if (_isUsingUltimate)
+				if (_isUsingFlamethrowerSkill)
 				{
 					LockForSkillAndUltimate(false, false, true, 0, 0.5f);
 				}
@@ -1403,9 +1412,9 @@ using Null = RPGCharacterAnims.Actions.Null;
 					_isUsingSkill = false;
 				}
 
-				if (_isUsingUltimate)
+				if (_isUsingFlamethrowerSkill)
 				{
-					_isUsingUltimate = false;
+					_isUsingFlamethrowerSkill = false;
 				}
 
 				animator.SetActionTrigger(AnimatorTrigger.CastEndTrigger, 1);

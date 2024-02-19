@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: facecbf9066e5c94ba7be3206ff5fdfe, type: 3}
+  m_Name: Violet
+  m_EditorClassIdentifier: 
+  UseColorGradient: 0
+  ColorGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  ColorGradientSpeed: 0
+  Color: {r: 1, g: 0, b: 0.7671118, a: 1}
+  Width: 14.3
+  UseNoiseAlpha: 1
+  NoiseAlpha: {fileID: 2800000, guid: 1423989cdb88097419b0b02ad0ef2225, type: 3}
+  NoiseScaleAlpha: 7.04
+  SpeedXAlpha: 0
+  SpeedYAlpha: 0
+  MultiplierAlpha: 0.0435
+  UseNoiseColor: 1
+  DefaultNoiseAlpha: 0.008
+  UseNoiseColorGradient: 0
+  ColorNoiseGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  ColorNoiseGradientSpeed: 0
+  NoiseTintColor: {r: 0.56470275, g: 0.56470275, b: 0.8867924, a: 1}
+  NoiseIntensity: 0.78
+  UseRandomizeNoiseTexture: 0
+  RandomizationSpeedFactor: 10
+  UseFlowColor: 1
+  SpeedXColor: 1.7
+  SpeedYColor: 0
+  NoiseColor: {fileID: 2800000, guid: 0f1b20a1f4b6d114682d9b7d429a52b7, type: 3}
+  NoiseScaleColor: 3.46
+  ColorMidStrength: 0.0089
+  ColorAlwaysAbove1: 1

@@ -4,21 +4,21 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CharacterEnergy : Singleton<CharacterEnergy>
 {
-    private UnityAction<float> UltimateIsUsedListener;
-    private UnityAction<float> SkillIsUsedListener;
+    private UnityAction<EnergySpenders> ContinousEnergyDrainListener;
+    private UnityAction<EnergySpenders> SkillIsUsedListener;
     private UnityAction<float> IncrementEenergyListener;
 
-    [SerializeField] public Slider skillSlider;
+    [SerializeField] public Slider energySlider;
     [SerializeField] public Slider ultimateSlider;
+    [SerializeField] public StatsTemplate playerStats;
     
-    private float ultimateEnergyState;
-    private float skillEnergyState;
-    private float skillEnergyNeed;
-    private float ultimateEnergyNeed;
+    
+   private float energyState;
     
     public bool ultimateIsReady;
     public bool skillIsReady;
@@ -29,61 +29,74 @@ public class CharacterEnergy : Singleton<CharacterEnergy>
     public float energyFromKill = 5;
     public float energyFromHit = 1;
     public float energyModifier;
+
+    public float drain = -3;
+    public bool draining;
+    
+    public enum EnergySpenders
+    {
+        Flamethrower = 3,
+        Mine = 60,
+        AttunementChip = 100,
+    }
     
     private void Start()
     {
-        skillEnergyNeed = 40;
-        ultimateEnergyNeed = 120;
-        ultimateEnergyState = 0;
-        skillEnergyState = 40;
+
         energyModifier = 1;
         skillIsReady = true;
         UpdateSliders();
     }
 
-    
+    private void Update()
+    {
+        DrainEnergy();
+        
 
-    private void UltimateUsed(float ph)
+    }
+
+    private void DrainEnergy()
+    {
+        if (draining && energyState >= 0)
+        {
+            energyState -= drain;
+        }
+    }
+
+    private void SetDrain(EnergySpenders culprit)
     {
         
-        ultimateIsReady = false;
-        ultimateEnergyState = 0;
-        UpdateSliders();
+        draining = true;
+        drain = (int)culprit;
+
     }
-    private void SkillUsed(float ph)
+
+    private void SpendEnergy(EnergySpenders skill)
     {
-        Debug.Log("used");
-        skillIsReady = false;
-        skillEnergyState = 0;
-        UpdateSliders();
+        
+    }
+
+    public bool SkillAvailable(EnergySpenders skill)
+    {
+        return energyState >= (float)skill;
     }
     private void IncrementEnergy(float amount)
     {
-        skillEnergyState += amount * energyModifier;
-        ultimateEnergyState += amount * energyModifier;
-        if (ultimateEnergyState >= ultimateEnergyNeed)
-        {
-            ultimateIsReady = true;
-        }
-        if (skillEnergyState >= skillEnergyNeed)
-        {
-            skillIsReady = true;
-        }
+        energyState = amount * energyModifier;
         UpdateSliders();
         
     }
 
     private void UpdateSliders()
     {
-        ultimateSlider.value = ultimateEnergyState;
-        skillSlider.value = skillEnergyState;
+        energySlider.value = energyState;
     }
     private void OnEnable()
     {
-        SkillIsUsedListener += SkillUsed;
+        SkillIsUsedListener += SpendEnergy;
         EventBus.StartListening(EventTypes.Events.ON_SKILL_USED, SkillIsUsedListener);
-        UltimateIsUsedListener += UltimateUsed;
-        EventBus.StartListening(EventTypes.Events.ON_ULTIMATE_USED, UltimateIsUsedListener);
+        ContinousEnergyDrainListener += SetDrain;
+        EventBus.StartListening(EventTypes.Events.ON_CONTINOUS_ENERGY_DRAIN_START, ContinousEnergyDrainListener);
         IncrementEenergyListener += IncrementEnergy;
         EventBus.StartListening(EventTypes.Events.ON_ENERGY_GAIN, IncrementEenergyListener);
     }

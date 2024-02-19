@@ -8,8 +8,10 @@ using RPGCharacterAnims.Actions;
 using RPGCharacterAnims.Extensions;
 using RPGCharacterAnims.Lookups;
 using Unity.Mathematics;
+using System.Reflection;
 // Requires installing the InputSystem Package from the Package Manager: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.5/manual/Installation.html
 using UnityEngine.InputSystem;
+using System;
 using UnityEngine.Rendering.Universal;
 
 namespace RPGCharacterAnims
@@ -29,8 +31,8 @@ namespace RPGCharacterAnims
 
 		// Inputs.
 		private bool inputJump;
-		private bool inputSkill;
-		private bool inputUltimate;
+		private bool inputSkill1;
+		private bool inputSkill2;
         private bool inputLightHit;
         private bool inputDeath;
         private bool inputAttackL;
@@ -57,12 +59,13 @@ namespace RPGCharacterAnims
 		private bool blockToggle;
 		private float inputPauseTimeout = 0;
 		private bool inputPaused = false;
-		
+		private bool alarm;
 		
 		
 		// TO BE REPLACED 
 
-		
+		public SkillsAndWeapons.Skills skill1 = SkillsAndWeapons.Skills.TerrainMine;
+		public SkillsAndWeapons.Skills skill2 = SkillsAndWeapons.Skills.Flamethrower;
 
 		private Characters activeCharacter = Characters.Jisa;
 		private void Awake()
@@ -105,13 +108,13 @@ namespace RPGCharacterAnims
 
 			if (!rpgCharacterController.IsActive("Relax")) {
 				Strafing();
-				UsingSKill();
+				UsingSkill();
 				Facing();
 				Aiming();
 				Rolling();
 				Attacking();
-				UsingSKill();
-				UsingUltimate();
+				
+				
 			}
 		}
 
@@ -133,8 +136,8 @@ namespace RPGCharacterAnims
             try {
 				inputAttackL = rpgInputs.RPGCharacter.AttackL.WasPressedThisFrame();
 				inputAttackR = rpgInputs.RPGCharacter.AttackR.WasPressedThisFrame();
-				inputSkill = rpgInputs.RPGCharacter.Skill.WasPressedThisFrame();
-				inputUltimate = rpgInputs.RPGCharacter.Ultimate.WasPressedThisFrame();
+				inputSkill1 = rpgInputs.RPGCharacter.Skill1.WasPressedThisFrame();
+				inputSkill2 = rpgInputs.RPGCharacter.Skill2.IsPressed();
 				inputBlock = rpgInputs.RPGCharacter.Block.IsPressed();
 				inputCastL = rpgInputs.RPGCharacter.CastL.WasPressedThisFrame();
 				inputCastR = rpgInputs.RPGCharacter.CastR.WasPressedThisFrame();
@@ -259,6 +262,11 @@ namespace RPGCharacterAnims
 			else { Strafing(); }
 		}
 
+		private void CustomAiming()
+		{
+			
+		}
+
 		private void Strafing()
 		{
 			if (rpgCharacterController.canStrafe) {
@@ -279,6 +287,7 @@ namespace RPGCharacterAnims
 				if (HasFacingInput()) {
 					if (inputFace) {
 
+						
 						// Get world position from mouse position on screen and convert to direction from character.
 						Plane playerPlane = new Plane(Vector3.up, transform.position);
 						Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -286,12 +295,14 @@ namespace RPGCharacterAnims
 						if (playerPlane.Raycast(ray, out hitdist)) {
 							Vector3 targetPoint = ray.GetPoint(hitdist);
 							Vector3 lookTarget = new Vector3(targetPoint.x - transform.position.x, transform.position.z - targetPoint.z, 0);
+							Debug.Log("here I am");
 							rpgCharacterController.SetFaceInput(lookTarget);
 						}
 					}
 					else { rpgCharacterController.SetFaceInput(new Vector3(inputFacing.x, inputFacing.y, 0)); }
 
-					if (rpgCharacterController.CanStartAction("Face")) { rpgCharacterController.StartAction("Face"); }
+					if (rpgCharacterController.CanStartAction("Face")) {
+						rpgCharacterController.StartAction("Face"); }
 				}
 				else {
 					if (rpgCharacterController.CanEndAction("Face")) { rpgCharacterController.EndAction("Face"); }
@@ -300,33 +311,98 @@ namespace RPGCharacterAnims
 		}
 
 		//just like Attacking() but instead for skill casts
-		private void UsingSKill()
+		private void UsingSkill()
 		{
-			
-			if (!rpgCharacterController.HandlerExists(HandlerTypes.Skill)) { return; }
-			
-			if (!rpgCharacterController.CanStartAction(HandlerTypes.Skill)) {Debug.Log("can't start"); return; }
-
-			if (activeCharacter == Characters.Jisa && inputSkill)
+			if (!(inputSkill1 || inputSkill2))
 			{
-				//inputFace = true;
-				//Facing();
-				//Debug.Log("you are testing the facing for the skill");
-				//same logic from the facing function to get mouse position and convert to world position
-				//also keep in mind that this is a good way to get screen coordinates on a surface the player stand on
-				
+				return;
+			}
+
+			if (inputSkill1)
+			{
+				string methodName = skill1.ToString();
+				MethodInfo methodInfo = typeof(RPGCharacterInputController).GetMethod
+					(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
+				if (methodInfo != null)
+				{
+					// Invoke the method
+					methodInfo.Invoke(null, null);
+				}
+			}
+
+			if (inputSkill2)
+			{
+				string methodName = SkillsAndWeapons.Skills.Flamethrower.ToString();
+				MethodInfo methodInfo =
+					typeof(RPGCharacterInputSystemController).GetMethod(methodName,
+						BindingFlags.NonPublic | BindingFlags.Instance);
+				Debug.Log(methodName);
+				if (methodInfo != null)
+				{
+					// Invoke the method
+					methodInfo.Invoke(this, null);
+				}
+			}
+		}
+
+		private void TerrainMine()
+		{
+			if (!rpgCharacterController.HandlerExists(HandlerTypes.TerrainMineSkill)) { return; }
+			
+			if (!rpgCharacterController.CanStartAction(HandlerTypes.TerrainMineSkill)) {Debug.Log("can't start"); return; }
+			
 				inputFace = true;
 				InitializeTargeting();
-				
-				
-			}
-			/* else if (inputAttackR)
-			{ rpgCharacterController.StartAction(HandlerTypes.Attack, new AttackContext(HandlerTypes.Attack, Side.Right)); }
-			else if (inputCastL)
-			{ rpgCharacterController.StartAction(HandlerTypes.AttackCast, new AttackCastContext(AnimationVariations.AttackCast.TakeRandom(), Side.Left)); }
-			else if (inputCastR)
-			{ rpgCharacterController.StartAction(HandlerTypes.AttackCast, new AttackCastContext(AnimationVariations.AttackCast.TakeRandom(), Side.Right)); } */
+		}
+
+		//we want controls to fundamentally change while we're using this skill
+		//we want the player to face the direction of the mouse as long as the mouse isn't outside the bounds 
+		//of the arc we set for rotation.
+		//so we need to manually make the player face the mouse direction during the duration of the skill
+		private void Flamethrower()
+		{
+			if (!rpgCharacterController.HandlerExists(HandlerTypes.FlamethrowerSkill)) { return; }
 			
+			//if (!rpgCharacterController.CanStartAction(HandlerTypes.FlamethrowerSkill)) {Debug.Log("can't start"); return; }
+
+
+			inputFace = true;
+			
+			
+			Plane playerPlane = new Plane(Vector3.up, transform.position);
+			Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+			float hitdist = 0.0f;
+			if (playerPlane.Raycast(ray, out hitdist))
+			{
+				Vector3 targetPoint = ray.GetPoint(hitdist);
+				Vector3 lookTarget = new Vector3(targetPoint.x - transform.position.x,
+					transform.position.z - targetPoint.z, 0);
+				rpgCharacterController.SetFaceInput(lookTarget);
+				rpgCharacterController.StartFace();
+				rpgCharacterController.StartStrafe();
+				
+				rpgCharacterController.StartAction(HandlerTypes.FlamethrowerSkill, 
+					new FlamethrowerSkillContext(HandlerTypes.FlamethrowerSkill, lookTarget, CustomTerrain.Terrains.Grass, transform));
+			}
+
+			if (!alarm)
+			{
+				StartCoroutine(FlamethrowerOff());
+				alarm = true;
+			}
+			
+			
+			
+		}
+
+
+		private IEnumerator FlamethrowerOff()
+		{
+			Debug.Log("start of coroutine");
+			yield return new WaitWhile(() => inputSkill2);
+			Debug.Log("end of coroutine");
+			alarm = false;
+			rpgCharacterController.EndAction(HandlerTypes.FlamethrowerSkill);
 		}
 		/// <summary>
 		/// changes cursor to targeting indicator and halts skill execution until the player decides the location.
@@ -383,28 +459,12 @@ namespace RPGCharacterAnims
 			Destroy(targetingCircle);
 			Destroy(rangeCircle);
 			rpgCharacterController.Unlock(true, true);
-			rpgCharacterController.StartAction(HandlerTypes.Skill,
-				new SkillContext(HandlerTypes.Skill, targetingCircle.transform.position, CustomTerrain.Terrains.Grass, 2));
+			rpgCharacterController.StartAction(HandlerTypes.TerrainMineSkill,
+				new SkillContext(HandlerTypes.TerrainMineSkill, targetingCircle.transform.position, CustomTerrain.Terrains.Grass, 2));
 		}
     
 
-		private void UsingUltimate()
-		{
-			if (!rpgCharacterController.HandlerExists(HandlerTypes.Ultimate))
-			{
-				return;
-			}
-
-			if (!rpgCharacterController.CanStartAction(HandlerTypes.Ultimate))
-			{
-				return;
-			}
-			if (activeCharacter == Characters.Jisa && inputUltimate)
-		    {
-		        
-			    rpgCharacterController.StartAction(HandlerTypes.Ultimate, new UltimateContext(HandlerTypes.Ultimate, transform, CustomTerrain.Terrains.Grass));
-		    }
-		}
+		
 		private void Attacking()
 		{
 			// Check to make sure Attack and Cast Actions exist.
