@@ -144,6 +144,19 @@ public class StatsTemplate : MonoBehaviour
         pRRRModifiers = new List<StatModifier>();
         pEvasivenessModifiers = new List<StatModifier>();
         pTalentModifiers = new List<StatModifier>();
+        
+        
+        ceHP = baseHP;
+        ceSpeed = baseSpeed;
+        ceAttack = baseAttack;
+        ceDefense = baseDefense;
+        ceAttackSpeed = baseSpeed;
+        ceResistance = baseResistance;
+        ceRRR = baseRRR; //resource regeneration rate
+        ceEvasiveness = baseEvasiveness;
+        ceTalent = baseTalent;
+        
+        CalculateCES();
     }
 
     // Update is called once per frame
@@ -363,7 +376,15 @@ public class StatsTemplate : MonoBehaviour
             }
         }
         ceTalent += delta;
-
+        CalculateTemporaryStats(statsList.HP);
+        CalculateTemporaryStats(statsList.Attack);
+        CalculateTemporaryStats(statsList.Defense);
+        CalculateTemporaryStats(statsList.Evasiveness);
+        CalculateTemporaryStats(statsList.Resistance);
+        CalculateTemporaryStats(statsList.Speed);
+        CalculateTemporaryStats(statsList.Talent);
+        CalculateTemporaryStats(statsList.AttackSpeed);
+        CalculateTemporaryStats(statsList.RRR);
     }
 
     public void
@@ -379,7 +400,7 @@ public class StatsTemplate : MonoBehaviour
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
-                        delta += baseHP * mod.value / 100;
+                        delta += ceHP * mod.value / 100;
                     }
                     else
                     {
@@ -395,7 +416,7 @@ public class StatsTemplate : MonoBehaviour
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
-                        delta += baseSpeed * mod.value / 100;
+                        delta += ceSpeed * mod.value / 100;
                     }
                     else
                     {
@@ -410,7 +431,7 @@ public class StatsTemplate : MonoBehaviour
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
-                        delta += baseAttack * mod.value / 100;
+                        delta += ceAttack * mod.value / 100;
                     }
                     else
                     {
@@ -426,7 +447,7 @@ public class StatsTemplate : MonoBehaviour
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
-                        delta += baseDefense * mod.value / 100;
+                        delta += ceDefense * mod.value / 100;
                     }
                     else
                     {
@@ -441,7 +462,7 @@ public class StatsTemplate : MonoBehaviour
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
-                        delta += baseAttackSpeed * mod.value / 100;
+                        delta += ceAttackSpeed * mod.value / 100;
                     }
                     else
                     {
@@ -456,7 +477,7 @@ public class StatsTemplate : MonoBehaviour
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
-                        delta += baseResistance * mod.value / 100;
+                        delta += ceResistance * mod.value / 100;
                     }
                     else
                     {
@@ -471,7 +492,7 @@ public class StatsTemplate : MonoBehaviour
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
-                        delta += baseRRR * mod.value / 100;
+                        delta += ceRRR * mod.value / 100;
                     }
                     else
                     {
@@ -486,7 +507,7 @@ public class StatsTemplate : MonoBehaviour
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
-                        delta += baseEvasiveness * mod.value / 100;
+                        delta += ceEvasiveness * mod.value / 100;
                     }
                     else
                     {
@@ -501,7 +522,7 @@ public class StatsTemplate : MonoBehaviour
                 {
                     if (mod.myType == StatModifierType.Percent)
                     {
-                        delta += baseTalent * mod.value / 100;
+                        delta += ceTalent * mod.value / 100;
                     }
                     else
                     {

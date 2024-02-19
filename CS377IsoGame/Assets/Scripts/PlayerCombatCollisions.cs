@@ -34,8 +34,9 @@ public class PlayerCombatCollisions : MonoBehaviour
         private bool isNewAttack;
         private float attackTimer;
         private bool attackDone;
-        
-        
+
+        private List<GameObject> hitByCurrentAttack  = new List<GameObject>();
+        public DamageCalculator calculator;
         void Start()
         {
             
@@ -46,6 +47,9 @@ public class PlayerCombatCollisions : MonoBehaviour
             speed = Animator.StringToHash("AttackSpeed");
             legExtending = Animator.StringToHash("Ongoing");
             staffBody = shockStaff.GetComponent<Rigidbody>();
+            calculator = DamageCalculator.Instance;
+            
+
 
 
 
@@ -60,7 +64,7 @@ public class PlayerCombatCollisions : MonoBehaviour
         public void TriggerColliderAnimation(int attackNumber, float attackSpeed)
         {
             this.attackNumber = attackNumber;
-            isNewAttack = true;
+            if ( hitByCurrentAttack.Count != 0) {hitByCurrentAttack.Clear();}
             if (attackNumber == 1)
             {
 
@@ -101,11 +105,11 @@ public class PlayerCombatCollisions : MonoBehaviour
 
             }
         
-        private void OnTriggerStay(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
-                if (isNewAttack)
-                {
-                    if (attackNumber == 3)
+                
+               
+            if (attackNumber == 3)
                     {
                         Debug.Log("collided");
                         EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
@@ -119,10 +123,12 @@ public class PlayerCombatCollisions : MonoBehaviour
 
                         DamageEnemy(other, 80f);
                         EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
-                            new EventTypes.FloatingDamageParam(other.gameObject, 80));
+                            new EventTypes.FloatingDamageParam(other.gameObject, 80, 4));
                     }
-                    else
+                    else if (!hitByCurrentAttack.Contains(other.gameObject))
                     {
+                        hitByCurrentAttack.Add(other.gameObject);
+                        
                         EventBus.TriggerEvent(EventTypes.Events.ON_LIFE_CURRENT_GAIN,
                             new EventTypes.Event5Param(attackNumber, 0));
 
@@ -130,16 +136,38 @@ public class PlayerCombatCollisions : MonoBehaviour
                             new EventTypes.HitFXParam(GetHitPoint(other),
                                 attackNumber,
                                 gameObject));
-                        EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
-                            CharacterEnergy.Instance.energyFromEnhancedBasic);
-                            EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
-                                new EventTypes.FloatingDamageParam(other.gameObject, 6));
-                            Debug.Log("collided");
-                            DamageEnemy(other, 6f);
-                        
-                    }
+                        //EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
+                            //CharacterEnergy.Instance.energyFromEnhancedBasic);
+                        Debug.Log("floating test");
 
-                    isNewAttack = false;
+                         float damageAmount;
+                        if (attackNumber == 5)
+                        {
+                            
+                            damageAmount = DamageCalculator.Instance.PlayerShockStickCombo1();
+                            
+                            DamageEnemy(other, damageAmount);
+                            
+                        }
+                        else if (attackNumber == 2)
+                        {
+                            damageAmount = calculator.PlayerShockStickCombo2();
+                            DamageEnemy(other, damageAmount);
+                        }
+                        else
+                        {
+                            damageAmount = calculator.PlayerShockStickCombo3();
+                            DamageEnemy(other, damageAmount);
+                        }
+                        
+                        EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
+                            new EventTypes.FloatingDamageParam(other.gameObject, damageAmount, 2));
+
+                        
+                        
+                    
+
+                    
                 }
 
             }

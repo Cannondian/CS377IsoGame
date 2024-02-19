@@ -24,10 +24,30 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
     }
     private void ShowFloatingDamage(EventTypes.FloatingDamageParam context)
     {
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(context.target.transform.position);
+        float textSizeScale = 0;
+        switch (context.size)
+        {
+            case 1:
+                textSizeScale = 1f;
+                break;
+            case 2:
+                textSizeScale = 1.3f;
+                break;
+            case 3:
+                textSizeScale = 1.5f;
+                break;
+            case 4:
+                textSizeScale = 2;
+                break;
+        }
         
+        
+        
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(context.target.transform.position);
+        Debug.Log("I am trying");
         var damageText = Instantiate(damageTextPrefab, screenPosition, 
             quaternion.identity, canvas.transform);
+        damageText.transform.localScale = new Vector3(textSizeScale, textSizeScale, textSizeScale);
         var text = damageText.GetComponent<TextMeshProUGUI>();
         damageText.transform.position = RandomOffset(damageText.transform.position);
         text.text = context.damage.ToString();

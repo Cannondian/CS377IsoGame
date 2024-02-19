@@ -11,6 +11,7 @@ public abstract class EnemyAI : MonoBehaviour
     protected NavMeshAgent agent;
     public Transform player;
     public LayerMask Walkable, whatIsPlayer;
+    public LayerMask Player;
 
     // Patrolling
     public Vector3 walkPoint;
@@ -28,6 +29,7 @@ public abstract class EnemyAI : MonoBehaviour
     protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        Debug.Log(agent);
         player = GameObject.FindWithTag("Player").transform;
         stunned = false;
         
@@ -47,12 +49,13 @@ public abstract class EnemyAI : MonoBehaviour
         
         // Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        Debug.Log("Player in Sight range" + playerInSightRange);
+        //Debug.Log("Player in Sight range" + playerInSightRange);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-        Debug.Log("Player in attack range" + playerInAttackRange);
+        //Debug.Log("Player in attack range" + playerInAttackRange);
 
         if (!stunned)
         {
+            
             agent.isStopped = false;
             if (!playerInSightRange && !playerInAttackRange) Patroling();
             if (playerInSightRange && !playerInAttackRange) ChasePlayer();

@@ -1094,20 +1094,20 @@ using Null = RPGCharacterAnims.Actions.Null;
 
 				}
 
-				if (comboIndex == 1)
+				if (comboIndex == 5)
 				{
-					comboIndex++;
+					comboIndex = 2;
 					
 				}
 				else if (comboIndex == 2)
 				{
-					comboIndex = 5;
-					Debug.Log("leg collider ");
+					comboIndex = 1;
+					
 					
 				}
 				else
 				{
-					comboIndex = 1;
+					comboIndex = 5;
 					
 				}
 

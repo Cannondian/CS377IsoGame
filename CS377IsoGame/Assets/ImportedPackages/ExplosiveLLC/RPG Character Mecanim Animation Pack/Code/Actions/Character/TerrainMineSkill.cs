@@ -14,7 +14,8 @@ namespace RPGCharacterAnims.Actions
 			//Debug.Log(active);
 			//Debug.Log(controller.isCasting);
 			return !controller.isRelaxed && !active && !controller.isCasting &&
-			       controller.canAction && CharacterEnergy.Instance.skillIsReady; }
+			       controller.canAction;
+		}
 
 		public override bool CanEndAction(RPGCharacterController controller)
 		{ return active; }
@@ -56,8 +57,10 @@ namespace RPGCharacterAnims.Actions
 				controller.AttackKick(attackNumber);
 				EndAction(controller);
 			}*/
-			if (context.type == "Skill") {
-				
+		
+			Debug.Log("check1");
+			if (context.type == "TerrainMineSkill") {
+				Debug.Log("check2");	
 				
 				
 				

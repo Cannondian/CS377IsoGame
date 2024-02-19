@@ -122,10 +122,14 @@ public class EventTypes
    {
       public GameObject target;
       public float damage;
-      public FloatingDamageParam(GameObject targetObject, float damageValue)
+      public int size; //on a scale of 1-4;
+      
+      public FloatingDamageParam(GameObject targetObject, float damageValue, int sizeScale)
        {
            target = targetObject;
            damage = damageValue;
+           size = sizeScale;
+
        }
    }
 

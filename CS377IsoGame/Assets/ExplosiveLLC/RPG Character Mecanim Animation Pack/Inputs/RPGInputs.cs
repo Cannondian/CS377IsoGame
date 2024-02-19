@@ -90,7 +90,7 @@ namespace RPGCharacterAnims
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Facing"",
@@ -436,6 +436,17 @@ namespace RPGCharacterAnims
                     ""name"": """",
                     ""id"": ""63104a7a-9566-435a-be44-cab8f87e4ab2"",
                     ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Face"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a85878c-96b1-4f9a-a6c1-1f187fe7f4da"",
+                    ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",

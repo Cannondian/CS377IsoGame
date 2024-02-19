@@ -21,6 +21,7 @@ namespace RPGCharacterAnims
 	public class RPGCharacterInputSystemController : MonoBehaviour
     {
         RPGCharacterController rpgCharacterController;
+        private RPGCharacterMovementController movementController;
         [SerializeField] private GameObject targetCirclePrefab;
         [SerializeField] private GameObject rangeCirclePrefab;
 
@@ -295,7 +296,7 @@ namespace RPGCharacterAnims
 						if (playerPlane.Raycast(ray, out hitdist)) {
 							Vector3 targetPoint = ray.GetPoint(hitdist);
 							Vector3 lookTarget = new Vector3(targetPoint.x - transform.position.x, transform.position.z - targetPoint.z, 0);
-							Debug.Log("here I am");
+							
 							rpgCharacterController.SetFaceInput(lookTarget);
 						}
 					}
@@ -321,12 +322,12 @@ namespace RPGCharacterAnims
 			if (inputSkill1)
 			{
 				string methodName = skill1.ToString();
-				MethodInfo methodInfo = typeof(RPGCharacterInputController).GetMethod
+				MethodInfo methodInfo = typeof(RPGCharacterInputSystemController).GetMethod
 					(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
 				if (methodInfo != null)
 				{
 					// Invoke the method
-					methodInfo.Invoke(null, null);
+					methodInfo.Invoke(this, null);
 				}
 			}
 
@@ -379,7 +380,7 @@ namespace RPGCharacterAnims
 					transform.position.z - targetPoint.z, 0);
 				rpgCharacterController.SetFaceInput(lookTarget);
 				rpgCharacterController.StartFace();
-				rpgCharacterController.StartStrafe();
+				//movementController.walkSpeed = movementController.walkSpeed / 2;
 				
 				rpgCharacterController.StartAction(HandlerTypes.FlamethrowerSkill, 
 					new FlamethrowerSkillContext(HandlerTypes.FlamethrowerSkill, lookTarget, CustomTerrain.Terrains.Grass, transform));
@@ -399,7 +400,7 @@ namespace RPGCharacterAnims
 		private IEnumerator FlamethrowerOff()
 		{
 			Debug.Log("start of coroutine");
-			yield return new WaitWhile(() => inputSkill2);
+			yield return new WaitWhile(() => inputSkill2 && !inputRoll && !inputAttackL);
 			Debug.Log("end of coroutine");
 			alarm = false;
 			rpgCharacterController.EndAction(HandlerTypes.FlamethrowerSkill);
