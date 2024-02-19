@@ -47,8 +47,10 @@ public abstract class EnemyAI : MonoBehaviour
         
         // Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        Debug.Log("Player in Sight range" + playerInSightRange);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-        
+        Debug.Log("Player in attack range" + playerInAttackRange);
+
         if (!stunned)
         {
             agent.isStopped = false;
