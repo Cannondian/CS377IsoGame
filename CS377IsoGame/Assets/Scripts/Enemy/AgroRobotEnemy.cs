@@ -20,7 +20,7 @@ public class AgroRobotEnemy : EnemyAI
 
         // Initialize health and attack damage for this specific enemy
         Health = 100f;
-        AttackDamage = 10f;
+        AttackDamage = 15f;
         originalSpeed = agent.speed;
     }
 

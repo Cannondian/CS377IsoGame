@@ -6,7 +6,16 @@ public class AgroMeleeAttackCollider : MonoBehaviour
 {
     public GameObject explosionPrefab;
     public Collider attackCollider;
+    private float AttackDamage;
 
+    private void Awake()
+    {
+        Transform rootParent = transform.root;
+        AttackDamage = rootParent.GetComponent<EnemyAI>().AttackDamage;
+        print("MeleeAgro swing damage:" + AttackDamage);
+
+
+    }
     // Call this method at the start of the attack animation
     public void ActivateIndicator()
     {
@@ -32,6 +41,8 @@ public class AgroMeleeAttackCollider : MonoBehaviour
         if (other.tag == "Player")
         {
             Debug.Log("Player HIT with slash attack!");
+            EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, AttackDamage);
+
         }
     }
 }

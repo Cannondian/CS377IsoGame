@@ -17,7 +17,7 @@ public class BigSlowEnemy : EnemyAI
 
         // Initialize health and attack damage for this specific enemy
         Health = 100f;
-        AttackDamage = 10f;
+        AttackDamage = 20f;
         originalSpeed = agent.speed;
     }
 
