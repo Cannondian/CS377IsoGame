@@ -11,11 +11,16 @@ public class AttackIndicator : MonoBehaviour
 
     private void Awake()
     {
-        Transform rootParent = transform.root;
-        AttackDamage = rootParent.GetComponent<EnemyAI>().AttackDamage;
+        EnemyAI enemyAI = GetComponentInParent<EnemyAI>(); // Searches up the hierarchy
+        if (enemyAI == null)
+        {
+            Debug.LogError("EnemyAI component not found in any parent GameObjects.");
+            return;
+        }
+        AttackDamage = enemyAI.AttackDamage;
         print("Big Slow attack damage:" + AttackDamage);
-
     }
+
 
     // Call this method at the start of the attack animation
     public void ActivateIndicator()

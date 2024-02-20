@@ -10,8 +10,13 @@ public class AgroMeleeAttackCollider : MonoBehaviour
 
     private void Awake()
     {
-        Transform rootParent = transform.root;
-        AttackDamage = rootParent.GetComponent<EnemyAI>().AttackDamage;
+        EnemyAI enemyAI = GetComponentInParent<EnemyAI>(); // Searches up the hierarchy
+        if (enemyAI == null)
+        {
+            Debug.LogError("EnemyAI component not found in any parent GameObjects.");
+            return;
+        }
+        AttackDamage = enemyAI.AttackDamage;
         print("MeleeAgro swing damage:" + AttackDamage);
 
 
