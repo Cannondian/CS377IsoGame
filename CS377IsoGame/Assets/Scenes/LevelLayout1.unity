@@ -16394,6 +16394,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1849318647}
     m_Modifications:
+    - target: {fileID: 157308210463696826, guid: 3ce8626a868a048e29e8b9989136bc0f, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2451309832464529230, guid: 3ce8626a868a048e29e8b9989136bc0f, type: 3}
       propertyPath: m_Name
       value: MeleeDrone
@@ -18429,7 +18433,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 3a9be44dd18774f8fab836ffc900fafb, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 95f8172c125ef4085a65133b20431506, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &431464940
 Transform:
