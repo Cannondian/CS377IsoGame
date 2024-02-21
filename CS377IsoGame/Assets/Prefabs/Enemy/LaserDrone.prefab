@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3090199768450106144}
   - component: {fileID: 6569676993447587475}
   - component: {fileID: 919869347276077709}
+  - component: {fileID: 4189785069285764920}
   - component: {fileID: 3187016616823076603}
   m_Layer: 15
   m_Name: LaserDrone
@@ -106,7 +107,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -130,10 +131,10 @@ MonoBehaviour:
     m_Bits: 2048
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 8256
   Player:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8192
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 10
@@ -146,6 +147,7 @@ MonoBehaviour:
   LaserConnectionContainer: {fileID: 5346312462221349852, guid: 1f8e48379bd2b2548a3bec9615d2a001, type: 3}
   PauseInterval: 1
   MaxConnections: 3
+  DamagePerSecond: 2.5
 --- !u!114 &6569676993447587475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,8 +161,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myStats: {fileID: 919869347276077709}
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 25
+  maxHealth: 25
   myEnemyAI: {fileID: 3090199768450106144}
   amIEnemy: 1
   damageComponent: {fileID: 0}
@@ -178,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 0
-  baseHP: 0
+  baseHP: 25
   baseSpeed: 0
   baseAttack: 0
   baseDefense: 0
@@ -205,6 +207,27 @@ MonoBehaviour:
   tRRR: 0
   tEvasiveness: 0
   tTalent: 0
+--- !u!135 &4189785069285764920
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094861630355358}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0.26956534, z: 0}
 --- !u!195 &3187016616823076603
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -536,9 +559,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 25
   m_WholeNumbers: 1
-  m_Value: 28
+  m_Value: 25
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

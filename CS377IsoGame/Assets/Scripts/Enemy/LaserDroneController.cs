@@ -8,11 +8,15 @@ public class LaserDroneController : EnemyAI
 
     public float PauseInterval; // How long the enemy will wait after reaching a walkpoint by the player
     public int MaxConnections; // How many other laser drones this drone can "connect" to
+    public float DamagePerSecond; // Damage *per* laser connection per second
 
     private bool SearchForNewWalkPoint = true;
     private GameObject[] OtherLaserDrones;
     private List<GameObject> LaserConnections = new List<GameObject>();
     private int RandomSeed;
+
+    private LayerMask PlayerLayerMask;
+    private LayerMask WalkableLayerMask;
 
     protected override void Awake()
     {
@@ -24,8 +28,16 @@ public class LaserDroneController : EnemyAI
         // Instantiate MaxConnections laser connection containers and store them
         for (int i = 0; i < MaxConnections; i++)
         {
-            LaserConnections.Add((GameObject)Instantiate(LaserConnectionContainer, Vector3.zero, Quaternion.identity, transform));
+            LaserConnections.Add((GameObject)Instantiate(LaserConnectionContainer, 
+                                                         transform.position,
+                                                         Quaternion.identity, 
+                                                         transform)); // keep this drone as parent for this connection
         }
+
+        PlayerLayerMask = LayerMask.GetMask("Player");
+        WalkableLayerMask = LayerMask.GetMask("Walkable");
+
+        AttackDamage = DamagePerSecond * Time.fixedDeltaTime; // Scale attack damage to fit desired damage per second
     }
 
     protected override void FixedUpdate()
@@ -81,7 +93,7 @@ public class LaserDroneController : EnemyAI
         if (distanceToWalkPoint.magnitude < 0.2f && SearchForNewWalkPoint)
         {
             SearchForNewWalkPoint = false;
-            yield return new WaitForSeconds(PauseInterval);
+            yield return new WaitForSeconds(PauseInterval + Random.Range(-PauseInterval/2f, PauseInterval/2f));
             walkPointSet = false;
             SearchForNewWalkPoint = true;
         }
@@ -93,21 +105,13 @@ public class LaserDroneController : EnemyAI
         OtherLaserDrones = GameObject.FindGameObjectsWithTag("LaserDrone");
 
         // Shuffle the order of the drones in the array
-        ReshuffleDrones();
+        ReshuffleDrones(); // This is breaking things at the moment
 
         // Iterate through all drones and remove those out of the range
         int i = 0; // current array index
         int j = 0; // number of valid drones in range
         foreach (var drone in OtherLaserDrones)
         {
-            // No self connections
-            if (drone == OtherLaserDrones[i])
-            {
-                OtherLaserDrones[i] = null;
-                i += 1;
-                continue;
-            }
-
             if ((drone.transform.position - transform.position).magnitude > sightRange)
             {
                 // Remove out of range
@@ -131,21 +135,46 @@ public class LaserDroneController : EnemyAI
 
     void DrawLaserToNearbyDrones()
     {
-        int i = 0; // Current laser connection
-        foreach (var drone in OtherLaserDrones)
+        // Move laser connections to drone position
+        for (int j = 0; j < MaxConnections; j++)
         {
-            if (drone != null)
+            LaserConnections[j].transform.position = transform.position;
+        }
+
+        int i = 0; // Current laser connection
+        foreach (var OtherDrone in OtherLaserDrones)
+        {
+            if (OtherDrone != null 
+                && !CheckForEnvironmentIntersection(transform.position, OtherDrone.transform.position))
             {
                 var ThisLaser = LaserConnections[i].GetComponent<LineRenderer>();
                 ThisLaser.enabled = true;
                 ThisLaser.SetPosition(0, transform.position);
-                ThisLaser.SetPosition(1, drone.transform.position);
+                ThisLaser.SetPosition(1, OtherDrone.transform.position);
+                CheckForPlayerIntersection(transform.position, OtherDrone.transform.position);
                 i += 1;
             }
         }
 
         // Disable remaining laser connections (i.e., all connections after i)
         DisableLaserConnections(i);
+    }
+
+    void CheckForPlayerIntersection(Vector3 Start, Vector3 End)
+    {
+        // Checks if player is between the start and end points of the laser connection and calls the damage event
+        if (Physics.Raycast(Start, End - Start, (End - Start).magnitude, PlayerLayerMask))
+        {
+            // Call the player's take damage event, deal damage per physics tick if it hits player
+            EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, AttackDamage);
+        }
+    }
+
+    bool CheckForEnvironmentIntersection(Vector3 Start, Vector3 End)
+    {
+        // Return whether the laser connection is interrupted by some piece of the environment
+        // Note: environment is currently labeled as any objects in the walkable layer mask
+        return Physics.Raycast(Start, End - Start, (End - Start).magnitude, WalkableLayerMask);
     }
 
     void DisableLaserConnections(int i)
@@ -160,7 +189,7 @@ public class LaserDroneController : EnemyAI
 
     void ReshuffleDrones()
     {
-        // Set random seed
+        // Set random seed to make sure we shuffle the drones the same way each time
         Random.seed = RandomSeed;
 
         // Knuth shuffle algorithm
