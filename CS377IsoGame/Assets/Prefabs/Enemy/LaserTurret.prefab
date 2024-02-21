@@ -575,6 +575,9 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 8192
+  Player:
+    serializedVersion: 2
+    m_Bits: 0
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 0
@@ -649,7 +652,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHP: 0
+  level: 0
+  baseHP: 60
   baseSpeed: 0
   baseAttack: 0
   baseDefense: 0
@@ -658,7 +662,7 @@ MonoBehaviour:
   baseEvasiveness: 0
   baseRRR: 0
   baseTalent: 0
-  ceHP: 20
+  ceHP: 0
   ceSpeed: 0
   ceAttack: 0
   ceDefense: 0

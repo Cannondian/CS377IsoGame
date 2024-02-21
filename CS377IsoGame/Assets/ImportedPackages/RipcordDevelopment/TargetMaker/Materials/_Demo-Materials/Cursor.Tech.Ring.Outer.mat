@@ -28,13 +28,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 854d2f66659313a4a95ba5d326511819, type: 3}
+        m_Texture: {fileID: 2800000, guid: f18a20d9b7e89cd45a94d3b3cbdada8d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _Color: {r: 0.033464234, g: 0.20754719, b: 0.016642937, a: 0.7176471}
+    - _Color: {r: 0.033464234, g: 0.20754719, b: 0.016642937, a: 0.7882353}
   m_BuildTextureStacks: []
 --- !u!1002 &2100001
 EditorExtensionImpl:

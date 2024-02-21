@@ -12,11 +12,9 @@ GameObject:
   - component: {fileID: 44810436395708986}
   - component: {fileID: 4317558383485406746}
   - component: {fileID: 709505195963040084}
-  - component: {fileID: 1207109408894146304}
-  - component: {fileID: 2802451437868346792}
-  - component: {fileID: 332118856412135980}
   - component: {fileID: 4281916475523864521}
-  - component: {fileID: 3073577234197913903}
+  - component: {fileID: 2363735117207662273}
+  - component: {fileID: 2229583771821218951}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -71,8 +69,8 @@ MonoBehaviour:
   coreChargeParticleLevel: 0
   ArtilleryStrikePrefab: {fileID: 4242371694356100040, guid: 4efb5292acd2b4995ac30bd60d398a21, type: 3}
   ElectricityPrefab1: {fileID: 1251993928265596, guid: c445b201205907b4f90b242a07f4dbc9, type: 3}
-  BasicHitPrefab: {fileID: 1602197966606650, guid: 639ffe8a2dcaab14fa53988d89810e9d, type: 3}
-  EnhancedBasicHitPrefab: {fileID: 5487650720231781904, guid: f5670dc5930535341a1c3debb5c38405, type: 3}
+  StaffSwingHitPrefab: {fileID: 1999270725527232, guid: 181f43d7923706548b30cdaaa3c4551d, type: 3}
+  KickPrefab: {fileID: 1883552001520024, guid: a30cd0ba5c00c6d459196515ec56574a, type: 3}
   BurningFXPrefab: {fileID: 201597765812643898, guid: 849eac987e001ad4389565fdc0a823de, type: 3}
   CorrosiveFXPrefab: {fileID: 4181999254741274469, guid: c887a388662a949818e20b7ad729d8f8, type: 3}
   BleedingFXPrefab: {fileID: 1639086506678902, guid: 631d19474f303c2438dd37274b631d4c, type: 3}
@@ -89,7 +87,11 @@ MonoBehaviour:
   RadiationPoisoningFXPrefab: {fileID: 8877596331768416466, guid: 23590b8e848e5a644ae05d8b9e003483, type: 3}
   MutatingFXPrefab: {fileID: 8877596331768416466, guid: 23590b8e848e5a644ae05d8b9e003483, type: 3}
   GlowingFXPrefab: {fileID: 8823902325820618965, guid: 696b6db4c54441c4bb9405b8291513c2, type: 3}
+  AttackArcPrefab: {fileID: 0}
+  FlamethrowerPrefab: {fileID: 1653619026499950, guid: ef4d31ab810a39b499877583c1f6a865, type: 3}
   coreChargeParticles: {fileID: 1065394818169530, guid: 784cda9c3ade4406389c31f32105fc77, type: 3}
+  flamethrowerInstance: {fileID: 0}
+  staffBody: {fileID: 0}
   alreadyPlaying: 0
 --- !u!114 &709505195963040084
 MonoBehaviour:
@@ -104,8 +106,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistent: 1
-  skillSlider: {fileID: 0}
+  energySlider: {fileID: 0}
   ultimateSlider: {fileID: 0}
+  playerStats: {fileID: 0}
   ultimateIsReady: 0
   skillIsReady: 0
   energyFromBasic: 3
@@ -114,57 +117,8 @@ MonoBehaviour:
   energyFromKill: 5
   energyFromHit: 1
   energyModifier: 0
---- !u!114 &1207109408894146304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6369396101182287963}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afb7c8998e638154391d51a6e6c6a9c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myStats: {fileID: 0}
-  currentHealth: 0
-  maxHealth: 100
-  myEnemyAI: {fileID: 0}
-  amIEnemy: 0
-  damageComponent: {fileID: 0}
-  healthSlider: {fileID: 0}
---- !u!114 &2802451437868346792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6369396101182287963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ab77e44519be44bd9fffe861e1f56c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _persistent: 1
-  damageTextPrefab: {fileID: 1101202589498805331, guid: 26a0bf881f8db4e3bbe63994d7c52a37, type: 3}
---- !u!114 &332118856412135980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6369396101182287963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81bbfbe38a54d44af8c69239ecc338d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _persistent: 1
-  shockStaff: {fileID: 0}
-  ultraLeg: {fileID: 0}
-  staffOriginalCollider: {fileID: 0}
-  legOriginalCollider: {fileID: 0}
-  staffAnimator: {fileID: 0}
+  drain: -3
+  draining: 0
 --- !u!114 &4281916475523864521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _persistent: 1
   damageTextPrefab: {fileID: 1101202589498805331, guid: 26a0bf881f8db4e3bbe63994d7c52a37, type: 3}
---- !u!114 &3073577234197913903
+--- !u!114 &2363735117207662273
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,12 +142,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 6369396101182287963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81bbfbe38a54d44af8c69239ecc338d4, type: 3}
+  m_Script: {fileID: 11500000, guid: 2975a6539542b400da4a42a8dc5bd083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _persistent: 1
-  shockStaff: {fileID: 0}
-  ultraLeg: {fileID: 0}
-  staffOriginalCollider: {fileID: 0}
-  legOriginalCollider: {fileID: 0}
-  staffAnimator: {fileID: 0}
+  onRecalculateStats:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: StatsTemplate, Assembly-CSharp
+        m_MethodName: CalculateCES
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2229583771821218951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6369396101182287963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a68f5ad4e210494db749c713b9324d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _persistent: 1
+  playerStats: {fileID: 0}

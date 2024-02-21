@@ -1409,6 +1409,9 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 8256
+  Player:
+    serializedVersion: 2
+    m_Bits: 0
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 10
@@ -1454,7 +1457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 0
-  baseHP: 0
+  baseHP: 120
   baseSpeed: 0
   baseAttack: 0
   baseDefense: 0
@@ -1463,7 +1466,7 @@ MonoBehaviour:
   baseEvasiveness: 0
   baseRRR: 0
   baseTalent: 0
-  ceHP: 100
+  ceHP: 0
   ceSpeed: 0
   ceAttack: 0
   ceDefense: 0
