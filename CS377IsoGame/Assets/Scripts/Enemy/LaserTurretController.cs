@@ -24,8 +24,8 @@ public class LaserTurretController : EnemyAI
     private float CurrentCooldownTime;
     private bool InCooldown;
 
-    private LayerMask playerLayerMask;
-    private LayerMask walkableLayerMask; // used to determine collisions with environment
+    private LayerMask PlayerLayerMask;
+    private LayerMask WalkableLayerMask; // used to determine collisions with environment
     private StatsTemplate Stats;
 
 
@@ -42,8 +42,8 @@ public class LaserTurretController : EnemyAI
             Debug.LogError("Missing Targeting Renderer!");
         }
 
-        playerLayerMask = LayerMask.GetMask("Player");
-        walkableLayerMask = LayerMask.GetMask("Walkable");
+        PlayerLayerMask = LayerMask.GetMask("Player");
+        WalkableLayerMask = LayerMask.GetMask("Walkable");
 
         Stats = gameObject.GetComponent<StatsTemplate>();
         // TODO ... ?
@@ -145,12 +145,12 @@ public class LaserTurretController : EnemyAI
 
             // Check if laser hits player using a raycast
             // Note: For some reason, we need to set origin to transform.position since BarrelTransform.position causes laser to miss.
-            if (Physics.Raycast(transform.position, BarrelTransform.forward, attackRange, playerLayerMask))
+            if (Physics.Raycast(transform.position, BarrelTransform.forward, attackRange, PlayerLayerMask))
             {
                 float distanceToPlayer = new Vector2(transform.position.x - player.position.x, transform.position.z - player.position.z).magnitude;
 
                 // Do another ray cast to determine if the laser is blocked by something else along the path to the player
-                if (!Physics.Raycast(transform.position, BarrelTransform.forward, distanceToPlayer, walkableLayerMask))
+                if (!Physics.Raycast(transform.position, BarrelTransform.forward, distanceToPlayer, WalkableLayerMask))
                 {
                     // Call the player's take damage event, deal damage per physics tick if it hits player
                     EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, AttackDamage);
@@ -197,7 +197,7 @@ public class LaserTurretController : EnemyAI
         Vector3 direction = BarrelTransform.forward;
 
         TargetingRenderer.enabled = true;
-        if (Physics.Raycast(start, direction, out hit, attackRange, walkableLayerMask))
+        if (Physics.Raycast(start, direction, out hit, attackRange, WalkableLayerMask))
         {
             TargetingRenderer.SetPosition(0, start);
             TargetingRenderer.SetPosition(1, hit.point);
