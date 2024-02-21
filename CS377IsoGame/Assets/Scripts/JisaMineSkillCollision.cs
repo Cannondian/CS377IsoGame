@@ -10,9 +10,12 @@ public class JisaMineSkillCollision : MonoBehaviour
     private List<Collider> hitThisCast = new List<Collider>();
     
    //ensure that damage is dealt only once
-    
+   private void Start()
+   {
+       hitThisCast.Clear();
+   }
 
-    // Update is called once per frame
+   // Update is called once per frame
     void Update()
     {
         

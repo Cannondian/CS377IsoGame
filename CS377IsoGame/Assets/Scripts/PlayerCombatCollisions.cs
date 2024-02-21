@@ -18,6 +18,7 @@ public class PlayerCombatCollisions : MonoBehaviour
         [SerializeField] private BoxCollider legOriginalCollider;
         [SerializeField] private Animator staffAnimator;
         [SerializeField] private Animator legAnimator;
+        public GameObject player;
 
         private Rigidbody staffBody;
         
@@ -159,9 +160,26 @@ public class PlayerCombatCollisions : MonoBehaviour
                             damageAmount = calculator.PlayerShockStickCombo3();
                             DamageEnemy(other, damageAmount);
                         }
-                        
-                        EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
-                            new EventTypes.FloatingDamageParam(other.gameObject, damageAmount, 2));
+
+                        if (PlayerHitEffects.Instance.AnyHitEffects())
+                        {
+                            float damageAmount2 = 0;
+                            foreach (PlayerHitEffects.HitEffect hitEffect in PlayerHitEffects.Instance.activeHitEffects)
+                            {
+                                if (hitEffect.additionalDamage != 0)
+                                {
+                                    damageAmount2 = hitEffect.additionalDamage;
+                                }
+                                if (hitEffect._additionalEffect == null) {Debug.Log("are we getting here?");}
+                                hitEffect._additionalEffect.Invoke(player, other.gameObject);
+                            }
+                           
+                            EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
+                                new EventTypes.FloatingDamageParam(other.gameObject, damageAmount, 2,
+                                    Damage.Types.Generic, damageAmount2, Damage.Types.Fire));
+                        }
+                        else {EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
+                            new EventTypes.FloatingDamageParam(other.gameObject, damageAmount, 2));}
 
                         
                         

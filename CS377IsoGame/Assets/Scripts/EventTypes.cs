@@ -123,12 +123,20 @@ public class EventTypes
       public GameObject target;
       public float damage;
       public int size; //on a scale of 1-4;
+      public Damage.Types firstType;
+      public float additionalDamage;
+      public Damage.Types secondType;
       
-      public FloatingDamageParam(GameObject targetObject, float damageValue, int sizeScale)
+      public FloatingDamageParam(GameObject targetObject, float damageValue, int sizeScale, 
+         Damage.Types type = Damage.Types.Generic, float secondaryDamageValue = 0, 
+         Damage.Types secondaryType = Damage.Types.Generic)
        {
            target = targetObject;
            damage = damageValue;
            size = sizeScale;
+           firstType = type;
+           additionalDamage = secondaryDamageValue;
+           secondType = secondaryType;
 
        }
    }

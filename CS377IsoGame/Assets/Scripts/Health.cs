@@ -16,9 +16,10 @@ public class Health : MonoBehaviour
     public DamageEffect damageComponent;
     
     
-    [SerializeField] public UnityEngine.UI.Slider healthSlider;
+    
 
     private UnityAction<float> UpdateCharacterHealthListener;
+    
 
     void Start()
     {
@@ -27,18 +28,24 @@ public class Health : MonoBehaviour
         if (myEnemyAI != null)
         {
             amIEnemy = true;
+            maxHealth = myStats.ceHP;
+            currentHealth = maxHealth;
             OnDisable();
         }
-        maxHealth = myStats.ceHP;
-        currentHealth = maxHealth;
+        
     }
 
     
     void Update()
     {
+        
         if (!amIEnemy)
         {
-            healthSlider.value = currentHealth / maxHealth;
+            if (currentHealth <= 0)
+            {
+                currentHealth = maxHealth;
+            }
+            
         }
         
     }

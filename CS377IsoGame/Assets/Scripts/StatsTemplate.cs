@@ -1,10 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class StatsTemplate : MonoBehaviour
 {
+    #region MyRegion
 
+    [Serializable] public class StatUpdate: UnityEvent<float>
+    { }
+
+    public StatUpdate SpeedUpdate;
+    public StatUpdate AttackSpeedUpdate;
+    public StatUpdate AttackUpdate;
+    public StatUpdate HPUpdate;
+    
+    #endregion
+    
     public int level;
     
     #region statsList
@@ -150,7 +163,7 @@ public class StatsTemplate : MonoBehaviour
         ceSpeed = baseSpeed;
         ceAttack = baseAttack;
         ceDefense = baseDefense;
-        ceAttackSpeed = baseSpeed;
+        ceAttackSpeed = baseAttackSpeed;
         ceResistance = baseResistance;
         ceRRR = baseRRR; //resource regeneration rate
         ceEvasiveness = baseEvasiveness;
@@ -409,6 +422,7 @@ public class StatsTemplate : MonoBehaviour
                 }
 
                 tHP = ceHP + delta;
+                HPUpdate.Invoke(tHP);
                 break;
             case statsList.Speed:
 
@@ -423,8 +437,9 @@ public class StatsTemplate : MonoBehaviour
                         delta += mod.value;
                     }
                 }
-
+                
                 tSpeed = ceSpeed + delta;
+                SpeedUpdate.Invoke(tSpeed);
                 break;
             case statsList.Attack:
                 foreach (StatModifier mod in tAttackModifiers)
@@ -440,6 +455,7 @@ public class StatsTemplate : MonoBehaviour
                 }
 
                 tAttack = ceAttack + delta;
+                AttackUpdate.Invoke(tAttack);
                 break;
             case statsList.Defense:
 
@@ -471,6 +487,7 @@ public class StatsTemplate : MonoBehaviour
                 }
 
                 tAttackSpeed = ceAttackSpeed + delta;
+                AttackSpeedUpdate.Invoke(tAttackSpeed);
                 break;
             case statsList.Resistance:
                 foreach (StatModifier mod in tResistanceModifiers)

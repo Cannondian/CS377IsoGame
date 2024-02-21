@@ -4,12 +4,14 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
 {
     // Start is called before the first frame update
 
-    public GameObject damageTextPrefab;
+    public GameObject genericDamageTextPrefab;
+    public GameObject fireDamageTextPrefab;
     private UnityAction<EventTypes.FloatingDamageParam> floatingDamageListener;
     private GameObject canvas;
     
@@ -45,23 +47,48 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
         
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(context.target.transform.position);
         Debug.Log("I am trying");
-        var damageText = Instantiate(damageTextPrefab, screenPosition, 
+        var damageText = Instantiate(genericDamageTextPrefab, screenPosition, 
             quaternion.identity, canvas.transform);
         damageText.transform.localScale = new Vector3(textSizeScale, textSizeScale, textSizeScale);
         var text = damageText.GetComponent<TextMeshProUGUI>();
-        damageText.transform.position = RandomOffset(damageText.transform.position);
+        damageText.transform.position = RandomOffset(damageText.transform.position, false);
         text.text = context.damage.ToString();
-        
-        
+
+        if (context.additionalDamage != 0)
+        {
+            
+            switch (context.secondType)
+            {
+                case Damage.Types.Fire:
+                    var damageText2 = Instantiate(fireDamageTextPrefab, damageText.transform);
+                    damageText2.transform.localScale = new Vector3(1, 1, 1);
+                    damageText2.transform.localPosition = RandomOffset(damageText2.transform.position, true);
+                    var text2 = damageText2.GetComponent<TextMeshProUGUI>();
+                    text2.text = context.additionalDamage.ToString();
+                    break;
+                    
+            }
+        }
         Destroy(damageText, 1.2f);
     }
 
-    private Vector3 RandomOffset(Vector3 oldPosition)
+    private Vector3 RandomOffset(Vector3 oldPosition, bool isAdditional)
     {
-        float randomX = UnityEngine.Random.Range(-60, 60);
-        float randomY = UnityEngine.Random.Range(50, 150);
-        var newPosition = oldPosition + new Vector3(randomX, randomY, 0);
-        return newPosition;
+        if (!isAdditional)
+        {
+            float randomX = UnityEngine.Random.Range(-60, 60);
+
+            float randomY = UnityEngine.Random.Range(50, 150);
+            var newPosition = oldPosition + new Vector3(randomX, randomY, 0);
+            return newPosition;
+        }
+        else
+        {
+            float randomX = UnityEngine.Random.Range(20, 30);
+            float randomY = UnityEngine.Random.Range(-20, 20);
+            var newPosition = oldPosition + new Vector3(randomX, randomY, 0);
+            return newPosition;
+        }
     }
     void Start()
     {

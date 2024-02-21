@@ -18,6 +18,15 @@ using Null = RPGCharacterAnims.Actions.Null;
 		/// </summary>
 		public class RPGCharacterController : MonoBehaviour
 		{
+			#region Stats
+
+			private float mySpeed;
+			private float myAttackSpeed;
+
+			private float attackSpeedConstant = 1.2f;
+			#endregion
+			
+			
 			#region Events
 
 			/// <summary>
@@ -320,6 +329,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 
 			public bool enhancedAttackIsReady;
 
+			
 			/// <summary>
 			/// Returns whether the Sprint action is active.
 			/// </summary>
@@ -528,6 +538,20 @@ using Null = RPGCharacterAnims.Actions.Null;
 
 			#endregion
 
+			#region ListenerFunctions
+
+			public void OnAttackSpeedChange(float aSpeed)
+			{
+				myAttackSpeed = aSpeed;
+			}
+			public void OnSpeedChange(float speed)
+			{
+				mySpeed = speed;
+			}
+			
+
+			#endregion
+
 			private void Start()
 			{
 				
@@ -678,9 +702,9 @@ using Null = RPGCharacterAnims.Actions.Null;
 			private void LateUpdate()
 			{
 				// Update Animator animation speed.
-				animator.SetFloat(AnimationParameters.AnimationSpeed, animationSpeed);
+				animator.SetFloat(AnimationParameters.AnimationSpeed, animationSpeed * mySpeed / 45);
 				animator.SetFloat(AnimationParameters.CustomAnimationSpeed, 1.5f);
-				animator.SetFloat(AnimationParameters.AttackSpeed, 1 + coreChargeValue * 1 / 90);
+				animator.SetFloat(AnimationParameters.AttackSpeed, myAttackSpeed * attackSpeedConstant);
 
 				// Aiming.
 				if (isAiming)
@@ -1170,9 +1194,8 @@ using Null = RPGCharacterAnims.Actions.Null;
 
 					ControlCombos();
 					int attackNumber = comboIndex;
-					coreChargeValue = CoreChargeManager.Instance.coreChargeState;
-					var coreChargeSpeedUp = coreChargeValue * 1 / 100;
-					informColliders.Invoke(attackNumber, 1 + coreChargeSpeedUp);
+					
+					informColliders.Invoke(attackNumber, myAttackSpeed * attackSpeedConstant);
 					
 					if (comboIndex == 5)
 					{
@@ -1182,10 +1205,10 @@ using Null = RPGCharacterAnims.Actions.Null;
 					{
 
 						
-						Lock(true, true, true, 0, 1 - 1 * coreChargeSpeedUp );
-						UnlockEarly(true, false, 0.70f - 0.8f * coreChargeSpeedUp);
+						Lock(true, true, true, 0, (attackSpeedConstant - 0.3f) / myAttackSpeed );
+						UnlockEarly(true, false, attackSpeedConstant / (2* myAttackSpeed));
 						EventBus.TriggerEvent(EventTypes.Events.ON_ATTACK_SWING,
-							new EventTypes.AttackSwingParam(1 + coreChargeValue * 1 / 90, 1));
+							new EventTypes.AttackSwingParam(1 + myAttackSpeed / 2.2f, 1));
 						
 					
 						
@@ -1314,7 +1337,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 			{
 				animator.SetActionTrigger(AnimatorTrigger.AttackKickTrigger, 3);
 				_isAttacking = true;
-				Lock(true, true, true, 0, 0.9f - 0.01f * coreChargeValue);
+				Lock(true, true, true, 0, attackSpeedConstant - myAttackSpeed / 1.6f);
 			}
 
 			public void EnhancedAttack()

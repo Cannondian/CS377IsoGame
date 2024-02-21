@@ -15,8 +15,8 @@ public class TileElement : MonoBehaviour
     
     
     
-    enum ElementType {Mech,Plant,Fire,Ice,Blob,Dust,Radioactive}
-    [SerializeField] private ElementType elementType;
+    public enum ElementType {Mech,Plant,Fire,Ice,Blob,Dust,Radioactive}
+    [SerializeField] public ElementType elementType;
 
     public Renderer tileRender;
     // Start is called before the first frame update

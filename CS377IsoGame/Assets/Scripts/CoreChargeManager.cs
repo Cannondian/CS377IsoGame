@@ -36,10 +36,7 @@ using UnityEngine.UI;
 
         private UnityAction<EventTypes.Event5Param> UpdateCoreChargeListener;
         private UnityAction<bool> CoreChargeAttackListener;
-        public Transform playerTransform;
-
-        public Slider coreChargeSlider;
-        public GameObject jarBar;
+        
 
         // Start is called before the first frame update
         void Start()
@@ -57,9 +54,7 @@ using UnityEngine.UI;
         // Update is called once per frame
         void Update()
         {
-            var playerPos =  Camera.main.WorldToScreenPoint(playerTransform.position);
-            jarBar.transform.position = playerPos + new Vector3(60, -40, 0);
-            coreChargeSlider.value = coreChargeState;
+            
             if (!atBaseValue)
             {
                 if (countdownToDrain == drainThresholdTime)

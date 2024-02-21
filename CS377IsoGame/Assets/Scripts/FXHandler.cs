@@ -248,6 +248,7 @@ namespace RPGCharacterAnims.Actions
                 if (activeStatusFX.Count < 3)
                 {
                     
+                    
                     GameObject statusConditionFX = Instantiate(context.condition, context.caller.transform);
                     statusConditionFX.name = context.myName;
                     activeStatusFX.Add(statusConditionFX);

@@ -13,6 +13,10 @@ public class ConditionState : MonoBehaviour
    
     public Health mySoul; //health component
     
+   
+    
+    
+    
     #region Components
 
     private StatsTemplate myStats;
@@ -61,7 +65,7 @@ public class ConditionState : MonoBehaviour
     
     #region BurningData
 
-    private float burningDuration;
+    public float burningDuration;
     
 
     #endregion
@@ -163,6 +167,7 @@ public class ConditionState : MonoBehaviour
 
     private float smolderingStrikesDuration;
     private StatModifier smolderingStrikesModifier;
+    private PlayerHitEffects.HitEffect.AdditionalEffect smolderingStrikesHitEffect;
 
     #endregion
     
@@ -358,7 +363,6 @@ public class ConditionState : MonoBehaviour
                 }
                 //ui trigger will go here
                 
-               
                 break;
             case StatusConditions.statusList.Corrosive: //intensity levels are 1, 2 and 3
 
@@ -569,10 +573,13 @@ public class ConditionState : MonoBehaviour
                           nameof(StatusConditions.statusList.SmolderingStrikes)));
                   smolderingStrikesModifier = new StatModifier(10, StatModifierType.Percent);
                   myStats.AddModifier(StatsTemplate.statsList.Attack, smolderingStrikesModifier);
-                  /*if (!enemy)
+                  if (!enemy)
                   {
-                      PlayerHitEffects.Instance.AddHitEffect( );
-                  }*/
+                      smolderingStrikesHitEffect = (self, other) => 
+                          other.GetComponent<ConditionState>().SetCondition(StatusConditions.statusList.Burning, 3);
+                      PlayerHitEffects.Instance.AddHitEffect(new PlayerHitEffects.HitEffect(myStats.tAttack * 0.2f,
+                          smolderingStrikesHitEffect));
+                  }
                 }
                 smolderingStrikes = true;
                 if (smolderingStrikesDuration < duration)
@@ -979,6 +986,8 @@ public class ConditionState : MonoBehaviour
                           nameof(StatusConditions.statusList.SmolderingStrikes)));
 
                   myStats.RemoveModifier(StatsTemplate.statsList.Attack, smolderingStrikesModifier);
+                  PlayerHitEffects.Instance.RemoveHitEffect(new PlayerHitEffects.HitEffect(myStats.tAttack * 0.2f,
+                      smolderingStrikesHitEffect));
                   smolderingStrikes = false;
                   smolderingStrikesDuration = 0;
                 }
@@ -1070,7 +1079,7 @@ public class ConditionState : MonoBehaviour
 
     private void ApplyBurning()
     {
-        burningDuration =- Time.deltaTime;
+        burningDuration -= Time.deltaTime;
         if (burningDuration <= 0)
         {
             RemoveCondition(StatusConditions.statusList.Burning);
@@ -1146,7 +1155,11 @@ public class ConditionState : MonoBehaviour
 
     private void ApplySmolderingStrikes()
     {
-        // Insert logic for 'SmolderingStrikes' state here
+        smolderingStrikesDuration =- Time.deltaTime;
+        if (smolderingStrikesDuration <= 0)
+        {
+            RemoveCondition(StatusConditions.statusList.SmolderingStrikes);
+        }
     }
 
     private void ApplyEvasive()

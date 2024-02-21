@@ -8,13 +8,13 @@ public class PlayerHitEffects : Singleton<PlayerHitEffects>
     public interface IHitEffect { }
 
     
-    public class HitEffect<T1, T2> : IHitEffect
+    public class HitEffect : IHitEffect
     {
-        private float additionalDamage;
+        public float additionalDamage;
 
-        public delegate void AdditionalEffect(T1 param1, T2 param2);
+        public delegate void AdditionalEffect(GameObject self, GameObject other);
 
-        private AdditionalEffect _additionalEffect;
+        public AdditionalEffect _additionalEffect;
 
         public HitEffect(float damage, AdditionalEffect method)
         {
@@ -24,12 +24,12 @@ public class PlayerHitEffects : Singleton<PlayerHitEffects>
 
     }
 
-    public List<IHitEffect> activeHitEffects;
+    public List<HitEffect> activeHitEffects;
     
     // Start is called before the first frame update
     void Start()
     {
-        activeHitEffects = new List<IHitEffect>();
+        activeHitEffects = new List<HitEffect>();
     }
 
     // Update is called once per frame
@@ -38,13 +38,19 @@ public class PlayerHitEffects : Singleton<PlayerHitEffects>
         
     }
 
-    public void AddHitEffect(IHitEffect hitEffect)
+    public void AddHitEffect(HitEffect hitEffect)
     {
         activeHitEffects.Add(hitEffect);
     }
 
-    public void RemoveHitEffect(IHitEffect hitEffect)
+    public void RemoveHitEffect(HitEffect hitEffect)
     {
         activeHitEffects.Remove(hitEffect);
+    }
+
+    public bool AnyHitEffects()
+    {
+        if (activeHitEffects.Count != 0) return true;
+        return false;
     }
 }
