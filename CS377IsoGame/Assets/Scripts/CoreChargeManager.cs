@@ -5,6 +5,7 @@ using RPGCharacterAnims;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 
@@ -19,8 +20,13 @@ using UnityEngine.UI;
 
 
         public int previousUpdateSentAt;
-        public bool enhancedAttackReady;
 
+        public float skill1Cost;
+        public bool skill1Ready;
+
+        public float skill2Cost;
+        public bool skill2Ready;
+        
         private bool atBaseValue;
         private bool isDraining;
         private bool recentlyAttacked;
@@ -30,12 +36,16 @@ using UnityEngine.UI;
 
         private UnityAction<EventTypes.Event5Param> UpdateCoreChargeListener;
         private UnityAction<bool> CoreChargeAttackListener;
+        public Transform playerTransform;
 
         public Slider coreChargeSlider;
+        public GameObject jarBar;
 
         // Start is called before the first frame update
         void Start()
         {
+            skill1Cost = 60;
+            skill2Cost = 3;
             coreChargeState = 0;
             coreChargeDrain = 2;
             previousUpdateSentAt = 0;
@@ -47,6 +57,8 @@ using UnityEngine.UI;
         // Update is called once per frame
         void Update()
         {
+            var playerPos =  Camera.main.WorldToScreenPoint(playerTransform.position);
+            jarBar.transform.position = playerPos + new Vector3(60, -40, 0);
             coreChargeSlider.value = coreChargeState;
             if (!atBaseValue)
             {
@@ -113,28 +125,42 @@ using UnityEngine.UI;
         {
             recentlyAttacked = true;
             
-            if (coreChargeState >= 45)
+            if (coreChargeState < 100)
             {
-                enhancedAttackReady = true;
-            }
-            else
-            {
+                if (coreChargeState >= skill1Cost)
+                {
+                    skill1Ready = true;
+                }
+                else
+                {
+                    skill1Ready = false;
+                }
+
+                if (coreChargeState >= skill2Cost)
+                {
+                    skill2Ready = true;
+                }
+                else
+                {
+                    skill2Ready = false;
+                }
+            
+            
+            
 
 
 
                 switch (context.attackNumber)
                 {
-                    case 0:
-                        coreChargeState += 2;
-                        break;
+                  
                     case 1:
-                        coreChargeState += 3;
+                        coreChargeState += 7;
                         break;
                     case 2:
                         coreChargeState += 4;
                         break;
-                    case 3:
-                        coreChargeState += 7;
+                    case 5:
+                        coreChargeState += 3;
                         break;
 
                 }
@@ -159,7 +185,7 @@ using UnityEngine.UI;
             if (isTriggered)
             {
                 
-                enhancedAttackReady = !isTriggered;
+                skill1Ready = !isTriggered;
 
                 coreChargeState = 0;
                 isDraining = false;

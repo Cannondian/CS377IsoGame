@@ -483,7 +483,7 @@ namespace RPGCharacterAnims
 			if (!rpgCharacterController.CanStartAction(HandlerTypes.Attack)) { return; }
 
 			moveInput = Vector3.zero;
-			if (inputAttackR && CoreChargeManager.Instance.enhancedAttackReady)
+			if (inputAttackR && CoreChargeManager.Instance.skill1Ready)
 			{ rpgCharacterController.StartAction(HandlerTypes.Attack, new AttackContext(HandlerTypes.EnhancedAttack, Side.Left)); }
 			else if (inputAttackL)
 			{ rpgCharacterController.StartAction(HandlerTypes.Attack, new AttackContext(HandlerTypes.Attack, Side.Left)); }

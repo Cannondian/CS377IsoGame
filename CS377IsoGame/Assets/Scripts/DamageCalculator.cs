@@ -47,6 +47,6 @@ public class DamageCalculator : Singleton<DamageCalculator>
     public float PlayerFlamethrowerTick()
     {
         Random random = new Random();
-        return (int)(playerStats.tAttack / 6) + random.Next((int)(playerStats.tAttack / 6 * -0.1), (int)(playerStats.tAttack / 6 * -0.1));
+        return (int)(playerStats.tAttack / 7) + random.Next((int)(playerStats.tAttack / 7 * -0.1), (int)(playerStats.tAttack / 7 * -0.1));
     }
 }

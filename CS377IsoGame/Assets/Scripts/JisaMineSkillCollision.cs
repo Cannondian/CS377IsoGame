@@ -7,12 +7,10 @@ using UnityEngine;
 public class JisaMineSkillCollision : MonoBehaviour
 {
     private bool isDamageDealt;
+    private List<Collider> hitThisCast = new List<Collider>();
     
    //ensure that damage is dealt only once
-    private void Awake()
-    {
-        isDamageDealt = false;
-    }
+    
 
     // Update is called once per frame
     void Update()
@@ -22,8 +20,9 @@ public class JisaMineSkillCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isDamageDealt)
+        if (!hitThisCast.Contains(other))
         {
+            hitThisCast.Add(other);
             var damage = DamageCalculator.Instance.PlayerMineSkill();
             EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
                 new EventTypes.FloatingDamageParam(other.gameObject, damage, 4));
