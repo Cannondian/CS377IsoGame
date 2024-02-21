@@ -8,9 +8,9 @@ public class PlayerStatsUI : MonoBehaviour
     public Slider defenseSlider;
     public Slider attackSlider;
     public Slider speedSlider;
-    public Slider RRRSlider;
+    //public Slider RRRSlider;
     public Slider attackSpeedSlider;
-    public Slider evasivenessSlider;
+    //public Slider evasivenessSlider;
 
     public StatsTemplate playerStats;
 

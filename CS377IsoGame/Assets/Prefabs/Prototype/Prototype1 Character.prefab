@@ -5271,6 +5271,7 @@ MonoBehaviour:
   legOriginalCollider: {fileID: 3802154172871383216}
   staffAnimator: {fileID: 7236618445454001111}
   legAnimator: {fileID: 2844295257783077083}
+  player: {fileID: 0}
   calculator: {fileID: 0}
 --- !u!95 &2844295257783077083
 Animator:
@@ -5343,6 +5344,10 @@ PrefabInstance:
     - target: {fileID: 780751873778942882, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
       propertyPath: fixedTimeStep
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 780751873778942882, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
+      propertyPath: debugGrounding
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 780751873778942882, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
       propertyPath: Walkable.m_Bits
@@ -7025,6 +7030,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 814506524793027058, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3464591597584820159}
+    - targetCorrespondingSourceObject: {fileID: 814506524793027058, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6452598746563371298}
     - targetCorrespondingSourceObject: {fileID: 2116631343679306313, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1870559423292915213}
@@ -7185,6 +7193,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpeedUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1679471075064110072}
+        m_TargetAssemblyTypeName: RPGCharacterAnims.RPGCharacterController, Assembly-CSharp
+        m_MethodName: OnSpeedChange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  AttackSpeedUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1679471075064110072}
+        m_TargetAssemblyTypeName: RPGCharacterAnims.RPGCharacterController, Assembly-CSharp
+        m_MethodName: OnAttackSpeedChange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  AttackUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  HPUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3464591597584820159}
+        m_TargetAssemblyTypeName: Health, Assembly-CSharp
+        m_MethodName: UpdateMaxHealth
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   level: 0
   baseHP: 100
   baseSpeed: 45
@@ -7228,6 +7284,7 @@ MonoBehaviour:
   mySoul: {fileID: 3464591597584820159}
   enemy: 0
   burning: 0
+  burningDuration: 0
   effectiveRejuvenationIntensityforFX: 0
 --- !u!114 &3464591597584820159
 MonoBehaviour:
@@ -7247,7 +7304,19 @@ MonoBehaviour:
   myEnemyAI: {fileID: 0}
   amIEnemy: 0
   damageComponent: {fileID: 0}
-  healthSlider: {fileID: 0}
+--- !u!114 &6452598746563371298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679471075052826140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a805e47daa3f4faf99b623e60b5d010, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTile: {fileID: 0}
 --- !u!114 &1679471075064110072 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 814506524787002390, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
@@ -7339,6 +7408,7 @@ MonoBehaviour:
   legOriginalCollider: {fileID: 3802154172871383216}
   staffAnimator: {fileID: 7236618445454001111}
   legAnimator: {fileID: 2844295257783077083}
+  player: {fileID: 0}
   calculator: {fileID: 0}
 --- !u!54 &2473145301465943405
 Rigidbody:
@@ -7922,7 +7992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198793745104055882, guid: 784cda9c3ade4406389c31f32105fc77, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].probability
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 198793745104055882, guid: 784cda9c3ade4406389c31f32105fc77, type: 3}
       propertyPath: SizeModule.y.maxCurve.m_Curve.Array.data[0].value
@@ -7967,6 +8037,14 @@ PrefabInstance:
     - target: {fileID: 198793745104055882, guid: 784cda9c3ade4406389c31f32105fc77, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minScalar
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198793745104055882, guid: 784cda9c3ade4406389c31f32105fc77, type: 3}
+      propertyPath: ClampVelocityModule.magnitude.maxCurve.m_Curve.Array.data[2].time
+      value: 0.9333471
+      objectReference: {fileID: 0}
+    - target: {fileID: 198793745104055882, guid: 784cda9c3ade4406389c31f32105fc77, type: 3}
+      propertyPath: ClampVelocityModule.magnitude.maxCurve.m_Curve.Array.data[2].value
+      value: 0.5023651
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
