@@ -364,9 +364,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 30
+  m_MaxValue: 15
   m_WholeNumbers: 1
-  m_Value: 30
+  m_Value: 15
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -671,8 +671,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackSpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  HPUpdate:
+    m_PersistentCalls:
+      m_Calls: []
   level: 0
-  baseHP: 15
+  baseHP: 0
   baseSpeed: 0
   baseAttack: 0
   baseDefense: 0
@@ -681,7 +693,7 @@ MonoBehaviour:
   baseEvasiveness: 0
   baseRRR: 0
   baseTalent: 0
-  ceHP: 0
+  ceHP: 15
   ceSpeed: 0
   ceAttack: 0
   ceDefense: 0
@@ -714,10 +726,9 @@ MonoBehaviour:
   myStats: {fileID: -2652444479010325795}
   currentHealth: 0
   maxHealth: 0
-  myEnemyAI: {fileID: 0}
+  myEnemyAI: {fileID: 6163111961061575989}
   amIEnemy: 0
   damageComponent: {fileID: 0}
-  healthSlider: {fileID: 0}
 --- !u!65 &157308210463696826
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -728,7 +739,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 73728
+    m_Bits: 73792
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

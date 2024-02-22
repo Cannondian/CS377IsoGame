@@ -575,8 +575,11 @@ public class ConditionState : MonoBehaviour
                   myStats.AddModifier(StatsTemplate.statsList.Attack, smolderingStrikesModifier);
                   if (!enemy)
                   {
-                      smolderingStrikesHitEffect = (self, other) => 
+                      smolderingStrikesHitEffect = (self, other) =>
+                      {
+                          Debug.Log("wow");
                           other.GetComponent<ConditionState>().SetCondition(StatusConditions.statusList.Burning, 3);
+                      };
                       PlayerHitEffects.Instance.AddHitEffect(new PlayerHitEffects.HitEffect(myStats.tAttack * 0.2f,
                           smolderingStrikesHitEffect));
                   }

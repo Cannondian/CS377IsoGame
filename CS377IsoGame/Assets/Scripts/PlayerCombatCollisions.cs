@@ -169,9 +169,12 @@ public class PlayerCombatCollisions : MonoBehaviour
                                 if (hitEffect.additionalDamage != 0)
                                 {
                                     damageAmount2 = hitEffect.additionalDamage;
+                                    Debug.Log(PlayerHitEffects.Instance.activeHitEffects);
+                                    hitEffect._additionalEffect.Invoke(player, other.gameObject);
+                                   
                                 }
                                 if (hitEffect._additionalEffect == null) {Debug.Log("are we getting here?");}
-                                hitEffect._additionalEffect.Invoke(player, other.gameObject);
+                                
                             }
                            
                             EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 

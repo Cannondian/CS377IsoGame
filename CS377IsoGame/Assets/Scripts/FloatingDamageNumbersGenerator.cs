@@ -33,13 +33,13 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
                 textSizeScale = 1f;
                 break;
             case 2:
-                textSizeScale = 1.3f;
-                break;
-            case 3:
                 textSizeScale = 1.5f;
                 break;
+            case 3:
+                textSizeScale = 1.8f;
+                break;
             case 4:
-                textSizeScale = 2;
+                textSizeScale = 2.2f;
                 break;
         }
         
@@ -61,8 +61,8 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
             {
                 case Damage.Types.Fire:
                     var damageText2 = Instantiate(fireDamageTextPrefab, damageText.transform);
-                    damageText2.transform.localScale = new Vector3(1, 1, 1);
-                    damageText2.transform.localPosition = RandomOffset(damageText2.transform.position, true);
+                    
+                    damageText2.transform.position = RandomOffset(damageText2.transform.position, true);
                     var text2 = damageText2.GetComponent<TextMeshProUGUI>();
                     text2.text = context.additionalDamage.ToString();
                     break;
@@ -84,7 +84,7 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
         }
         else
         {
-            float randomX = UnityEngine.Random.Range(20, 30);
+            float randomX = UnityEngine.Random.Range(30, 50);
             float randomY = UnityEngine.Random.Range(-20, 20);
             var newPosition = oldPosition + new Vector3(randomX, randomY, 0);
             return newPosition;
