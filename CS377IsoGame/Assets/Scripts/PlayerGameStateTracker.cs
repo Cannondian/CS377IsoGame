@@ -14,8 +14,7 @@ public class PlayerGameStateTracker : Singleton<PlayerGameStateTracker>
     // Start is called before the first frame update
     void Start()
     {
-        onRecalculateStats.Invoke();
-        Cursor.SetCursor(sciFiCursor, new Vector2(0, 0), CursorMode.ForceSoftware);
+        
     }
 
     // Update is called once per frame
