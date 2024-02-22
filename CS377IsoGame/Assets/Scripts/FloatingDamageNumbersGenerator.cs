@@ -84,8 +84,8 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
         }
         else
         {
-            float randomX = UnityEngine.Random.Range(30, 50);
-            float randomY = UnityEngine.Random.Range(-20, 20);
+            float randomX = UnityEngine.Random.Range(40, 50);
+            float randomY = UnityEngine.Random.Range(-30, 30);
             var newPosition = oldPosition + new Vector3(randomX, randomY, 0);
             return newPosition;
         }
