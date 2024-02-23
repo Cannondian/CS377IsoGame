@@ -30,16 +30,16 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
         switch (context.size)
         {
             case 1:
-                textSizeScale = 1f;
-                break;
-            case 2:
                 textSizeScale = 1.5f;
                 break;
-            case 3:
+            case 2:
                 textSizeScale = 1.8f;
                 break;
+            case 3:
+                textSizeScale = 2.1f;
+                break;
             case 4:
-                textSizeScale = 2.2f;
+                textSizeScale = 2.4f;
                 break;
         }
         

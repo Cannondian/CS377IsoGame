@@ -1205,7 +1205,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 					{
 
 						
-						Lock(true, true, true, 0, (attackSpeedConstant - 0.3f) / myAttackSpeed );
+						Lock(true, true, true, 0, (attackSpeedConstant - 0.4f) / myAttackSpeed );
 						UnlockEarly(true, false, attackSpeedConstant / (2* myAttackSpeed));
 						EventBus.TriggerEvent(EventTypes.Events.ON_ATTACK_SWING,
 							new EventTypes.AttackSwingParam(1 + myAttackSpeed / 2.2f, 1));
