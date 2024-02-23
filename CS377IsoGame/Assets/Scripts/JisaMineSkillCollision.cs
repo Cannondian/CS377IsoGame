@@ -7,12 +7,16 @@ using UnityEngine;
 public class JisaMineSkillCollision : MonoBehaviour
 {
     private bool isDamageDealt;
-    private List<Collider> hitThisCast = new List<Collider>();
+    private BoxCollider myCollider;
+    private List<GameObject> hitThisCast = new List<GameObject>();
     
    //ensure that damage is dealt only once
    private void Start()
    {
+       myCollider = GetComponent<BoxCollider>();
        hitThisCast.Clear();
+       StartCoroutine(DisableCollider());
+
    }
 
    // Update is called once per frame
@@ -21,11 +25,17 @@ public class JisaMineSkillCollision : MonoBehaviour
         
     }
 
+    private IEnumerator DisableCollider()
+    {
+        yield return new WaitForSeconds(1);
+        myCollider.enabled = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!hitThisCast.Contains(other))
+        if (!hitThisCast.Contains(other.gameObject))
         {
-            hitThisCast.Add(other);
+            hitThisCast.Add(other.gameObject);
             var damage = DamageCalculator.Instance.PlayerMineSkill();
             EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
                 new EventTypes.FloatingDamageParam(other.gameObject, damage, 4));
@@ -36,10 +46,10 @@ public class JisaMineSkillCollision : MonoBehaviour
     }
     void DamageEnemy(Collider other, float damage)
     {
-        var enemyHealth = other.gameObject.GetComponent<Health>();
-        if (enemyHealth.amIEnemy)
+        var enemyStats = other.gameObject.GetComponent<StatsTemplate>();
+        if (enemyStats.amIEnemy)
         {
-            enemyHealth.TakeDamage(damage);
+            enemyStats.TakeDamage(damage);
         }
     }
 }

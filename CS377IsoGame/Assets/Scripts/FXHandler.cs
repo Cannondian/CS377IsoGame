@@ -363,23 +363,7 @@ namespace RPGCharacterAnims.Actions
 
         private void InitializeHitFX(EventTypes.HitFXParam context)
         {
-            if (context.attackType == 1 || context.attackType == 2)
-            {
-
-                var hitObject = Instantiate(StaffSwingHitPrefab, context.hitPosition,
-                    context.hitter.transform.rotation);
-
-                DelayedTerminateFX(0.5f, hitObject);
-
-            }
-            else{
-            
-                    var hitObject2 = Instantiate(KickPrefab, context.hitPosition,
-                        context.hitter.transform.rotation);
-                    hitObject2.transform.position = context.hitPosition;
-                    DelayedTerminateFX(0.5f, hitObject2);
-                    
-            }
+            StartCoroutine(DelayedStartForHitFX(context));
         }
 
         private void InitializeFlamethrowerFX(EventTypes.FlamethrowerStartFXParam context)
@@ -402,8 +386,41 @@ namespace RPGCharacterAnims.Actions
                 Destroy(particles);
                 alreadyPlaying = false;
 
+        }
 
+        private IEnumerator DelayedStartForHitFX(EventTypes.HitFXParam context)
+        {
+            
+            if (context.attackType == 1 || context.attackType == 2)
+            {
+                yield return new WaitForSeconds(0.15f);
+                if (context.attackType == 1)
+                {
+                    
+                    var hitObject = Instantiate(StaffSwingHitPrefab, context.hitPosition,
+                        context.hitter.transform.rotation);
+                    DelayedTerminateFX(0.5f, hitObject);
+                }
+                else
+                {
+                    var attackRotation = Quaternion.Euler(-51, 166, 176);
+                    var hitObject = Instantiate(StaffSwingHitPrefab, context.hitPosition,
+                        attackRotation);
+                    DelayedTerminateFX(0.5f, hitObject);
+                }
+                
 
+                
+
+            }
+            else{
+                
+                var hitObject2 = Instantiate(KickPrefab, context.hitPosition,
+                    context.hitter.transform.rotation);
+                hitObject2.transform.position = context.hitPosition;
+                DelayedTerminateFX(0.5f, hitObject2);
+                    
+            }
         }
     }
 }

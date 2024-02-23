@@ -1313,7 +1313,6 @@ GameObject:
   - component: {fileID: 2358589669322719545}
   - component: {fileID: 5284326387935249629}
   - component: {fileID: 6195836827943575947}
-  - component: {fileID: 8933896775190563846}
   - component: {fileID: 3761155282434843065}
   - component: {fileID: 7880840789313249952}
   m_Layer: 15
@@ -1401,7 +1400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f3309c7204f240a4a38eca30b97fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myHealth: {fileID: 8933896775190563846}
+  myStats: {fileID: 0}
   player: {fileID: 0}
   Walkable:
     serializedVersion: 2
@@ -1425,25 +1424,6 @@ MonoBehaviour:
   animator: {fileID: 2358589669322719545}
   originalSpeed: 0
   attackIndicator: {fileID: 547595496978076355}
---- !u!114 &8933896775190563846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3589093526055912379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afb7c8998e638154391d51a6e6c6a9c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myStats: {fileID: 3761155282434843065}
-  currentHealth: 0
-  maxHealth: 0
-  myEnemyAI: {fileID: 6195836827943575947}
-  amIEnemy: 0
-  damageComponent: {fileID: 0}
-  healthSlider: {fileID: 0}
 --- !u!114 &3761155282434843065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1456,7 +1436,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
+  SpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackSpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  myCurrentHealth: 0
+  amIEnemy: 0
   baseHP: 120
   baseSpeed: 0
   baseAttack: 0

@@ -434,7 +434,6 @@ GameObject:
   - component: {fileID: 8276013049323935219}
   - component: {fileID: 8209002257798234674}
   - component: {fileID: 5960566213668016564}
-  - component: {fileID: -3595388163800749056}
   - component: {fileID: 8132734453922592655}
   m_Layer: 15
   m_Name: LaserTurret
@@ -567,7 +566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb5efb34b28c002418ada8e2b3ddeff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myHealth: {fileID: -3595388163800749056}
+  myStats: {fileID: 0}
   player: {fileID: 0}
   Walkable:
     serializedVersion: 2
@@ -621,25 +620,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &-3595388163800749056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4293943630410068203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afb7c8998e638154391d51a6e6c6a9c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myStats: {fileID: 8132734453922592655}
-  currentHealth: 0
-  maxHealth: 20
-  myEnemyAI: {fileID: 8209002257798234674}
-  amIEnemy: 0
-  damageComponent: {fileID: 0}
-  healthSlider: {fileID: 5465502576255269825}
 --- !u!114 &8132734453922592655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,7 +632,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
+  SpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackSpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  myCurrentHealth: 0
+  amIEnemy: 0
   baseHP: 60
   baseSpeed: 0
   baseAttack: 0

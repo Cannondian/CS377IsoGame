@@ -1668,7 +1668,6 @@ GameObject:
   - component: {fileID: 1372640591809119730}
   - component: {fileID: 3743688449965436143}
   - component: {fileID: 7816633478423871631}
-  - component: {fileID: 1709549150844895746}
   m_Layer: 15
   m_Name: JumpingGrenadier
   m_TagString: Untagged
@@ -1706,7 +1705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52e9cf55f97b6ce4a95b1e33f7e9b192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myHealth: {fileID: 1709549150844895746}
+  myStats: {fileID: 0}
   player: {fileID: 0}
   Walkable:
     serializedVersion: 2
@@ -1842,7 +1841,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
+  SpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackSpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  myCurrentHealth: 0
+  amIEnemy: 0
   baseHP: 100
   baseSpeed: 0
   baseAttack: 0
@@ -1870,25 +1879,6 @@ MonoBehaviour:
   tRRR: 0
   tEvasiveness: 0
   tTalent: 0
---- !u!114 &1709549150844895746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583388733458509172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afb7c8998e638154391d51a6e6c6a9c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myStats: {fileID: 7816633478423871631}
-  currentHealth: 50
-  maxHealth: 50
-  myEnemyAI: {fileID: 4736483594225145397}
-  amIEnemy: 1
-  damageComponent: {fileID: 0}
-  healthSlider: {fileID: 6319317605391711561}
 --- !u!1 &5583869465737827825
 GameObject:
   m_ObjectHideFlags: 0

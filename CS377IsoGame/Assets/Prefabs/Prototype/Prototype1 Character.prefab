@@ -5271,7 +5271,7 @@ MonoBehaviour:
   legOriginalCollider: {fileID: 3802154172871383216}
   staffAnimator: {fileID: 7236618445454001111}
   legAnimator: {fileID: 2844295257783077083}
-  player: {fileID: 0}
+  player: {fileID: 1679471075052826140}
   calculator: {fileID: 0}
 --- !u!95 &2844295257783077083
 Animator:
@@ -5447,15 +5447,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 814506524792661458, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.79
+      value: -10.66
       objectReference: {fileID: 0}
     - target: {fileID: 814506524792661458, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.65
+      value: 0.69
       objectReference: {fileID: 0}
     - target: {fileID: 814506524792661458, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.08
+      value: 4.26
       objectReference: {fileID: 0}
     - target: {fileID: 814506524792661458, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7029,9 +7029,6 @@ PrefabInstance:
       addedObject: {fileID: -7158238824673921091}
     - targetCorrespondingSourceObject: {fileID: 814506524793027058, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3464591597584820159}
-    - targetCorrespondingSourceObject: {fileID: 814506524793027058, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6452598746563371298}
     - targetCorrespondingSourceObject: {fileID: 2116631343679306313, guid: 8b011d53fce744a35b8692f8cd5404ac, type: 3}
       insertIndex: -1
@@ -7226,22 +7223,8 @@ MonoBehaviour:
   AttackUpdate:
     m_PersistentCalls:
       m_Calls: []
-  HPUpdate:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3464591597584820159}
-        m_TargetAssemblyTypeName: Health, Assembly-CSharp
-        m_MethodName: UpdateMaxHealth
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  level: 0
+  myCurrentHealth: 0
+  amIEnemy: 0
   baseHP: 100
   baseSpeed: 45
   baseAttack: 30
@@ -7281,29 +7264,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480d3ece0d8b243b081b8e1f49c56c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mySoul: {fileID: 3464591597584820159}
+  mySoul: {fileID: 0}
   enemy: 0
   burning: 0
   burningDuration: 0
   effectiveRejuvenationIntensityforFX: 0
---- !u!114 &3464591597584820159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1679471075052826140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afb7c8998e638154391d51a6e6c6a9c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myStats: {fileID: 7013306702040076005}
-  currentHealth: 0
-  maxHealth: 0
-  myEnemyAI: {fileID: 0}
-  amIEnemy: 0
-  damageComponent: {fileID: 0}
 --- !u!114 &6452598746563371298
 MonoBehaviour:
   m_ObjectHideFlags: 0

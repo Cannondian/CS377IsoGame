@@ -1355,9 +1355,6 @@ PrefabInstance:
       addedObject: {fileID: 3822876395219301983}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 21e1340f0ec98c849822321ff3df8758, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1685012635762116934}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 21e1340f0ec98c849822321ff3df8758, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 7831747682396266192}
   m_SourcePrefab: {fileID: 100100000, guid: 21e1340f0ec98c849822321ff3df8758, type: 3}
 --- !u!4 &992521235394390327 stripped
@@ -1409,7 +1406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64802bc7c25764391818bea309d01516, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myHealth: {fileID: 1685012635762116934}
+  myStats: {fileID: 0}
   player: {fileID: 0}
   Walkable:
     serializedVersion: 2
@@ -1417,6 +1414,9 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 8256
+  Player:
+    serializedVersion: 2
+    m_Bits: 0
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 5
@@ -1475,25 +1475,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7, y: 2, z: 0.7}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &1685012635762116934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5303408490421992520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afb7c8998e638154391d51a6e6c6a9c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myStats: {fileID: 7831747682396266192}
-  currentHealth: 0
-  maxHealth: 0
-  myEnemyAI: {fileID: 0}
-  amIEnemy: 0
-  damageComponent: {fileID: 0}
-  healthSlider: {fileID: 0}
 --- !u!114 &7831747682396266192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1506,7 +1487,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
+  SpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackSpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  myCurrentHealth: 0
+  amIEnemy: 0
   baseHP: 0
   baseSpeed: 0
   baseAttack: 0

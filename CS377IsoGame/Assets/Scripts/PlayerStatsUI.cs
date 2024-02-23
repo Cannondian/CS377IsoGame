@@ -24,7 +24,7 @@ public class PlayerStatsUI : MonoBehaviour
 
     #region Health
 
-    public Health myHealth;
+   
     public Slider healthSlider;
 
     #endregion
@@ -59,7 +59,7 @@ public class PlayerStatsUI : MonoBehaviour
 
     public void UpdateHealthSlider()
     {
-        healthSlider.maxValue = myHealth.maxHealth;
-        healthSlider.value = myHealth.currentHealth ;
+        healthSlider.maxValue = playerStats.tHP;
+        healthSlider.value = playerStats.myCurrentHealth ;
     }
 }

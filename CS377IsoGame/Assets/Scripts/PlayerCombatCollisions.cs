@@ -209,10 +209,10 @@ public class PlayerCombatCollisions : MonoBehaviour
          
         void DamageEnemy(Collider other, float damage)
         {
-            var enemyHealth = other.gameObject.GetComponent<Health>();
-            if (enemyHealth.amIEnemy)
+            var enemyStats = other.gameObject.GetComponent<StatsTemplate>();
+            if (enemyStats.amIEnemy)
             {
-                enemyHealth.TakeDamage(damage);
+                enemyStats.TakeDamage(damage);
             }
         }
 }

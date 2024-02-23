@@ -6,7 +6,7 @@ public abstract class EnemyAI : MonoBehaviour
 {
     
     public float Health { get; protected set; }
-    [SerializeField] public Health myHealth;
+    [SerializeField] private StatsTemplate myStats;
     public float AttackDamage { get; protected set; }
     protected NavMeshAgent agent;
     public Transform player;
@@ -32,6 +32,7 @@ public abstract class EnemyAI : MonoBehaviour
         Debug.Log(agent);
         player = GameObject.FindWithTag("Player").transform;
         stunned = false;
+        myStats = GetComponent<StatsTemplate>();
  
     }
     
@@ -64,14 +65,13 @@ public abstract class EnemyAI : MonoBehaviour
             agent.isStopped = true;
         }
 
-        Health = myHealth.currentHealth;
+        Health = myStats.myCurrentHealth;
         UpdateCanvas();
-        if (Health < 0)
+        if (Health <= 0)
         {
             Die();
         }
     }
-
 
     protected virtual void Patroling()
     {

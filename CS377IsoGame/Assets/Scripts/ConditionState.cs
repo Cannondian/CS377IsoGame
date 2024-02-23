@@ -11,7 +11,7 @@ using Random = System.Random;
 public class ConditionState : MonoBehaviour
 {
    
-    public Health mySoul; //health component
+    
     
    
     
@@ -211,9 +211,8 @@ public class ConditionState : MonoBehaviour
         activeSlows = new List<Slow>();
         activeRejuvenations = new List<Rejuvenation>();
         myStats = GetComponent<StatsTemplate>();
-        mySoul = GetComponent<Health>();
         FXhandler = FXHandler.Instance;
-        enemy = mySoul.amIEnemy;
+        enemy = myStats.amIEnemy;
 
         //make modifiers for each of the status conditions.
         //These modifiers will be sent to the stat template for adjusting of those stats
@@ -1091,7 +1090,7 @@ public class ConditionState : MonoBehaviour
         if (burningDuration % 1 == 0)
         {
             var tickDamage = myStats.tHP * 0.02f;
-            mySoul.TakeDamage(tickDamage);
+            myStats.TakeDamage(tickDamage);
         }
        
     }

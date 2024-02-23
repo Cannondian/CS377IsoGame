@@ -14,11 +14,22 @@ public class StatsTemplate : MonoBehaviour
     public StatUpdate SpeedUpdate;
     public StatUpdate AttackSpeedUpdate;
     public StatUpdate AttackUpdate;
-    public StatUpdate HPUpdate;
+    
     
     #endregion
+
+    #region Health
+
+    public float myCurrentHealth;
+    public bool amIEnemy;
+    private EnemyAI myEnemyAI;
+    private DamageEffect damageComponent;
+    private UnityAction<float> UpdateCharacterHealthListener;
     
-    public int level;
+
+    #endregion
+    
+    
     
     #region statsList
 
@@ -170,13 +181,50 @@ public class StatsTemplate : MonoBehaviour
         ceTalent = baseTalent;
         
         CalculateCES();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        
+        myEnemyAI = GetComponent<EnemyAI>();
+        damageComponent = GetComponentInChildren<DamageEffect>();
+        if (myEnemyAI != null)
+        {
+            amIEnemy = true;
+            myCurrentHealth = baseHP;
+            OnDisable();
+        }
+        
+        
         
     }
+
+    public void TakeDamage(float damage)
+    {
+        myCurrentHealth -= damage;
+    }
+
+    public void RestoreHealth(float heal)
+    {
+        myCurrentHealth = Mathf.Min(myCurrentHealth + heal, tHP);
+    }
+
+    public void ScaleCurrentHealth(float oldMaxHealth)
+    {
+        float scalingFactor = tHP / oldMaxHealth;
+        myCurrentHealth *= scalingFactor;
+        
+    }
+
+    private void OnEnable()
+    {
+        UpdateCharacterHealthListener += TakeDamage;
+        EventBus.StartListening(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, UpdateCharacterHealthListener);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.StopListening(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, UpdateCharacterHealthListener);
+    }
+
+
+    
 
     public void AddModifier(statsList stat, StatModifier modifier)
     {
@@ -421,8 +469,9 @@ public class StatsTemplate : MonoBehaviour
                     }
                 }
 
+                var oldHP = tHP;
                 tHP = ceHP + delta;
-                HPUpdate.Invoke(tHP);
+                ScaleCurrentHealth(oldHP);
                 break;
             case statsList.Speed:
 
