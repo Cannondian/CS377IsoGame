@@ -116,6 +116,8 @@ public class JumpingGrenadierController : EnemyAI
                 1f // Destroy FX after 1 second
             );
 
+            SoundManager.PlaySound(SoundManager.Sound.Grenadier_Fire, transform.position);
+
             var Grenade = Instantiate(
                 GrenadePrefab,
                 TurretTransform.position + LaunchOffset,
