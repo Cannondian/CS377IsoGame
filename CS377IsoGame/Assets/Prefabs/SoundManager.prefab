@@ -49,10 +49,10 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: ff37eae483ce1b3409b3872e1e2cfc51, type: 3}
   - sound: 1
     audioClip: {fileID: 8300000, guid: 9b6e72f49be4db0478acc64e3c2650b6, type: 3}
-  - sound: 0
-    audioClip: {fileID: 0}
-  - sound: 0
-    audioClip: {fileID: 0}
+  - sound: 2
+    audioClip: {fileID: 8300000, guid: edfb35ac12623db44bc4f2f4de5ab147, type: 3}
+  - sound: 3
+    audioClip: {fileID: 8300000, guid: a9e2140b4bea3a34cabedd942ef7f86c, type: 3}
   - sound: 0
     audioClip: {fileID: 0}
   - sound: 0

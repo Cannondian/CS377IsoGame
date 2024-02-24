@@ -22,6 +22,8 @@ public class SoundManager : MonoBehaviour
     {
         Grenadier_Fire,
         Grenadier_GrenadeExplode,
+        LaserDrone_Hover,
+        LaserDrone_Laser,
         // TODO, more...
     }
 
@@ -112,31 +114,49 @@ public class SoundManager : MonoBehaviour
             if (containerIndex >= 0)
             {
                 GameObject container = instance.pooledContainers[containerIndex];
-                AudioSource source = instance.pooledAudioSources[containerIndex];
+                AudioSource audioSource = instance.pooledAudioSources[containerIndex];
 
                 container.transform.position = position;
-                source.clip = GetAudioClip(sound);
+                audioSource.clip = GetAudioClip(sound);
 
                 // Optional parameter adjustments...
-                source.volume = volume;
-                // audioSource.maxDistance = 100f;
-                // audioSource.spatialBlend = 1f;
-                // audioSource.rolloffMode = AudioRolloffMode.Linear;
-                // audioSource.dopplerLevel = 0f;
+                audioSource.volume = volume;
+                SetDefaultAudioSourceParams(audioSource);
 
                 container.SetActive(true);
-                source.Play();
+                audioSource.Play();
 
                 // Disable the audio container after the clip is done playing
-                instance.StartCoroutine(instance.DisableContainerAfterDelay(container, source.clip.length));
+                instance.StartCoroutine(DisableContainerAfterDelay(container, audioSource.clip.length));
             }
         }
     }
 
-    private IEnumerator DisableContainerAfterDelay(GameObject container, float delay)
+    private static IEnumerator DisableContainerAfterDelay(GameObject container, float delay)
     {
         yield return new WaitForSeconds(delay);
         container.SetActive(false);
+    }
+
+    // Play a sound loop that is attached to a given parent transform
+    // Useful for continuous sounds emmited from a single entity (like a flying drone's hover sound)
+    public static void PlaySoundLoop(Sound sound, Transform parent, float volume = 1f)
+    {
+        if (CanPlaySound(sound))
+        {
+            GameObject container = new GameObject("Sound");
+            container.transform.parent = parent; // attach container to designated parent gameobject
+            container.transform.position = parent.position;
+            AudioSource audioSource = container.AddComponent<AudioSource>();
+            audioSource.clip = GetAudioClip(sound);
+
+            // Optional parameter adjustments...
+            audioSource.volume = volume;
+            audioSource.loop = true;
+            SetDefaultAudioSourceParams(audioSource);
+
+            audioSource.Play();
+        }
     }
 
     // Returns the audioClip associated with a given sound
@@ -168,5 +188,14 @@ public class SoundManager : MonoBehaviour
             //     return true;
 
         }
+    }
+
+    private static void SetDefaultAudioSourceParams(AudioSource audioSource)
+    {
+        audioSource.minDistance = 5f; // minimum distance before audio fall-off
+        audioSource.maxDistance = 100f;
+        audioSource.spatialBlend = 1f;
+        audioSource.rolloffMode = AudioRolloffMode.Logarithmic; // User Logarithmic for realistic falloff
+        audioSource.dopplerLevel = 0f;
     }
 }

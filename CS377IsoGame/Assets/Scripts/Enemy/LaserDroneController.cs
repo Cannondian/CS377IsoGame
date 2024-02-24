@@ -28,16 +28,20 @@ public class LaserDroneController : EnemyAI
         // Instantiate MaxConnections laser connection containers and store them
         for (int i = 0; i < MaxConnections; i++)
         {
-            LaserConnections.Add((GameObject)Instantiate(LaserConnectionContainer, 
-                                                         transform.position,
-                                                         Quaternion.identity, 
-                                                         transform)); // keep this drone as parent for this connection
+            GameObject Container = (GameObject)Instantiate(LaserConnectionContainer, 
+                                                           transform.position,
+                                                           Quaternion.identity, 
+                                                           transform); // keep this drone as parent for this connection 
+            SoundManager.PlaySoundLoop(SoundManager.Sound.LaserDrone_Laser, Container.transform, 1f/MaxConnections);
+            LaserConnections.Add(Container);
         }
 
         PlayerLayerMask = LayerMask.GetMask("Player");
         WalkableLayerMask = LayerMask.GetMask("Walkable");
 
         AttackDamage = DamagePerSecond * Time.fixedDeltaTime; // Scale attack damage to fit desired damage per second
+        
+        SoundManager.PlaySoundLoop(SoundManager.Sound.LaserDrone_Hover, transform, 1f/MaxConnections);
     }
 
     protected override void FixedUpdate()
@@ -142,15 +146,15 @@ public class LaserDroneController : EnemyAI
         }
 
         int i = 0; // Current laser connection
-        foreach (var OtherDrone in OtherLaserDrones)
+        foreach (var OtherDrone in OtherLaserDrones) 
         {
             if (OtherDrone != null 
                 && !CheckForEnvironmentIntersection(transform.position, OtherDrone.transform.position))
             {
-                var ThisLaser = LaserConnections[i].GetComponent<LineRenderer>();
-                ThisLaser.enabled = true;
-                ThisLaser.SetPosition(0, transform.position);
-                ThisLaser.SetPosition(1, OtherDrone.transform.position);
+                LaserConnections[i].SetActive(true);
+                var LaserRenderer = LaserConnections[i].GetComponent<LineRenderer>();
+                LaserRenderer.SetPosition(0, transform.position);
+                LaserRenderer.SetPosition(1, OtherDrone.transform.position);
                 CheckForPlayerIntersection(transform.position, OtherDrone.transform.position);
                 i += 1;
             }
@@ -181,8 +185,7 @@ public class LaserDroneController : EnemyAI
     {
         while (i < MaxConnections)
         {
-            var ThisLaser = LaserConnections[i].GetComponent<LineRenderer>();
-            ThisLaser.enabled = false;
+            LaserConnections[i].SetActive(false);
             i += 1;
         }
     }
