@@ -86,7 +86,7 @@ public class SoundManager : MonoBehaviour
     }
 
     // Play a single shot of a desired sound
-    public static void PlaySound(Sound sound)
+    public static void PlaySound(Sound sound, float volume = 1f)
     {
         if (CanPlaySound(sound))
         {
@@ -99,12 +99,12 @@ public class SoundManager : MonoBehaviour
                 oneShotGameObject.transform.parent = instance.gameObject.transform;
             }
 
-            oneShotAudioSource.PlayOneShot(GetAudioClip(sound));
+            oneShotAudioSource.PlayOneShot(GetAudioClip(sound), volume);
         }
     }
 
     // Play a single shot of a desired sound at a particular position
-    public static void PlaySound(Sound sound, Vector3 position)
+    public static void PlaySound(Sound sound, Vector3 position, float volume = 1f)
     {
         if (CanPlaySound(sound))
         {
@@ -117,7 +117,8 @@ public class SoundManager : MonoBehaviour
                 container.transform.position = position;
                 source.clip = GetAudioClip(sound);
 
-                // // Optional parameter adjustments...
+                // Optional parameter adjustments...
+                source.volume = volume;
                 // audioSource.maxDistance = 100f;
                 // audioSource.spatialBlend = 1f;
                 // audioSource.rolloffMode = AudioRolloffMode.Linear;
