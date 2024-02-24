@@ -179,7 +179,7 @@ MonoBehaviour:
   baseEvasiveness: 0
   baseRRR: 0
   baseTalent: 0
-  ceHP: 25
+  ceHP: 0
   ceSpeed: 0
   ceAttack: 0
   ceDefense: 0

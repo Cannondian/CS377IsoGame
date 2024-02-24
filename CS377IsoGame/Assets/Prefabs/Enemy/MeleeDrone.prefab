@@ -681,7 +681,7 @@ MonoBehaviour:
       m_Calls: []
   myCurrentHealth: 0
   amIEnemy: 0
-  baseHP: 0
+  baseHP: 15
   baseSpeed: 0
   baseAttack: 0
   baseDefense: 0
@@ -690,7 +690,7 @@ MonoBehaviour:
   baseEvasiveness: 0
   baseRRR: 0
   baseTalent: 0
-  ceHP: 15
+  ceHP: 0
   ceSpeed: 0
   ceAttack: 0
   ceDefense: 0
