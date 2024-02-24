@@ -12,29 +12,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Platform_Large_11 (16) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1478700975778324, guid: 947441de82a48ae4e8d693f272edde94, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4555110006396732, guid: 947441de82a48ae4e8d693f272edde94, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.78810656
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4555110006396732, guid: 947441de82a48ae4e8d693f272edde94, type: 3}
       propertyPath: m_LocalScale.y
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4555110006396732, guid: 947441de82a48ae4e8d693f272edde94, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.972595
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4555110006396732, guid: 947441de82a48ae4e8d693f272edde94, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 167.18
+      value: 167.18886
       objectReference: {fileID: 0}
     - target: {fileID: 4555110006396732, guid: 947441de82a48ae4e8d693f272edde94, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 23.46
+      value: 23.547758
       objectReference: {fileID: 0}
     - target: {fileID: 4555110006396732, guid: 947441de82a48ae4e8d693f272edde94, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1894.5
+      value: 1886.3926
       objectReference: {fileID: 0}
     - target: {fileID: 4555110006396732, guid: 947441de82a48ae4e8d693f272edde94, type: 3}
       propertyPath: m_LocalRotation.w
