@@ -5,9 +5,19 @@ using UnityEngine.Playables;
 
 public class DataManager : MonoBehaviour
 {
+    public static DataManager Instance;
+
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
     // note that data is assigned to player in stats template
     private void OnApplicationQuit()
