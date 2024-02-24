@@ -6,6 +6,8 @@ using UnityEngine.Events;
 
 public class StatsTemplate : MonoBehaviour
 {
+    public static StatsTemplate PlayerStatsToSave;
+
     #region MyRegion
 
     [Serializable] public class StatUpdate: UnityEvent<float>
@@ -29,8 +31,6 @@ public class StatsTemplate : MonoBehaviour
 
     #endregion
     
-    
-    
     #region statsList
 
     public enum statsList
@@ -48,7 +48,6 @@ public class StatsTemplate : MonoBehaviour
     }
 
     #endregion
-    
     
     #region baseStats
 
@@ -77,7 +76,6 @@ public class StatsTemplate : MonoBehaviour
     public float ceTalent;
     
     #endregion
-    
     
     #region temporaryStats 
     //calculated and stored based on external parameters
@@ -145,10 +143,45 @@ public class StatsTemplate : MonoBehaviour
         baseEvasiveness = evasiveness;
         baseTalent = talent;
     }
-    
-    // Start is called before the first frame update
-    void Start()
+
+    // Method used to apply deserialized stats from prev scene
+    public void ApplyStats(PlayerStatsData data)
     {
+        baseHP = data.baseHP;
+        baseSpeed = data.baseSpeed;
+        baseAttack = data.baseAttack;
+        baseDefense = data.baseDefense;
+        baseAttackSpeed = data.baseAttackSpeed;
+        baseResistance = data.baseResistance;
+        baseEvasiveness = data.baseEvasiveness;
+        baseRRR = data.baseRRR; // Resource regeneration rate
+        baseTalent = data.baseTalent;
+
+        ceHP = data.ceHP;
+        ceSpeed = data.ceSpeed;
+        ceAttack = data.ceAttack;
+        ceDefense = data.ceDefense;
+        ceAttackSpeed = data.ceAttackSpeed;
+        ceResistance = data.ceResistance;
+        ceRRR = data.ceRRR; // Resource regeneration rate
+        ceEvasiveness = data.ceEvasiveness;
+        ceTalent = data.ceTalent;
+
+        // After updating the stats, we might need to call any initialization or update methods
+        // that recalculates the derived stats or effects based on these base and current stats.
+    }
+
+    private void Start()
+    {
+        if (!amIEnemy)
+        {
+            PlayerStatsData data = SaveSystem.LoadPlayerStats();
+            if (data != null)
+            {
+                ApplyStats(data);
+            }
+        }
+        // Moved from start to awake
         tHPModifiers = new List<StatModifier>();
         tSpeedModifiers = new List<StatModifier>();
         tAttackModifiers = new List<StatModifier>();
@@ -158,7 +191,7 @@ public class StatsTemplate : MonoBehaviour
         tRRRModifiers = new List<StatModifier>();
         tEvasivenessModifiers = new List<StatModifier>();
         tTalentModifiers = new List<StatModifier>();
-        
+
         pHPModifiers = new List<StatModifier>();
         pSpeedModifiers = new List<StatModifier>();
         pAttackModifiers = new List<StatModifier>();
@@ -168,8 +201,8 @@ public class StatsTemplate : MonoBehaviour
         pRRRModifiers = new List<StatModifier>();
         pEvasivenessModifiers = new List<StatModifier>();
         pTalentModifiers = new List<StatModifier>();
-        
-        
+
+
         ceHP = baseHP;
         ceSpeed = baseSpeed;
         ceAttack = baseAttack;
@@ -179,9 +212,9 @@ public class StatsTemplate : MonoBehaviour
         ceRRR = baseRRR; //resource regeneration rate
         ceEvasiveness = baseEvasiveness;
         ceTalent = baseTalent;
-        
+
         CalculateCES();
-        
+
         myEnemyAI = GetComponent<EnemyAI>();
         damageComponent = GetComponentInChildren<DamageEffect>();
         if (myEnemyAI != null)
@@ -190,9 +223,6 @@ public class StatsTemplate : MonoBehaviour
             myCurrentHealth = baseHP;
             OnDisable();
         }
-        
-        
-        
     }
 
     public void TakeDamage(float damage)

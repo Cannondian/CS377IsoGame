@@ -444,6 +444,7 @@ public class ConditionState : MonoBehaviour
                         EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
                             new EventTypes.StatusConditionFXParam(FXhandler.SlowFXPrefab, gameObject,
                                 nameof(StatusConditions.statusList.Slow)));
+                        // add a check here?
                         activeSlows[0] = new Slow(intensity, duration);
                         slowModifier = new StatModifier(intensity * -5, StatModifierType.Percent);
                         myStats.AddModifier(StatsTemplate.statsList.Speed, slowModifier);

@@ -1497,7 +1497,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   myCurrentHealth: 0
-  amIEnemy: 0
+  amIEnemy: 1
   baseHP: 100
   baseSpeed: 0
   baseAttack: 0
