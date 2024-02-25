@@ -64930,6 +64930,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechTile
       objectReference: {fileID: 0}
+    - target: {fileID: 8909421588560615729, guid: a35b5de08adae4634bc82d138c574c83, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -65048,6 +65052,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LavaTile
       objectReference: {fileID: 0}
+    - target: {fileID: 3136343437244157327, guid: 46f60cc5e5bff4dbfb00b355de1f3c5f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -65064,6 +65072,10 @@ PrefabInstance:
     - target: {fileID: 3167993131212910094, guid: 00bbda00b8cdd43e0bd2ff6f9b9f8757, type: 3}
       propertyPath: m_Name
       value: PlantTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167993131212910094, guid: 00bbda00b8cdd43e0bd2ff6f9b9f8757, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5141590436184494723, guid: 00bbda00b8cdd43e0bd2ff6f9b9f8757, type: 3}
       propertyPath: m_LocalPosition.x
@@ -65121,6 +65133,10 @@ PrefabInstance:
     - target: {fileID: 6994886278169232082, guid: fa577fca4d5174a2880e0ded0349fc6d, type: 3}
       propertyPath: m_Name
       value: IceTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 6994886278169232082, guid: fa577fca4d5174a2880e0ded0349fc6d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7394082556891882816, guid: fa577fca4d5174a2880e0ded0349fc6d, type: 3}
       propertyPath: m_LocalPosition.x
