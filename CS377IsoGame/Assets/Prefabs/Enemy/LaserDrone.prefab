@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -1253307371582614810}
   m_Layer: 15
   m_Name: LaserDrone
-  m_TagString: LaserDrone
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
