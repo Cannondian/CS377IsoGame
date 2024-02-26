@@ -29,12 +29,16 @@ public class LaserTurretController : EnemyAI
 
 
     // For soundFX
-    private bool SpiningUp;
-    private bool Spinning;
-    private bool SpinningDown;
-    private bool Turning;
+    private enum State {
+        spinningUp,
+        spinning,
+        spinningDown,
+    }
+    private State CurrentState;
     private GameObject TurningSoundFXContainer;
     private GameObject SpinningSoundFXContainer;
+    private GameObject ChargingSoundFXContainer;
+    private GameObject FiringSoundFXContainer;
 
     protected override void Awake()
     {
@@ -102,16 +106,13 @@ public class LaserTurretController : EnemyAI
         TurretTransform.rotation = newRotation;
 
         float currentTurretAngle = TurretTransform.rotation.eulerAngles.y;
-        float deltaAngle = Mathf.Abs(targetTurretAngle - currentTurretAngle - 180f);
-        // Debug.LogError(deltaAngle);
-        if (!Turning && deltaAngle > 5f)
+        float deltaAngle = Mathf.Abs(Mathf.Abs(targetTurretAngle - currentTurretAngle + 180f) - 180f); // The double Abs are a hack to make sure deltaAngle >= 0
+        if (deltaAngle > 5f)
         {
-            Turning = true;
             TurningSoundFXContainer.SetActive(true);
         } 
         else 
         {
-            Turning = false;
             TurningSoundFXContainer.SetActive(false);
         }
     }
@@ -200,7 +201,30 @@ public class LaserTurretController : EnemyAI
 
         UpdateTargetingRenderer(2f*CurrentSpinRate/MaxSpinRate);
 
-        // SoundManager.PlaySound(SoundManager.Sound.LaserTurret_SpinUp, transform.position);
+        // Sound FX
+        if (CurrentSpinRate/MaxSpinRate > MinFireSpinPercent && CurrentState != State.spinning)
+        {
+            if (ChargingSoundFXContainer != null)
+                ChargingSoundFXContainer.SetActive(false);
+            
+            SpinningSoundFXContainer.SetActive(true);
+            
+            FiringSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_Firing, transform);
+            
+            CurrentState = State.spinning;
+        }
+        else if (CurrentState != State.spinningUp && CurrentState != State.spinning)
+        {
+            SpinningSoundFXContainer.SetActive(false);
+            
+            if (FiringSoundFXContainer != null)
+                FiringSoundFXContainer.SetActive(false);
+            
+            SoundManager.PlaySound(SoundManager.Sound.LaserTurret_SpinUp, transform.position);
+            ChargingSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_Charging, transform);
+            
+            CurrentState = State.spinningUp;
+        }
     }
 
     void WindDown()
@@ -219,7 +243,21 @@ public class LaserTurretController : EnemyAI
             CurrentFireTime -= Time.deltaTime;
         }
 
-        // SoundManager.PlaySound(SoundManager.Sound.LaserTurret_SpinDown, transform.position);
+        // SoundFX
+        if (CurrentState != State.spinningDown)
+        {
+            SpinningSoundFXContainer.SetActive(false);
+            
+            if (ChargingSoundFXContainer != null)
+                ChargingSoundFXContainer.SetActive(false);
+            
+            if (FiringSoundFXContainer != null)
+                FiringSoundFXContainer.SetActive(false);
+            
+            SoundManager.PlaySound(SoundManager.Sound.LaserTurret_SpinDown, transform.position);
+            
+            CurrentState = State.spinningDown;
+        }
     }
 
     void UpdateTargetingRenderer(float alpha)

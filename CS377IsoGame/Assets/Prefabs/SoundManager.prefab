@@ -75,10 +75,10 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: b7c4db6edec017e4cb141ad0b139a5e7, type: 3}
   - sound: 14
     audioClip: {fileID: 8300000, guid: bc0d86acf61868440a27f325a0d68823, type: 3}
-  - sound: 0
-    audioClip: {fileID: 0}
-  - sound: 0
-    audioClip: {fileID: 0}
+  - sound: 15
+    audioClip: {fileID: 8300000, guid: 33d852237947f324d924b584292e2a9a, type: 3}
+  - sound: 16
+    audioClip: {fileID: 8300000, guid: ca7e57cbaf96bfb4ba6c511a8c1216c8, type: 3}
   - sound: 0
     audioClip: {fileID: 0}
   - sound: 0
