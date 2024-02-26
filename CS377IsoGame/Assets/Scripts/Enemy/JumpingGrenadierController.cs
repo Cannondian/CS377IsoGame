@@ -116,7 +116,7 @@ public class JumpingGrenadierController : EnemyAI
                 1f // Destroy FX after 1 second
             );
 
-            SoundManager.PlaySound(SoundManager.Sound.Grenadier_Fire, transform.position);
+            SoundManager.PlaySound(SoundManager.Sound.Generic_FireMissile, transform.position);
 
             var Grenade = Instantiate(
                 GrenadePrefab,
@@ -229,6 +229,9 @@ public class JumpingGrenadierController : EnemyAI
             i += 1;
         }
 
+        if (i == 100)
+            Debug.LogWarning("Failed to find a valid jump location in "+ i.ToString() + " tries!");
+
         if (walkPointSet)
         {
             StartCoroutine(JumpToWalkPoint());    
@@ -256,6 +259,9 @@ public class JumpingGrenadierController : EnemyAI
             i += 1;
         }
 
+        if (i == 100)
+            Debug.LogWarning("Failed to find a valid jump location in "+ i.ToString() + " tries!");
+
         if (walkPointSet)
         {
             StartCoroutine(JumpToWalkPoint());    
@@ -279,14 +285,19 @@ public class JumpingGrenadierController : EnemyAI
         _Animator.speed = 1f / (TimeToTarget * 1.25f); // scale up time to target to account for startup and stop sections of animation
         _Animator.Play("JumpingGrenadierJump");
 
-        // Wait for first 7/60th of animation (when grenadier is priming its jump)
+        // Wait for first 7/60th of animation (when grenadier is priming its jump) then plat soundFX
         yield return new WaitForSeconds(_Animator.speed * 7f/60f);
+        SoundManager.PlaySound(SoundManager.Sound.Generic_Thump, transform.position);
         
         // Move the enemy to the walkpoint
         agent.SetDestination(walkPoint);
 
+        // Wait for landing then play landing soundFX
+        yield return new WaitForSeconds(TimeToTarget);
+        SoundManager.PlaySound(SoundManager.Sound.Generic_Thump, transform.position);
+
         // Wait for animation to complete
-        yield return new WaitForSeconds(TimeToTarget + _Animator.speed * 8f/60f);
+        yield return new WaitForSeconds(_Animator.speed * 8f/60f);
 
         // Stop animation, ensure we reset it as well (so the enemy does not end up floating)
         walkPointSet = false;

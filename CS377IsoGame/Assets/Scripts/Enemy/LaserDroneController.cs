@@ -32,7 +32,7 @@ public class LaserDroneController : EnemyAI
                                                            transform.position,
                                                            Quaternion.identity, 
                                                            transform); // keep this drone as parent for this connection 
-            SoundManager.PlaySoundLoop(SoundManager.Sound.LaserDrone_Laser, Container.transform, 1f/MaxConnections);
+            SoundManager.PlaySoundLoop(SoundManager.Sound.Generic_Laser, Container.transform, 1f/MaxConnections);
             LaserConnections.Add(Container);
         }
 
@@ -40,8 +40,12 @@ public class LaserDroneController : EnemyAI
         WalkableLayerMask = LayerMask.GetMask("Walkable");
 
         AttackDamage = DamagePerSecond * Time.fixedDeltaTime; // Scale attack damage to fit desired damage per second
-        
-        SoundManager.PlaySoundLoop(SoundManager.Sound.LaserDrone_Hover, transform, 1f/MaxConnections);
+    }
+
+    void Start()
+    {
+        // This needs to be in start otherwise the SoundManager may not be instantiated yet...
+        SoundManager.PlaySoundLoop(SoundManager.Sound.Generic_Hover, transform, 1f/MaxConnections);
     }
 
     protected override void FixedUpdate()

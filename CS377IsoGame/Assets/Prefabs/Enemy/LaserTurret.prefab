@@ -413,9 +413,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 60
   m_WholeNumbers: 1
-  m_Value: 28
+  m_Value: 60
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -643,7 +643,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   myCurrentHealth: 0
-  amIEnemy: 0
+  amIEnemy: 1
   baseHP: 60
   baseSpeed: 0
   baseAttack: 0

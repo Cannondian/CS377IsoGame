@@ -1365,7 +1365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1807d8d51a1f74a836ba829a0ed882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myHealth: {fileID: -6462754791197078523}
+  myStats: {fileID: 0}
   player: {fileID: 0}
   Walkable:
     serializedVersion: 2
@@ -1373,6 +1373,9 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 8256
+  Player:
+    serializedVersion: 2
+    m_Bits: 0
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 20
@@ -1461,7 +1464,6 @@ MonoBehaviour:
   myEnemyAI: {fileID: 0}
   amIEnemy: 0
   damageComponent: {fileID: 0}
-  healthSlider: {fileID: 0}
 --- !u!114 &7657220417883237292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1474,6 +1476,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackSpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  myCurrentHealth: 0
+  amIEnemy: 1
   baseHP: 0
   baseSpeed: 0
   baseAttack: 0
@@ -1519,7 +1532,6 @@ MonoBehaviour:
   myEnemyAI: {fileID: 0}
   amIEnemy: 0
   damageComponent: {fileID: 0}
-  healthSlider: {fileID: 0}
 --- !u!114 &5825425988576240823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1532,6 +1544,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackSpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  AttackUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  myCurrentHealth: 0
+  amIEnemy: 0
   baseHP: 0
   baseSpeed: 0
   baseAttack: 0

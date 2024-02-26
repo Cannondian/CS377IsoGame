@@ -57,7 +57,7 @@ public class GrenadierMissile : MonoBehaviour
             1f // Destroy FX after 1 second
         );
 
-        SoundManager.PlaySound(SoundManager.Sound.Grenadier_GrenadeExplode, transform.position);
+        SoundManager.PlaySound(SoundManager.Sound.Generic_Explosion, transform.position);
 
         Destroy(gameObject);
     }
