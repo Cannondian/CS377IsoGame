@@ -18,7 +18,6 @@ public class LaserTurretController : EnemyAI
     public float MaxFireTime; // Max time before laser turns off
     public float CooldownTime;
 
-    private Quaternion CurrentTurretAngles;
     private float CurrentSpinRate;
     private float CurrentFireTime;
     private float CurrentCooldownTime;
@@ -28,6 +27,14 @@ public class LaserTurretController : EnemyAI
     private LayerMask WalkableLayerMask; // used to determine collisions with environment
     private StatsTemplate Stats;
 
+
+    // For soundFX
+    private bool SpiningUp;
+    private bool Spinning;
+    private bool SpinningDown;
+    private bool Turning;
+    private GameObject TurningSoundFXContainer;
+    private GameObject SpinningSoundFXContainer;
 
     protected override void Awake()
     {
@@ -48,6 +55,16 @@ public class LaserTurretController : EnemyAI
         Health = 20f;
         healthBar.maxValue = Health;
         AttackDamage = 0.5f;
+    }
+
+    void Start()
+    {
+        // Initialize soundFX loop containers
+        TurningSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_Turning, transform);
+        TurningSoundFXContainer.SetActive(false);
+
+        SpinningSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_Spinning, transform);
+        SpinningSoundFXContainer.SetActive(false);
     }
 
     protected override void Patroling()
@@ -83,6 +100,20 @@ public class LaserTurretController : EnemyAI
         Quaternion newRotation = Quaternion.RotateTowards(TurretTransform.rotation, targetRotation, TurnRate * Time.deltaTime);
 
         TurretTransform.rotation = newRotation;
+
+        float currentTurretAngle = TurretTransform.rotation.eulerAngles.y;
+        float deltaAngle = Mathf.Abs(targetTurretAngle - currentTurretAngle - 180f);
+        // Debug.LogError(deltaAngle);
+        if (!Turning && deltaAngle > 5f)
+        {
+            Turning = true;
+            TurningSoundFXContainer.SetActive(true);
+        } 
+        else 
+        {
+            Turning = false;
+            TurningSoundFXContainer.SetActive(false);
+        }
     }
 
     void MaybeFire()
@@ -168,6 +199,8 @@ public class LaserTurretController : EnemyAI
         BarrelTransform.Rotate(0f, 0f, CurrentSpinRate, Space.Self);
 
         UpdateTargetingRenderer(2f*CurrentSpinRate/MaxSpinRate);
+
+        // SoundManager.PlaySound(SoundManager.Sound.LaserTurret_SpinUp, transform.position);
     }
 
     void WindDown()
@@ -185,6 +218,8 @@ public class LaserTurretController : EnemyAI
         {
             CurrentFireTime -= Time.deltaTime;
         }
+
+        // SoundManager.PlaySound(SoundManager.Sound.LaserTurret_SpinDown, transform.position);
     }
 
     void UpdateTargetingRenderer(float alpha)

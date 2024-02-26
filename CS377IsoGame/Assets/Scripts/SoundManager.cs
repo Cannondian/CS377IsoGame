@@ -31,6 +31,12 @@ public class SoundManager : MonoBehaviour
         Generic_Slash_3,
         Generic_Slash_4,
         Generic_Thump,
+        LaserTurret_SpinUp,
+        LaserTurret_SpinDown,
+        LaserTurret_Spinning,
+        LaserTurret_Turning,
+        LaserTurret_Charging,
+        LaserTurret_Firing,
         // TODO, more...
     }
 
@@ -147,7 +153,7 @@ public class SoundManager : MonoBehaviour
 
     // Play a sound loop that is attached to a given parent transform
     // Useful for continuous sounds emmited from a single entity (like a flying drone's hover sound)
-    public static void PlaySoundLoop(Sound sound, Transform parent, float volume = 1f)
+    public static GameObject PlaySoundLoop(Sound sound, Transform parent, float volume = 1f)
     {
         if (CanPlaySound(sound))
         {
@@ -163,7 +169,10 @@ public class SoundManager : MonoBehaviour
             SetDefaultAudioSourceParams(audioSource);
 
             audioSource.Play();
+
+            return container;
         }
+        return null;
     }
 
     // Returns the audioClip associated with a given sound
