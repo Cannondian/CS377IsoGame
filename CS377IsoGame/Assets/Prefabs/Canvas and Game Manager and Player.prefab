@@ -9886,6 +9886,7 @@ Transform:
   - {fileID: 7568698081992543329}
   - {fileID: 8793991872965219995}
   - {fileID: 4303730850685767364}
+  - {fileID: 130152353517585815}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5854455330659084962
@@ -29891,6 +29892,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &4984164952436220771
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8980067670479477328}
+    m_Modifications:
+    - target: {fileID: 1540639432211445947, guid: ed98166d2864fc143a96035450320c76, type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964421983571896052, guid: ed98166d2864fc143a96035450320c76, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.0780396
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964421983571896052, guid: ed98166d2864fc143a96035450320c76, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5918293
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964421983571896052, guid: ed98166d2864fc143a96035450320c76, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.2557926
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964421983571896052, guid: ed98166d2864fc143a96035450320c76, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964421983571896052, guid: ed98166d2864fc143a96035450320c76, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964421983571896052, guid: ed98166d2864fc143a96035450320c76, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964421983571896052, guid: ed98166d2864fc143a96035450320c76, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964421983571896052, guid: ed98166d2864fc143a96035450320c76, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964421983571896052, guid: ed98166d2864fc143a96035450320c76, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964421983571896052, guid: ed98166d2864fc143a96035450320c76, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ed98166d2864fc143a96035450320c76, type: 3}
+--- !u!4 &130152353517585815 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4964421983571896052, guid: ed98166d2864fc143a96035450320c76, type: 3}
+  m_PrefabInstance: {fileID: 4984164952436220771}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5878583748692979269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30161,6 +30224,22 @@ PrefabInstance:
       propertyPath: Plant
       value: 
       objectReference: {fileID: 11400000, guid: 9f9e4f9d2fadc4b2699d105608d85b68, type: 2}
+    - target: {fileID: 4317558383485406746, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
+      propertyPath: Ilsihre
+      value: 
+      objectReference: {fileID: 11400000, guid: 180caf96b775a4a4d85cb9d7b27daea5, type: 2}
+    - target: {fileID: 4317558383485406746, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
+      propertyPath: Zulzara
+      value: 
+      objectReference: {fileID: 11400000, guid: bcb498f551e2647a987ebb8f22d17d70, type: 2}
+    - target: {fileID: 4317558383485406746, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
+      propertyPath: Velheret
+      value: 
+      objectReference: {fileID: 11400000, guid: 9f9e4f9d2fadc4b2699d105608d85b68, type: 2}
+    - target: {fileID: 4317558383485406746, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
+      propertyPath: Shalharan
+      value: 
+      objectReference: {fileID: 11400000, guid: 584e05163c58047e3b04dd5d08d39acc, type: 2}
     - target: {fileID: 4317558383485406746, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
       propertyPath: staffBody
       value: 
