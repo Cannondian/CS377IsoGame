@@ -30,6 +30,12 @@ public class MeleeDroneController : EnemyAI
         AttackDamage = 5f;
     }
 
+    void Start()
+    {
+        // This needs to be in start otherwise the SoundManager may not be instantiated yet...
+        SoundManager.PlaySoundLoop(SoundManager.Sound.Generic_Hover, transform);
+    }
+
     protected override void AttackPlayer()
     {
         if (!alreadyAttacked)
@@ -54,6 +60,7 @@ public class MeleeDroneController : EnemyAI
         stunned = true;
         attackBox.SetActive(true);
 
+
         // handle strange cases
         float dashStartTime = Time.time;
         float dashMaxDuration = 2.0f;
@@ -73,6 +80,7 @@ public class MeleeDroneController : EnemyAI
             attackIndicator.SetActive(false);
         }
 
+        SoundManager.PlaySound(SoundManager.Sound.Generic_Boost, transform.position);
         while (Vector3.Distance(new Vector3(transform.position.x, 0f, transform.position.z),
                                 new Vector3(target.x, 0f, target.z)) > 0.1f)
         {

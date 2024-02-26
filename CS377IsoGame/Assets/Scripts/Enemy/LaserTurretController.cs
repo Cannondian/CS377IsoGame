@@ -44,9 +44,6 @@ public class LaserTurretController : EnemyAI
 
         PlayerLayerMask = LayerMask.GetMask("Player");
         WalkableLayerMask = LayerMask.GetMask("Walkable");
-
-        Stats = gameObject.GetComponent<StatsTemplate>();
-        // TODO ... ?
         
         Health = 20f;
         healthBar.maxValue = Health;

@@ -20,10 +20,17 @@ public class SoundManager : MonoBehaviour
     // Enum of all soundFX
     public enum Sound 
     {
-        Grenadier_Fire,
-        Grenadier_GrenadeExplode,
-        LaserDrone_Hover,
-        LaserDrone_Laser,
+        Generic_Explosion,
+        Generic_FireMissile,
+        Generic_Hover,
+        Generic_Laser,
+        Generic_Yell,
+        Generic_Boost,
+        Generic_Slash_1,
+        Generic_Slash_2,
+        Generic_Slash_3,
+        Generic_Slash_4,
+        Generic_Thump,
         // TODO, more...
     }
 

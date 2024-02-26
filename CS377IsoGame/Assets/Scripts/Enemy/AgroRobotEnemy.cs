@@ -44,6 +44,7 @@ public class AgroRobotEnemy : EnemyAI
             // Trigger attack pattern
             animator.SetTrigger("StartAttack");
 
+            // SoundManager.PlaySound(SoundManager.Sound.Generic_Yell, transform.position); // TODO: The reset for this is wrong...
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -66,6 +67,8 @@ public class AgroRobotEnemy : EnemyAI
         float dashStartTime = Time.time;
         float dashMaxDuration = 2.0f; // Maximum duration to prevent infinite dashing
 
+        SoundManager.PlaySound(SoundManager.Sound.Generic_Slash_3, transform.position);
+
         while (Vector3.Distance(new Vector3(transform.position.x, 0f, transform.position.z),
                                 new Vector3(target.x, 0f, target.z)) > 0.1f)
         {
@@ -81,6 +84,12 @@ public class AgroRobotEnemy : EnemyAI
 
             yield return null; // Wait a frame and continue
         }
+
+        // Play Sounds to match with animation
+        yield return new WaitForSeconds(0.4f);
+        SoundManager.PlaySound(SoundManager.Sound.Generic_Slash_2, transform.position);
+        yield return new WaitForSeconds(0.2f);
+        SoundManager.PlaySound(SoundManager.Sound.Generic_Explosion, transform.position);
     }
 
 
