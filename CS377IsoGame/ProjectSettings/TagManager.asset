@@ -8,6 +8,7 @@ TagManager:
   - Collide
   - BurningFX
   - LaserDrone
+  - Enemy
   layers:
   - Default
   - TransparentFX

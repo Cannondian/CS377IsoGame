@@ -11,7 +11,7 @@ public class LaserDroneController : EnemyAI
     public float DamagePerSecond; // Damage *per* laser connection per second
 
     private bool SearchForNewWalkPoint = true;
-    private GameObject[] OtherLaserDrones;
+    private LaserDroneController[] OtherLaserDrones;
     private List<GameObject> LaserConnections = new List<GameObject>();
     private int RandomSeed;
 
@@ -110,7 +110,7 @@ public class LaserDroneController : EnemyAI
     void SearchForOtherLaserDronesInSightRange()
     {
         // Find all other laser drones in the scene
-        OtherLaserDrones = GameObject.FindGameObjectsWithTag("LaserDrone");
+        OtherLaserDrones = (LaserDroneController[])GameObject.FindObjectsOfType(typeof(LaserDroneController));
 
         // Shuffle the order of the drones in the array
         ReshuffleDrones(); // This is breaking things at the moment
@@ -202,7 +202,7 @@ public class LaserDroneController : EnemyAI
         // Knuth shuffle algorithm
         for (int i = 0; i < OtherLaserDrones.Length; i++)
         {
-            GameObject tmp = OtherLaserDrones[i];
+            var tmp = OtherLaserDrones[i];
             int r = Random.Range(i, OtherLaserDrones.Length);
             OtherLaserDrones[i] = OtherLaserDrones[r];
             OtherLaserDrones[r] = tmp;

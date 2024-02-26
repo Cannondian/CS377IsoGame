@@ -65,16 +65,16 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 8d8646c84b2924740b90b56fcc3d3c70, type: 3}
   - sound: 9
     audioClip: {fileID: 8300000, guid: c05df119163c8054d8c758b4317a0145, type: 3}
-  - sound: 0
-    audioClip: {fileID: 0}
-  - sound: 0
-    audioClip: {fileID: 0}
-  - sound: 0
-    audioClip: {fileID: 0}
-  - sound: 0
-    audioClip: {fileID: 0}
-  - sound: 0
-    audioClip: {fileID: 0}
+  - sound: 10
+    audioClip: {fileID: 8300000, guid: c05df119163c8054d8c758b4317a0145, type: 3}
+  - sound: 11
+    audioClip: {fileID: 8300000, guid: bf7a3a2c0ab1a1b4c8def216ef6a8112, type: 3}
+  - sound: 12
+    audioClip: {fileID: 8300000, guid: 365d1fe354cb3d14292072f9bf78f531, type: 3}
+  - sound: 13
+    audioClip: {fileID: 8300000, guid: b7c4db6edec017e4cb141ad0b139a5e7, type: 3}
+  - sound: 14
+    audioClip: {fileID: 8300000, guid: bc0d86acf61868440a27f325a0d68823, type: 3}
   - sound: 0
     audioClip: {fileID: 0}
   - sound: 0
