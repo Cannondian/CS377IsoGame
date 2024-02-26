@@ -47,7 +47,7 @@ namespace RPGCharacterAnims.Actions
 
            
                     EventBus.TriggerEvent(EventTypes.Events.ON_FLAMETHROWER_SKILL_START, 
-                        new EventTypes.FlamethrowerStartFXParam(Color.green, playerTransform, context.direction));
+                        new EventTypes.FlamethrowerStartFXParam(CustomTerrain.Terrains.Zulzara, playerTransform, context.direction));
                     controller.FlamethrowerSKill();
                     
                     Debug.Log("flamethrower");

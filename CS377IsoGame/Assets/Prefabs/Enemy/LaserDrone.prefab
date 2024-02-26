@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 919869347276077709}
   - component: {fileID: 4189785069285764920}
   - component: {fileID: 3187016616823076603}
+  - component: {fileID: -1253307371582614810}
   m_Layer: 15
   m_Name: LaserDrone
   m_TagString: LaserDrone
@@ -240,6 +241,22 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-1253307371582614810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094861630355358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480d3ece0d8b243b081b8e1f49c56c42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: 0
+  burning: 0
+  burningDuration: 0
+  effectiveRejuvenationIntensityforFX: 0
 --- !u!1 &2381148178787232430
 GameObject:
   m_ObjectHideFlags: 0

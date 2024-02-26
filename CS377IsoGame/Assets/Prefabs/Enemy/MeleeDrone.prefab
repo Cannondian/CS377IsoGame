@@ -492,6 +492,7 @@ GameObject:
   - component: {fileID: 8926394991584352150}
   - component: {fileID: -2652444479010325795}
   - component: {fileID: 157308210463696826}
+  - component: {fileID: -4592611728281541160}
   m_Layer: 15
   m_Name: MeleeDrone
   m_TagString: Untagged
@@ -729,6 +730,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8, y: 1.5, z: 0.8}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4592611728281541160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2451309832464529230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480d3ece0d8b243b081b8e1f49c56c42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: 0
+  burning: 0
+  burningDuration: 0
+  effectiveRejuvenationIntensityforFX: 0
 --- !u!1 &3684121135795408966
 GameObject:
   m_ObjectHideFlags: 0

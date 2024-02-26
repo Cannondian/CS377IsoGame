@@ -132,6 +132,8 @@ public class StatsTemplate : MonoBehaviour
     
     
     #endregion
+    
+    
 
     public StatsTemplate(float hp, float speed, float attack, float defense, float attackSpeed, float resistance, float RRR, float evasiveness, float talent)
     {
@@ -144,6 +146,7 @@ public class StatsTemplate : MonoBehaviour
         baseRRR = RRR;
         baseEvasiveness = evasiveness;
         baseTalent = talent;
+        
     }
     
     // Start is called before the first frame update

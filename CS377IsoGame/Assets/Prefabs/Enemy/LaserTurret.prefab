@@ -435,6 +435,7 @@ GameObject:
   - component: {fileID: 8209002257798234674}
   - component: {fileID: 5960566213668016564}
   - component: {fileID: 8132734453922592655}
+  - component: {fileID: -8764642941583820700}
   m_Layer: 15
   m_Name: LaserTurret
   m_TagString: Untagged
@@ -670,6 +671,22 @@ MonoBehaviour:
   tRRR: 0
   tEvasiveness: 0
   tTalent: 0
+--- !u!114 &-8764642941583820700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4293943630410068203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480d3ece0d8b243b081b8e1f49c56c42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: 0
+  burning: 0
+  burningDuration: 0
+  effectiveRejuvenationIntensityforFX: 0
 --- !u!1 &4298992819331346240
 GameObject:
   m_ObjectHideFlags: 0

@@ -312,5 +312,5 @@ Material:
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
     - _UnlitColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
-    - _WhiteColor: {r: 1, g: 0.8950032, b: 0, a: 0}
+    - _WhiteColor: {r: 1, g: 0.8950032, b: 0, a: 0.45490196}
   m_BuildTextureStacks: []

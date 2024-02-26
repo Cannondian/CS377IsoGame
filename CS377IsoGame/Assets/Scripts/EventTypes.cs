@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using HighlightPlus;
 using RPGCharacterAnims;
 using UnityEngine;
 
@@ -26,23 +27,25 @@ public class EventTypes
       ON_BASIC_ATTACK_HIT,
       ON_SKILL_USED,
       ON_ULTIMATE_USED,
+      ON_HIGHLIGHT_FX_TRIGGERED,
+      ON_HIGHLIGHT_FX_EXPIRED
 
       
    }
 
    public class SkillUsedParam
    {
-      public Color color;
+      public CustomTerrain.Terrains tile;
       public Vector3 position;
-      public FXList.FXlist fx;
+      public GameObject skillFX;
       public float duration;
       public float delay;
 
-      public SkillUsedParam(Color p1, Vector3 p2, FXList.FXlist p3, float p4, float p5)
+      public SkillUsedParam(CustomTerrain.Terrains p1, Vector3 p2, GameObject FX, float p4, float p5)
       {
-         color = p1;
+         tile = p1;
          position = p2;
-         fx = p3;
+         skillFX = FX;
          delay = p4;
          duration = p5;
       }
@@ -51,11 +54,11 @@ public class EventTypes
    public class FlamethrowerStartFXParam
    {
       public Vector3 direction;
-      public Color color;
+      public CustomTerrain.Terrains element;
       public Transform transform;
-       public FlamethrowerStartFXParam(Color p1, Transform p2, Vector3 dir)
+       public FlamethrowerStartFXParam(CustomTerrain.Terrains p1, Transform p2, Vector3 dir)
        {
-           color = p1;
+           element = p1;
            transform = p2;
            direction = dir;
            
@@ -105,11 +108,11 @@ public class EventTypes
    public class StatusConditionFXParam
    {
       public GameObject condition;
-      public int intensity;
+      public float intensity;
       public GameObject caller;
       public string myName;
       
-      public StatusConditionFXParam(GameObject prefab, GameObject callerObject, string name, int intensity = 1)
+      public StatusConditionFXParam(GameObject prefab, GameObject callerObject, string name, float intensity = 1)
        {
            this.condition = prefab;
            this.intensity = intensity;
@@ -155,5 +158,19 @@ public class EventTypes
 
       }
       
+   }
+
+   public class HighlightFXParam
+   {
+      public HighlightProfile tileHighlight;
+      public float highlightIntensity;
+      public bool isWeaponIncluded;
+
+      public HighlightFXParam(HighlightProfile profile, float intensity, bool weapon)
+      {
+         tileHighlight = profile;
+          highlightIntensity = intensity;
+          isWeaponIncluded = weapon;
+      }
    }
 }

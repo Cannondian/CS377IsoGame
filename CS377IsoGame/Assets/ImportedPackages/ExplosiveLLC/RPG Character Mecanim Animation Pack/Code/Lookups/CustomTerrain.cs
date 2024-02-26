@@ -6,11 +6,11 @@ public class CustomTerrain
 {
     public enum Terrains
     {
-        Ice,
-        Swamp,
-        Grass,
-        Titanium,
-        CalciumSulfateSalts //don't question the chemistry
+        Ilsihre, //attack (red)
+        Shalharan, //speed (white)
+        Zulzara, // RRR (blue brown)
+        Velheret, // healing (green)
+        Obhalas, //defense (purple/black)
         
     }
 }

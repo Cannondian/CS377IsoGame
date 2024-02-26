@@ -10,8 +10,6 @@ using Random = System.Random;
 
 public class ConditionState : MonoBehaviour
 {
-   
-    
     
    
     
@@ -73,7 +71,7 @@ public class ConditionState : MonoBehaviour
     #region CorrosiveData
 
     private float corrosiveDuration;
-    private int corrosiveIntensity;
+    private float corrosiveIntensity;
     private StatModifier corrosiveModifier;
 
     #endregion
@@ -105,10 +103,10 @@ public class ConditionState : MonoBehaviour
     public StatModifier slowModifier; //stat modifier that represents all active slow effect on the entity
     public struct Slow
     {
-        public readonly int slowIntensity;
+        public readonly float slowIntensity;
         public readonly float slowDuration;
         
-        public Slow(int i, float d)
+        public Slow(float i, float d)
         {
             slowIntensity = i;
             slowDuration = d;
@@ -129,13 +127,13 @@ public class ConditionState : MonoBehaviour
 
     #region  RejuvenationData
 
-    public int effectiveRejuvenationIntensityforFX;
+    public float effectiveRejuvenationIntensityforFX;
     public struct Rejuvenation
     {
         public float duration;
-        public int intensity;
+        public float intensity;
 
-        public Rejuvenation(float d, int i)
+        public Rejuvenation(float d, float i)
         {
             duration = d;
             intensity = i;
@@ -160,11 +158,13 @@ public class ConditionState : MonoBehaviour
     private int slipperyStepsIntensity;
     private StatModifier slipperyStepsSpeedModifier;
     private StatModifier slipperyStepsResistanceModifier;
+    private StatModifier slipperyStepsAttackSpeedModifier;
 
     #endregion
 
     #region SmolderingStrikesData
 
+    private float smolderingStrikesIntensity;
     private float smolderingStrikesDuration;
     private StatModifier smolderingStrikesModifier;
     private PlayerHitEffects.HitEffect.AdditionalEffect smolderingStrikesHitEffect;
@@ -182,7 +182,7 @@ public class ConditionState : MonoBehaviour
 
     private float defensiveTerrainDuration;
     private StatModifier defensiveTerrainModifier;
-    private int defensiveTerrainIntensity;
+    private float defensiveTerrainIntensity;
     
     #endregion
 
@@ -344,7 +344,7 @@ public class ConditionState : MonoBehaviour
 /// <param name="condition"></param>
 /// <param name="duration"></param>
 /// <param name="intensity"></param>
-    public void SetCondition(StatusConditions.statusList condition, float duration = 0f, int intensity = 1)
+    public void SetCondition(StatusConditions.statusList condition, float duration = -1, float intensity = 1)
     {
         switch (condition)
         {
@@ -356,14 +356,25 @@ public class ConditionState : MonoBehaviour
                 else
                 {
                     burning = true;
-                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION, 
-                        new EventTypes.StatusConditionFXParam(FXHandler.Instance.BurningFXPrefab, gameObject,  nameof(StatusConditions.statusList.Burning)));
+                    if (enemy)
+                    {
+                        EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                            new EventTypes.StatusConditionFXParam(FXHandler.Instance.BurningFXPrefabEnemy, gameObject,
+                                nameof(StatusConditions.statusList.Burning)));
+                    }
+                    else
+                    {
+                        EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                            new EventTypes.StatusConditionFXParam(FXHandler.Instance.playerBurningFX, gameObject,
+                                nameof(StatusConditions.statusList.Burning)));
+                    }
+                    
                     burningDuration = duration;
                 }
                 //ui trigger will go here
                 
                 break;
-            case StatusConditions.statusList.Corrosive: //intensity levels are 1, 2 and 3
+            case StatusConditions.statusList.Corrosive: 
 
                 if (corrosiveIntensity < intensity)
                 {
@@ -400,7 +411,7 @@ public class ConditionState : MonoBehaviour
                             gameObject, nameof(StatusConditions.statusList.Bleeding)));
                 }
 
-                if (bleedingStackCount < 10) bleedingStackCount += intensity;
+                if (bleedingStackCount < 10) bleedingStackCount += 1;
                 
                 if (duration > bleedingDuration)
                 {
@@ -496,7 +507,7 @@ public class ConditionState : MonoBehaviour
                 if (activeRejuvenations.Count == 4)
                 {
                     Rejuvenation rejuvenationToRemove = activeRejuvenations[0];
-                    int lowest = activeRejuvenations[0].intensity;
+                    float lowest = activeRejuvenations[0].intensity;
                     
                     foreach (Rejuvenation r in activeRejuvenations)
                     {
@@ -543,10 +554,11 @@ public class ConditionState : MonoBehaviour
                     slipperyStepsSpeedModifier =
                         new StatModifier(intensity * 15, StatModifierType.Percent); //add new version
                     myStats.AddModifier(StatsTemplate.statsList.Speed, slipperyStepsSpeedModifier);
-                    if (intensity == 3)
+                    slipperyStepsResistanceModifier = new StatModifier(100 * intensity, StatModifierType.Flat);
+                    myStats.AddModifier(StatsTemplate.statsList.Resistance, slipperyStepsResistanceModifier);
+                    if (!enemy)
                     {
-                        slipperyStepsResistanceModifier = new StatModifier(200, StatModifierType.Flat);
-                        myStats.AddModifier(StatsTemplate.statsList.Resistance, slipperyStepsResistanceModifier);
+                        slipperyStepsAttackSpeedModifier = new StatModifier(0.2f * intensity, StatModifierType.Flat);
                     }
 
                     EventBus.TriggerEvent(
@@ -556,6 +568,11 @@ public class ConditionState : MonoBehaviour
                             this.gameObject,
                             nameof(StatusConditions.statusList
                                 .SlipperySteps)));
+                    if (!enemy)
+                    {
+                        EventBus.TriggerEvent(EventTypes.Events.ON_HIGHLIGHT_FX_TRIGGERED, 
+                            new EventTypes.HighlightFXParam(FXhandler.Shalharan, intensity, false));
+                    }
                 }
 
                 slipperySteps = true;
@@ -564,30 +581,39 @@ public class ConditionState : MonoBehaviour
                 break;
             //scales with attack but has fixed intensity
             //also increases attack minimally
-            case StatusConditions.statusList.SmolderingStrikes: 
-                if (!smolderingStrikes)
+            case StatusConditions.statusList.SmolderingStrikes:
+                if (!enemy)
                 {
-                  EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION, 
-                      new EventTypes.StatusConditionFXParam(FXhandler.SmolderingStrikesFXPrefab, gameObject,
-                          nameof(StatusConditions.statusList.SmolderingStrikes)));
-                  smolderingStrikesModifier = new StatModifier(10, StatModifierType.Percent);
-                  myStats.AddModifier(StatsTemplate.statsList.Attack, smolderingStrikesModifier);
-                  if (!enemy)
-                  {
-                      smolderingStrikesHitEffect = (self, other) =>
-                      {
-                          Debug.Log("wow");
-                          other.GetComponent<ConditionState>().SetCondition(StatusConditions.statusList.Burning, 3);
-                      };
-                      PlayerHitEffects.Instance.AddHitEffect(new PlayerHitEffects.HitEffect(myStats.tAttack * 0.2f,
-                          smolderingStrikesHitEffect));
-                  }
+                    if (!smolderingStrikes)
+                    {
+
+
+                        EventBus.TriggerEvent(EventTypes.Events.ON_HIGHLIGHT_FX_TRIGGERED,
+                            new EventTypes.HighlightFXParam(FXhandler.Ilsihre, 1, false));
+                               
+
+
+                        smolderingStrikesModifier = new StatModifier(10 * intensity, StatModifierType.Percent);
+                        myStats.AddModifier(StatsTemplate.statsList.Attack, smolderingStrikesModifier);
+                        
+                            smolderingStrikesHitEffect = (self, other) =>
+                            {
+                                other.GetComponent<ConditionState>()
+                                    .SetCondition(StatusConditions.statusList.Burning, 4 * intensity);
+                            };
+                            PlayerHitEffects.Instance.AddHitEffect(new PlayerHitEffects.HitEffect(
+                                myStats.tAttack * 0.2f * Mathf.Pow(intensity, 2),
+                                smolderingStrikesHitEffect));
+                        
+                    }
+
+                    smolderingStrikes = true;
+                    if (smolderingStrikesDuration < duration)
+                    {
+                        smolderingStrikesDuration = duration;
+                    }
                 }
-                smolderingStrikes = true;
-                if (smolderingStrikesDuration < duration)
-                {
-                    smolderingStrikesDuration = duration;
-                }
+
                 break;
             case StatusConditions.statusList.Evasive:
                 if (!evasive)
@@ -783,9 +809,18 @@ public class ConditionState : MonoBehaviour
                 {
                     burningDuration = 0;
                     burning = false;
-                    EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
-                        new EventTypes.StatusConditionFXParam(FXHandler.Instance.BurningFXPrefab, gameObject,
-                            nameof(StatusConditions.statusList.Burning)));
+                    if (enemy)
+                    {
+                        EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
+                            new EventTypes.StatusConditionFXParam(FXHandler.Instance.BurningFXPrefabEnemy, gameObject,
+                                nameof(StatusConditions.statusList.Burning)));
+                    }
+                    else
+                    {
+                        EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
+                            new EventTypes.StatusConditionFXParam(FXHandler.Instance.playerBurningFX, gameObject,
+                                nameof(StatusConditions.statusList.Burning)));
+                    }
                 }
 
                 break;
@@ -926,7 +961,7 @@ public class ConditionState : MonoBehaviour
                                 gameObject, nameof(StatusConditions.statusList.Rejuvenation),
                                 rejuvenationToRemove.intensity));
                         activeRejuvenations.Remove(rejuvenationToRemove);
-                        int largestRejuvenation = 0;
+                        float largestRejuvenation = 0;
                         foreach (Rejuvenation r in activeRejuvenations)
                         {
                             if (r.intensity > largestRejuvenation)
@@ -966,11 +1001,12 @@ public class ConditionState : MonoBehaviour
                     EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
                         new EventTypes.StatusConditionFXParam(FXhandler.SlipperyStepsFXPrefab, this.gameObject,
                             nameof(StatusConditions.statusList.SlipperySteps)));
-                    if (slipperyStepsIntensity == 3)
+                   
+                    if (!enemy)
                     {
-                        myStats.RemoveModifier(StatsTemplate.statsList.Resistance, slipperyStepsResistanceModifier);
+                        myStats.RemoveModifier(StatsTemplate.statsList.AttackSpeed, slipperyStepsAttackSpeedModifier);
                     }
-
+                    myStats.RemoveModifier(StatsTemplate.statsList.Resistance, slipperyStepsResistanceModifier);
                     myStats.RemoveModifier(StatsTemplate.statsList.Speed, slipperyStepsSpeedModifier);
                     slipperyStepsDuration = 0;
                     slipperyStepsIntensity = 0;
@@ -981,11 +1017,11 @@ public class ConditionState : MonoBehaviour
             //scales with attack but has fixed intensity
             //also increases attack minimally
             case StatusConditions.statusList.SmolderingStrikes:
-                if (smolderingStrikes)
+                if (smolderingStrikes && !enemy)
                 {
-                  EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
-                      new EventTypes.StatusConditionFXParam(FXhandler.SmolderingStrikesFXPrefab, gameObject,
-                          nameof(StatusConditions.statusList.SmolderingStrikes)));
+                  //if we want to replace it with another, then pass on a different highlight than the one that's already in effect;
+                    EventBus.TriggerEvent(EventTypes.Events.ON_HIGHLIGHT_FX_EXPIRED, 
+                      new EventTypes.HighlightFXParam(FXhandler.Ilsihre, 0, false));
 
                   myStats.RemoveModifier(StatsTemplate.statsList.Attack, smolderingStrikesModifier);
                   PlayerHitEffects.Instance.RemoveHitEffect(new PlayerHitEffects.HitEffect(myStats.tAttack * 0.2f,

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e9253636bf2648bd813257f451f8486, type: 3}
-  m_Name: FireAttuned
+  m_Name: FlameTile
   m_EditorClassIdentifier: 
   effectGroup: 0
   effectGroupLayer:
@@ -43,24 +43,24 @@ MonoBehaviour:
   outlineColorStyle: 1
   outlineGradient:
     serializedVersion: 2
-    key0: {r: 1, g: 0, b: 0, a: 0}
-    key1: {r: 1, g: 0, b: 0, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 1, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 0.15690291, b: 0, a: 0}
+    key2: {r: 1, g: 0.15690291, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 12722
-    ctime1: 65535
-    ctime2: 0
+    ctime0: 9252
+    ctime1: 32382
+    ctime2: 28720
     ctime3: 0
     ctime4: 0
     ctime5: 0
     ctime6: 0
     ctime7: 0
-    atime0: 11565
-    atime1: 65535
+    atime0: 4626
+    atime1: 57247
     atime2: 0
     atime3: 0
     atime4: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_ColorSpace: -1
+    m_ColorSpace: 1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   outlineGradientInLocalSpace: 0
@@ -91,8 +91,8 @@ MonoBehaviour:
   glowHQColor: {r: 0.64, g: 1, b: 0, a: 1}
   glowDithering: 1
   glowDitheringStyle: 0
-  glowMagicNumber1: 0.75
-  glowMagicNumber2: 0.5
+  glowMagicNumber1: 0.7
+  glowMagicNumber2: 0.1
   glowAnimationSpeed: 1
   glowVisibility: 0
   glowBlendMode: 0
@@ -100,23 +100,23 @@ MonoBehaviour:
   glowPasses:
   - offset: 4
     alpha: 0.1
-    color: {r: 0.64, g: 1, b: 0, a: 1}
+    color: {r: 1, g: 0.5152213, b: 0, a: 1}
   - offset: 3
     alpha: 0.2
-    color: {r: 0.64, g: 1, b: 0, a: 1}
+    color: {r: 1, g: 0.14498512, b: 0, a: 1}
   - offset: 2
     alpha: 0.3
-    color: {r: 0.64, g: 1, b: 0, a: 1}
+    color: {r: 0.93333334, g: 0.8115832, b: 0.09411764, a: 1}
   - offset: 1
     alpha: 0.4
-    color: {r: 0.64, g: 1, b: 0, a: 1}
+    color: {r: 1, g: 0.009313857, b: 0, a: 1}
   glowMaskMode: 0
-  innerGlow: 0.5
+  innerGlow: 1.43
   innerGlowWidth: 1
   innerGlowBlendMode: 0
-  innerGlowColor: {r: 0.6509434, g: 0.08290317, b: 0.08290317, a: 1}
+  innerGlowColor: {r: 0.9622642, g: 0.12830222, b: 0, a: 1}
   innerGlowVisibility: 0
-  targetFX: 1
+  targetFX: 0
   targetFXTexture: {fileID: 2800000, guid: 1de3c566a6c8c405b9f6f453137273ec, type: 3}
   targetFXColor: {r: 0.8867924, g: 0.10457456, b: 0.10457456, a: 1}
   targetFXRotationSpeed: 50

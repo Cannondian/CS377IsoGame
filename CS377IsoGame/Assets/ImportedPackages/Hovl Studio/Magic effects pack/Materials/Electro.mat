@@ -21,21 +21,24 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Electro
-  m_Shader: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
+  m_Shader: {fileID: 4800000, guid: 2a33a166317493947a7be330dcc78a05, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _EMISSION
-  - _SURFACE_TYPE_TRANSPARENT
+  m_ValidKeywords: []
   m_InvalidKeywords:
-  - _ALPHABLEND_ON
+  - _ALPHAPREMULTIPLY_ON
+  - _EMISSION
   - _FLIPBOOKBLENDING_OFF
+  - _GRUNGEDECALSWITCH_1_ON
+  - _GRUNGEDECALSWITCH_2_ON
+  - _LINKTILING_1USEXONLY_ON
+  - _LINKTILING_2USEXONLY_ON
+  - _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses:
   - GRABPASS
   - DepthOnly
@@ -44,11 +47,23 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Back:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: ede7b7fc6b09fcc41892be0d6935c8cf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Ceiling:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -68,11 +83,19 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Floor:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: ede7b7fc6b09fcc41892be0d6935c8cf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normals:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -84,19 +107,57 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Props:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TriplanarTexture_1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TriplanarTexture_2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Wall:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WindowAlpha:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _AlphaCutoff: 0.5
     - _AlphaToMask: 0
+    - _BackWallTexTiling: 0
     - _Blend: 0
+    - _BlendModePreserveSpecular: 1
     - _BlendOp: 0
     - _BumpScale: 1
     - _CameraFadingEnabled: 0
     - _CameraFarFadeDistance: 2
     - _CameraNearFadeDistance: 1
+    - _CeilingTexTiling: 0
     - _ColorMode: 0
     - _Cull: 0
     - _Cutoff: 0.5
+    - _DecalTransparency_1: 1
+    - _DecalTransparency_2: 1
     - _DetailNormalMapScale: 1
     - _DistortionBlend: 0.5
     - _DistortionEnabled: 0
@@ -105,26 +166,51 @@ Material:
     - _DstBlend: 10
     - _DstBlendAlpha: 10
     - _EmissionEnabled: 0
+    - _EnvironmentReflections: 1
+    - _FacadeSmoothness: 0.2
+    - _FacadeTiling: 0
     - _FlipbookBlending: 0
     - _FlipbookMode: 0
+    - _FloorTexTiling: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _GrungeDecalSwitch_1: 1
+    - _GrungeDecalSwitch_2: 1
     - _LightingEnabled: 0
+    - _LinkTiling_1useXonly: 1
+    - _LinkTiling_2useXonly: 1
     - _Metallic: 0
     - _Mode: 2
+    - _NormalAmount: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _PropsTexTiling: 0
+    - _QueueControl: -1
     - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _RoomEmission: 1
+    - _RoomTile: 0
+    - _ShowFacade: 0
+    - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 1
+    - _SwitchPlane: 0
+    - _TogglePropLayer: 0
+    - _TriplanarTiling_1_X: 1
+    - _TriplanarTiling_1_Y: 1
+    - _TriplanarTiling_2_X: 1
+    - _TriplanarTiling_2_Y: 1
     - _UVSec: 0
+    - _WallEmission: 1
+    - _WallGlowThreshold: 0.95
+    - _WalltexTiling: 0
     - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 6.3479204, g: 6.3479204, b: 6.3479204, a: 1}
@@ -133,5 +219,8 @@ Material:
     - _Color: {r: 6.3479204, g: 6.3479204, b: 6.3479204, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _PositionOffsetXYZroomsWprops: {r: 0, g: 0, b: 0, a: 0}
+    - _RoomTint: {r: 0, g: 0, b: 0, a: 0}
+    - _RoomsXYZPropsW: {r: 1, g: 1, b: 1, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -1,17 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RPGCharacterAnims;
 using UnityEngine;
 
 public class TileEffects : MonoBehaviour
 {
     private ConditionState myState;
     public TileElement currentTile;
+    public TileMastery myMastery;
+    private bool player;
      
     // Start is called before the first frame update
     void Start()
     {
         myState = GetComponent<ConditionState>();
+        if (GetComponent<RPGCharacterController>() != null)
+        {
+            player = true;
+            myMastery = TileMastery.Instance;
+        }
+
+        
     }
 
     // Update is called once per frame
@@ -41,22 +51,31 @@ public class TileEffects : MonoBehaviour
     {
         if (currentTile != null)
         {
+            float intensity = 1;
             switch (currentTile.elementType)
             {
-                case TileElement.ElementType.Mech:
+                case TileElement.ElementType.Zulzara:
                     myState.SetCondition(StatusConditions.statusList.Hacked);
                     break;
-                case TileElement.ElementType.Plant:
+                case TileElement.ElementType.Velheret:
                     myState.SetCondition(StatusConditions.statusList.Rejuvenation);
                     break;
-                case TileElement.ElementType.Fire:
-                    myState.SetCondition(StatusConditions.statusList.Burning, 8);
-                    myState.SetCondition(StatusConditions.statusList.SmolderingStrikes, 8);
+                case TileElement.ElementType.Ilsihre:
+                    if (player)
+                    {
+                        intensity = 1 + myMastery.IlsihreEffectIntensity();
+                    }
+                    myState.SetCondition(StatusConditions.statusList.Burning, 8, intensity);
+                    myState.SetCondition(StatusConditions.statusList.SmolderingStrikes, 8, intensity);
                     break;
-                case TileElement.ElementType.Ice:
-                    myState.SetCondition(StatusConditions.statusList.Slow);
+                case TileElement.ElementType.Shalharan:
+                    if (player)
+                    {
+                        intensity = 1 + myMastery.ShalharanEffectIntensity();
+                    }
+                    myState.SetCondition(StatusConditions.statusList.SlipperySteps, 8, intensity);
                     break;
-                case TileElement.ElementType.Blob:
+                case TileElement.ElementType.Obhalas:
                     myState.SetCondition(StatusConditions.statusList.Corrosive);
                     break;
                 case TileElement.ElementType.Dust:

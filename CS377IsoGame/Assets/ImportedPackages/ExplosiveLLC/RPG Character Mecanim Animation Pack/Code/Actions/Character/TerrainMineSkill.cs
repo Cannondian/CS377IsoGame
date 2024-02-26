@@ -65,7 +65,7 @@ namespace RPGCharacterAnims.Actions
 				
 				
 				EventBus.TriggerEvent(EventTypes.Events.ON_PARTICLE_FX_FOR_SKILL, 
-					new EventTypes.SkillUsedParam(Color.green, position, FXList.FXlist.ArtilleryStrike, 0.3f, 2.5f));
+					new EventTypes.SkillUsedParam(CustomTerrain.Terrains.Shalharan, position, FXHandler.Instance.SHMinePrefab, 0.3f, 2.5f));
 				controller.MineSkill(Characters.Jisa,
 					0.1f,
 					terrain);

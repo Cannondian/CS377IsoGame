@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.IO;
+using HighlightPlus;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEditor.Rendering;
@@ -30,12 +31,15 @@ namespace RPGCharacterAnims.Actions
         private UnityAction<EventTypes.StatusConditionFXParam> NewStatusFXListener;
         private UnityAction<EventTypes.StatusConditionFXParam> ExpiredStatusFXListener;
 
-        private UnityAction<EventTypes.AttackSwingParam> AttackSwingParam;
+        private UnityAction<EventTypes.AttackSwingParam> AttackSwingListener;
+
+        private UnityAction<EventTypes.HighlightFXParam> NewHighlightListener;
+        private UnityAction<EventTypes.HighlightFXParam> ExpiredHighlightListener;
         #endregion
 
         #region Fields
 
-
+        [SerializeField] private HighlightEffect playerHighlightComponent;
         public int coreChargeParticleLevel;
 
         public Dictionary<GameObject, List<GameObject>> ActiveStatusEffectsDict =
@@ -43,6 +47,8 @@ namespace RPGCharacterAnims.Actions
 
         public Dictionary<GameObject, List<GameObject>> StatusEffectsOnQueue =
             new Dictionary<GameObject, List<GameObject>>();
+
+        private HighlightProfile activeHighlight;
 
     #endregion
 
@@ -52,7 +58,8 @@ namespace RPGCharacterAnims.Actions
         public GameObject ElectricityPrefab1;
         [FormerlySerializedAs("BasicHitPrefab")] [FormerlySerializedAs("BasicHit2Prefab")] public GameObject StaffSwingHitPrefab;
         [FormerlySerializedAs("EnhancedBasicHitPrefab")] [FormerlySerializedAs("EnhancedBasicHit2")] public GameObject KickPrefab;
-        public GameObject BurningFXPrefab;
+        public GameObject BurningFXPrefabEnemy;
+        
         public GameObject CorrosiveFXPrefab;
         public GameObject BleedingFXPrefab;
         public GameObject ConfusedFXPrefab;
@@ -70,15 +77,36 @@ namespace RPGCharacterAnims.Actions
         public GameObject GlowingFXPrefab;
         public GameObject AttackArcPrefab;
         public GameObject FlamethrowerPrefab;
-
+        public GameObject ILFlamethrowerPrefab;
+        public GameObject SHFlamethrowerPrefab;
+        public GameObject ZZFlamethrowerPrefab;
+        public GameObject VHFlamethrowerPrefab;
+        public GameObject OBFlamethrowerPrefab;
         
+        
+        public GameObject ILMinePrefab;
+        public GameObject SHMinePrefab;
+        public GameObject ZZMinePrefab;
+        public GameObject VHMinePrefab;
+        public GameObject OBMinePrefab;
 
         #endregion
 
+        #region Highlights
+
+        [FormerlySerializedAs("Mech")] public HighlightProfile Zulzara;
+        [FormerlySerializedAs("Fire")] public HighlightProfile Ilsihre;
+        [FormerlySerializedAs("Air")] public HighlightProfile Shalharan;
+        [FormerlySerializedAs("Plant")] public HighlightProfile Velheret;
+        [FormerlySerializedAs("Stone")] public HighlightProfile Obhalas;
+
+        #endregion
+        
         #region FXInstances
         
         public GameObject coreChargeParticles;
         public GameObject flamethrowerInstance;
+        public GameObject playerBurningFX;
         
         #endregion
 
@@ -110,13 +138,17 @@ namespace RPGCharacterAnims.Actions
             EventBus.StartListening(EventTypes.Events.ON_NEW_STATUS_CONDITION, NewStatusFXListener);
             ExpiredStatusFXListener += TerminateStatusConditionFX;
             EventBus.StartListening(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION, ExpiredStatusFXListener);
-            AttackSwingParam += EnableAttackSwingFX;
-            EventBus.StartListening(EventTypes.Events.ON_ATTACK_SWING, AttackSwingParam);
+            AttackSwingListener += EnableAttackSwingFX;
+            EventBus.StartListening(EventTypes.Events.ON_ATTACK_SWING, AttackSwingListener);
+            NewHighlightListener += InitializeTileStateHighlight;
+            EventBus.StartListening(EventTypes.Events.ON_HIGHLIGHT_FX_TRIGGERED, NewHighlightListener);
+            ExpiredHighlightListener += KillTileStateHighlight;
+            EventBus.StartListening(EventTypes.Events.ON_HIGHLIGHT_FX_EXPIRED, ExpiredHighlightListener);
         }
 
         private void OnDisable()
         {
-           EventBus.StopListening(EventTypes.Events.ON_PARTICLE_FX_FOR_SKILL, InitializeFXListener);
+           EventBus.StopListeningAll<EventTypes.Events>();
         }
         // PH is for placeholder
         private void SetFlags(string color, Vector3 pos, FXList.FXlist effect, float duration)
@@ -217,18 +249,30 @@ namespace RPGCharacterAnims.Actions
         {
             
 
-            switch (context.fx)
-            {
-                case FXList.FXlist.ArtilleryStrike:
-                    Debug.Log("FXHandler TEST2");
-                    StartCoroutine(DelayedStart(context.color, context.position, context.delay, context.duration, ArtilleryStrikePrefab));
-                    
-                    break;
-                case FXList.FXlist.ElectricityFX1:
-                    break;
-                //var ActualElectricity = Instantiate(ElectricityPrefab, pos, quaternion.identity);
-            }       
             
+                    Debug.Log("FXHandler TEST2");
+                    StartCoroutine(DelayedStart(context.position, context.delay, context.duration, context.skillFX));
+                    
+                   
+            
+        }
+
+        private void InitializeTileStateHighlight(EventTypes.HighlightFXParam context)
+        {
+            if (!playerHighlightComponent.highlighted)
+            {
+                playerHighlightComponent.highlighted = true;
+            }
+
+            playerHighlightComponent.ProfileLoad(context.tileHighlight);
+        }
+
+        private void KillTileStateHighlight(EventTypes.HighlightFXParam context)
+        {
+            if (context.tileHighlight == activeHighlight)
+            {
+                playerHighlightComponent.highlighted = false;
+            }
         }
 
         /// <summary>
@@ -341,7 +385,7 @@ namespace RPGCharacterAnims.Actions
         /// <param name="duration"></param>
         /// <param name="FX"></param>
         /// <returns></returns>
-        private IEnumerator DelayedStart(Color color, Vector3 pos, float delay, float duration, GameObject FX)
+        private IEnumerator DelayedStart( Vector3 pos, float delay, float duration, GameObject FX)
         {
             if (delay > 0)
             {
@@ -349,8 +393,8 @@ namespace RPGCharacterAnims.Actions
             }
             
             var realFXObject = Instantiate(FX, pos, quaternion.identity);
-            ParticleSystem.MainModule particleSettings = realFXObject.GetComponent<ParticleSystem>().main;
-            particleSettings.startColor = new ParticleSystem.MinMaxGradient(color);
+            
+            
             StartCoroutine(DelayedTerminateFX(duration, realFXObject));
         } 
         
@@ -368,7 +412,27 @@ namespace RPGCharacterAnims.Actions
 
         private void InitializeFlamethrowerFX(EventTypes.FlamethrowerStartFXParam context)
         {
-            flamethrowerInstance = Instantiate(FlamethrowerPrefab, context.transform);
+            switch (context.element)
+            {
+                case CustomTerrain.Terrains.Ilsihre:
+                    flamethrowerInstance = Instantiate(ILFlamethrowerPrefab, context.transform);
+                    break;
+                case CustomTerrain.Terrains.Shalharan:
+                    flamethrowerInstance = Instantiate(SHFlamethrowerPrefab, context.transform);
+                    break;
+                case CustomTerrain.Terrains.Zulzara:
+                    flamethrowerInstance = Instantiate(ZZFlamethrowerPrefab, context.transform);
+                    break;
+                case CustomTerrain.Terrains.Velheret:
+                    flamethrowerInstance = Instantiate(VHFlamethrowerPrefab, context.transform);
+                    break;
+                case CustomTerrain.Terrains.Obhalas:
+                    flamethrowerInstance = Instantiate(OBFlamethrowerPrefab, context.transform);
+                    break;
+               
+            }
+            
+            
         }
 
         private void TerminateFX(FXList.FXlist fx)

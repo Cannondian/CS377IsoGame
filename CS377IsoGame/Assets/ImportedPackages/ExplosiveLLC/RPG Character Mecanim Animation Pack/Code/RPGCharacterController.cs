@@ -703,7 +703,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 			{
 				// Update Animator animation speed.
 				animator.SetFloat(AnimationParameters.AnimationSpeed, animationSpeed * mySpeed / 45);
-				animator.SetFloat(AnimationParameters.CustomAnimationSpeed, 1.5f);
+				animator.SetFloat(AnimationParameters.CustomAnimationSpeed, 1.5f * mySpeed / 45);
 				animator.SetFloat(AnimationParameters.AttackSpeed, myAttackSpeed * attackSpeedConstant);
 
 				// Aiming.
