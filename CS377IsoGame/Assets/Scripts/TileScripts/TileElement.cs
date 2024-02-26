@@ -15,7 +15,7 @@ public class TileElement : MonoBehaviour
     
     
     
-    public enum ElementType {Zulzara,Velheret,Ilsihre,Shalharan,Obhalas,Dust,Radioactive}
+    public enum ElementType {Zulzara,Velheret,Ilsihre,Shalharan,Obhalas,Dust,Radioactive, None}
     [SerializeField] public ElementType elementType;
 
     public Renderer tileRender;
@@ -41,7 +41,7 @@ public class TileElement : MonoBehaviour
         }
         else if (elementType == ElementType.Ilsihre)
         {
-            tileRender.material.color = Color.red;
+            
         }
         else if (elementType == ElementType.Shalharan)
         {

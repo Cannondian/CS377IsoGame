@@ -226,6 +226,10 @@ public class StatsTemplate : MonoBehaviour
             myCurrentHealth = baseHP;
             OnDisable();
         }
+        else
+        {
+            myCurrentHealth = ceHP;
+        }
     }
 
     public void TakeDamage(float damage)

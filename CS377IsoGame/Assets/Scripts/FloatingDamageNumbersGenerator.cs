@@ -30,27 +30,35 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
         switch (context.size)
         {
             case 1:
-                textSizeScale = 1.5f;
+                textSizeScale = 20f;
                 break;
             case 2:
-                textSizeScale = 1.8f;
+                textSizeScale = 28f;
                 break;
             case 3:
-                textSizeScale = 2.1f;
+                textSizeScale = 36f;
                 break;
             case 4:
-                textSizeScale = 2.4f;
+                textSizeScale = 40F;
                 break;
         }
-        
-        
+
+        GameObject textToUse = genericDamageTextPrefab;
+        switch (context.firstType)
+        {
+            case Damage.Types.Fire:
+                textToUse = fireDamageTextPrefab;
+                break;
+                
+        }
         
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(context.target.transform.position);
         Debug.Log("I am trying");
-        var damageText = Instantiate(genericDamageTextPrefab, screenPosition, 
+        var damageText = Instantiate(textToUse, screenPosition, 
             quaternion.identity, canvas.transform);
-        damageText.transform.localScale = new Vector3(textSizeScale, textSizeScale, textSizeScale);
+        
         var text = damageText.GetComponent<TextMeshProUGUI>();
+        text.fontSize = textSizeScale;
         damageText.transform.position = RandomOffset(damageText.transform.position, false);
         text.text = context.damage.ToString();
 
@@ -61,16 +69,34 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
             {
                 case Damage.Types.Fire:
                     var damageText2 = Instantiate(fireDamageTextPrefab, damageText.transform);
-                    
                     damageText2.transform.position = RandomOffset(damageText2.transform.position, true);
                     var text2 = damageText2.GetComponent<TextMeshProUGUI>();
                     text2.text = context.additionalDamage.ToString();
+                    text2.fontSize = textSizeScale / 3;
                     break;
                     
             }
         }
         Destroy(damageText, 1.2f);
+        //StayOnTarget(context.target, damageText, 1.2f);
     }
+
+    private IEnumerator StayOnTarget(GameObject target, GameObject text, float duration)
+    {
+
+        if (duration <= 0)
+        {
+            Destroy(text);
+        }
+        else
+        {
+            text.transform.position = RandomOffset(Camera.main.WorldToScreenPoint(target.transform.position), false);
+
+            yield return StayOnTarget(target, text, duration - Time.deltaTime);
+        }
+    }
+
+
 
     private Vector3 RandomOffset(Vector3 oldPosition, bool isAdditional)
     {

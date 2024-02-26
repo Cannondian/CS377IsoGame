@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TileMastery : Singleton<TileMastery>
 {
@@ -14,7 +15,9 @@ public class TileMastery : Singleton<TileMastery>
     public float masteryOverObhalas;
 
     #endregion
-    
+
+    public TileElement.ElementType effectiveTile { get; set; }
+   
     
     // Start is called before the first frame update
     void Start()
@@ -37,4 +40,7 @@ public class TileMastery : Singleton<TileMastery>
     {
         return masteryOverShalharan * 0.1f;
     }
+
+    
+    
 }

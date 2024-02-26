@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using RPGCharacterAnims;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TileEffects : MonoBehaviour
 {
     private ConditionState myState;
-    public TileElement currentTile;
+    public TileElement.ElementType currentTile;
     public TileMastery myMastery;
     private bool player;
+    
+    public UnityEvent<TileElement.ElementType> tileAnnouncement;    
      
     // Start is called before the first frame update
     void Start()
@@ -21,7 +24,7 @@ public class TileEffects : MonoBehaviour
             myMastery = TileMastery.Instance;
         }
 
-        
+        currentTile = TileElement.ElementType.None;
     }
 
     // Update is called once per frame
@@ -42,17 +45,30 @@ public class TileEffects : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.up * -1, out hit, 4, 1 << 11))
         {
             TileElement tile;
+            TileElement.ElementType elementalTile;
             hit.collider.gameObject.TryGetComponent<TileElement>(out tile);
-            currentTile = tile;
+            if (tile == null)
+            {
+                elementalTile = TileElement.ElementType.None;
+            }
+            else
+            {
+                elementalTile = tile.elementType;
+            }
+            if (currentTile != elementalTile && player)
+            {
+                tileAnnouncement.Invoke(elementalTile);
+                currentTile = elementalTile;
+            }
         }
     }
     
     private void ApplyTileEffects()
     {
-        if (currentTile != null)
+        if (currentTile != TileElement.ElementType.None)
         {
             float intensity = 1;
-            switch (currentTile.elementType)
+            switch (currentTile)
             {
                 case TileElement.ElementType.Zulzara:
                     myState.SetCondition(StatusConditions.statusList.Hacked);

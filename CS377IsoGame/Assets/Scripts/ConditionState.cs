@@ -64,6 +64,7 @@ public class ConditionState : MonoBehaviour
     #region BurningData
 
     public float burningDuration;
+    public float burningCounter;
     
 
     #endregion
@@ -1118,16 +1119,24 @@ public class ConditionState : MonoBehaviour
 
     private void ApplyBurning()
     {
-        burningDuration -= Time.deltaTime;
+        burningCounter += Time.deltaTime;
+        
         if (burningDuration <= 0)
         {
             RemoveCondition(StatusConditions.statusList.Burning);
+            burningCounter = 0;
         }
 
-        if (burningDuration % 1 == 0)
+        if (burningCounter > 1 )
         {
+            
+            burningDuration -= burningCounter;
+            burningCounter = 0;
             var tickDamage = myStats.tHP * 0.02f;
             myStats.TakeDamage(tickDamage);
+            EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT,
+                new EventTypes.FloatingDamageParam(gameObject, tickDamage, 1,
+                    Damage.Types.Fire));
         }
        
     }
