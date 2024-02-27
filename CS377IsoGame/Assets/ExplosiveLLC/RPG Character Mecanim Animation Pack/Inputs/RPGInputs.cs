@@ -390,17 +390,6 @@ namespace RPGCharacterAnims
                 },
                 {
                     ""name"": """",
-                    ""id"": ""fd8e2b73-bd35-47c4-baad-2faa61e5608f"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Mouse and Keyboard"",
-                    ""action"": ""AttackR"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""d79770ca-5c77-4b53-ac33-9712a4cb8ee2"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
@@ -633,7 +622,7 @@ namespace RPGCharacterAnims
                 {
                     ""name"": """",
                     ""id"": ""60184a28-f38e-44bc-8354-d1deed3f366c"",
-                    ""path"": ""<Keyboard>/2"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
