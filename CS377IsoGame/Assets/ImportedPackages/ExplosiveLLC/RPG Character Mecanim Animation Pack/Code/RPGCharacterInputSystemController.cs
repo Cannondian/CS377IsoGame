@@ -436,7 +436,7 @@ namespace RPGCharacterAnims
 		public IEnumerator TargetingLoop()
 		{
 
-			while (!rpgInputs.RPGCharacter.AttackL.IsPressed())
+			while (true)
 			{
 				Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 				float hitDist;
@@ -453,18 +453,28 @@ namespace RPGCharacterAnims
 					{
 						targetingCircle.transform.position = ray.GetPoint(hitDist);
 					}
+					
 
+				}
 
+				if (rpgInputs.RPGCharacter.AttackL.IsPressed() || rpgInputs.RPGCharacter.AttackR.IsPressed())
+				{
+					break;
 				}
 				
 				yield return null;
+				
 			}
 
-			Destroy(targetingCircle);
-			Destroy(rangeCircle);
-			rpgCharacterController.Unlock(true, true);
-			rpgCharacterController.StartAction(HandlerTypes.TerrainMineSkill,
-				new SkillContext(HandlerTypes.TerrainMineSkill, targetingCircle.transform.position, TileMastery.Instance.effectiveTile, 2));
+			if (!rpgInputs.RPGCharacter.AttackR.IsPressed())
+			{
+				Destroy(targetingCircle);
+				Destroy(rangeCircle);
+				rpgCharacterController.Unlock(true, true);
+				rpgCharacterController.StartAction(HandlerTypes.TerrainMineSkill,
+					new SkillContext(HandlerTypes.TerrainMineSkill, targetingCircle.transform.position,
+						TileMastery.Instance.effectiveTile, 2));
+			}
 		}
     
 
