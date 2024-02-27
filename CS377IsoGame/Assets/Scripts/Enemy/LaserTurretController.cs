@@ -56,8 +56,8 @@ public class LaserTurretController : EnemyAI
         PlayerLayerMask = LayerMask.GetMask("Player");
         WalkableLayerMask = LayerMask.GetMask("Walkable");
         
-        Health = 20f;
-        healthBar.maxValue = Health;
+        // Health = 20f; // Now set in the stats template
+        // healthBar.maxValue = Health;
         AttackDamage = 0.5f;
     }
 
@@ -173,13 +173,12 @@ public class LaserTurretController : EnemyAI
             TargetingRenderer.enabled = false; // Turn off targeting while firing
 
             // Check if laser hits player using a raycast
-            // Note: For some reason, we need to set origin to transform.position since BarrelTransform.position causes laser to miss.
-            if (Physics.Raycast(transform.position, BarrelTransform.forward, attackRange, PlayerLayerMask))
+            if (Physics.Raycast(BarrelTransform.position, BarrelTransform.forward, attackRange, PlayerLayerMask))
             {
                 float distanceToPlayer = new Vector2(transform.position.x - player.position.x, transform.position.z - player.position.z).magnitude;
 
                 // Do another ray cast to determine if the laser is blocked by something else along the path to the player
-                if (!Physics.Raycast(transform.position, BarrelTransform.forward, distanceToPlayer, WalkableLayerMask))
+                if (!Physics.Raycast(BarrelTransform.position, BarrelTransform.forward, distanceToPlayer, WalkableLayerMask))
                 {
                     // Call the player's take damage event, deal damage per physics tick if it hits player
                     EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, AttackDamage);
