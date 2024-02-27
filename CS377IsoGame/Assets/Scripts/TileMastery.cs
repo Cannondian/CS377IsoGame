@@ -22,7 +22,7 @@ public class TileMastery : Singleton<TileMastery>
     // Start is called before the first frame update
     void Start()
     {
-        
+        effectiveTile = TileElement.ElementType.None;
     }
 
     // Update is called once per frame

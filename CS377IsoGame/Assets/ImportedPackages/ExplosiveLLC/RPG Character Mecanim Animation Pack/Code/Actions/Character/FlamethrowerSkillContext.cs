@@ -7,15 +7,15 @@ namespace RPGCharacterAnims.Actions
 
         public Vector3 direction;
         public Transform playerTransform;
-        public CustomTerrain.Terrains terrain;
+        public TileElement.ElementType element; 
         public string type;
         
         
 
-        public FlamethrowerSkillContext(string handlerType, Vector3 loc, CustomTerrain.Terrains ter, Transform nucleus)
+        public FlamethrowerSkillContext(string handlerType, Vector3 loc, TileElement.ElementType ter, Transform nucleus)
         {
             direction = loc;
-            terrain = ter;
+            element = ter;
             type = handlerType;
             playerTransform = nucleus;
 

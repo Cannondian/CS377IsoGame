@@ -383,7 +383,7 @@ namespace RPGCharacterAnims
 				//movementController.walkSpeed = movementController.walkSpeed / 2;
 				
 				rpgCharacterController.StartAction(HandlerTypes.FlamethrowerSkill, 
-					new FlamethrowerSkillContext(HandlerTypes.FlamethrowerSkill, lookTarget, CustomTerrain.Terrains.Velheret, transform));
+					new FlamethrowerSkillContext(HandlerTypes.FlamethrowerSkill, lookTarget, TileMastery.Instance.effectiveTile, transform));
 			}
 
 			if (!alarm)
@@ -461,7 +461,7 @@ namespace RPGCharacterAnims
 			Destroy(rangeCircle);
 			rpgCharacterController.Unlock(true, true);
 			rpgCharacterController.StartAction(HandlerTypes.TerrainMineSkill,
-				new SkillContext(HandlerTypes.TerrainMineSkill, targetingCircle.transform.position, CustomTerrain.Terrains.Velheret, 2));
+				new SkillContext(HandlerTypes.TerrainMineSkill, targetingCircle.transform.position, TileMastery.Instance.effectiveTile, 2));
 		}
     
 

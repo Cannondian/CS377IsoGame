@@ -247,14 +247,27 @@ namespace RPGCharacterAnims.Actions
 
         private void InitializeArtilleryStrikeFX(EventTypes.SkillUsedParam context)
         {
-            
 
-            
-                    Debug.Log("FXHandler TEST2");
-                    StartCoroutine(DelayedStart(context.position, context.delay, context.duration, context.skillFX));
-                    
-                   
-            
+
+
+            switch (context.tile)
+            {
+                case TileElement.ElementType.Ilsihre:
+                    StartCoroutine(DelayedStart(context.position, context.delay, context.duration, ILMinePrefab));
+                    break;
+                case TileElement.ElementType.Velheret:
+                    StartCoroutine(DelayedStart(context.position, context.delay, context.duration, VHMinePrefab));
+                    break;
+                case TileElement.ElementType.Shalharan:
+                    StartCoroutine(DelayedStart(context.position, context.delay, context.duration, SHMinePrefab));
+                    break;
+                case TileElement.ElementType.None:
+                    StartCoroutine(DelayedStart(context.position, context.delay, context.duration, ArtilleryStrikePrefab));
+                    break;
+            }
+
+
+
         }
 
         private void InitializeTileStateHighlight(EventTypes.HighlightFXParam context)
@@ -414,20 +427,23 @@ namespace RPGCharacterAnims.Actions
         {
             switch (context.element)
             {
-                case CustomTerrain.Terrains.Ilsihre:
+                case TileElement.ElementType.Ilsihre:
                     flamethrowerInstance = Instantiate(ILFlamethrowerPrefab, context.transform);
                     break;
-                case CustomTerrain.Terrains.Shalharan:
+                case TileElement.ElementType.Shalharan:
                     flamethrowerInstance = Instantiate(SHFlamethrowerPrefab, context.transform);
                     break;
-                case CustomTerrain.Terrains.Zulzara:
+                case TileElement.ElementType.Zulzara:
                     flamethrowerInstance = Instantiate(ZZFlamethrowerPrefab, context.transform);
                     break;
-                case CustomTerrain.Terrains.Velheret:
+                case TileElement.ElementType.Velheret:
                     flamethrowerInstance = Instantiate(VHFlamethrowerPrefab, context.transform);
                     break;
-                case CustomTerrain.Terrains.Obhalas:
+                case TileElement.ElementType.Obhalas:
                     flamethrowerInstance = Instantiate(OBFlamethrowerPrefab, context.transform);
+                    break;
+                case TileElement.ElementType.None:
+                    flamethrowerInstance = Instantiate(FlamethrowerPrefab, context.transform);
                     break;
                
             }

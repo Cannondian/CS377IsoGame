@@ -1154,7 +1154,7 @@ using Null = RPGCharacterAnims.Actions.Null;
 
 			
 			
-			public void MineSkill(Characters character, float duration, CustomTerrain.Terrains terrain)
+			public void MineSkill(Characters character, float duration, TileElement.ElementType tile)
 			{
 
 				switch (character)

@@ -7,13 +7,13 @@ namespace RPGCharacterAnims.Actions
     {
         public string type;
         public Vector3 pos;
-        public CustomTerrain.Terrains terrainType;
+        public TileElement.ElementType element;
         public int energy;
 
-        public SkillContext(string type, Vector3 location, CustomTerrain.Terrains terrainData, int number = -1)
+        public SkillContext(string type, Vector3 location, TileElement.ElementType e, int number = -1)
         {
             this.type = type;
-            terrainType = terrainData;
+            element = e;
             pos = location;
             this.energy = number;
         }

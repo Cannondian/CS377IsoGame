@@ -35,17 +35,15 @@ public class EventTypes
 
    public class SkillUsedParam
    {
-      public CustomTerrain.Terrains tile;
+      public TileElement.ElementType tile;
       public Vector3 position;
-      public GameObject skillFX;
       public float duration;
       public float delay;
 
-      public SkillUsedParam(CustomTerrain.Terrains p1, Vector3 p2, GameObject FX, float p4, float p5)
+      public SkillUsedParam(TileElement.ElementType p1, Vector3 p2, float p4, float p5)
       {
          tile = p1;
          position = p2;
-         skillFX = FX;
          delay = p4;
          duration = p5;
       }
@@ -54,9 +52,9 @@ public class EventTypes
    public class FlamethrowerStartFXParam
    {
       public Vector3 direction;
-      public CustomTerrain.Terrains element;
+      public TileElement.ElementType element;
       public Transform transform;
-       public FlamethrowerStartFXParam(CustomTerrain.Terrains p1, Transform p2, Vector3 dir)
+       public FlamethrowerStartFXParam(TileElement.ElementType p1, Transform p2, Vector3 dir)
        {
            element = p1;
            transform = p2;
