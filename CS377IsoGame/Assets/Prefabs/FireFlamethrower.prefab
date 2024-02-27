@@ -4592,6 +4592,7 @@ GameObject:
   - component: {fileID: 199378252207973648}
   - component: {fileID: -5547590644671356748}
   - component: {fileID: 3934652231146962920}
+  - component: {fileID: 306410674132791415}
   m_Layer: 0
   m_Name: FireFlamethrower
   m_TagString: Untagged
@@ -9450,3 +9451,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 2, z: 12}
   m_Center: {x: 0, y: 1, z: 6}
+--- !u!114 &306410674132791415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653619026499950}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 072f7771b561443e2b489c58c9ecbb24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
