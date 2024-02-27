@@ -12,6 +12,7 @@ using System.Reflection;
 // Requires installing the InputSystem Package from the Package Manager: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.5/manual/Installation.html
 using UnityEngine.InputSystem;
 using System;
+using System.Drawing;
 using UnityEngine.Rendering.Universal;
 
 namespace RPGCharacterAnims
@@ -419,7 +420,7 @@ namespace RPGCharacterAnims
 			if (Physics.Raycast(ray, out hitInfo))
 			{
 				Vector3 targetPoint = hitInfo.point;
-				targetingCircle = Instantiate(targetCirclePrefab, targetPoint, quaternion.identity);
+				targetingCircle = Instantiate(targetCirclePrefab, targetPoint, transform.rotation, transform);
 				CreateRangeIndicator();
 			}
 			rpgCharacterController.Lock(false, true, false, 0, 0);
@@ -438,20 +439,22 @@ namespace RPGCharacterAnims
 			while (!rpgInputs.RPGCharacter.AttackL.IsPressed())
 			{
 				Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-				RaycastHit hitInfo;
-				if (Physics.Raycast(ray, out hitInfo))
+				float hitDist;
+				Plane playerPlane = new Plane(Vector3.up, transform.position);
+				if (playerPlane.Raycast(ray, out hitDist))
 				{
-					Vector3 targetPoint = hitInfo.point;
-					Vector3 direction = targetPoint - transform.position;
-					direction.y = 0;
-					Vector3 range = direction.normalized * 5.5f;
-					
-					
+					Vector3 hitVector = ray.GetPoint(hitDist) - transform.position;
+					if (hitVector.magnitude > 5.5)
+					{
+						targetingCircle.transform.position = transform.position +
+						                                     (ray.GetPoint(hitDist) - transform.position).normalized * 5.5f;
+					}
+					else
+					{
+						targetingCircle.transform.position = ray.GetPoint(hitDist);
+					}
 
-					targetingCircle.transform.position =
-						direction.magnitude > range.magnitude
-							? transform.position + range 
-							: transform.position + direction;
+
 				}
 				
 				yield return null;
