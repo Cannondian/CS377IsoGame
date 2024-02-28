@@ -37,8 +37,6 @@ public class JisaMineSkillCollision : MonoBehaviour
         {
             hitThisCast.Add(other.gameObject);
             var damage = DamageCalculator.Instance.PlayerMineSkill();
-            EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
-                new EventTypes.FloatingDamageParam(other.gameObject, damage, 4));
             DamageEnemy(other, damage);
             isDamageDealt = true;
         }
@@ -50,6 +48,8 @@ public class JisaMineSkillCollision : MonoBehaviour
         if (enemyStats.amIEnemy)
         {
             enemyStats.TakeDamage(damage);
+            EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
+                                  new EventTypes.FloatingDamageParam(other.gameObject, damage, 4));
         }
     }
 }
