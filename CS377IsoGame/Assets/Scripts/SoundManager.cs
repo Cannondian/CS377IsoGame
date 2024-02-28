@@ -17,6 +17,9 @@ public class SoundManager : MonoBehaviour
     private List<AudioSource> pooledAudioSources = new List<AudioSource>();
     private int amountToPool = 100;
 
+    private GameObject musicContainer;
+    private AudioSource musicSource;
+
     // Enum of all soundFX
     public enum Sound 
     {
@@ -38,6 +41,7 @@ public class SoundManager : MonoBehaviour
         LaserTurret_Charging,
         LaserTurret_Firing,
         BigSlow_Stomp,
+        Music_Track1,
 
         // TODO, more...
     }
@@ -82,6 +86,10 @@ public class SoundManager : MonoBehaviour
 
         soundTimerDictionary = new Dictionary<Sound, float>();
         // TODO: initialize values...
+
+
+        // Start playing music for this level
+        PlayMusic(Sound.Music_Track1, 0.5f);
     }
 
     public int GetPooledContainerIndex()
@@ -175,6 +183,20 @@ public class SoundManager : MonoBehaviour
             return container;
         }
         return null;
+    }
+
+    private void PlayMusic(Sound sound, float volume = 1f)
+    {
+        musicContainer = new GameObject("Music");
+        musicContainer.transform.parent = instance.gameObject.transform.parent.GetChild(0); // select the player as parent for music
+        musicSource = musicContainer.AddComponent<AudioSource>();
+
+        musicSource.clip = GetAudioClip(sound);
+        musicSource.volume = volume;
+        musicSource.loop = true;
+        musicSource.spatialize = false; // no spatial audio, keep constant volume
+        SetDefaultAudioSourceParams(musicSource);
+        musicSource.Play();
     }
 
     // Returns the audioClip associated with a given sound

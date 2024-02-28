@@ -1376,7 +1376,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3589093526055912379}
   m_Enabled: 1
   m_AgentTypeID: -1372625422
-  m_Radius: 0.5
+  m_Radius: 0.1
   m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1401,7 +1401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f3309c7204f240a4a38eca30b97fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myStats: {fileID: 0}
+  myStats: {fileID: 3761155282434843065}
   player: {fileID: 0}
   Walkable:
     serializedVersion: 2
@@ -1511,6 +1511,7 @@ MonoBehaviour:
   enemy: 0
   burning: 0
   burningDuration: 0
+  burningCounter: 0
   effectiveRejuvenationIntensityforFX: 0
 --- !u!1 &3644027774952300743
 GameObject:

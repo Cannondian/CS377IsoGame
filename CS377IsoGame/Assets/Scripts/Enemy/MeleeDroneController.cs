@@ -48,6 +48,27 @@ public class MeleeDroneController : EnemyAI
                 player.position.z + directionToPlayer.z * overshootDistance
             );
 
+
+            // Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            // transform.rotation = Quaternion.Euler(directionToPlayer.x, directionToPlayer.y, directionToPlayer.z);
+            // float distanceToPlayer = new Vector2(player.position.x - transform.position.x, player.position.z - transform.position.z).magnitude;
+            // float dashDistance = 0f;
+            // Vector3 attackTarget = new Vector3(
+            //     directionToPlayer.x * dashDistance,
+            //     transform.position.y, // Keep original Y-axis
+            //     directionToPlayer.z * dashDistance
+            // );
+
+            // while (Physics.Raycast(attackTarget, Vector3.down, 5f, Walkable) && dashDistance + 0.1f < distanceToPlayer+overshootDistance)
+            // {
+            //     dashDistance += 0.1f;
+            //     attackTarget = new Vector3(
+            //         directionToPlayer.x * dashDistance,
+            //         transform.position.y, // Keep original Y-axis
+            //         directionToPlayer.z * dashDistance
+            //     );
+            // }
+
             StartCoroutine(DashTowardsTarget(attackTarget));
 
             alreadyAttacked = true;
