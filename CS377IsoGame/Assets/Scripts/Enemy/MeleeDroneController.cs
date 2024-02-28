@@ -40,34 +40,31 @@ public class MeleeDroneController : EnemyAI
     {
         if (!alreadyAttacked)
         {
-            // Calculate the overshoot target, maintaining the same Y-axis (height)
-            Vector3 directionToPlayer = (player.position - transform.position).normalized;
-            Vector3 attackTarget = new Vector3(
-                player.position.x + directionToPlayer.x * overshootDistance,
-                transform.position.y, // Keep original Y-axis
-                player.position.z + directionToPlayer.z * overshootDistance
-            );
-
-
+            // // Calculate the overshoot target, maintaining the same Y-axis (height)
             // Vector3 directionToPlayer = (player.position - transform.position).normalized;
-            // transform.rotation = Quaternion.Euler(directionToPlayer.x, directionToPlayer.y, directionToPlayer.z);
-            // float distanceToPlayer = new Vector2(player.position.x - transform.position.x, player.position.z - transform.position.z).magnitude;
-            // float dashDistance = 0f;
             // Vector3 attackTarget = new Vector3(
-            //     directionToPlayer.x * dashDistance,
+            //     player.position.x + directionToPlayer.x * overshootDistance,
             //     transform.position.y, // Keep original Y-axis
-            //     directionToPlayer.z * dashDistance
+            //     player.position.z + directionToPlayer.z * overshootDistance
             // );
 
-            // while (Physics.Raycast(attackTarget, Vector3.down, 5f, Walkable) && dashDistance + 0.1f < distanceToPlayer+overshootDistance)
-            // {
-            //     dashDistance += 0.1f;
-            //     attackTarget = new Vector3(
-            //         directionToPlayer.x * dashDistance,
-            //         transform.position.y, // Keep original Y-axis
-            //         directionToPlayer.z * dashDistance
-            //     );
-            // }
+
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            transform.rotation = Quaternion.Euler(0f, Vector3.SignedAngle(Vector3.forward, directionToPlayer, Vector3.up), 0f);
+            float distanceToPlayer = new Vector2(player.position.x - transform.position.x, player.position.z - transform.position.z).magnitude;
+            float dashDistance = 0f;
+            Vector3 attackTarget = transform.position;
+
+            // search along direction to player until ground is no longer walkable or past overshoot distance
+            while (Physics.Raycast(attackTarget, Vector3.down, 5f, Walkable) && dashDistance + 0.1f < distanceToPlayer+overshootDistance)
+            {
+                dashDistance += 0.1f;
+                attackTarget = new Vector3(
+                    transform.position.x + directionToPlayer.x * dashDistance,
+                    transform.position.y, // Keep original Y-axis
+                    transform.position.z + directionToPlayer.z * dashDistance
+                );
+            }
 
             StartCoroutine(DashTowardsTarget(attackTarget));
 

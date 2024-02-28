@@ -89,7 +89,7 @@ public class SoundManager : MonoBehaviour
 
 
         // Start playing music for this level
-        PlayMusic(Sound.Music_Track1, 0.5f);
+        PlayMusic(Sound.Music_Track1, 0.25f);
     }
 
     public int GetPooledContainerIndex()
@@ -192,10 +192,10 @@ public class SoundManager : MonoBehaviour
         musicSource = musicContainer.AddComponent<AudioSource>();
 
         musicSource.clip = GetAudioClip(sound);
+        SetDefaultAudioSourceParams(musicSource);
         musicSource.volume = volume;
         musicSource.loop = true;
-        musicSource.spatialize = false; // no spatial audio, keep constant volume
-        SetDefaultAudioSourceParams(musicSource);
+        musicSource.spatialBlend = 0f; // no spatial audio, keep constant volume
         musicSource.Play();
     }
 
