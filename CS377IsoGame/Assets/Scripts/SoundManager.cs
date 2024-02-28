@@ -37,6 +37,8 @@ public class SoundManager : MonoBehaviour
         LaserTurret_Turning,
         LaserTurret_Charging,
         LaserTurret_Firing,
+        BigSlow_Stomp,
+
         // TODO, more...
     }
 

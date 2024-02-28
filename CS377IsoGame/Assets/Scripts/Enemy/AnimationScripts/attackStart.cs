@@ -20,6 +20,9 @@ public class ScreamBehaviour : StateMachineBehaviour
             // Set the speed to 0 to stop the enemy from moving
             agent.speed = 0;
             thrustAttackIndicator.GetComponent<AgroMeleeSwordCollider>().ActivateWithDelay(0.5f);
+
+            // PlaysoundFX for yell
+            SoundManager.PlaySound(SoundManager.Sound.Generic_Yell, agent.transform.position);
         }
     }
 

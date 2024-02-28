@@ -36,7 +36,9 @@ public class LaserTurretController : EnemyAI
     }
     private State CurrentState;
     private GameObject TurningSoundFXContainer;
+    private GameObject SpinUpSoundFXContainer;
     private GameObject SpinningSoundFXContainer;
+    private GameObject SpinDownSoundFXContainer;
     private GameObject ChargingSoundFXContainer;
     private GameObject FiringSoundFXContainer;
 
@@ -65,10 +67,13 @@ public class LaserTurretController : EnemyAI
     {
         // Initialize soundFX loop containers
         TurningSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_Turning, transform);
-        TurningSoundFXContainer.SetActive(false);
-
+        SpinUpSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_SpinUp, transform);
         SpinningSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_Spinning, transform);
-        SpinningSoundFXContainer.SetActive(false);
+        SpinDownSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_SpinDown, transform);
+        ChargingSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_Charging, transform);
+        FiringSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_Firing, transform);
+
+        DisableAllSoundFXContainers();
     }
 
     protected override void Patroling()
@@ -107,7 +112,7 @@ public class LaserTurretController : EnemyAI
 
         float currentTurretAngle = TurretTransform.rotation.eulerAngles.y;
         float deltaAngle = Mathf.Abs(Mathf.Abs(targetTurretAngle - currentTurretAngle + 180f) - 180f); // The double Abs are a hack to make sure deltaAngle >= 0
-        if (deltaAngle > 5f)
+        if (deltaAngle > 1f)
         {
             TurningSoundFXContainer.SetActive(true);
         } 
@@ -203,23 +208,15 @@ public class LaserTurretController : EnemyAI
         // Sound FX
         if (CurrentSpinRate/MaxSpinRate > MinFireSpinPercent && CurrentState != State.spinning)
         {
-            if (ChargingSoundFXContainer != null)
-                ChargingSoundFXContainer.SetActive(false);
-            
-            SpinningSoundFXContainer.SetActive(true);
-            
+            DisableAllSoundFXContainers();            
             FiringSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_Firing, transform);
             
             CurrentState = State.spinning;
         }
         else if (CurrentState != State.spinningUp && CurrentState != State.spinning)
         {
-            SpinningSoundFXContainer.SetActive(false);
-            
-            if (FiringSoundFXContainer != null)
-                FiringSoundFXContainer.SetActive(false);
-            
-            SoundManager.PlaySound(SoundManager.Sound.LaserTurret_SpinUp, transform.position);
+            DisableAllSoundFXContainers();
+            SpinUpSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_SpinUp, transform);
             ChargingSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_Charging, transform);
             
             CurrentState = State.spinningUp;
@@ -245,18 +242,23 @@ public class LaserTurretController : EnemyAI
         // SoundFX
         if (CurrentState != State.spinningDown)
         {
-            SpinningSoundFXContainer.SetActive(false);
-            
-            if (ChargingSoundFXContainer != null)
-                ChargingSoundFXContainer.SetActive(false);
-            
-            if (FiringSoundFXContainer != null)
-                FiringSoundFXContainer.SetActive(false);
-            
-            SoundManager.PlaySound(SoundManager.Sound.LaserTurret_SpinDown, transform.position);
+            DisableAllSoundFXContainers();
+            SpinDownSoundFXContainer = SoundManager.PlaySoundLoop(SoundManager.Sound.LaserTurret_SpinDown, transform);
             
             CurrentState = State.spinningDown;
         }
+    }
+
+    void DisableAllSoundFXContainers()
+    {
+        // The general process for enabling certain containers will be to first turn all of them off then
+        // only turn on/set the containers we want at any given moment.
+        TurningSoundFXContainer.SetActive(false);
+        SpinUpSoundFXContainer.SetActive(false);
+        SpinningSoundFXContainer.SetActive(false);
+        SpinDownSoundFXContainer.SetActive(false);
+        ChargingSoundFXContainer.SetActive(false);
+        FiringSoundFXContainer.SetActive(false);
     }
 
     void UpdateTargetingRenderer(float alpha)
