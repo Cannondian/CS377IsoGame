@@ -12,6 +12,7 @@ public class PlayerStatsUI : MonoBehaviour
     public Slider attackSpeedSlider;
     //public Slider evasivenessSlider;
 
+    private RollManager rollManager;
     public StatsTemplate playerStats;
 
     #region CoreCharge
@@ -26,13 +27,21 @@ public class PlayerStatsUI : MonoBehaviour
 
    
     public Slider healthSlider;
+    public Slider bonusHealthSlider;
+
+    #endregion
+    
+    #region Roll
+
+    public GameObject rollBulb1;
+    public GameObject rollBulb2;
 
     #endregion
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        rollManager = GetComponent<RollManager>();
     }
 
     // Update is called once per frame
@@ -40,7 +49,8 @@ public class PlayerStatsUI : MonoBehaviour
     {
         UpdateCoreChargeSlider();
         UpdateHealthSlider();
-        
+        DrawBonusHealth();
+        UpdateRollIndicator();
         defenseSlider.value = playerStats.tDefense;
         attackSlider.value = playerStats.tAttack;
         speedSlider.value = playerStats.tSpeed;
@@ -60,6 +70,33 @@ public class PlayerStatsUI : MonoBehaviour
     public void UpdateHealthSlider()
     {
         healthSlider.maxValue = playerStats.tHP;
-        healthSlider.value = playerStats.myCurrentHealth ;
+        healthSlider.value = playerStats.myCurrentHealth;
+    }
+
+    public void DrawBonusHealth()
+    {
+        bonusHealthSlider.value = playerStats.bonusHealth;
+    }
+
+    public void UpdateRollIndicator()
+    {
+        if (rollManager.roll1Ready)
+        {
+            rollBulb1.SetActive(true);
+            
+        }
+        else
+        {
+            rollBulb1.SetActive(false);
+        }
+        if (rollManager.roll2Ready)
+        {
+            rollBulb2.SetActive(true);
+            
+        }
+        else
+        {
+            rollBulb2.SetActive(false);
+        }
     }
 }

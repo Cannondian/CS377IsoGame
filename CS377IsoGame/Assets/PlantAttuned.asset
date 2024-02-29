@@ -38,24 +38,24 @@ MonoBehaviour:
   overlayTextureScale: 1
   overlayTextureScrolling: {x: 0, y: 0}
   overlayVisibility: 0
-  outline: 1
+  outline: 0.644
   outlineColor: {r: 0.15699537, g: 1.5849056, b: 0.25084692, a: 1}
   outlineColorStyle: 1
   outlineGradient:
     serializedVersion: 2
-    key0: {r: 0.057315804, g: 1.735849, b: 0.31893632, a: 1}
-    key1: {r: 0.8809929, g: 0.034602042, b: 1.1014982, a: 1}
-    key2: {r: 0.8416628, g: 0.042743966, b: 1.0528554, a: 0}
-    key3: {r: 0, g: 0.21698111, b: 0.011897711, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 0.32724366, g: 1.7358493, b: 0.07270577, a: 1}
+    key1: {r: 0.11373104, g: 1.6193273, b: 0.3725355, a: 1}
+    key2: {r: 0.48931068, g: 0.96878, b: 0, a: 0}
+    key3: {r: 0.1897851, g: 1.4546064, b: 0.44361508, a: 0}
+    key4: {r: 0, g: 0.21698111, b: 0.011897711, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 8481
-    ctime1: 22552
-    ctime2: 36044
-    ctime3: 44718
-    ctime4: 0
+    ctime1: 23130
+    ctime2: 40092
+    ctime3: 57632
+    ctime4: 49151
     ctime5: 0
     ctime6: 0
     ctime7: 0
@@ -73,7 +73,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   outlineGradientInLocalSpace: 1
   outlineBlurPasses: 2
-  outlineWidth: 0.3
+  outlineWidth: 0.15
   outlineQuality: 1
   outlineEdgeMode: 0
   outlineEdgeThreshold: 0.995
@@ -83,38 +83,38 @@ MonoBehaviour:
   outlineVisibility: 0
   outlineIndependent: 0
   outlineMaskMode: 0
-  glow: 0
+  glow: 0.52
   glowWidth: 0.4
   glowQuality: 1
   glowBlurMethod: 0
   glowDownsampling: 2
   glowHQColor: {r: 0.64, g: 1, b: 0, a: 1}
-  glowDithering: 1
+  glowDithering: 0.155
   glowDitheringStyle: 0
-  glowMagicNumber1: 0.75
-  glowMagicNumber2: 0.5
+  glowMagicNumber1: 10
+  glowMagicNumber2: 0.01
   glowAnimationSpeed: 1
   glowVisibility: 0
   glowBlendMode: 0
   glowBlendPasses: 1
   glowPasses:
   - offset: 4
-    alpha: 0.1
-    color: {r: 0.64, g: 1, b: 0, a: 1}
+    alpha: 0.3
+    color: {r: 0.9019475, g: 0, b: 1, a: 1}
   - offset: 3
     alpha: 0.2
-    color: {r: 0.64, g: 1, b: 0, a: 1}
+    color: {r: 0.012677431, g: 1, b: 0, a: 1}
   - offset: 2
     alpha: 0.3
-    color: {r: 0.64, g: 1, b: 0, a: 1}
+    color: {r: 0.7234583, g: 0, b: 1, a: 1}
   - offset: 1
     alpha: 0.4
-    color: {r: 0.64, g: 1, b: 0, a: 1}
+    color: {r: 0.7103927, g: 1, b: 0, a: 1}
   glowMaskMode: 0
-  innerGlow: 1.4
+  innerGlow: 1.3
   innerGlowWidth: 1
   innerGlowBlendMode: 0
-  innerGlowColor: {r: 0.017221425, g: 0.4056604, b: 0.038695987, a: 1}
+  innerGlowColor: {r: 0.03444285, g: 0.8113208, b: 0.077391975, a: 1}
   innerGlowVisibility: 0
   targetFX: 0
   targetFXTexture: {fileID: 0}

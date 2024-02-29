@@ -22,6 +22,9 @@ public static class StatusConditions
         RadiationPoisoning, //debuff that applies a random generic debuff at a set interval. Produced by the radioactive puddle Tile.
         Mutating, // buff that applies two random generic buffs from those available through tiles. This buff changes at set intervals and is also applied by the radioactive puddle Tile
         Glowing, // generic buff produced by the NeonStrips Tile. It gives an attack speed buff and a HitEffect which deals increased damage to stunned enemies.
+        ChlorophyllInfusion,
+        InnerFire,
+        
         OneWithTheWorld, //TBD
         Unstoppable, //TBD
         Hacked, //TBD

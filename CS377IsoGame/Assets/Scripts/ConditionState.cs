@@ -52,6 +52,7 @@ public class ConditionState : MonoBehaviour
     private bool mutating;
     private bool glowing;
     private bool defensiveTerrain;
+    private bool chlorophyllInfusion;
 
     #endregion
     
@@ -99,6 +100,16 @@ public class ConditionState : MonoBehaviour
 
     #endregion
 
+    #region CholorphyllInfusionData
+
+    private float chlorophyllInfusionDuration;
+    private float chlorophyllInfusionIntensity;
+    private float chlorophyllInfusionCounter;
+
+    #endregion
+    
+    
+    
     #region SlowedData
 
     public StatModifier slowModifier; //stat modifier that represents all active slow effect on the entity
@@ -119,6 +130,13 @@ public class ConditionState : MonoBehaviour
     
     #endregion
 
+    #region InnderFireData
+
+    public bool innerFire;
+    private float innerFireDuration;
+    public float innerFireIntensity;
+    
+    #endregion
     #region ExhaustedData
 
     private float exhaustedDuration;
@@ -156,7 +174,7 @@ public class ConditionState : MonoBehaviour
     #region SlipperyStepsData
 
     private float slipperyStepsDuration;
-    private int slipperyStepsIntensity;
+    private float slipperyStepsIntensity;
     private StatModifier slipperyStepsSpeedModifier;
     private StatModifier slipperyStepsResistanceModifier;
     private StatModifier slipperyStepsAttackSpeedModifier;
@@ -165,10 +183,11 @@ public class ConditionState : MonoBehaviour
 
     #region SmolderingStrikesData
 
+    private float smolderingStrikesCounter;
     private float smolderingStrikesIntensity;
     private float smolderingStrikesDuration;
     private StatModifier smolderingStrikesModifier;
-    private PlayerHitEffects.HitEffect.AdditionalEffect smolderingStrikesHitEffect;
+    private PlayerHitEffects.HitEffect smolderingStrikesHitEffect;
 
     #endregion
     
@@ -328,6 +347,11 @@ public class ConditionState : MonoBehaviour
         {
             ApplyDefensiveTerrain();
         }
+
+        if (chlorophyllInfusion)
+        {
+            ApplyChlorophyllInfusion();
+        }
         
     }
 /// <summary>
@@ -435,6 +459,18 @@ public class ConditionState : MonoBehaviour
                 
 
                 break;
+            case StatusConditions.statusList.InnerFire:
+                if (!innerFire && enemy)
+                {
+                    innerFire = true;
+                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
+                        new EventTypes.StatusConditionFXParam(FXhandler.InnerFireFXPrefab, gameObject,
+                            nameof(StatusConditions.statusList.InnerFire)));
+                    innerFireDuration = duration;
+                    innerFireIntensity = intensity;
+                }
+
+                break;
             case StatusConditions.statusList.Stunned:
                 
                     if (!stunned)
@@ -525,6 +561,30 @@ public class ConditionState : MonoBehaviour
                     activeRejuvenations.Add(new Rejuvenation(duration, intensity));
                 }
                 break;
+            case StatusConditions.statusList.ChlorophyllInfusion:
+                if (!chlorophyllInfusion && !enemy)
+                {
+                   
+                    if (smolderingStrikes)
+                    {
+                       RemoveCondition(StatusConditions.statusList.SmolderingStrikes);
+                    }
+
+                    if (slipperySteps)
+                    {
+                        RemoveCondition(StatusConditions.statusList.SlipperySteps);
+                    }
+                    
+                    chlorophyllInfusion = true;
+                    EventBus.TriggerEvent(EventTypes.Events.ON_HIGHLIGHT_FX_TRIGGERED, 
+                        new EventTypes.HighlightFXParam(FXhandler.Velheret, intensity, false));
+                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION, 
+                        new EventTypes.StatusConditionFXParam( FXhandler.ChlorophyllInfusionPrefab, this.gameObject, 
+                            nameof(StatusConditions.statusList.ChlorophyllInfusion)));
+                }
+
+                chlorophyllInfusionDuration = duration;
+                break;
             case StatusConditions.statusList.Energized:
                 if (!energized)
                 {
@@ -545,6 +605,18 @@ public class ConditionState : MonoBehaviour
             case StatusConditions.statusList.SlipperySteps:
                 if (intensity > slipperyStepsIntensity) 
                 {
+                    
+                    if (smolderingStrikes)
+                    {
+                        RemoveCondition(StatusConditions.statusList.SmolderingStrikes);
+                    }
+
+                    if (chlorophyllInfusion)
+                    {
+                        RemoveCondition(StatusConditions.statusList.ChlorophyllInfusion);
+                    }
+                    
+                    
                     if (slipperySteps)
                     {
                         myStats.RemoveModifier(StatsTemplate.statsList.Speed, slipperyStepsSpeedModifier);
@@ -558,9 +630,11 @@ public class ConditionState : MonoBehaviour
                     myStats.AddModifier(StatsTemplate.statsList.Speed, slipperyStepsSpeedModifier);
                     slipperyStepsResistanceModifier = new StatModifier(100 * intensity, StatModifierType.Flat);
                     myStats.AddModifier(StatsTemplate.statsList.Resistance, slipperyStepsResistanceModifier);
+                    Debug.Log("slippery");
                     if (!enemy)
                     {
                         slipperyStepsAttackSpeedModifier = new StatModifier(0.2f * intensity, StatModifierType.Flat);
+                        myStats.AddModifier(StatsTemplate.statsList.AttackSpeed, slipperyStepsAttackSpeedModifier);
                     }
 
                     EventBus.TriggerEvent(
@@ -577,6 +651,7 @@ public class ConditionState : MonoBehaviour
                     }
                 }
 
+                slipperyStepsIntensity = intensity;
                 slipperySteps = true;
                 slipperyStepsDuration = duration;
                 
@@ -588,28 +663,39 @@ public class ConditionState : MonoBehaviour
                 {
                     if (!smolderingStrikes)
                     {
+                        if (slipperySteps)
+                        {
+                            RemoveCondition(StatusConditions.statusList.SlipperySteps);
+                        }
 
+                        if (chlorophyllInfusion)
+                        {
+                            RemoveCondition(StatusConditions.statusList.ChlorophyllInfusion);
+                        }
 
+                        SetCondition(StatusConditions.statusList.Burning, duration, intensity);
                         EventBus.TriggerEvent(EventTypes.Events.ON_HIGHLIGHT_FX_TRIGGERED,
                             new EventTypes.HighlightFXParam(FXhandler.Ilsihre, 1, false));
                                
-
+                        Debug.Log("smoldering strikes2");
 
                         smolderingStrikesModifier = new StatModifier(10 * intensity, StatModifierType.Percent);
                         myStats.AddModifier(StatsTemplate.statsList.Attack, smolderingStrikesModifier);
                         
-                            smolderingStrikesHitEffect = (self, other) =>
+                            PlayerHitEffects.HitEffect.AdditionalEffect smolderingStrikesHitFunction = (self, other) =>
                             {
                                 other.GetComponent<ConditionState>()
                                     .SetCondition(StatusConditions.statusList.Burning, 4 * intensity);
                             };
-                            PlayerHitEffects.Instance.AddHitEffect(new PlayerHitEffects.HitEffect(
+                            smolderingStrikesHitEffect = new PlayerHitEffects.HitEffect(
                                 myStats.tAttack * 0.2f * Mathf.Pow(intensity, 2),
-                                smolderingStrikesHitEffect));
+                                smolderingStrikesHitFunction);
+                            PlayerHitEffects.Instance.AddHitEffect(smolderingStrikesHitEffect);
                         
                     }
 
                     smolderingStrikes = true;
+                    
                     if (smolderingStrikesDuration < duration)
                     {
                         smolderingStrikesDuration = duration;
@@ -843,6 +929,20 @@ public class ConditionState : MonoBehaviour
 
                 break;
             //intensity can bu used to apply multiple stacks at once
+            case StatusConditions.statusList.InnerFire:
+                if (innerFire)
+                {
+                    EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
+                        new EventTypes.StatusConditionFXParam(FXhandler.InnerFireFXPrefab, gameObject,
+                            nameof(StatusConditions.statusList.InnerFire)));
+                    innerFire = false;
+                    innerFireDuration = 0;
+                    innerFireIntensity = 0;
+                }
+
+                break;
+            
+            
             case StatusConditions.statusList.Bleeding:
                 if (bleeding)
                 {
@@ -1000,16 +1100,22 @@ public class ConditionState : MonoBehaviour
             case StatusConditions.statusList.SlipperySteps:
                 if (slipperySteps)
                 {
+                   
                     EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
                         new EventTypes.StatusConditionFXParam(FXhandler.SlipperyStepsFXPrefab, this.gameObject,
                             nameof(StatusConditions.statusList.SlipperySteps)));
-                   
+                    
+                    EventBus.TriggerEvent(EventTypes.Events.ON_HIGHLIGHT_FX_EXPIRED,
+                        new EventTypes.HighlightFXParam(FXhandler.Shalharan, 0, false));
+                    
                     if (!enemy)
                     {
                         myStats.RemoveModifier(StatsTemplate.statsList.AttackSpeed, slipperyStepsAttackSpeedModifier);
                     }
                     myStats.RemoveModifier(StatsTemplate.statsList.Resistance, slipperyStepsResistanceModifier);
+                   
                     myStats.RemoveModifier(StatsTemplate.statsList.Speed, slipperyStepsSpeedModifier);
+                    
                     slipperyStepsDuration = 0;
                     slipperyStepsIntensity = 0;
                     slipperySteps = false;
@@ -1026,12 +1132,27 @@ public class ConditionState : MonoBehaviour
                       new EventTypes.HighlightFXParam(FXhandler.Ilsihre, 0, false));
 
                   myStats.RemoveModifier(StatsTemplate.statsList.Attack, smolderingStrikesModifier);
-                  PlayerHitEffects.Instance.RemoveHitEffect(new PlayerHitEffects.HitEffect(myStats.tAttack * 0.2f,
-                      smolderingStrikesHitEffect));
+                  PlayerHitEffects.Instance.RemoveHitEffect(smolderingStrikesHitEffect);
                   smolderingStrikes = false;
                   smolderingStrikesDuration = 0;
                 }
                 
+                break;
+            case StatusConditions.statusList.ChlorophyllInfusion:
+                if (chlorophyllInfusion)
+                {
+                    EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
+                        new EventTypes.StatusConditionFXParam(FXhandler.ChlorophyllInfusionPrefab, gameObject,
+                            nameof(StatusConditions.statusList.ChlorophyllInfusion)));
+                    EventBus.TriggerEvent(EventTypes.Events.ON_HIGHLIGHT_FX_EXPIRED,
+                        new EventTypes.HighlightFXParam(FXhandler.Shalharan, 1, false));
+                    chlorophyllInfusionDuration = 0;
+                    chlorophyllInfusionIntensity = 0;
+                    chlorophyllInfusion = false;
+                    myStats.bonusHealth = 0;
+                    
+                }
+
                 break;
             case StatusConditions.statusList.Evasive:
                 if (evasive)
@@ -1203,10 +1324,11 @@ public class ConditionState : MonoBehaviour
 
     private void ApplySmolderingStrikes()
     {
-        smolderingStrikesDuration =- Time.deltaTime;
+        smolderingStrikesDuration -= Time.deltaTime;
         if (smolderingStrikesDuration <= 0)
         {
             RemoveCondition(StatusConditions.statusList.SmolderingStrikes);
+            RemoveCondition(StatusConditions.statusList.Burning);
         }
     }
 
@@ -1238,5 +1360,26 @@ public class ConditionState : MonoBehaviour
     private void ApplyDefensiveTerrain()
     {
         // Insert logic for 'DefensiveTerrain' state here
+    }
+
+    private void ApplyChlorophyllInfusion()
+    {
+        chlorophyllInfusionCounter += Time.deltaTime;
+        
+        if (chlorophyllInfusionDuration <= 0)
+        {
+            RemoveCondition(StatusConditions.statusList.ChlorophyllInfusion);
+            chlorophyllInfusionCounter = 0;
+        }
+
+        if (chlorophyllInfusionCounter > 1 )
+        {
+            
+            chlorophyllInfusionDuration -= chlorophyllInfusionCounter;
+            chlorophyllInfusionCounter = 0;
+            var hpBuildUp = 2 + TileMastery.Instance.masteryOverVelheret / 20;
+            myStats.AddBonusHealth(hpBuildUp);
+            
+        }
     }
 }

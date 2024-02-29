@@ -64,7 +64,7 @@ namespace RPGCharacterAnims.Actions
 				
 				
 				EventBus.TriggerEvent(EventTypes.Events.ON_PARTICLE_FX_FOR_SKILL, 
-					new EventTypes.SkillUsedParam(context.element, position, 0.3f, 2.5f));
+					new EventTypes.SkillUsedParam(context.element, position, 0.3f, 3f));
 				controller.MineSkill(Characters.Jisa,
 					0.1f,
 					context.element);

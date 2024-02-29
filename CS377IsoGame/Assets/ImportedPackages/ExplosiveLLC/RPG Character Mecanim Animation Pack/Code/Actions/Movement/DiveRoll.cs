@@ -9,12 +9,13 @@ namespace RPGCharacterAnims.Actions
         }
 
         public override bool CanStartAction(RPGCharacterController controller)
-        { return (controller.canAction || controller.isAttacking) && !controller.isRelaxed; }
+        { return (controller.canAction || controller.isAttacking) && !controller.isRelaxed && RollManager.Instance.CanRoll(); }
 
         protected override void _StartAction(RPGCharacterController controller, DiveRollType rollType)
         {
             controller.DiveRoll(rollType);
             movement.currentState = CharacterState.DiveRoll;
+            RollManager.Instance.Roll();
 		}
 
         public override bool IsActive()

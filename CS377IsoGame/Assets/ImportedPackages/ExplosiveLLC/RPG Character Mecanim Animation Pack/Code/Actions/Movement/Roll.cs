@@ -9,12 +9,14 @@ namespace RPGCharacterAnims.Actions
         }
 
         public override bool CanStartAction(RPGCharacterController controller)
-        { return controller.canAction && !controller.IsActive("Relax"); }
+        {
+            return controller.canAction && !controller.IsActive("Relax"); }
 
         protected override void _StartAction(RPGCharacterController controller, RollType rollType)
         {
             controller.Roll(rollType);
             movement.currentState = CharacterState.Roll;
+            
 		}
 
         public override bool IsActive()

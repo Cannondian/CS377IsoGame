@@ -23,6 +23,8 @@ public class StatsTemplate : MonoBehaviour
     #region Health
 
     public float myCurrentHealth;
+    public float bonusHealth;
+    
     public bool amIEnemy;
     private EnemyAI myEnemyAI;
     private DamageEffect damageComponent;
@@ -205,7 +207,7 @@ public class StatsTemplate : MonoBehaviour
         pEvasivenessModifiers = new List<StatModifier>();
         pTalentModifiers = new List<StatModifier>();
 
-
+        
         ceHP = baseHP;
         ceSpeed = baseSpeed;
         ceAttack = baseAttack;
@@ -217,7 +219,10 @@ public class StatsTemplate : MonoBehaviour
         ceTalent = baseTalent;
 
         CalculateCES();
-
+        
+        
+        bonusHealth = 0;
+        
         myEnemyAI = GetComponent<EnemyAI>();
         damageComponent = GetComponentInChildren<DamageEffect>();
         if (myEnemyAI != null)
@@ -229,12 +234,25 @@ public class StatsTemplate : MonoBehaviour
         else
         {
             myCurrentHealth = ceHP;
+            
         }
     }
 
     public void TakeDamage(float damage)
     {
-        myCurrentHealth -= damage;
+        if (bonusHealth <= 0)
+        {
+            myCurrentHealth -= damage;
+        }
+        else
+        {
+            bonusHealth = bonusHealth - damage;
+            if (bonusHealth < 0)
+            {
+                myCurrentHealth += bonusHealth;
+                bonusHealth = 0;
+            }
+        }
     }
 
     public void RestoreHealth(float heal)
@@ -331,6 +349,7 @@ public class StatsTemplate : MonoBehaviour
                 CalculateTemporaryStats(statsList.AttackSpeed);
                 break;
             case statsList.Resistance:
+               
                 tResistanceModifiers.Remove(modifier);
                 CalculateTemporaryStats(statsList.Resistance);
                 break;
@@ -576,6 +595,7 @@ public class StatsTemplate : MonoBehaviour
                 AttackSpeedUpdate.Invoke(tAttackSpeed);
                 break;
             case statsList.Resistance:
+                
                 foreach (StatModifier mod in tResistanceModifiers)
                 {
                     if (mod.myType == StatModifierType.Percent)
@@ -642,6 +662,13 @@ public class StatsTemplate : MonoBehaviour
     {
         
     }
-    
+
+    public void AddBonusHealth(float tick)
+    {
+        if (bonusHealth <= 20 + TileMastery.Instance.masteryOverVelheret / 2)
+        {
+            bonusHealth += tick;
+        }
+    }
     
 }

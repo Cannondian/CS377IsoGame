@@ -65,6 +65,7 @@ namespace RPGCharacterAnims.Actions
         public GameObject ConfusedFXPrefab;
         public GameObject StunnedFXPrefab;
         public GameObject SlowFXPrefab;
+        public GameObject InnerFireFXPrefab;
         public GameObject ExhaustedFXPrefab;
         public GameObject RejuvenationFXPrefab;
         public GameObject EnergizedFXPrefab;
@@ -75,7 +76,9 @@ namespace RPGCharacterAnims.Actions
         public GameObject RadiationPoisoningFXPrefab;
         public GameObject MutatingFXPrefab;
         public GameObject GlowingFXPrefab;
+        public GameObject ChlorophyllInfusionPrefab;
         public GameObject AttackArcPrefab;
+        public GameObject InnerFireHitFX;
         public GameObject FlamethrowerPrefab;
         public GameObject ILFlamethrowerPrefab;
         public GameObject SHFlamethrowerPrefab;
@@ -272,19 +275,27 @@ namespace RPGCharacterAnims.Actions
 
         private void InitializeTileStateHighlight(EventTypes.HighlightFXParam context)
         {
-            if (!playerHighlightComponent.highlighted)
-            {
-                playerHighlightComponent.highlighted = true;
-            }
+            
+            
+            activeHighlight = context.tileHighlight;
 
-            playerHighlightComponent.ProfileLoad(context.tileHighlight);
+            playerHighlightComponent.profile = context.tileHighlight;
+            playerHighlightComponent.highlighted = true;
+            playerHighlightComponent.ProfileReload();
+            
+            
+
+
         }
 
         private void KillTileStateHighlight(EventTypes.HighlightFXParam context)
         {
             if (context.tileHighlight == activeHighlight)
             {
+               
                 playerHighlightComponent.highlighted = false;
+                playerHighlightComponent.ProfileReload();
+                
             }
         }
 
@@ -305,9 +316,10 @@ namespace RPGCharacterAnims.Actions
                 if (activeStatusFX.Count < 3)
                 {
                     
-                    
                     GameObject statusConditionFX = Instantiate(context.condition, context.caller.transform);
                     statusConditionFX.name = context.myName;
+                    
+                    
                     activeStatusFX.Add(statusConditionFX);
                 }
                 else if (StatusEffectsOnQueue.TryGetValue(context.caller, out var queuedStatusFX)) //is the game object in the dictionary for queued status FX?
@@ -329,12 +341,13 @@ namespace RPGCharacterAnims.Actions
             }
             else
             {
-                Debug.Log("this is called");
+                
                 GameObject statusConditionFX = Instantiate(context.condition, context.caller.transform.position, 
                     quaternion.identity, context.caller.transform );
                 statusConditionFX.transform.localPosition = new Vector3(0, -0.2f, 0);
                 statusConditionFX.name = context.myName;
-                List<GameObject> objectActiveStatusFX = new List<GameObject> { statusConditionFX };
+                List<GameObject> objectActiveStatusFX = new List<GameObject>();
+                objectActiveStatusFX.Add(statusConditionFX);
                 ActiveStatusEffectsDict.Add(context.caller, objectActiveStatusFX);
             }
         }
@@ -354,9 +367,13 @@ namespace RPGCharacterAnims.Actions
         {
             if (ActiveStatusEffectsDict.TryGetValue(context.caller, out var activeFX))
             {
+                Debug.Log(activeFX[0]);
                 GameObject FXtoTerminate = activeFX.Find(x => x.name == context.myName);
+                
                 if (FXtoTerminate == null)
                 {
+                    
+                    
                     List<GameObject> FXonQueueForCaller = StatusEffectsOnQueue[context.caller];
                     FXtoTerminate = FXonQueueForCaller.Find(x => x.name == context.myName);
                     FXonQueueForCaller.Remove(FXtoTerminate);
@@ -370,14 +387,17 @@ namespace RPGCharacterAnims.Actions
                 {
                     activeFX.Remove(FXtoTerminate);
                     Destroy(FXtoTerminate);
-                    List<GameObject> FXonQueueForCaller = StatusEffectsOnQueue[context.caller];
-                    if (FXonQueueForCaller.Count != 0)
+                    if (StatusEffectsOnQueue.TryGetValue(context.caller, out var FXonQueueForCaller))
                     {
-                        GameObject nextFX = FXonQueueForCaller[0];
-                        nextFX.SetActive(true);
-                        activeFX.Add(nextFX);
+                        if (FXonQueueForCaller.Count != 0)
+                        {
+                            GameObject nextFX = FXonQueueForCaller[0];
+                            nextFX.SetActive(true);
+                            activeFX.Add(nextFX);
                         
+                        }
                     }
+                    
 
                 }
             }
@@ -493,13 +513,21 @@ namespace RPGCharacterAnims.Actions
                 
 
             }
-            else{
+            else if (context.attackType == 5)
+            {
                 
                 var hitObject2 = Instantiate(KickPrefab, context.hitPosition,
                     context.hitter.transform.rotation);
                 hitObject2.transform.position = context.hitPosition;
                 DelayedTerminateFX(0.5f, hitObject2);
                     
+            }
+            else
+            {
+                var hitObject3 = Instantiate(InnerFireHitFX, context.hitPosition,
+                    context.hitter.transform.rotation);
+                hitObject3.transform.position = context.hitPosition;
+                DelayedTerminateFX(0.5f, hitObject3);
             }
         }
     }

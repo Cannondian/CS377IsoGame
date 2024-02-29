@@ -468,12 +468,34 @@ namespace RPGCharacterAnims
 
 			if (!rpgInputs.RPGCharacter.AttackR.IsPressed())
 			{
-				Destroy(targetingCircle);
-				Destroy(rangeCircle);
-				rpgCharacterController.Unlock(true, true);
-				rpgCharacterController.StartAction(HandlerTypes.TerrainMineSkill,
-					new SkillContext(HandlerTypes.TerrainMineSkill, targetingCircle.transform.position,
-						TileMastery.Instance.effectiveTile, 2));
+				RaycastHit hit;
+				if (Physics.Raycast(targetingCircle.transform.position + new Vector3(0, 1, 0),
+					    targetingCircle.transform.up * -1, out hit, 3, 1 << 11))
+				{
+					TileElement.ElementType element;
+					TileElement tile = hit.collider.gameObject.GetComponent<TileElement>();
+					if (tile == null)
+					{
+						element = TileElement.ElementType.None;
+					}
+					else
+					{
+						element = tile.elementType;
+					}
+
+					rpgCharacterController.Unlock(true, true);
+					rpgCharacterController.StartAction(HandlerTypes.TerrainMineSkill,
+						new SkillContext(HandlerTypes.TerrainMineSkill, targetingCircle.transform.position,
+							element, 2));
+					Destroy(targetingCircle);
+					Destroy(rangeCircle);
+				}
+				else
+				{
+					rpgCharacterController.Unlock(true, true);
+					Destroy(targetingCircle);
+					Destroy(rangeCircle);
+				}
 			}
 		}
     

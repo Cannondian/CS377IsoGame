@@ -114,7 +114,7 @@ public class PlayerCombatCollisions : MonoBehaviour
                     {
                         Debug.Log("collided");
                         EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
-                            new EventTypes.HitFXParam(transform.position, attackNumber,
+                            new EventTypes.HitFXParam(GetHitPoint( other), attackNumber,
                                 gameObject));
 
                         EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
@@ -128,68 +128,99 @@ public class PlayerCombatCollisions : MonoBehaviour
                     }
                     else if (!hitByCurrentAttack.Contains(other.gameObject))
                     {
-                        hitByCurrentAttack.Add(other.gameObject);
-                        
-                        EventBus.TriggerEvent(EventTypes.Events.ON_LIFE_CURRENT_GAIN,
-                            new EventTypes.Event5Param(attackNumber, 0));
-
-                        EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
-                            new EventTypes.HitFXParam(GetHitPoint(other),
-                                attackNumber,
-                                gameObject));
-                        //EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
-                            //CharacterEnergy.Instance.energyFromEnhancedBasic);
-                        Debug.Log("floating test");
-
-                         float damageAmount;
-                        if (attackNumber == 5)
+                        float damageAmount;
+                        var enemyStats = other.GetComponent<ConditionState>();
+                        if (enemyStats.innerFire)
                         {
-                            
-                            damageAmount = DamageCalculator.Instance.PlayerShockStickCombo1();
-                            
+                            damageAmount = DamageCalculator.Instance.PlayerInnerFireExplosion();
                             DamageEnemy(other, damageAmount);
-                            
-                        }
-                        else if (attackNumber == 2)
-                        {
-                            damageAmount = calculator.PlayerShockStickCombo2();
-                            DamageEnemy(other, damageAmount);
+                            hitByCurrentAttack.Add(other.gameObject);
+
+                            EventBus.TriggerEvent(EventTypes.Events.ON_LIFE_CURRENT_GAIN,
+                                new EventTypes.Event5Param(attackNumber, 0));
+
+                            EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
+                                new EventTypes.HitFXParam(GetHitPoint(other),
+                                    10,
+                                    gameObject));
+                            EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT,
+                                new EventTypes.FloatingDamageParam(other.gameObject, damageAmount, 4, Damage.Types.Fire));
+                            enemyStats.RemoveCondition(StatusConditions.statusList.InnerFire);
                         }
                         else
                         {
-                            damageAmount = calculator.PlayerShockStickCombo3();
-                            DamageEnemy(other, damageAmount);
-                        }
+                            
 
-                        if (PlayerHitEffects.Instance.AnyHitEffects())
-                        {
-                            float damageAmount2 = 0;
-                            foreach (PlayerHitEffects.HitEffect hitEffect in PlayerHitEffects.Instance.activeHitEffects)
+                            hitByCurrentAttack.Add(other.gameObject);
+
+                            EventBus.TriggerEvent(EventTypes.Events.ON_LIFE_CURRENT_GAIN,
+                                new EventTypes.Event5Param(attackNumber, 0));
+
+                            EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
+                                new EventTypes.HitFXParam(GetHitPoint(other),
+                                    attackNumber,
+                                    gameObject));
+                            //EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
+                            //CharacterEnergy.Instance.energyFromEnhancedBasic);
+                            Debug.Log("floating test");
+
+
+                            if (attackNumber == 5)
                             {
-                                if (hitEffect.additionalDamage != 0)
-                                {
-                                    damageAmount2 = hitEffect.additionalDamage;
-                                    Debug.Log(PlayerHitEffects.Instance.activeHitEffects);
-                                    hitEffect._additionalEffect.Invoke(player, other.gameObject);
-                                   
-                                }
-                                if (hitEffect._additionalEffect == null) {Debug.Log("are we getting here?");}
-                                
+
+                                damageAmount = DamageCalculator.Instance.PlayerShockStickCombo1();
+
+                                DamageEnemy(other, damageAmount);
+
                             }
-                           
-                            EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
-                                new EventTypes.FloatingDamageParam(other.gameObject, damageAmount, 2,
-                                    Damage.Types.Generic, damageAmount2, Damage.Types.Fire));
+                            else if (attackNumber == 2)
+                            {
+                                damageAmount = calculator.PlayerShockStickCombo2();
+                                DamageEnemy(other, damageAmount);
+                            }
+                            else
+                            {
+                                damageAmount = calculator.PlayerShockStickCombo3();
+                                DamageEnemy(other, damageAmount);
+                            }
+
+                            if (PlayerHitEffects.Instance.AnyHitEffects())
+                            {
+                                float damageAmount2 = 0;
+                                foreach (PlayerHitEffects.HitEffect hitEffect in PlayerHitEffects.Instance
+                                             .activeHitEffects)
+                                {
+                                    if (hitEffect.additionalDamage != 0)
+                                    {
+                                        damageAmount2 = hitEffect.additionalDamage;
+                                        Debug.Log(PlayerHitEffects.Instance.activeHitEffects);
+                                        hitEffect._additionalEffect.Invoke(player, other.gameObject);
+
+                                    }
+
+                                    if (hitEffect._additionalEffect == null)
+                                    {
+                                        Debug.Log("are we getting here?");
+                                    }
+
+                                }
+
+                                EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT,
+                                    new EventTypes.FloatingDamageParam(other.gameObject, damageAmount, 2,
+                                        Damage.Types.Generic, damageAmount2, Damage.Types.Fire));
+                            }
+                            else
+                            {
+                                EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT,
+                                    new EventTypes.FloatingDamageParam(other.gameObject, damageAmount, 2));
+                            }
+
                         }
-                        else {EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
-                            new EventTypes.FloatingDamageParam(other.gameObject, damageAmount, 2));}
 
-                        
-                        
-                    
 
-                    
-                }
+
+
+                    }
 
             }
 

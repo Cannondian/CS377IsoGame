@@ -59,6 +59,7 @@ public class TileEffects : MonoBehaviour
             {
                 tileAnnouncement.Invoke(elementalTile);
                 currentTile = elementalTile;
+               
             }
         }
     }
@@ -74,15 +75,20 @@ public class TileEffects : MonoBehaviour
                     myState.SetCondition(StatusConditions.statusList.Hacked);
                     break;
                 case TileElement.ElementType.Velheret:
-                    myState.SetCondition(StatusConditions.statusList.Rejuvenation);
+                    
+                    myState.SetCondition(StatusConditions.statusList.ChlorophyllInfusion, 8, 1);
                     break;
                 case TileElement.ElementType.Ilsihre:
                     if (player)
                     {
                         intensity = 1 + myMastery.IlsihreEffectIntensity();
+                        myState.SetCondition(StatusConditions.statusList.SmolderingStrikes, 8, intensity);
                     }
-                    myState.SetCondition(StatusConditions.statusList.Burning, 8, intensity);
-                    myState.SetCondition(StatusConditions.statusList.SmolderingStrikes, 8, intensity);
+                    else
+                    {
+                        myState.SetCondition(StatusConditions.statusList.Burning, 8, intensity);
+                    }
+                    
                     break;
                 case TileElement.ElementType.Shalharan:
                     if (player)
