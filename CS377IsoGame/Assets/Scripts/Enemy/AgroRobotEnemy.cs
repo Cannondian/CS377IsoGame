@@ -20,7 +20,7 @@ public class AgroRobotEnemy : EnemyAI
 
         // Initialize health and attack damage for this specific enemy
         Health = 100f;
-        AttackDamage = 15f;
+        AttackDamage = 10f;
         originalSpeed = agent.speed;
     }
 
@@ -43,8 +43,6 @@ public class AgroRobotEnemy : EnemyAI
         {
             // Trigger attack pattern
             animator.SetTrigger("StartAttack");
-
-            // SoundManager.PlaySound(SoundManager.Sound.Generic_Yell, transform.position); // TODO: The reset for this is wrong...
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);

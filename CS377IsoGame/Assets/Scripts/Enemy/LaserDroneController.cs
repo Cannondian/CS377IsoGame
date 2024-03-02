@@ -32,7 +32,7 @@ public class LaserDroneController : EnemyAI
                                                            transform.position,
                                                            Quaternion.identity, 
                                                            transform); // keep this drone as parent for this connection 
-            SoundManager.PlaySoundLoop(SoundManager.Sound.Generic_Laser, Container.transform, 1f/MaxConnections);
+            // SoundManager.PlaySoundLoop(SoundManager.Sound.Generic_Laser, Container.transform, 1f/MaxConnections);
             LaserConnections.Add(Container);
         }
 
