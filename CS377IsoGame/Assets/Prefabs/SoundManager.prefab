@@ -85,10 +85,10 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 68cefda0c2187b349a80ed7c4d6a5fc2, type: 3}
   - sound: 19
     audioClip: {fileID: 8300000, guid: 92be617e15de2594aa41d30fae1a4c9a, type: 3}
-  - sound: 0
-    audioClip: {fileID: 0}
-  - sound: 0
-    audioClip: {fileID: 0}
+  - sound: 20
+    audioClip: {fileID: 8300000, guid: 3db4224523b2c574fbf1fd7371d8c3e7, type: 3}
+  - sound: 21
+    audioClip: {fileID: 8300000, guid: 6044c56b29b438e4583dbdea0ea2b3cf, type: 3}
   - sound: 0
     audioClip: {fileID: 0}
   - sound: 0

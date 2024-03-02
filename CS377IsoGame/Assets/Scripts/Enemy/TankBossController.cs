@@ -13,7 +13,14 @@ public class TankBossController : EnemyAI
     [SerializeField] GameObject AttackIndicator;
     [SerializeField] Rigidbody TankRigidbody;
 
-    /// Tank hover controls no longer being used for this enemy
+    [SerializeField] GameObject TargetingCircle;
+    [SerializeField] GameObject LaserCircle;
+
+    private ParticleSystem TargetingParticles;
+    private ParticleSystem LaserStrikeParticles;
+
+    //// Note: these values are NOT the actual values saved to the prefab! Those are specified separately within the editor 
+    //// (though these should be a good start in case something goes wrong)
     public float TankRestHeight = 1.5f;          // target height position for tank
     public float TankControlFactor = 1f;         // controls how quickly the thrusters travel between their min and max thrust based on current tank height
 
@@ -27,9 +34,16 @@ public class TankBossController : EnemyAI
     public float BarrelShootingAngleRange = 15f; // Tank shoots iff barrel is within X deg off vector to character posn
     public float TankMissileHomingStrength = 1f; // How strong the homing effect of the tank missile is (set to 0 to turn off homing)
     public float TankMissileMaxLifeSpan = 5f;    // The max lifespan of missiles before they auto-explode
+    public float RepositionChance = 0.2f;        // Probability the tank will move away from the player on any given attack cycle
+    public float LaserStrikeChance = 0.5f;       // Probability of performing the defensive laser strike if player is within range
+    public float LaserStrikeActivationRange = 5f;// Distance Player has to be within for laser strike to be allowed and the distance out to which lasers can deal damage
+    public float LaserStrikeDamage = 0.1f;       // Damage laser strike does per fixed update
+    public float DroneSpawnChance = 0.2f;        // Probability of spawning a drone on any given attack cycle
+    public float TankImpactDamage = 3f;          // Damage player takes if the tank collides with them
     
     private float TankMissileLastFireTime;
     private float LastWalkPointSetTime;
+    private bool LasersActive;
 
     private Quaternion CurrentTurretAngles;
     private Quaternion CurrentBarrelAngles;
@@ -50,7 +64,20 @@ public class TankBossController : EnemyAI
         // Health = 200f;
         AttackDamage = 30f; 
 
+        TargetingParticles = TargetingCircle.GetComponent<ParticleSystem>();
+        LaserStrikeParticles = LaserCircle.GetComponent<ParticleSystem>();
+
         SoundManager.PlaySoundLoop(SoundManager.Sound.BossTank_Hover, transform);
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        if (LasersActive && (transform.position - player.position).magnitude < 5f)
+        {
+            EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, LaserStrikeDamage);
+        }
     }
 
     protected override void ChasePlayer()
@@ -66,18 +93,26 @@ public class TankBossController : EnemyAI
         // When the tank is close to the player (i.e., in its attack range), it will move away from the player
         if (!isFiring) { AimTurret(); }
 
+        // Reset walk point if within target walkpoint or enough time has passed
         if ((walkPointSet && (transform.position - walkPoint).magnitude < 2f) || Time.time - LastWalkPointSetTime > 4f)
             walkPointSet = false;
 
         if (!walkPointSet && !isFiring)
         {
-            if (Random.Range(0f, 1f) < 0.2f && !willFire)
+            willFire = false;
+            if (Random.Range(0f, 1f) < RepositionChance && !willFire)
             {
-                willFire = false;
+                // Chance to reposition
                 SearchForWalkPointAwayFromPlayer();
             }
-            else if (Random.Range(0f, 1f) < 0.2f && !willFire)
+            else if (Random.Range(0f, 1f) < LaserStrikeChance && !willFire && (transform.position - player.position).magnitude < LaserStrikeActivationRange)
             {
+                // Chance to activate defensive laser strike if player is within range
+                StartCoroutine(LaserStrike());
+            }
+            else if (Random.Range(0f, 1f) < DroneSpawnChance && !willFire)
+            {
+                // Chance to spawn a drone
                 StartCoroutine(SpawnDrone());
             }
             else
@@ -86,6 +121,25 @@ public class TankBossController : EnemyAI
                 MaybeFire();
             }
         }
+    }
+
+    IEnumerator LaserStrike()
+    {
+        isFiring = true;
+
+        TargetingParticles.Play();
+        SoundManager.PlaySound(SoundManager.Sound.Generic_Alert, transform.position);
+        yield return new WaitForSeconds(4f);
+        TargetingParticles.Stop();
+
+        LaserStrikeParticles.Play();
+        SoundManager.PlaySound(SoundManager.Sound.BossTank_Lasers, transform.position);
+        LasersActive = true;
+        yield return new WaitForSeconds(4f);
+        LaserStrikeParticles.Stop();
+        LasersActive = false;
+
+        isFiring = false;
     }
 
     IEnumerator SpawnDrone()
@@ -264,7 +318,7 @@ public class TankBossController : EnemyAI
         // Player takes damage if the tank hits them
         if (col.gameObject.tag == "Player")
         {
-            EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, 5f);
+            EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, TankImpactDamage);
         }
     }
 

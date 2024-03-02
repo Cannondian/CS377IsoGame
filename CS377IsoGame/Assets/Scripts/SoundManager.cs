@@ -43,6 +43,9 @@ public class SoundManager : MonoBehaviour
         BigSlow_Stomp,
         Music_Track1,
         BossTank_Hover,
+        BossTank_Lasers,
+        Generic_Alert,
+
 
         // TODO, more...
     }
