@@ -6,17 +6,24 @@ using UnityEngine.Events;
 
 public class TankMissile : MonoBehaviour
 {
+    [SerializeField] GameObject ExplosionFX;
+
     private Rigidbody rb;
     private float SpawnTime;
+
+    private Transform player;
 
     // These values should be set by the caller
     public float MaxLifeSpan = 5f;
     public float Damage = 10f;
+    public float HomingStrength = 1f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         SpawnTime = Time.time;
+
+        player = GameObject.FindWithTag("Player").transform;
     }
 
     void Update()
@@ -27,11 +34,14 @@ public class TankMissile : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Time.time - SpawnTime > MaxLifeSpan) 
+        Vector3 ToPlayer = (player.position - transform.position).normalized;
+        Vector3 Delta = ToPlayer - transform.forward;
+        Delta = new Vector3(Delta.x, 0f, Delta.z);
+        rb.velocity = rb.velocity + Delta * HomingStrength;
+
+        if (Time.time - SpawnTime > MaxLifeSpan || transform.position.y <= 0) 
         {
-            // Do not explode but simply delete
-            // (we don't want any extra effects from missiles that go far off)
-            Destroy(gameObject);
+            Explode();
         }
     }
 
@@ -43,7 +53,7 @@ public class TankMissile : MonoBehaviour
             EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, Damage);
         }
 
-        else if (col.gameObject.tag == "Collide")
+        else if (col.gameObject.layer == LayerMask.NameToLayer("Walkable"))
         {
             Explode();
         }
@@ -51,7 +61,16 @@ public class TankMissile : MonoBehaviour
 
     void Explode()
     {
-        // TODO: SoundFX, animations, etc.
+        Destroy(
+            Instantiate(
+                ExplosionFX, 
+                transform.position, 
+                Quaternion.identity
+            ),
+            1f // Destroy FX after 1 second
+        );
+
+        SoundManager.PlaySound(SoundManager.Sound.Generic_Explosion, transform.position, 0.5f);
 
         Destroy(gameObject);
     }

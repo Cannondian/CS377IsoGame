@@ -29,7 +29,7 @@ public abstract class EnemyAI : MonoBehaviour
     protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        Debug.Log(agent);
+        // Debug.Log(agent);
         player = GameObject.FindWithTag("Player").transform;
         stunned = false;
         myStats = GetComponent<StatsTemplate>();
