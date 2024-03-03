@@ -37,7 +37,7 @@ public class TileElement : MonoBehaviour
         }
         else if (elementType == ElementType.Velheret)
         {
-            tileRender.material.color = Color.green;
+            //tileRender.material.color = Color.green;
         }
         else if (elementType == ElementType.Ilsihre)
         {
@@ -45,7 +45,7 @@ public class TileElement : MonoBehaviour
         }
         else if (elementType == ElementType.Shalharan)
         {
-            tileRender.material.color = Color.white;
+            //tileRender.material.color = Color.white;
         }
         else if (elementType == ElementType.Obhalas)
         {
