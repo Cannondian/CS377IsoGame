@@ -1,0 +1,514 @@
+fileFormatVersion: 2
+guid: b92a121f4fd6e45f69905f3efe860bb2
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 1
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 1
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  spriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+    spritePosition: {x: 0, y: 0}
+  mosaicSpriteImportData: []
+  rigSpriteImportData:
+  - name: ControlUIRoll copy
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 9831
+      width: 1350
+      height: 1768
+    spriteID: bbad3d0ca82e34fe9b16ceb2e5c94675
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 9831}
+    spritePosition: {x: 5609, y: 2110}
+  - name: ControlUIRoll
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4126
+      y: 8994
+      width: 1424
+      height: 828
+    spriteID: 2636d910a9e2e4c3289d6a485d8230c9
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4126, y: 8994}
+    spritePosition: {x: 2608, y: 3052}
+  - name: 'Skills:'
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 5558
+      y: 8994
+      width: 357
+      height: 168
+    spriteID: f3637a99ee4194b2c8e44b524e896baf
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 5558, y: 8994}
+    spritePosition: {x: 3661, y: 2076}
+  - name: "-- PRESS \u201CTAB\u201D TO TOGGLE INSTRUCTIONS ON/OFF --"
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1362
+      y: 9831
+      width: 357
+      height: 168
+    spriteID: d63188e0e411b4d7aa0060d553c8aa50
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1362, y: 9831}
+    spritePosition: {x: 2208, y: 400}
+  - name: ControlUIExplosion
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 8994
+      width: 4114
+      height: 829
+    spriteID: 0272477662ac44523b63ff23bd065039
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 8994}
+    spritePosition: {x: 701, y: 687}
+  - name: ControlUIAttack
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 8124
+      width: 4343
+      height: 862
+    spriteID: 1fdc271cc51af43ac8294d0a6df5967b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 8124}
+    spritePosition: {x: 701, y: 1910}
+  - name: ControlUIMine copy
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4355
+      y: 8124
+      width: 2032
+      height: 847
+    spriteID: 10e001753aa984a8c85aa890fd81e3ad
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4355, y: 8124}
+    spritePosition: {x: 4927, y: 669}
+  - name: ControlUIMove
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 6395
+      y: 8124
+      width: 1545
+      height: 826
+    spriteID: 633c34aa2d1b5472682380011471eaf4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 6395, y: 8124}
+    spritePosition: {x: 701, y: 3052}
+  - name: Layer 3
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4332
+      width: 7122
+      height: 3784
+    spriteID: 9191482f539d14b92a51faf1f3138128
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4332}
+    spritePosition: {x: 295, y: 276}
+  - name: Layer 2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 7680
+      height: 4320
+    spriteID: 097b47d9b8ee14201ac2a9dd6d5f5244
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 0, y: 0}
+  - name: Layer 1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 7948
+      y: 8124
+      width: 0
+      height: 0
+    spriteID: fa50067773afc40ff91a3171c982fb3e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 7948, y: 8124}
+    spritePosition: {x: 0, y: 4320}
+  characterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    pivot: {x: 0, y: 0}
+    boneReadOnly: 0
+  sharedRigSpriteImportData: []
+  sharedRigCharacterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    pivot: {x: 0, y: 0}
+    boneReadOnly: 0
+  platformSettings: []
+  mosaicLayers: 1
+  characterMode: 1
+  documentPivot: {x: 0, y: 0}
+  documentAlignment: 7
+  importHiddenLayers: 0
+  layerMappingOption: 2
+  generatePhysicsShape: 0
+  paperDollMode: 0
+  keepDupilcateSpriteName: 1
+  skeletonAssetReferenceID: 
+  pipeline: {instanceID: 0}
+  pipelineVersion: 
+  padding: 4
+  spriteSizeExpand: 0
+  spriteCategoryList:
+    categories: []
+  spritePackingTag: 
+  resliceFromLayer: 0
+  mosaicPSDLayers: []
+  rigPSDLayers:
+  - name: "Screenshot 2024-03-03 at 12.40.38\u202FPM"
+    spriteName: 
+    isGroup: 0
+    parentIndex: -1
+    spriteID: dd6279b8da758492a8b0375305ec33fd
+    layerID: 3
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 0
+  - name: ControlUIRoll copy
+    spriteName: ControlUIRoll copy
+    isGroup: 0
+    parentIndex: -1
+    spriteID: bbad3d0ca82e34fe9b16ceb2e5c94675
+    layerID: 44
+    mosaicPosition: {x: 4, y: 9831}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: ControlUIRoll
+    spriteName: ControlUIRoll
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 2636d910a9e2e4c3289d6a485d8230c9
+    layerID: 38
+    mosaicPosition: {x: 4126, y: 8994}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: 'Skills:'
+    spriteName: 'Skills:'
+    isGroup: 0
+    parentIndex: -1
+    spriteID: f3637a99ee4194b2c8e44b524e896baf
+    layerID: 46
+    mosaicPosition: {x: 5558, y: 8994}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: "-- PRESS \u201CTAB\u201D TO TOGGLE INSTRUCTIONS ON/OFF --"
+    spriteName: "-- PRESS \u201CTAB\u201D TO TOGGLE INSTRUCTIONS ON/OFF --"
+    isGroup: 0
+    parentIndex: -1
+    spriteID: d63188e0e411b4d7aa0060d553c8aa50
+    layerID: 45
+    mosaicPosition: {x: 1362, y: 9831}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: ControlUIExplosion
+    spriteName: ControlUIExplosion
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 0272477662ac44523b63ff23bd065039
+    layerID: 43
+    mosaicPosition: {x: 4, y: 8994}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: ControlUIAttack
+    spriteName: ControlUIAttack
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 1fdc271cc51af43ac8294d0a6df5967b
+    layerID: 36
+    mosaicPosition: {x: 4, y: 8124}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: ControlUIMine copy
+    spriteName: ControlUIMine copy
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 10e001753aa984a8c85aa890fd81e3ad
+    layerID: 42
+    mosaicPosition: {x: 4355, y: 8124}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: ControlUIMove
+    spriteName: ControlUIMove
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 633c34aa2d1b5472682380011471eaf4
+    layerID: 28
+    mosaicPosition: {x: 6395, y: 8124}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: "Screenshot 2024-03-03 at 12.39.50\u202FPM"
+    spriteName: 
+    isGroup: 0
+    parentIndex: -1
+    spriteID: fab3b37b0b45841cbbf8904844c6ac5e
+    layerID: 2
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 0
+  - name: Layer 3
+    spriteName: Layer 3
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 9191482f539d14b92a51faf1f3138128
+    layerID: 9
+    mosaicPosition: {x: 4, y: 4332}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Layer 2
+    spriteName: Layer 2
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 097b47d9b8ee14201ac2a9dd6d5f5244
+    layerID: 8
+    mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Layer 1
+    spriteName: Layer 1
+    isGroup: 0
+    parentIndex: -1
+    spriteID: fa50067773afc40ff91a3171c982fb3e
+    layerID: 4
+    mosaicPosition: {x: 7948, y: 8124}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Background
+    spriteName: 
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 3124e21452c5f407d9e9c47e9e2ae9b5
+    layerID: 1
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 0
+  sharedRigPSDLayers: []
+  pSDLayerImportSetting: []
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  spriteSizeExpandChanged: 0
+  generateGOHierarchy: 0
+  textureAssetName: 
+  prefabAssetName: 
+  spriteLibAssetName: 
+  skeletonAssetName: 
+  secondarySpriteTextures: []
