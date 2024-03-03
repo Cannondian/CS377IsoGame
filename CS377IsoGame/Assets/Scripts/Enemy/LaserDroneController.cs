@@ -17,6 +17,7 @@ public class LaserDroneController : EnemyAI
 
     private LayerMask PlayerLayerMask;
     private LayerMask WalkableLayerMask;
+    private LayerMask NavigableLayerMask;
 
     protected override void Awake()
     {
@@ -38,6 +39,7 @@ public class LaserDroneController : EnemyAI
 
         PlayerLayerMask = LayerMask.GetMask("Player");
         WalkableLayerMask = LayerMask.GetMask("Walkable");
+        NavigableLayerMask = LayerMask.GetMask("Navigable");
 
         AttackDamage = DamagePerSecond * Time.fixedDeltaTime; // Scale attack damage to fit desired damage per second
     }
@@ -54,21 +56,43 @@ public class LaserDroneController : EnemyAI
 
         SearchForOtherLaserDronesInSightRange();
         DrawLaserToNearbyDrones(); 
+
+        
     }
 
     protected override void Patroling()
     {
-        base.Patroling();
+        Patrol();
     }
 
     protected override void ChasePlayer()
     {
-        StartCoroutine(SearchAndMoveToWalkPointByPlayer());
+        // Patrol();
+
+        if (!walkPointSet)
+        {
+            StartCoroutine(SearchAndMoveToWalkPointByPlayer());
+        }
+
+        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        // Walkpoint reached
+        if (distanceToWalkPoint.magnitude < 2f)
+            walkPointSet = false;
     }
 
     protected override void AttackPlayer()
     {
-        StartCoroutine(SearchAndMoveToWalkPointByPlayer());
+        // Patrol();
+
+        if (!walkPointSet)
+        {
+            StartCoroutine(SearchAndMoveToWalkPointByPlayer());
+        }
+
+        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        // Walkpoint reached
+        if (distanceToWalkPoint.magnitude < 2f)
+            walkPointSet = false;
     }
 
     protected override void UpdateCanvas()
@@ -80,17 +104,24 @@ public class LaserDroneController : EnemyAI
     {
         if (!walkPointSet)
         {
-            // Search for a walk point within attack range around the current player position
-            walkPoint = new Vector3(player.position.x + Random.Range(-attackRange, attackRange), 
-                                    transform.position.y,
-                                    player.position.z + Random.Range(-attackRange, attackRange));
-
-            // If that walkPoint is viable, move towards it
-            if (Physics.Raycast(walkPoint, -transform.up, 2f, Walkable))
+            // try up to 100 times to find a valid walk point
+            int i = 0;
+            while (!walkPointSet && i < 100)
             {
-                walkPointSet = true;
+                // Search for a walk point within attack range around the current player position
+                walkPoint = new Vector3(player.position.x + Random.Range(-attackRange, attackRange), 
+                                        transform.position.y,
+                                        player.position.z + Random.Range(-attackRange, attackRange));
+
+                // If that walkPoint is viable, move towards it
+                if (Physics.Raycast(walkPoint, -Vector3.up, 1000f, NavigableLayerMask))
+                {
+                    walkPointSet = true;
+                    agent.SetDestination(walkPoint);
+                }
+
+                i += 1;
             }
-            agent.SetDestination(walkPoint);
         }
 
         // If walk point is reached, wait before the enemy is allowed to search for a new walkpoint.
@@ -98,14 +129,65 @@ public class LaserDroneController : EnemyAI
         // Note: to prevent multiple coroutines from setting walkPointSet to false, we bar entry using the
         // 'SearchForNewWalkPoint' boolean which is set by the first call to the coroutine after a walk point is set.  
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
-        if (distanceToWalkPoint.magnitude < 0.2f && SearchForNewWalkPoint)
+        if (distanceToWalkPoint.magnitude < 2f && SearchForNewWalkPoint)
         {
             SearchForNewWalkPoint = false;
             yield return new WaitForSeconds(PauseInterval + Random.Range(-PauseInterval/2f, PauseInterval/2f));
+            // yield return new WaitForSeconds(PauseInterval);
+
             walkPointSet = false;
             SearchForNewWalkPoint = true;
         }
     }
+
+    void Patrol()
+    {
+        if (!walkPointSet) SearchForWalkPoint();
+
+        if (walkPointSet)
+            agent.SetDestination(walkPoint);
+
+        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+        // Walkpoint reached
+        if (distanceToWalkPoint.magnitude < 1f)
+            walkPointSet = false;
+    }
+
+    void SearchForWalkPoint()
+    {
+        float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        float randomX = Random.Range(-walkPointRange, walkPointRange);
+
+        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+
+        if (Physics.Raycast(walkPoint, -Vector3.up, 1000f, NavigableLayerMask))
+        {
+            walkPointSet = true;
+        }
+    }
+
+    // void SearchAndMoveToWalkPointByPlayer()
+    // {
+    //     // try up to 100 times to find a valid walk point
+    //     int i = 0;
+    //     while (!walkPointSet && i < 100)
+    //     {
+    //         // Search for a walk point within attack range around the current player position
+    //         walkPoint = new Vector3(player.position.x + Random.Range(-attackRange, attackRange), 
+    //                                 transform.position.y,
+    //                                 player.position.z + Random.Range(-attackRange, attackRange));
+
+    //         // If that walkPoint is viable, move towards it
+    //         if (Physics.Raycast(walkPoint, -Vector3.up, 1000f, NavigableLayerMask))
+    //         {
+    //             walkPointSet = true;
+    //             agent.SetDestination(walkPoint);
+    //         }
+
+    //         i += 1;
+    //     }
+    // }
 
     void SearchForOtherLaserDronesInSightRange()
     {

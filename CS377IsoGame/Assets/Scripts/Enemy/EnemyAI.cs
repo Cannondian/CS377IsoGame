@@ -54,7 +54,6 @@ public abstract class EnemyAI : MonoBehaviour
 
         if (!stunned)
         {
-            
             agent.isStopped = false;
             if (!playerInSightRange && !playerInAttackRange) Patroling();
             if (playerInSightRange && !playerInAttackRange) ChasePlayer();
@@ -94,7 +93,7 @@ public abstract class EnemyAI : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, Walkable))
+        if (Physics.Raycast(walkPoint, -Vector3.up, 1000f, Walkable))
         {
             walkPointSet = true;
         }
