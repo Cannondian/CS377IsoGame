@@ -92,7 +92,7 @@ public class PlayerCombatCollisions : MonoBehaviour
                 legAnimator.SetFloat(speed, attackSpeed);
                 legAnimator.SetBool(legExtending, true);
                 StartCoroutine(DisableLegAnimator(attackSpeed));
-                Debug.Log("leg collider ");
+                // Debug.Log("leg collider ");
 
             }
         }
@@ -112,7 +112,7 @@ public class PlayerCombatCollisions : MonoBehaviour
                
             if (attackNumber == 3)
                     {
-                        Debug.Log("collided");
+                        // Debug.Log("collided");
                         EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
                             new EventTypes.HitFXParam(GetHitPoint( other), attackNumber,
                                 gameObject));
@@ -162,7 +162,7 @@ public class PlayerCombatCollisions : MonoBehaviour
                                     gameObject));
                             //EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
                             //CharacterEnergy.Instance.energyFromEnhancedBasic);
-                            Debug.Log("floating test");
+                            // Debug.Log("floating test");
 
 
                             if (attackNumber == 5)
@@ -200,7 +200,7 @@ public class PlayerCombatCollisions : MonoBehaviour
 
                                     if (hitEffect._additionalEffect == null)
                                     {
-                                        Debug.Log("are we getting here?");
+                                        // Debug.Log("are we getting here?");
                                     }
 
                                 }

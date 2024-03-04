@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: dbb38da4a4f0c4b2bb8904813f19d670
   - enabled: 1
+    path: Assets/Scenes/LevelLayout0-Tutorial.unity
+    guid: aa2123c2ffd7e4c4b96f9b2676527c69
+  - enabled: 1
     path: Assets/Scenes/LevelLayout1.unity
     guid: efc38b7daf71a4d7fbc8c3989ccd24ad
   - enabled: 1
@@ -24,12 +27,21 @@ EditorBuildSettings:
     path: Assets/Scenes/LevelLayout5-1.unity
     guid: 499b59104c3334e5dac4aa7d7f6a2185
   - enabled: 1
-    path: Assets/Scenes/LevelLayout6.unity
-    guid: 9a73e9c38b3f6497a8c1bc1632bf1f7c
+    path: Assets/Scenes/LevelLayout6-1.unity
+    guid: fb726124f6f164ec1a10099a8885e085
   - enabled: 1
-    path: Assets/Scenes/LevelLayout7.unity
-    guid: 5425f79c2b7e94cb08f112250656f736
+    path: Assets/Scenes/LevelLayout7-1.unity
+    guid: b9abb347a7e304bedad02e9835895cb1
   - enabled: 1
-    path: Assets/Scenes/LevelLayout8.unity
-    guid: ce39ba4e6a87a4945823dd7ad69f8cf3
+    path: Assets/Scenes/LevelLayout8-1.unity
+    guid: f9a95f445ab354a179977458ee48f0ea
+  - enabled: 1
+    path: Assets/Scenes/LevelLayout9-1-Boss.unity
+    guid: 202cc8c15ddfe4dca80dab58f3d030c2
+  - enabled: 1
+    path: Assets/Scenes/GameEnd.unity
+    guid: d763c7af5cc0a4b6a8505da9fa165486
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 1348423a9d68149efa8a609a22187c38
   m_configObjects: {}

@@ -42,6 +42,10 @@ public class SoundManager : MonoBehaviour
         LaserTurret_Firing,
         BigSlow_Stomp,
         Music_Track1,
+        BossTank_Hover,
+        BossTank_Lasers,
+        Generic_Alert,
+
 
         // TODO, more...
     }
@@ -89,7 +93,7 @@ public class SoundManager : MonoBehaviour
 
 
         // Start playing music for this level
-        PlayMusic(Sound.Music_Track1, 0.25f);
+        PlayMusic(Sound.Music_Track1, 0.15f);
     }
 
     public int GetPooledContainerIndex()

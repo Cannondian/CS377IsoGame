@@ -17,7 +17,7 @@ public class AgroMeleeAttackCollider : MonoBehaviour
             return;
         }
         AttackDamage = enemyAI.AttackDamage;
-        print("MeleeAgro swing damage:" + AttackDamage);
+        // print("MeleeAgro swing damage:" + AttackDamage);
 
 
     }
@@ -34,7 +34,7 @@ public class AgroMeleeAttackCollider : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         GameObject explosionInstance = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         attackCollider.enabled = true;
-        Debug.Log("HAPPENED");
+        // Debug.Log("HAPPENED");
         // Optionally, deactivate the indicator and collider after a short duration
         yield return new WaitForSeconds(0.5f); // Adjust based on the desired visibility duration
         gameObject.SetActive(false);
@@ -45,9 +45,8 @@ public class AgroMeleeAttackCollider : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Debug.Log("Player HIT with slash attack!");
+            // Debug.Log("Player HIT with slash attack!");
             EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, AttackDamage);
-
         }
     }
 }

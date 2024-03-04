@@ -30,7 +30,7 @@ public class PlayerGameStateTracker : Singleton<PlayerGameStateTracker>
         }
 
         playerHealth = player.GetComponent<StatsTemplate>().myCurrentHealth;
-        Debug.Log("current hp" + playerHealth);
+        // Debug.Log("current hp" + playerHealth);
         if (playerHealth < 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

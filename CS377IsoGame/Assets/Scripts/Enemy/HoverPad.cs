@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Tank hover pad mechanic not currently being used
-/*
 public class HoverPad : MonoBehaviour
 {
     private Rigidbody HoverPadRigidbody;
@@ -19,8 +17,8 @@ public class HoverPad : MonoBehaviour
     {
         // We get the rest height on each update in case we want to be able to change it in tank script
         // This is the type of thing that might benefit from an observer setup
-        float RestHeight = GetComponentInParent<Tank01Controller>().TankRestHeight;
-        float ControlFactor = GetComponentInParent<Tank01Controller>().TankRestHeight;
+        float RestHeight = GetComponentInParent<TankBossController>().TankRestHeight;
+        float ControlFactor = GetComponentInParent<TankBossController>().TankRestHeight;
 
         // Modify thrust depending on distance from ground using sigmoid inspired function
         // Such that at RestHeight the modifier = 1 and goes to 2 at lower positions, 0 at higher
@@ -30,4 +28,3 @@ public class HoverPad : MonoBehaviour
         HoverPadRigidbody.AddForce(UpwardThrust, ForceMode.Force);
     }
 }
-*/

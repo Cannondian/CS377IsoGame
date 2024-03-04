@@ -13,11 +13,10 @@ GameObject:
   - component: {fileID: 23410759485544486}
   - component: {fileID: 64399541219719194}
   - component: {fileID: 3090199768450106144}
-  - component: {fileID: 919869347276077709}
   - component: {fileID: 4189785069285764920}
   - component: {fileID: 3187016616823076603}
+  - component: {fileID: 919869347276077709}
   - component: {fileID: -1253307371582614810}
-  - component: {fileID: 4183524948871671534}
   m_Layer: 15
   m_Name: LaserDrone
   m_TagString: Enemy
@@ -36,7 +35,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6667612621969937974}
   m_Father: {fileID: 0}
@@ -139,16 +138,59 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 10
-  sightRange: 20
-  attackRange: 10
+  sightRange: 30
+  attackRange: 5
   playerInSightRange: 0
   playerInAttackRange: 0
   stunned: 0
   healthBar: {fileID: 5400803632075480731}
   LaserConnectionContainer: {fileID: 5346312462221349852, guid: 1f8e48379bd2b2548a3bec9615d2a001, type: 3}
   PauseInterval: 1
-  MaxConnections: 3
-  DamagePerSecond: 2.5
+  MaxConnections: 5
+  DamagePerSecond: 10
+--- !u!135 &4189785069285764920
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094861630355358}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.8
+  m_Center: {x: 0, y: 0.26956534, z: 0}
+--- !u!195 &3187016616823076603
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094861630355358}
+  m_Enabled: 1
+  m_AgentTypeID: -1372625422
+  m_Radius: 0.8
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &919869347276077709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +213,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   myCurrentHealth: 0
+  bonusHealth: 0
   amIEnemy: 1
   baseHP: 25
   baseSpeed: 0
@@ -199,49 +242,6 @@ MonoBehaviour:
   tRRR: 0
   tEvasiveness: 0
   tTalent: 0
---- !u!135 &4189785069285764920
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094861630355358}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 0.26956534, z: 0}
---- !u!195 &3187016616823076603
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094861630355358}
-  m_Enabled: 1
-  m_AgentTypeID: -1372625422
-  m_Radius: 1
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &-1253307371582614810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,22 +257,9 @@ MonoBehaviour:
   enemy: 0
   burning: 0
   burningDuration: 0
-  effectiveRejuvenationIntensityforFX: 0
---- !u!114 &4183524948871671534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094861630355358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 480d3ece0d8b243b081b8e1f49c56c42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: 0
-  burning: 0
-  burningDuration: 0
+  burningCounter: 0
+  innerFire: 0
+  innerFireIntensity: 0
   effectiveRejuvenationIntensityforFX: 0
 --- !u!1 &2381148178787232430
 GameObject:

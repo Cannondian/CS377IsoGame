@@ -33,11 +33,11 @@ public class TileElement : MonoBehaviour
         //that being said, maybe we can have a switch statement?
         if (elementType == ElementType.Zulzara)
         {
-            tileRender.material.color = Color.black;
+            //tileRender.material.color = Color.black;
         }
         else if (elementType == ElementType.Velheret)
         {
-            tileRender.material.color = Color.green;
+            //tileRender.material.color = Color.green;
         }
         else if (elementType == ElementType.Ilsihre)
         {
@@ -45,19 +45,19 @@ public class TileElement : MonoBehaviour
         }
         else if (elementType == ElementType.Shalharan)
         {
-            tileRender.material.color = Color.white;
+            //tileRender.material.color = Color.white;
         }
         else if (elementType == ElementType.Obhalas)
         {
-            tileRender.material.color = Color.cyan;
+            //tileRender.material.color = Color.cyan;
         }
         else if (elementType == ElementType.Dust)
         {
-            tileRender.material.color = Color.magenta;
+           // tileRender.material.color = Color.magenta;
         }
         else if (elementType == ElementType.Radioactive)
         {
-            tileRender.material.color = Color.yellow;
+            //tileRender.material.color = Color.yellow;
         }
     }
     
