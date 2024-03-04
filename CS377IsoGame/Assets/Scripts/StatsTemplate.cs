@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RPGCharacterAnims;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -29,6 +30,7 @@ public class StatsTemplate : MonoBehaviour
     private EnemyAI myEnemyAI;
     private DamageEffect damageComponent;
     private UnityAction<float> UpdateCharacterHealthListener;
+    private bool invulnerable;
     
 
     #endregion
@@ -240,17 +242,25 @@ public class StatsTemplate : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (bonusHealth <= 0)
+        if (!amIEnemy)
         {
-            myCurrentHealth -= damage;
+            invulnerable = GetComponent<RPGCharacterController>().invulnerable;
         }
-        else
+
+        if (!invulnerable)
         {
-            bonusHealth = bonusHealth - damage;
-            if (bonusHealth < 0)
+            if (bonusHealth <= 0)
             {
-                myCurrentHealth += bonusHealth;
-                bonusHealth = 0;
+                myCurrentHealth -= damage;
+            }
+            else
+            {
+                bonusHealth = bonusHealth - damage;
+                if (bonusHealth < 0)
+                {
+                    myCurrentHealth += bonusHealth;
+                    bonusHealth = 0;
+                }
             }
         }
     }

@@ -5,13 +5,14 @@ using JetBrains.Annotations;
 using RPGCharacterAnims.Actions;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 using Random = System.Random;
 
 public class ConditionState : MonoBehaviour
 {
-    
-   
+
+    public UnityEvent<StatusConditions.statusList, bool> communicateWithUI;
     
     
     
@@ -26,15 +27,15 @@ public class ConditionState : MonoBehaviour
     #region DebuffStatusFlags
 
     public bool burning;
-    private bool corrosive;
-    private bool bleeding;
-    private bool confused;
-    private bool stunned;
-    private bool slowed;
-    private bool exhausted;
-    private bool blinded;
-    private bool hacked;
-    private bool radiationPoisoning;
+    public bool corrosive;
+    public bool bleeding;
+    public bool confused;
+    public bool stunned;
+    public bool slowed;
+    public bool exhausted;
+    public bool blinded;
+    public bool hacked;
+    public bool radiationPoisoning;
    
 
     #endregion
@@ -42,17 +43,17 @@ public class ConditionState : MonoBehaviour
 
     #region BuffStatusFlags
 
-    private bool rejuvenation;
-    private bool energized;
-    private bool slipperySteps;
-    private bool smolderingStrikes;
-    private bool evasive;
-    private bool oneWithTheWorld;
-    private bool unstoppable;
-    private bool mutating;
-    private bool glowing;
-    private bool defensiveTerrain;
-    private bool chlorophyllInfusion;
+    public bool rejuvenation;
+    public bool energized;
+    public bool slipperySteps;
+    public bool smolderingStrikes;
+    public bool evasive;
+    public bool oneWithTheWorld;
+    public bool unstoppable;
+    public bool mutating;
+    public bool glowing;
+    public bool defensiveTerrain;
+    public bool chlorophyllInfusion;
 
     #endregion
     
@@ -371,6 +372,7 @@ public class ConditionState : MonoBehaviour
 /// <param name="intensity"></param>
     public void SetCondition(StatusConditions.statusList condition, float duration = -1, float intensity = 1)
     {
+        communicateWithUI.Invoke(condition, true);
         switch (condition)
         {
             case StatusConditions.statusList.Burning:
@@ -661,6 +663,7 @@ public class ConditionState : MonoBehaviour
             case StatusConditions.statusList.SmolderingStrikes:
                 if (!enemy)
                 {
+                    SetCondition(StatusConditions.statusList.Burning, duration, intensity);
                     if (!smolderingStrikes)
                     {
                         if (slipperySteps)
@@ -673,7 +676,7 @@ public class ConditionState : MonoBehaviour
                             RemoveCondition(StatusConditions.statusList.ChlorophyllInfusion);
                         }
 
-                        SetCondition(StatusConditions.statusList.Burning, duration, intensity);
+                        
                         EventBus.TriggerEvent(EventTypes.Events.ON_HIGHLIGHT_FX_TRIGGERED,
                             new EventTypes.HighlightFXParam(FXhandler.Ilsihre, 1, false));
                                
@@ -889,6 +892,7 @@ public class ConditionState : MonoBehaviour
     //remove condition with single application, or if multiple applications exist, remove the condition instance atIndex
     public void RemoveCondition(StatusConditions.statusList condition, int atIndex = 0)
     {
+        communicateWithUI.Invoke(condition, false);
         switch (condition)
         {
             case StatusConditions.statusList.Burning:
@@ -1254,10 +1258,13 @@ public class ConditionState : MonoBehaviour
             burningDuration -= burningCounter;
             burningCounter = 0;
             var tickDamage = myStats.tHP * 0.02f;
-            myStats.TakeDamage(tickDamage);
-            EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT,
-                new EventTypes.FloatingDamageParam(gameObject, tickDamage, 1,
-                    Damage.Types.Fire));
+            if (myStats.myCurrentHealth > tickDamage)
+            {
+                myStats.TakeDamage(tickDamage);
+                EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT,
+                    new EventTypes.FloatingDamageParam(gameObject, tickDamage, 1,
+                        Damage.Types.Fire));
+            }
         }
        
     }

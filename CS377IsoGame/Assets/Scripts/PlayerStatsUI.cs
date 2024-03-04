@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PlayerStatsUI : MonoBehaviour
@@ -12,9 +13,18 @@ public class PlayerStatsUI : MonoBehaviour
     public Slider attackSpeedSlider;
     //public Slider evasivenessSlider;
 
+    
+    
+    public GameObject SmolderingStrikesIcon;
+    public GameObject ChlorophyllInfusionIcon;
+    public GameObject RejuvinationIcon;
+    public GameObject SlipperyStepsIcon;
+    public GameObject TailwindBoostIcon;
+  
     private RollManager rollManager;
     public StatsTemplate playerStats;
-
+    public ConditionState playerState;
+    
     #region CoreCharge
 
     public GameObject jarBar;
@@ -51,6 +61,7 @@ public class PlayerStatsUI : MonoBehaviour
         UpdateHealthSlider();
         DrawBonusHealth();
         UpdateRollIndicator();
+        
         defenseSlider.value = playerStats.tDefense;
         attackSlider.value = playerStats.tAttack;
         speedSlider.value = playerStats.tSpeed;
@@ -63,7 +74,7 @@ public class PlayerStatsUI : MonoBehaviour
     public void UpdateCoreChargeSlider()
     {
         var playerPos =  Camera.main.WorldToScreenPoint(playerTransform.position);
-        jarBar.transform.position = playerPos + new Vector3(60, -40, 0);
+        jarBar.transform.position = playerPos + new Vector3(-50, -70, 0);
         coreChargeSlider.value = CoreChargeManager.Instance.coreChargeState;
     }
 
@@ -97,6 +108,29 @@ public class PlayerStatsUI : MonoBehaviour
         else
         {
             rollBulb2.SetActive(false);
+        }
+    }
+
+    public void UpdateStatusDial(StatusConditions.statusList condition, bool active)
+    {
+        if (condition == StatusConditions.statusList.SmolderingStrikes)
+        {
+            SmolderingStrikesIcon.SetActive(active);
+        }
+
+        if (condition == StatusConditions.statusList.ChlorophyllInfusion)
+        {
+            ChlorophyllInfusionIcon.SetActive(active);
+        }
+
+        if (condition == StatusConditions.statusList.Rejuvenation)
+        {
+            RejuvinationIcon.SetActive(active);
+        }
+
+        if (condition == StatusConditions.statusList.SlipperySteps)
+        {
+            SlipperyStepsIcon.SetActive(active);
         }
     }
 }

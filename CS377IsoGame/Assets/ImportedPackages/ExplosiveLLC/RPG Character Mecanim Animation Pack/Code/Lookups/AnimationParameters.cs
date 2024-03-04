@@ -38,5 +38,6 @@ namespace RPGCharacterAnims.Lookups
         public static readonly int Idle = Animator.StringToHash("Idle");
         public static readonly int CustomAnimationSpeed = Animator.StringToHash("CustomAnimationSpeed");
         public static readonly int AttackSpeed = Animator.StringToHash("AttackSpeed");
+        public static readonly int KickSpeed = Animator.StringToHash("KickSpeed");
     }
 }

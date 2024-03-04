@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,10 +55,17 @@ public class DamageCalculator : Singleton<DamageCalculator>
         Random random = new Random();
         return (int)(playerStats.tAttack / 7) + random.Next((int)(playerStats.tAttack / 7 * -0.1), (int)(playerStats.tAttack / 7 * -0.1));
     }
+    
+    public float PlayerFlamethrowerTickIL()
+    {
+        Random random = new Random();
+        return (int)((playerStats.tAttack / 5) + random.Next((int)(playerStats.tAttack / 7 * -0.1), (int)(playerStats.tAttack / 7 * -0.1))) 
+            * (1 + TileMastery.Instance.masteryOverIlsihre / 150) * Mathf.Pow(1 + ((playerStats.ceHP - playerStats.myCurrentHealth) / playerStats.ceHP) / 3, 2 );
+    }
 
     public float PlayerInnerFireExplosion()
     {
         return playerStats.tAttack / 2 * (1 + TileMastery.Instance.masteryOverIlsihre / 100) *
-                (1 + (playerStats.ceHP - playerStats.myCurrentHealth) / playerStats.ceHP);
+                (1 + (playerStats.ceHP - playerStats.myCurrentHealth) / (playerStats.ceHP * 2));
     }
 }

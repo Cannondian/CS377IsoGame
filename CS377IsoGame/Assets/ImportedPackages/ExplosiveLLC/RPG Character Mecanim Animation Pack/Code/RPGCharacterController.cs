@@ -24,9 +24,10 @@ using Null = RPGCharacterAnims.Actions.Null;
 			private float myAttackSpeed;
 
 			private float attackSpeedConstant = 1.2f;
+			private float kickSpeedConstant = 1.4f;
 			#endregion
-			
-			
+
+			public bool invulnerable;
 			#region Events
 
 			/// <summary>
@@ -705,6 +706,8 @@ using Null = RPGCharacterAnims.Actions.Null;
 				animator.SetFloat(AnimationParameters.AnimationSpeed, animationSpeed * mySpeed / 45);
 				animator.SetFloat(AnimationParameters.CustomAnimationSpeed, 1.5f * mySpeed / 45);
 				animator.SetFloat(AnimationParameters.AttackSpeed, myAttackSpeed * attackSpeedConstant);
+				animator.SetFloat(AnimationParameters.KickSpeed, myAttackSpeed * kickSpeedConstant);
+				
 
 				// Aiming.
 				if (isAiming)
@@ -939,9 +942,16 @@ using Null = RPGCharacterAnims.Actions.Null;
 			{
 				animator.TriggerDiveRoll(rollType);
 				Lock(true, true, true, 0, 0.40f);
+				
 				SetIKPause(0.35f);
 			}
 
+			public IEnumerator RollInvulnerability()
+			{
+				 invulnerable = true;
+				 yield return new WaitForSeconds(0.4f);
+				 invulnerable = false;
+			}
 			/// <summary>
 			/// Roll in the specified direction.
 			///
