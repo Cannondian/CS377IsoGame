@@ -24,7 +24,7 @@ public static class StatusConditions
         Glowing, // generic buff produced by the NeonStrips Tile. It gives an attack speed buff and a HitEffect which deals increased damage to stunned enemies.
         ChlorophyllInfusion,
         InnerFire,
-        
+        Poisoned, 
         OneWithTheWorld, //TBD
         Unstoppable, //TBD
         Hacked, //TBD

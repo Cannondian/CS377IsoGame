@@ -25,6 +25,7 @@ public abstract class EnemyAI : MonoBehaviour
     
     // UI elements
     public Slider healthBar;
+    public Slider poisonBar;
 
     protected virtual void Awake()
     {

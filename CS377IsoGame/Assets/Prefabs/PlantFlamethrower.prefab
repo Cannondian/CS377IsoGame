@@ -4590,8 +4590,8 @@ GameObject:
   - component: {fileID: 4740318220287132}
   - component: {fileID: 198404725357797736}
   - component: {fileID: 199378252207973648}
-  - component: {fileID: -5547590644671356748}
   - component: {fileID: 3934652231146962920}
+  - component: {fileID: 4381459320766445642}
   m_Layer: 0
   m_Name: PlantFlamethrower
   m_TagString: Untagged
@@ -9417,18 +9417,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &-5547590644671356748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1653619026499950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bcc1c68b0f1a4d2ca1bcedbe7e954c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &3934652231146962920
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9442,7 +9430,7 @@ BoxCollider:
     m_Bits: 32768
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 97783
+    m_Bits: 228855
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -9450,3 +9438,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 2, z: 7}
   m_Center: {x: 0, y: 1, z: 4}
+--- !u!114 &4381459320766445642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653619026499950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b1a4ff0a3a6249fc91a9789a462bb44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

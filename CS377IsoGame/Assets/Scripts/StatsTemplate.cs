@@ -219,8 +219,8 @@ public class StatsTemplate : MonoBehaviour
         ceRRR = baseRRR; //resource regeneration rate
         ceEvasiveness = baseEvasiveness;
         ceTalent = baseTalent;
-
-        CalculateCES();
+        
+        
         
         
         bonusHealth = 0;
@@ -231,11 +231,15 @@ public class StatsTemplate : MonoBehaviour
         {
             amIEnemy = true;
             myCurrentHealth = baseHP;
+            tHP = baseHP;
+            CalculateCES();
             OnDisable();
         }
         else
         {
+            CalculateCES();
             myCurrentHealth = ceHP;
+            
             
         }
     }
@@ -268,13 +272,27 @@ public class StatsTemplate : MonoBehaviour
     public void RestoreHealth(float heal)
     {
         myCurrentHealth = Mathf.Min(myCurrentHealth + heal, tHP);
+        EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, new EventTypes.FloatingDamageParam(this.gameObject, heal, 2, Damage.Types.Healing));
     }
 
     public void ScaleCurrentHealth(float oldMaxHealth)
     {
-        float scalingFactor = tHP / oldMaxHealth;
-        myCurrentHealth *= scalingFactor;
         
+        float scalingFactor = tHP / oldMaxHealth;
+        myCurrentHealth = myCurrentHealth * scalingFactor;
+        myEnemyAI.poisonBar.maxValue = ceHP;
+        myEnemyAI.poisonBar.value = oldMaxHealth - tHP;
+        myEnemyAI.healthBar.maxValue = ceHP;
+        myEnemyAI.healthBar.value = myCurrentHealth;
+        
+
+    }
+
+    public void UnscaleCurrentHealth()
+    {
+        myEnemyAI.poisonBar.value = 0;
+        myCurrentHealth = ceHP / tHP * myCurrentHealth;
+        myEnemyAI.healthBar.value = myCurrentHealth;
     }
 
     private void OnEnable()
@@ -340,6 +358,7 @@ public class StatsTemplate : MonoBehaviour
         {
             case statsList.HP:
                 tHPModifiers.Remove(modifier);
+                
                 CalculateTemporaryStats(statsList.HP);
                 break;
             case statsList.Speed:
@@ -537,7 +556,10 @@ public class StatsTemplate : MonoBehaviour
 
                 var oldHP = tHP;
                 tHP = ceHP + delta;
-                ScaleCurrentHealth(oldHP);
+                if (amIEnemy)
+                {
+                    ScaleCurrentHealth(oldHP);
+                }
                 break;
             case statsList.Speed:
 

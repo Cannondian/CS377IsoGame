@@ -6,6 +6,7 @@ using RPGCharacterAnims.Actions;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Random = System.Random;
 
@@ -27,7 +28,7 @@ public class ConditionState : MonoBehaviour
     #region DebuffStatusFlags
 
     public bool burning;
-    public bool corrosive;
+    [FormerlySerializedAs("corrosive")] public bool poisoned;
     public bool bleeding;
     public bool confused;
     public bool stunned;
@@ -71,12 +72,13 @@ public class ConditionState : MonoBehaviour
 
     #endregion
 
-    #region CorrosiveData
+    #region PoisonedData
 
-    private float corrosiveDuration;
-    private float corrosiveIntensity;
-    private StatModifier corrosiveModifier;
-
+    private float poisonedDuration;
+    private float poisonedIntensity;
+    private StatModifier poisonedModifier;
+    private int poisonedStackCount;
+    private float poisonedCounter;
     #endregion
     
     #region BleedingData
@@ -148,6 +150,8 @@ public class ConditionState : MonoBehaviour
     #region  RejuvenationData
 
     public float effectiveRejuvenationIntensityforFX;
+    public float rejuvinationCounter;
+    public float rejuvenationDuration;
     public struct Rejuvenation
     {
         public float duration;
@@ -252,9 +256,9 @@ public class ConditionState : MonoBehaviour
             ApplyBurning();
         }
 
-        if (corrosive)
+        if (poisoned)
         {
-            ApplyCorrosive();
+            ApplyPoisoned();
         }
 
         if (bleeding)
@@ -401,30 +405,28 @@ public class ConditionState : MonoBehaviour
                 //ui trigger will go here
                 
                 break;
-            case StatusConditions.statusList.Corrosive: 
+            case StatusConditions.statusList.Poisoned: 
 
-                if (corrosiveIntensity < intensity)
+                if (poisonedStackCount < 10)
                 {
-                    if (corrosive) 
+                    if (poisoned) 
                     { 
-                        EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION, 
-                        new EventTypes.StatusConditionFXParam(FXhandler.CorrosiveFXPrefab, gameObject,
-                            nameof(StatusConditions.statusList.Corrosive)));
-                        myStats.RemoveModifier(StatsTemplate.statsList.Defense, corrosiveModifier);
-                        
+                        myStats.RemoveModifier(StatsTemplate.statsList.HP, poisonedModifier);
+                       
+
                     }
+                    poisonedStackCount += 1;
                     EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION,
-                        new EventTypes.StatusConditionFXParam(FXhandler.CorrosiveFXPrefab, gameObject,
-                                                                nameof(StatusConditions.statusList.Corrosive), intensity));
-                    
-                    corrosiveModifier = new StatModifier(intensity * -20, StatModifierType.Percent);
-                    myStats.AddModifier(StatsTemplate.statsList.Defense, corrosiveModifier);
+                        new EventTypes.StatusConditionFXParam(FXhandler.PoisonedFXPrefab, gameObject,
+                                                                nameof(StatusConditions.statusList.Poisoned), intensity));
+                    poisonedModifier = new StatModifier(intensity * -3 * poisonedStackCount, StatModifierType.Percent);
+                    myStats.AddModifier(StatsTemplate.statsList.HP, poisonedModifier);
                 }
 
-                corrosive = true;
-                if (duration > corrosiveDuration)
+                poisoned = true;
+                if (duration > poisonedDuration)
                 {
-                    corrosiveDuration = duration;
+                    poisonedDuration = duration;
                 }
 
                 break;
@@ -535,7 +537,7 @@ public class ConditionState : MonoBehaviour
                     {
                         EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
                             new EventTypes.StatusConditionFXParam(FXhandler.RejuvenationFXPrefab,
-                            gameObject, nameof(StatusConditions.statusList.Rejuvenation), intensity));
+                                gameObject, nameof(StatusConditions.statusList.Rejuvenation), intensity));
                     }
 
                     rejuvenation = true;
@@ -543,25 +545,31 @@ public class ConditionState : MonoBehaviour
                         new EventTypes.StatusConditionFXParam(FXhandler.RejuvenationFXPrefab,
                             gameObject, nameof(StatusConditions.statusList.Rejuvenation), intensity));
                     effectiveRejuvenationIntensityforFX = intensity;
-                }
-                if (activeRejuvenations.Count == 4)
-                {
-                    Rejuvenation rejuvenationToRemove = activeRejuvenations[0];
-                    float lowest = activeRejuvenations[0].intensity;
-                    
-                    foreach (Rejuvenation r in activeRejuvenations)
+                    rejuvenationDuration = duration;
+                    if (activeRejuvenations.Count == 4)
                     {
-                        if (r.intensity < lowest)
+                        Rejuvenation rejuvenationToRemove = activeRejuvenations[0];
+                        float lowest = activeRejuvenations[0].intensity;
+
+                        foreach (Rejuvenation r in activeRejuvenations)
                         {
-                            lowest = r.intensity;
-                            rejuvenationToRemove = r;
-                        } 
+                            if (r.intensity < lowest)
+                            {
+                                lowest = r.intensity;
+                                rejuvenationToRemove = r;
+                            }
 
+                        }
+
+                        activeRejuvenations.Remove(rejuvenationToRemove);
+                        activeRejuvenations.Add(new Rejuvenation(duration, intensity));
                     }
-
-                    activeRejuvenations.Remove(rejuvenationToRemove);
-                    activeRejuvenations.Add(new Rejuvenation(duration, intensity));
+                    else
+                    {
+                        activeRejuvenations.Add(new Rejuvenation(duration, intensity));
+                    }
                 }
+
                 break;
             case StatusConditions.statusList.ChlorophyllInfusion:
                 if (!chlorophyllInfusion && !enemy)
@@ -917,18 +925,20 @@ public class ConditionState : MonoBehaviour
 
                 break;
 
-            case StatusConditions.statusList.Corrosive: //intensity levels are 1, 2 and 3
+            case StatusConditions.statusList.Poisoned: //intensity levels are 1, 2 and 3
 
 
-                if (corrosive)
+                if (poisoned)
                 {
                     EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
-                        new EventTypes.StatusConditionFXParam(FXhandler.CorrosiveFXPrefab, gameObject,
-                            nameof(StatusConditions.statusList.Corrosive)));
-                    myStats.RemoveModifier(StatsTemplate.statsList.Defense, corrosiveModifier);
-                    corrosive = false;
-                    corrosiveDuration = 0;
-                    corrosiveIntensity = 0;
+                        new EventTypes.StatusConditionFXParam(FXhandler.PoisonedFXPrefab, gameObject,
+                            nameof(StatusConditions.statusList.Poisoned)));
+                    myStats.RemoveModifier(StatsTemplate.statsList.HP, poisonedModifier);
+                    myStats.UnscaleCurrentHealth();
+                    poisoned = false;
+                    poisonedDuration = 0;
+                    poisonedIntensity = 0;
+                    poisonedStackCount = 0;
                 }
 
                 break;
@@ -1149,7 +1159,7 @@ public class ConditionState : MonoBehaviour
                         new EventTypes.StatusConditionFXParam(FXhandler.ChlorophyllInfusionPrefab, gameObject,
                             nameof(StatusConditions.statusList.ChlorophyllInfusion)));
                     EventBus.TriggerEvent(EventTypes.Events.ON_HIGHLIGHT_FX_EXPIRED,
-                        new EventTypes.HighlightFXParam(FXhandler.Shalharan, 1, false));
+                        new EventTypes.HighlightFXParam(FXhandler.Velheret, 1, false));
                     chlorophyllInfusionDuration = 0;
                     chlorophyllInfusionIntensity = 0;
                     chlorophyllInfusion = false;
@@ -1269,9 +1279,22 @@ public class ConditionState : MonoBehaviour
        
     }
 
-    private void ApplyCorrosive()
+    private void ApplyPoisoned()
     {
-        // Insert logic for 'Corrosive' state here
+        poisonedCounter += Time.deltaTime;
+        
+        if (poisonedDuration <= 0)
+        {
+            RemoveCondition(StatusConditions.statusList.Poisoned);
+            poisonedCounter = 0;
+        }
+
+        if (poisonedCounter > 1)
+        {
+
+            poisonedDuration -= poisonedCounter;
+            poisonedCounter = 0;
+        }
     }
 
     private void ApplyBleeding()
@@ -1316,7 +1339,21 @@ public class ConditionState : MonoBehaviour
 
     private void ApplyRejuvenation()
     {
-        // Insert logic for 'Rejuvenation' state here
+        rejuvinationCounter += Time.deltaTime;
+        var rej = activeRejuvenations[0];
+        if (rejuvenationDuration <= 0)
+        {
+            RemoveCondition(StatusConditions.statusList.Rejuvenation, 0);
+            rejuvinationCounter = 0;
+        }
+
+        if (rejuvinationCounter > 0.5f)
+        {
+            rejuvenationDuration -= rejuvinationCounter;
+            rejuvinationCounter = 0;
+            int heal = (int)rej.intensity / 20 + 2;
+            myStats.RestoreHealth(heal);
+        }
     }
 
     private void ApplyEnergized()

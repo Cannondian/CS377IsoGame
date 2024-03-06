@@ -12,6 +12,8 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
 
     public GameObject genericDamageTextPrefab;
     public GameObject fireDamageTextPrefab;
+    public GameObject poisonDamageTextPrefab;
+    public GameObject healingTextPrefab;
     private UnityAction<EventTypes.FloatingDamageParam> floatingDamageListener;
     private GameObject canvas;
     
@@ -48,6 +50,12 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
         {
             case Damage.Types.Fire:
                 textToUse = fireDamageTextPrefab;
+                break;
+            case Damage.Types.Poison:
+                textToUse = poisonDamageTextPrefab;
+                break;
+            case Damage.Types.Healing:
+                textToUse = healingTextPrefab;
                 break;
                 
         }

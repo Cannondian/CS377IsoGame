@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1344993179994423662}
   - component: {fileID: -4443591956415568627}
   m_Layer: 5
-  m_Name: FloatingTextForHealing
+  m_Name: FloatingTextForPoison
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,14 +71,14 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7c2d01260ac7e430e810c5347944e1bc, type: 2}
-  m_sharedMaterial: {fileID: -1151466694427683444, guid: 7c2d01260ac7e430e810c5347944e1bc, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3438a35fbb83a4a4ca0b79b18f3006d0, type: 2}
+  m_sharedMaterial: {fileID: -1151466694427683444, guid: 3438a35fbb83a4a4ca0b79b18f3006d0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 16777215
   m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -96,8 +96,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 45
+  m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -160,7 +160,7 @@ Animator:
   m_GameObject: {fileID: 1101202589498805331}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: af609c202db12464db79ca84ef966b9c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3e912527978a5438384d10e659f8b4c4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

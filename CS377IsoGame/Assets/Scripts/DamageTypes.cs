@@ -7,6 +7,8 @@ public class Damage
     public enum Types
     {
         Generic,
-        Fire
+        Fire,
+        Poison,
+        Healing
     }
 }

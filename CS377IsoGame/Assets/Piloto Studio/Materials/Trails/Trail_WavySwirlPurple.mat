@@ -79,8 +79,8 @@ Material:
     - _DstBlend: 1
     - _EnableFogOnTransparent: 0
     - _Fresnel: 0
-    - _FresnelPower: 1
-    - _FresnelScale: 1
+    - _FresnelPower: 0
+    - _FresnelScale: 100
     - _MiddlePointPos: 0.5
     - _MultiplyNoiseDesaturation: 1
     - _OpaqueCullMode: 2
@@ -131,7 +131,7 @@ Material:
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _FlipbooksColumsRows: {r: 1, g: 1, b: 0, a: 0}
-    - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FresnelColor: {r: 0.66208535, g: 0.2007832, b: 0.9056604, a: 1}
     - _LastColor: {r: 0.06326309, g: 0, b: 0.4245283, a: 0}
     - _MainAlphaChannel: {r: 1, g: 1, b: 1, a: 0}
     - _MainAlphaPanning: {r: 0, g: 0, b: 0, a: 0}

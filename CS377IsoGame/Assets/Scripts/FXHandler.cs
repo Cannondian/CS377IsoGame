@@ -60,7 +60,7 @@ namespace RPGCharacterAnims.Actions
         [FormerlySerializedAs("EnhancedBasicHitPrefab")] [FormerlySerializedAs("EnhancedBasicHit2")] public GameObject KickPrefab;
         public GameObject BurningFXPrefabEnemy;
         
-        public GameObject CorrosiveFXPrefab;
+        [FormerlySerializedAs("CorrosiveFXPrefab")] public GameObject PoisonedFXPrefab;
         public GameObject BleedingFXPrefab;
         public GameObject ConfusedFXPrefab;
         public GameObject StunnedFXPrefab;

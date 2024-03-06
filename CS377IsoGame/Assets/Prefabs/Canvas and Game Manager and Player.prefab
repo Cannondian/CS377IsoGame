@@ -56318,6 +56318,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4281916475523864521, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
+      propertyPath: poisonDamageTextPrefab
+      value: 
+      objectReference: {fileID: 1101202589498805331, guid: 41082edeb2443473da80641f8e6d2ca5, type: 3}
     - target: {fileID: 4317558383485406746, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
       propertyPath: Air
       value: 
@@ -56378,6 +56382,10 @@ PrefabInstance:
       propertyPath: playerBurningFX
       value: 
       objectReference: {fileID: 6540984283354260090, guid: 70d7507b839304956ab5c2cef865905b, type: 3}
+    - target: {fileID: 4317558383485406746, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
+      propertyPath: PoisonedFXPrefab
+      value: 
+      objectReference: {fileID: 1471001059461388, guid: c1d501f0836891042af0a9b9060d3ff2, type: 3}
     - target: {fileID: 4317558383485406746, guid: e8f4a9c3853db2241b9c3d71cf2d8210, type: 3}
       propertyPath: InnerFireFXPrefab
       value: 
@@ -57009,15 +57017,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1679471075053187644, guid: 0b14f5a81c3bffb42b756bc6eb795021, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -861.4371
+      value: -873.402
       objectReference: {fileID: 0}
     - target: {fileID: 1679471075053187644, guid: 0b14f5a81c3bffb42b756bc6eb795021, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -679.2977
+      value: -679.29065
       objectReference: {fileID: 0}
     - target: {fileID: 1679471075053187644, guid: 0b14f5a81c3bffb42b756bc6eb795021, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15.209107
+      value: -12.530322
       objectReference: {fileID: 0}
     - target: {fileID: 1679471075053187644, guid: 0b14f5a81c3bffb42b756bc6eb795021, type: 3}
       propertyPath: m_LocalRotation.w
