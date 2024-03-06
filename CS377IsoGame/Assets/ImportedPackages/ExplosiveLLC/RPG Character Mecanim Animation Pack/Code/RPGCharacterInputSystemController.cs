@@ -20,14 +20,16 @@ namespace RPGCharacterAnims
 	[HelpURL("https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/index.html")]
 
 	public class RPGCharacterInputSystemController : MonoBehaviour
-    {
-        RPGCharacterController rpgCharacterController;
-        private RPGCharacterMovementController movementController;
-        [SerializeField] private GameObject targetCirclePrefab;
-        [SerializeField] private GameObject rangeCirclePrefab;
+	{
+		RPGCharacterController rpgCharacterController;
+		private RPGCharacterMovementController movementController;
+		[SerializeField] private GameObject targetCirclePrefab;
+		[SerializeField] private GameObject rangeCirclePrefab;
 
-        private GameObject targetingCircle;
-        private GameObject rangeCircle;
+		private GameObject targetingCircle;
+
+		private GameObject rangeCircle;
+
 		//InputSystem
 		public @RPGInputs rpgInputs;
 
@@ -35,12 +37,12 @@ namespace RPGCharacterAnims
 		private bool inputJump;
 		private bool inputSkill1;
 		private bool inputSkill2;
-        private bool inputLightHit;
-        private bool inputDeath;
-        private bool inputAttackL;
-        private bool inputAttackR;
-        private bool inputCastL;
-        private bool inputCastR;
+		private bool inputLightHit;
+		private bool inputDeath;
+		private bool inputAttackL;
+		private bool inputAttackR;
+		private bool inputCastL;
+		private bool inputCastR;
 		private bool inputBlock;
 		private bool inputRoll;
 		private bool inputShield;
@@ -62,27 +64,32 @@ namespace RPGCharacterAnims
 		private float inputPauseTimeout = 0;
 		private bool inputPaused = false;
 		private bool alarm;
-		
-		
+
+
 		// TO BE REPLACED 
 
 		public SkillsAndWeapons.Skills skill1 = SkillsAndWeapons.Skills.TerrainMine;
 		public SkillsAndWeapons.Skills skill2 = SkillsAndWeapons.Skills.Flamethrower;
 
 		private Characters activeCharacter = Characters.Jisa;
+
 		private void Awake()
-        {
-            rpgCharacterController = GetComponent<RPGCharacterController>();
+		{
+			rpgCharacterController = GetComponent<RPGCharacterController>();
 			rpgInputs = new @RPGInputs();
 			currentAim = Vector3.zero;
-			
-        }
+
+		}
 
 		private void OnEnable()
-		{ rpgInputs.Enable(); }
+		{
+			rpgInputs.Enable();
+		}
 
 		private void OnDisable()
-		{ rpgInputs.Disable(); }
+		{
+			rpgInputs.Disable();
+		}
 
 		public bool HasMoveInput() => moveInput.magnitude > 0.1f;
 
@@ -95,12 +102,22 @@ namespace RPGCharacterAnims
 		private void Update()
 		{
 			// Pause input for other external input.
-			if (inputPaused) {
-				if (Time.time > inputPauseTimeout) { inputPaused = false; }
-				else { return; }
+			if (inputPaused)
+			{
+				if (Time.time > inputPauseTimeout)
+				{
+					inputPaused = false;
+				}
+				else
+				{
+					return;
+				}
 			}
 
-			if (!inputPaused) { Inputs(); }
+			if (!inputPaused)
+			{
+				Inputs();
+			}
 
 			Blocking();
 			Moving();
@@ -108,15 +125,16 @@ namespace RPGCharacterAnims
 			Damage();
 			SwitchWeapons();
 
-			if (!rpgCharacterController.IsActive("Relax")) {
+			if (!rpgCharacterController.IsActive("Relax"))
+			{
 				Strafing();
 				UsingSkill();
 				Facing();
 				Aiming();
 				Rolling();
 				Attacking();
-				
-				
+
+
 			}
 		}
 
@@ -134,8 +152,9 @@ namespace RPGCharacterAnims
 		/// Input abstraction for easier asset updates using outside control schemes.
 		/// </summary>
 		private void Inputs()
-        {
-            try {
+		{
+			try
+			{
 				inputAttackL = rpgInputs.RPGCharacter.AttackL.WasPressedThisFrame();
 				inputAttackR = rpgInputs.RPGCharacter.AttackR.WasPressedThisFrame();
 				inputSkill1 = rpgInputs.RPGCharacter.Skill1.WasPressedThisFrame();
@@ -158,55 +177,85 @@ namespace RPGCharacterAnims
 				inputSwitchRight = rpgInputs.RPGCharacter.WeaponRight.WasPressedThisFrame();
 				inputSwitchUp = rpgInputs.RPGCharacter.WeaponUp.WasPressedThisFrame();
 
-                // Headlook toggle.
-                if (rpgInputs.RPGCharacter.ToggleHeadLook.IsPressed())
-				{ rpgCharacterController.ToggleHeadlook(); }
+				// Headlook toggle.
+				if (rpgInputs.RPGCharacter.ToggleHeadLook.IsPressed())
+				{
+					rpgCharacterController.ToggleHeadlook();
+				}
 
 				// Injury toggle.
-				if (rpgInputs.RPGCharacter.ToggleInjury.IsPressed()) {
-                    if (rpgCharacterController.CanStartAction("Injure"))
-					{ rpgCharacterController.StartAction("Injure"); }
+				if (rpgInputs.RPGCharacter.ToggleInjury.IsPressed())
+				{
+					if (rpgCharacterController.CanStartAction("Injure"))
+					{
+						rpgCharacterController.StartAction("Injure");
+					}
 					else if (rpgCharacterController.CanEndAction("Injure"))
-					{ rpgCharacterController.EndAction("Injure"); }
-                }
-                // Pause toggle.
-                if (rpgInputs.RPGCharacter.TogglePause.IsPressed()) {
-                    if (rpgCharacterController.CanStartAction("SlowTime"))
-					{ rpgCharacterController.StartAction("SlowTime", 0f); }
+					{
+						rpgCharacterController.EndAction("Injure");
+					}
+				}
+
+				// Pause toggle.
+				if (rpgInputs.RPGCharacter.TogglePause.IsPressed())
+				{
+					if (rpgCharacterController.CanStartAction("SlowTime"))
+					{
+						rpgCharacterController.StartAction("SlowTime", 0f);
+					}
 					else if (rpgCharacterController.CanEndAction("SlowTime"))
-					{ rpgCharacterController.EndAction("SlowTime"); }
-                }
-                // Slow time toggle.
-                if (rpgInputs.RPGCharacter.ToggleSlowTime.IsPressed()) {
-                    if (rpgCharacterController.CanStartAction("SlowTime"))
-					{ rpgCharacterController.StartAction("SlowTime", 0.125f); }
+					{
+						rpgCharacterController.EndAction("SlowTime");
+					}
+				}
+
+				// Slow time toggle.
+				if (rpgInputs.RPGCharacter.ToggleSlowTime.IsPressed())
+				{
+					if (rpgCharacterController.CanStartAction("SlowTime"))
+					{
+						rpgCharacterController.StartAction("SlowTime", 0.125f);
+					}
 					else if (rpgCharacterController.CanEndAction("SlowTime"))
-					{ rpgCharacterController.EndAction("SlowTime"); }
-                }
-            }
-			catch (System.Exception) { Debug.LogError("Inputs not found!  Character must have Player Input component."); }
-        }
+					{
+						rpgCharacterController.EndAction("SlowTime");
+					}
+				}
+			}
+			catch (System.Exception)
+			{
+				Debug.LogError("Inputs not found!  Character must have Player Input component.");
+			}
+		}
 
 		public void Blocking()
-        {
-            bool blocking = HasBlockInput();
-            if (blocking && rpgCharacterController.CanStartAction("Block")) {
-                rpgCharacterController.StartAction("Block");
+		{
+			bool blocking = HasBlockInput();
+			if (blocking && rpgCharacterController.CanStartAction("Block"))
+			{
+				rpgCharacterController.StartAction("Block");
 				blockToggle = true;
-            }
-			else if (!blocking && blockToggle && rpgCharacterController.CanEndAction("Block")) {
-                rpgCharacterController.EndAction("Block");
+			}
+			else if (!blocking && blockToggle && rpgCharacterController.CanEndAction("Block"))
+			{
+				rpgCharacterController.EndAction("Block");
 				blockToggle = false;
-            }
-        }
+			}
+		}
 
-        public void Moving()
+		public void Moving()
 		{
 			moveInput = new Vector3(inputMovement.x, inputMovement.y, 0f);
 
 			// Filter the 0.1 threshold of HasMoveInput.
-			if (HasMoveInput()) { rpgCharacterController.SetMoveInput(moveInput); }
-			else { rpgCharacterController.SetMoveInput(Vector3.zero); }
+			if (HasMoveInput())
+			{
+				rpgCharacterController.SetMoveInput(moveInput);
+			}
+			else
+			{
+				rpgCharacterController.SetMoveInput(Vector3.zero);
+			}
 		}
 
 		private void Jumping()
@@ -216,68 +265,125 @@ namespace RPGCharacterAnims
 			rpgCharacterController.SetJumpInput(jumpInput);
 
 			// If we pressed jump button this frame, jump.
-			if (inputJump && rpgCharacterController.CanStartAction("Jump")) { rpgCharacterController.StartAction("Jump"); }
-			else if (inputJump && rpgCharacterController.CanStartAction("DoubleJump")) { rpgCharacterController.StartAction("DoubleJump"); }
+			if (inputJump && rpgCharacterController.CanStartAction("Jump"))
+			{
+				rpgCharacterController.StartAction("Jump");
+			}
+			else if (inputJump && rpgCharacterController.CanStartAction("DoubleJump"))
+			{
+				rpgCharacterController.StartAction("DoubleJump");
+			}
 		}
 
 		public void Rolling()
 		{
-			if (!inputRoll) { return; }
-			if (!rpgCharacterController.CanStartAction("DiveRoll")) { return; }
+			if (!inputRoll)
+			{
+				return;
+			}
+
+			if (!rpgCharacterController.CanStartAction("DiveRoll"))
+			{
+				return;
+			}
 
 			rpgCharacterController.StartAction("DiveRoll", 1);
 		}
 
 		private void Aiming()
 		{
-			if (rpgCharacterController.hasAimedWeapon) {
-				if (rpgCharacterController.HandlerExists(HandlerTypes.Aim)) {
-					if (HasAimInput()) { rpgCharacterController.TryStartAction(HandlerTypes.Aim); }
-					else { rpgCharacterController.TryEndAction(HandlerTypes.Aim); }
+			if (rpgCharacterController.hasAimedWeapon)
+			{
+				if (rpgCharacterController.HandlerExists(HandlerTypes.Aim))
+				{
+					if (HasAimInput())
+					{
+						rpgCharacterController.TryStartAction(HandlerTypes.Aim);
+					}
+					else
+					{
+						rpgCharacterController.TryEndAction(HandlerTypes.Aim);
+					}
 				}
-				if (rpgCharacterController.rightWeapon == Weapon.TwoHandBow) {
+
+				if (rpgCharacterController.rightWeapon == Weapon.TwoHandBow)
+				{
 
 					// If using the bow, we want to pull back slowly on the bow string while the
 					// Left Mouse button is down, and shoot when it is released.
-					if (Mouse.current.leftButton.isPressed) { bowPull += 0.05f; }
-					else if (Mouse.current.leftButton.wasReleasedThisFrame) {
-						if (rpgCharacterController.HandlerExists(HandlerTypes.Shoot))
-						{ rpgCharacterController.TryStartAction(HandlerTypes.Shoot); }
+					if (Mouse.current.leftButton.isPressed)
+					{
+						bowPull += 0.05f;
 					}
-					else { bowPull = 0f; }
+					else if (Mouse.current.leftButton.wasReleasedThisFrame)
+					{
+						if (rpgCharacterController.HandlerExists(HandlerTypes.Shoot))
+						{
+							rpgCharacterController.TryStartAction(HandlerTypes.Shoot);
+						}
+					}
+					else
+					{
+						bowPull = 0f;
+					}
+
 					bowPull = Mathf.Clamp(bowPull, 0f, 1f);
 				}
-				else {
+				else
+				{
 					// If using a gun or a crossbow, we want to fire when the left mouse button is pressed.
-					if (rpgCharacterController.HandlerExists(HandlerTypes.Shoot)) {
-						if (Mouse.current.leftButton.isPressed) { rpgCharacterController.TryStartAction(HandlerTypes.Shoot); }
+					if (rpgCharacterController.HandlerExists(HandlerTypes.Shoot))
+					{
+						if (Mouse.current.leftButton.isPressed)
+						{
+							rpgCharacterController.TryStartAction(HandlerTypes.Shoot);
+						}
 					}
 				}
+
 				// Reload.
-				if (rpgCharacterController.HandlerExists(HandlerTypes.Reload)) {
-					if (Mouse.current.rightButton.isPressed) { rpgCharacterController.TryStartAction(HandlerTypes.Reload); }
+				if (rpgCharacterController.HandlerExists(HandlerTypes.Reload))
+				{
+					if (Mouse.current.rightButton.isPressed)
+					{
+						rpgCharacterController.TryStartAction(HandlerTypes.Reload);
+					}
 				}
+
 				// Finally, set aim location and bow pull.
 				rpgCharacterController.SetAimInput(rpgCharacterController.target.position);
 				rpgCharacterController.SetBowPull(bowPull);
 			}
-			else { Strafing(); }
+			else
+			{
+				Strafing();
+			}
 		}
 
 		private void CustomAiming()
 		{
-			
+
 		}
 
 		private void Strafing()
 		{
-			if (rpgCharacterController.canStrafe) {
-				if (!rpgCharacterController.hasAimedWeapon) {
-					if (inputAim) {
-						if (rpgCharacterController.CanStartAction("Strafe")) { rpgCharacterController.StartAction("Strafe"); }
+			if (rpgCharacterController.canStrafe)
+			{
+				if (!rpgCharacterController.hasAimedWeapon)
+				{
+					if (inputAim)
+					{
+						if (rpgCharacterController.CanStartAction("Strafe"))
+						{
+							rpgCharacterController.StartAction("Strafe");
+						}
 					}
-					else {
-						if (rpgCharacterController.CanEndAction("Strafe")) { rpgCharacterController.EndAction("Strafe"); }
+					else
+					{
+						if (rpgCharacterController.CanEndAction("Strafe"))
+						{
+							rpgCharacterController.EndAction("Strafe");
+						}
 					}
 				}
 			}
@@ -285,29 +391,43 @@ namespace RPGCharacterAnims
 
 		private void Facing()
 		{
-			if (rpgCharacterController.canFace) {
-				if (HasFacingInput()) {
-					if (inputFace) {
+			if (rpgCharacterController.canFace)
+			{
+				if (HasFacingInput())
+				{
+					if (inputFace)
+					{
 
-						
+
 						// Get world position from mouse position on screen and convert to direction from character.
 						Plane playerPlane = new Plane(Vector3.up, transform.position);
 						Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 						float hitdist = 0.0f;
-						if (playerPlane.Raycast(ray, out hitdist)) {
+						if (playerPlane.Raycast(ray, out hitdist))
+						{
 							Vector3 targetPoint = ray.GetPoint(hitdist);
-							Vector3 lookTarget = new Vector3(targetPoint.x - transform.position.x, transform.position.z - targetPoint.z, 0);
-							
+							Vector3 lookTarget = new Vector3(targetPoint.x - transform.position.x,
+								transform.position.z - targetPoint.z, 0);
+
 							rpgCharacterController.SetFaceInput(lookTarget);
 						}
 					}
-					else { rpgCharacterController.SetFaceInput(new Vector3(inputFacing.x, inputFacing.y, 0)); }
+					else
+					{
+						rpgCharacterController.SetFaceInput(new Vector3(inputFacing.x, inputFacing.y, 0));
+					}
 
-					if (rpgCharacterController.CanStartAction("Face")) {
-						rpgCharacterController.StartAction("Face"); }
+					if (rpgCharacterController.CanStartAction("Face"))
+					{
+						rpgCharacterController.StartAction("Face");
+					}
 				}
-				else {
-					if (rpgCharacterController.CanEndAction("Face")) { rpgCharacterController.EndAction("Face"); }
+				else
+				{
+					if (rpgCharacterController.CanEndAction("Face"))
+					{
+						rpgCharacterController.EndAction("Face");
+					}
 				}
 			}
 		}
@@ -349,9 +469,13 @@ namespace RPGCharacterAnims
 
 		private void TerrainMine()
 		{
-			if (!rpgCharacterController.HandlerExists(HandlerTypes.TerrainMineSkill)) { return; }
-			
-			if (!rpgCharacterController.CanStartAction(HandlerTypes.TerrainMineSkill)) {Debug.Log("can't start"); return; }
+			if (!rpgCharacterController.HandlerExists(HandlerTypes.TerrainMineSkill))
+			{
+				return;
+			}
+
+			if (!rpgCharacterController.CanStartAction(HandlerTypes.TerrainMineSkill) 
+			    || !CoreChargeManager.Instance.skill1Ready) {Debug.Log("can't start"); return; }
 			
 				inputFace = true;
 				InitializeTargeting();
@@ -363,14 +487,14 @@ namespace RPGCharacterAnims
 		//so we need to manually make the player face the mouse direction during the duration of the skill
 		private void Flamethrower()
 		{
-			if (!rpgCharacterController.HandlerExists(HandlerTypes.FlamethrowerSkill)) { return; }
+			if (!rpgCharacterController.HandlerExists(HandlerTypes.FlamethrowerSkill) || !CoreChargeManager.Instance.skill2Ready) { return; }
 			
 			//if (!rpgCharacterController.CanStartAction(HandlerTypes.FlamethrowerSkill)) {Debug.Log("can't start"); return; }
 
 
 			inputFace = true;
 			
-			
+			CoreChargeManager.Instance.UseFlamethrower();
 			Plane playerPlane = new Plane(Vector3.up, transform.position);
 			Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 			float hitdist = 0.0f;
@@ -401,7 +525,7 @@ namespace RPGCharacterAnims
 		private IEnumerator FlamethrowerOff()
 		{
 			Debug.Log("start of coroutine");
-			yield return new WaitWhile(() => inputSkill2 && !inputRoll && !inputAttackL);
+			yield return new WaitWhile(() => inputSkill2 && !inputRoll && !inputAttackL && CoreChargeManager.Instance.skill2Ready);
 			Debug.Log("end of coroutine");
 			alarm = false;
 			rpgCharacterController.EndAction(HandlerTypes.FlamethrowerSkill);
@@ -487,6 +611,7 @@ namespace RPGCharacterAnims
 					rpgCharacterController.StartAction(HandlerTypes.TerrainMineSkill,
 						new SkillContext(HandlerTypes.TerrainMineSkill, targetingCircle.transform.position,
 							element, 2));
+					CoreChargeManager.Instance.UseMine();
 					Destroy(targetingCircle);
 					Destroy(rangeCircle);
 				}

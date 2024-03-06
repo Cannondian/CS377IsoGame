@@ -35,7 +35,7 @@ public class FlamethrowerVH: MonoBehaviour {
             var damage = DamageCalculator.Instance.PlayerFlamethrowerTickVH();
             DamageEnemy(other, damage);
             other.GetComponent<ConditionState>().SetCondition(StatusConditions.statusList.Poisoned, 6, 
-                1 + TileMastery.Instance.masteryOverVelheret / 30);
+                1.3f + TileMastery.Instance.masteryOverVelheret / 30);
             EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT, 
                 new EventTypes.FloatingDamageParam(other.gameObject, damage, 2, Damage.Types.Poison));
         }

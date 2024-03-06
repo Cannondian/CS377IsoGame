@@ -480,7 +480,7 @@ MonoBehaviour:
   myCurrentHealth: 0
   bonusHealth: 0
   amIEnemy: 1
-  baseHP: 15
+  baseHP: 60
   baseSpeed: 0
   baseAttack: 0
   baseDefense: 0

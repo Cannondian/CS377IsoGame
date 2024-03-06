@@ -1615,7 +1615,7 @@ MonoBehaviour:
   myCurrentHealth: 0
   bonusHealth: 0
   amIEnemy: 1
-  baseHP: 200
+  baseHP: 350
   baseSpeed: 0
   baseAttack: 0
   baseDefense: 0
@@ -1705,6 +1705,8 @@ MonoBehaviour:
   innerFire: 0
   innerFireIntensity: 0
   effectiveRejuvenationIntensityforFX: 0
+  rejuvinationCounter: 0
+  rejuvenationDuration: 0
 --- !u!1 &3644027774952300743
 GameObject:
   m_ObjectHideFlags: 0

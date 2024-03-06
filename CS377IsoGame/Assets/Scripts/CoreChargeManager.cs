@@ -15,11 +15,11 @@ using UnityEngine.UI;
     public class CoreChargeManager : Singleton<CoreChargeManager>
     {
 
-        public int coreChargeState { get; set; }
+        public float coreChargeState { get; set; }
         private int coreChargeDrain;
 
 
-        public int previousUpdateSentAt;
+        public float previousUpdateSentAt;
 
         public float skill1Cost;
         public bool skill1Ready;
@@ -42,7 +42,7 @@ using UnityEngine.UI;
         void Start()
         {
             skill1Cost = 60;
-            skill2Cost = 3;
+            skill2Cost = 0.12f;
             coreChargeState = 0;
             coreChargeDrain = 2;
             previousUpdateSentAt = 0;
@@ -113,6 +113,24 @@ using UnityEngine.UI;
 
             }
 
+            if (coreChargeState >= (int)skill1Cost)
+            {
+                skill1Ready = true;
+            }
+            else
+            {
+                skill1Ready = false;
+            }
+
+            if (coreChargeState >= (int)skill2Cost)
+            {
+                skill2Ready = true;
+            }
+            else
+            {
+                skill2Ready = false;
+            }
+
 
         }
 
@@ -149,13 +167,13 @@ using UnityEngine.UI;
                 {
                   
                     case 1:
-                        coreChargeState += 7;
+                        coreChargeState += 9;
                         break;
                     case 2:
-                        coreChargeState += 4;
+                        coreChargeState += 5;
                         break;
                     case 5:
-                        coreChargeState += 3;
+                        coreChargeState += 4;
                         break;
 
                 }
@@ -200,10 +218,25 @@ using UnityEngine.UI;
             {
                 previousUpdateSentAt = coreChargeState;
                 EventBus.TriggerEvent(EventTypes.Events.ON_UPDATE_CORE_CHARGE_PARTICLES,
-                    new EventTypes.Event8Param(coreChargeState, false, FXList.FXlist.ElectricityFX2));
+                    new EventTypes.Event8Param((int)coreChargeState, false, FXList.FXlist.ElectricityFX2));
             }
         }
-        
+
+        public void UseMine()
+        {
+            if (skill1Ready)
+            {
+                coreChargeState -= (int) skill1Cost;
+            }
+        }
+
+        public void UseFlamethrower()
+        {
+            if (skill2Ready)
+            {
+                coreChargeState -= skill2Cost;
+            }
+        }
 
         private void OnEnable()
         {

@@ -1493,7 +1493,7 @@ public class ConditionState : MonoBehaviour
             
             chlorophyllInfusionDuration -= chlorophyllInfusionCounter;
             chlorophyllInfusionCounter = 0;
-            var hpBuildUp = 2 + TileMastery.Instance.masteryOverVelheret / 20;
+            var hpBuildUp = 4 + TileMastery.Instance.masteryOverVelheret / 20;
             myStats.AddBonusHealth(hpBuildUp);
             
         }

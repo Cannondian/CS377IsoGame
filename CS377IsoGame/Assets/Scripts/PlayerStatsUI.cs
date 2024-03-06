@@ -13,7 +13,14 @@ public class PlayerStatsUI : MonoBehaviour
     public Slider attackSpeedSlider;
     //public Slider evasivenessSlider;
 
-    
+    public GameObject skill1Indicator1;
+    public GameObject skill1Indicator2;
+    public GameObject skill1Indicator3;
+    public GameObject skill1Indicator4;
+    public GameObject skill1Indicator5;
+    public bool skill1Idrawn;
+
+    private CoreChargeManager coreChargeManager;
     
     public GameObject SmolderingStrikesIcon;
     public GameObject ChlorophyllInfusionIcon;
@@ -52,6 +59,7 @@ public class PlayerStatsUI : MonoBehaviour
     void Start()
     {
         rollManager = GetComponent<RollManager>();
+        coreChargeManager = GetComponent<CoreChargeManager>();
     }
 
     // Update is called once per frame
@@ -61,14 +69,43 @@ public class PlayerStatsUI : MonoBehaviour
         UpdateHealthSlider();
         DrawBonusHealth();
         UpdateRollIndicator();
-        
-        
-        
+        HandleSkillIndicators();
+
+
+
         //RRRSlider.value = playerStats.tRRR;
         //attackSpeedSlider.value = playerStats.tAttackSpeed;
         //evasivenessSlider.value = playerStats.tEvasiveness;
     }
 
+    public void HandleSkillIndicators()
+    {
+        if (!skill1Idrawn && coreChargeManager.skill1Ready)
+        {
+            StartCoroutine(DrawIndicators1(true));
+        }
+
+        if (!coreChargeManager.skill1Ready && skill1Idrawn)
+        {
+            StartCoroutine(DrawIndicators1(false));
+        }
+    }
+
+    private IEnumerator DrawIndicators1(bool mode)
+    {
+        
+        skill1Idrawn = mode;
+        skill1Indicator1.SetActive(mode);
+        yield return new WaitForSeconds(0.5f);
+        skill1Indicator2.SetActive(mode);
+        yield return new WaitForSeconds(0.5f);
+        skill1Indicator3.SetActive(mode);
+        yield return new WaitForSeconds(0.5f);
+        skill1Indicator4.SetActive(mode);
+        yield return new WaitForSeconds(0.5f);
+        skill1Indicator5.SetActive(mode);
+        skill1Idrawn = mode;
+    }
     public void UpdateCoreChargeSlider()
     {
         var playerPos =  Camera.main.WorldToScreenPoint(playerTransform.position);

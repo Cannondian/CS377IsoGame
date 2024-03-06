@@ -76,7 +76,7 @@ public class DamageCalculator : Singleton<DamageCalculator>
     {
         Random random = new Random();
         return (int)(((playerStats.tAttack / 7) + random.Next((int)(playerStats.tAttack / 5 * -0.15), (int)(playerStats.tAttack / 5 * -0.15))) 
-            * (1 + TileMastery.Instance.masteryOverIlsihre / 150) * Mathf.Pow(1 + ((playerStats.ceHP - playerStats.myCurrentHealth) / playerStats.ceHP) / 2.6f, 3 ));
+            * (1 + TileMastery.Instance.masteryOverIlsihre / 150) * Mathf.Pow(1 + ((playerStats.ceHP - playerStats.myCurrentHealth) / playerStats.ceHP) / 2, 3 ));
     }
     public float PlayerFlamethrowerTickVH()
     {
@@ -95,6 +95,6 @@ public class DamageCalculator : Singleton<DamageCalculator>
     public float PlayerInnerFireExplosion()
     {
         return playerStats.tAttack / 2 * (1 + TileMastery.Instance.masteryOverIlsihre / 100) *
-                (1 + (playerStats.ceHP - playerStats.myCurrentHealth) / (playerStats.ceHP * 2));
+                (1 + (playerStats.ceHP - playerStats.myCurrentHealth) / (playerStats.ceHP * 1.7f));
     }
 }

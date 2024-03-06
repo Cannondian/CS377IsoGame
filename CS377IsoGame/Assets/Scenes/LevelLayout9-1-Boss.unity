@@ -60750,6 +60750,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1849318647}
     m_Modifications:
+    - target: {fileID: 955394606369895311, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 955394606369895311, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 955394606369895311, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335933974963093586, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335933974963093586, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1768871034273769911, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
       propertyPath: m_LocalPosition.x
       value: 172.24463
@@ -60824,11 +60844,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7355422006962617961, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
-      value: 777719
+      value: 761335
       objectReference: {fileID: 0}
     - target: {fileID: 7355422006962617961, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
       propertyPath: m_IncludeLayers.m_Bits
-      value: 270336
+      value: 286720
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

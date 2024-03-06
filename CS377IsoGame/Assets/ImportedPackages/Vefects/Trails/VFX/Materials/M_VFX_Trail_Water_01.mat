@@ -91,7 +91,7 @@ Material:
     - _DistortionMaskIntensity: 1
     - _Distortion_Amount: 0.5
     - _DstBlend: 0
-    - _EmissiveIntensity: 0.2
+    - _EmissiveIntensity: 1
     - _Erosion_Intensity: 1
     - _Erosion_Intensity1: 1
     - _Erosion_Multiply: 0
@@ -119,10 +119,10 @@ Material:
     - __dirty: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color_01: {r: 0.10196078, g: 0.4013073, b: 1, a: 0}
+    - _Color_01: {r: 0, g: 0.3318777, b: 1, a: 1}
     - _Color_02: {r: 0.10196078, g: 0.8503267, b: 1, a: 0}
     - _Color_Scale: {r: 1, g: 1, b: 0, a: 0}
-    - _Color_Speed: {r: -0.2, g: -0.1, b: 0, a: 0}
+    - _Color_Speed: {r: -0.1, g: -0.1, b: 0, a: 0}
     - _Distortion_Scale: {r: 1, g: 1, b: 0, a: 0}
     - _Distortion_Speed: {r: 0.3, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

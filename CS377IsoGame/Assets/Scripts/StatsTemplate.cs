@@ -697,7 +697,7 @@ public class StatsTemplate : MonoBehaviour
 
     public void AddBonusHealth(float tick)
     {
-        if (bonusHealth <= 20 + TileMastery.Instance.masteryOverVelheret / 2)
+        if (bonusHealth <= 40 + TileMastery.Instance.masteryOverVelheret / 2)
         {
             bonusHealth += tick;
         }
