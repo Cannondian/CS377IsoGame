@@ -14,8 +14,8 @@ public class MeleeHumanEnemyAI : EnemyAI
         enemyRenderer = GetComponent<Renderer>();
 
         // Initialize health and attack damage for this specific enemy
-        Health = 100f;
-        AttackDamage = 10f;
+        Health = 1000000f;
+        AttackDamage = 0f;
     }
 
     protected override void Patroling()
