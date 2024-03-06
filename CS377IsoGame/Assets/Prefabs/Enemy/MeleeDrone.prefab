@@ -289,7 +289,6 @@ GameObject:
   - component: {fileID: -2652444479010325795}
   - component: {fileID: 157308210463696826}
   - component: {fileID: -4592611728281541160}
-  - component: {fileID: 6914604905468388036}
   m_Layer: 15
   m_Name: MeleeDrone
   m_TagString: Enemy
@@ -407,7 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc8534ac8c5542c49eae34331956f53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myStats: {fileID: 0}
+  myStats: {fileID: -2652444479010325795}
   player: {fileID: 0}
   Walkable:
     serializedVersion: 2
@@ -518,7 +517,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 73792
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -571,48 +570,8 @@ MonoBehaviour:
   innerFire: 0
   innerFireIntensity: 0
   effectiveRejuvenationIntensityforFX: 0
---- !u!114 &6914604905468388036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2451309832464529230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 480d3ece0d8b243b081b8e1f49c56c42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  communicateWithUI:
-    m_PersistentCalls:
-      m_Calls: []
-  enemy: 0
-  burning: 0
-  poisoned: 0
-  bleeding: 0
-  confused: 0
-  stunned: 0
-  slowed: 0
-  exhausted: 0
-  blinded: 0
-  hacked: 0
-  radiationPoisoning: 0
-  rejuvenation: 0
-  energized: 0
-  slipperySteps: 0
-  smolderingStrikes: 0
-  evasive: 0
-  oneWithTheWorld: 0
-  unstoppable: 0
-  mutating: 0
-  glowing: 0
-  defensiveTerrain: 0
-  chlorophyllInfusion: 0
-  burningDuration: 0
-  burningCounter: 0
-  innerFire: 0
-  innerFireIntensity: 0
-  effectiveRejuvenationIntensityforFX: 0
+  rejuvinationCounter: 0
+  rejuvenationDuration: 0
 --- !u!1 &2850627821220453408
 GameObject:
   m_ObjectHideFlags: 0
