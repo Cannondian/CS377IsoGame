@@ -743,7 +743,13 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
     UNet: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -763,11 +769,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: 1ae76267-926e-405d-9503-18048b6e1922
+  cloudProjectId: 5f79b7eb-aa2f-42ac-82d1-6769f3df0835
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: CS377IsoGame
-  organizationId: maurqh
+  organizationId: mmrsk45
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

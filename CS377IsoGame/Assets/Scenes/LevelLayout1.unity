@@ -17108,21 +17108,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1849318647}
     m_Modifications:
-    - target: {fileID: 157308210463696826, guid: 3ce8626a868a048e29e8b9989136bc0f, type: 3}
-      propertyPath: m_IncludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2451309832464529230, guid: 3ce8626a868a048e29e8b9989136bc0f, type: 3}
       propertyPath: m_Name
       value: MeleeDrone
-      objectReference: {fileID: 0}
-    - target: {fileID: 2831354511811458835, guid: 3ce8626a868a048e29e8b9989136bc0f, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2831354511811458835, guid: 3ce8626a868a048e29e8b9989136bc0f, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4314696061987229252, guid: 3ce8626a868a048e29e8b9989136bc0f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -17172,10 +17160,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6163111961061575989, guid: 3ce8626a868a048e29e8b9989136bc0f, type: 3}
-      propertyPath: myStats
-      value: 
-      objectReference: {fileID: 1052689980}
     - target: {fileID: 7525192467465483874, guid: 3ce8626a868a048e29e8b9989136bc0f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -17184,8 +17168,7 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6914604905468388036, guid: 3ce8626a868a048e29e8b9989136bc0f, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -44398,17 +44381,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 413476, guid: 4322256955695a94a84fec782ec10d7a, type: 3}
   m_PrefabInstance: {fileID: 1193063807}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1052689980 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -2652444479010325795, guid: 3ce8626a868a048e29e8b9989136bc0f, type: 3}
-  m_PrefabInstance: {fileID: 373586599}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b88cf8dc5b6c4f32ad72e7e34306ffb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1056219149
 PrefabInstance:
   m_ObjectHideFlags: 0

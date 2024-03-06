@@ -131,6 +131,8 @@ public class JumpingGrenadierController : EnemyAI
             float HorizontalDistanceFromBase = new Vector2(Indicator.position.x - transform.position.x, Indicator.position.z - transform.position.z).magnitude;
             float HorizontalLaunchVelocity = (HorizontalDistanceFromBase / TimeToGround) + HorizontalDistanceFromBase * 0.05f; // last part is a fudge factor to make sure targeting is perfect
 
+            Grenade.GetComponent<GrenadierMissile>().TimeToGround = TimeToGround;
+
             // Potentially add variation in horizontal launch velocity
             float LaunchVariationX = 0f;
             float LaunchVariationZ = 0f;

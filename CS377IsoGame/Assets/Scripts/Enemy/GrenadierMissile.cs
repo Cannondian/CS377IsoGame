@@ -8,6 +8,7 @@ public class GrenadierMissile : MonoBehaviour
 
     // These values should be set by whoever instantiates the prefab
     public float Damage = 10f;
+    public float TimeToGround;
 
     private Rigidbody rb;
     private float LaunchTime;
@@ -24,10 +25,10 @@ public class GrenadierMissile : MonoBehaviour
         // transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.forward);
     }
 
-    void OnCollisionEnter(Collision col)
-    {
-        Explode();
-    }
+    // void OnCollisionEnter(Collision col)
+    // {
+    //     Explode();
+    // }
 
     void OnTriggerEnter(Collider col)
     {
@@ -39,8 +40,7 @@ public class GrenadierMissile : MonoBehaviour
 
     void FixedUpdate()
     {
-        // For some reason, some collisions are missing. This should ensure it always blows up
-        if (transform.position.y <= 0)
+        if (transform.position.y <= 0.5f || Time.time - LaunchTime > TimeToGround)
         {
             Explode();
         }

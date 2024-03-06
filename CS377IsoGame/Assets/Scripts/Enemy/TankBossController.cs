@@ -66,7 +66,10 @@ public class TankBossController : EnemyAI
 
         TargetingParticles = TargetingCircle.GetComponent<ParticleSystem>();
         LaserStrikeParticles = LaserCircle.GetComponent<ParticleSystem>();
+    }
 
+    void Start()
+    {
         SoundManager.PlaySoundLoop(SoundManager.Sound.BossTank_Hover, transform);
     }
 
@@ -163,6 +166,9 @@ public class TankBossController : EnemyAI
                         Quaternion.identity
                     );
 
+        var DroneCollider = Drone.GetComponent<BoxCollider>();
+        DroneCollider.enabled = false; // Disable drone collider until animation is complete
+
         var Vector = 2f * HatchTransform.forward;
         var Origin = HatchTransform.position - Vector;
 
@@ -187,6 +193,9 @@ public class TankBossController : EnemyAI
             yield return null; // wait for next frame
         }
         HatchTransform.localRotation = Quaternion.identity;
+
+        // Enable the drone collider now
+        DroneCollider.enabled = true;
 
         isFiring = false;
     }
