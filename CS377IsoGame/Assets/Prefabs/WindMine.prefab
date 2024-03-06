@@ -9749,6 +9749,7 @@ GameObject:
   - component: {fileID: 2645063440791178057}
   - component: {fileID: 4407776777544067770}
   - component: {fileID: 6601663957353152736}
+  - component: {fileID: 2142151299540959198}
   m_Layer: 0
   m_Name: WindMine
   m_TagString: Untagged
@@ -9766,7 +9767,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.740672, y: -1.3962193, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalScale: {x: 1.6, y: 1.3, z: 1.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4240342984182012}
@@ -9934,7 +9935,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.37753648, g: 0.7924528, b: 0.7631571, a: 1}
+      maxColor: {r: 0.32280168, g: 0.5849056, b: 0.5675969, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -10738,7 +10739,7 @@ ParticleSystem:
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
-        m_RotationOrder: 0
+        m_RotationOrder: 4
       minCurve:
         serializedVersion: 2
         m_Curve:
@@ -14637,7 +14638,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.00002002716, y: 0.00002002716, z: 0.00002}
+  m_Size: {x: 5.5, y: 1, z: 5.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &6601663957353152736
 Animator:
@@ -14660,6 +14661,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2142151299540959198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352952055292810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e48d9533963c24e96952532251c89f19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1365527214934048
 GameObject:
   m_ObjectHideFlags: 0
@@ -14811,8 +14824,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 10
-      minScalar: 10
+      scalar: 11
+      minScalar: 11
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14911,8 +14924,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2
-      minScalar: 0.5
+      scalar: 2.2
+      minScalar: 0.7
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -29101,7 +29114,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 3
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -29136,7 +29149,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 25
+      scalar: 20
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -33674,11 +33687,60 @@ PrefabInstance:
       propertyPath: m_Name
       value: LootBeam_Generic_Common
       objectReference: {fileID: 0}
+    - target: {fileID: 8844613807067360556, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8844613807067360556, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8662876473727561334}
+    - targetCorrespondingSourceObject: {fileID: 8844613807067360556, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7816547090512001221}
   m_SourcePrefab: {fileID: 100100000, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+--- !u!1 &3615031835317408529 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8844613807067360556, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+  m_PrefabInstance: {fileID: 5230171379039567421}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &8662876473727561334
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3615031835317408529}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8192
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1039863
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &7816547090512001221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3615031835317408529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2fee9a4f61b648dea212fed8f8bec00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickUpEffect: {fileID: 2245806557845527215, guid: 0ca43abba53f8432ea3f516771ba16b3, type: 3}
 --- !u!4 &3615031835317408534 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8844613807067360555, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}

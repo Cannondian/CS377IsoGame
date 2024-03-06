@@ -248,7 +248,7 @@ public class StatsTemplate : MonoBehaviour
     {
         if (!amIEnemy)
         {
-            invulnerable = GetComponent<RPGCharacterController>().invulnerable;
+            invulnerable = RollManager.Instance.invulnerable;
         }
 
         if (!invulnerable)

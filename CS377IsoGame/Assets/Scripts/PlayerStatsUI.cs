@@ -62,9 +62,7 @@ public class PlayerStatsUI : MonoBehaviour
         DrawBonusHealth();
         UpdateRollIndicator();
         
-        defenseSlider.value = playerStats.tDefense;
-        attackSlider.value = playerStats.tAttack;
-        speedSlider.value = playerStats.tSpeed;
+        
         
         //RRRSlider.value = playerStats.tRRR;
         //attackSpeedSlider.value = playerStats.tAttackSpeed;

@@ -25,6 +25,7 @@ public static class StatusConditions
         ChlorophyllInfusion,
         InnerFire,
         Poisoned, 
+        TailwindBoost,
         OneWithTheWorld, //TBD
         Unstoppable, //TBD
         Hacked, //TBD

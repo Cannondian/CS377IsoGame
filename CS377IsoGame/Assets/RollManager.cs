@@ -9,6 +9,7 @@ public class RollManager : Singleton<RollManager>
     public float roll1ReadyIn;
     public float roll2ReadyIn;
     public float rollCooldown;
+    public bool invulnerable;
     
     // Start is called before the first frame update
     void Start()
@@ -55,10 +56,13 @@ public class RollManager : Singleton<RollManager>
         if (roll1Ready)
         {
             roll1Ready = false;
+            StartCoroutine(Invulnerability());
+
         }
         else if (roll2Ready)
         {
             roll2Ready = false;
+            StartCoroutine(Invulnerability());
         }
     }
 
@@ -70,5 +74,12 @@ public class RollManager : Singleton<RollManager>
         }
 
         return false;
+    }
+
+    private IEnumerator Invulnerability()
+    {
+        invulnerable = true;
+        yield return new WaitForSeconds(0.5f);
+        invulnerable = false;
     }
 }

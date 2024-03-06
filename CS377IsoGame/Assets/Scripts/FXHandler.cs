@@ -77,6 +77,7 @@ namespace RPGCharacterAnims.Actions
         public GameObject MutatingFXPrefab;
         public GameObject GlowingFXPrefab;
         public GameObject ChlorophyllInfusionPrefab;
+        public GameObject TailwindBoostFXPrefab;
         public GameObject AttackArcPrefab;
         public GameObject InnerFireHitFX;
         public GameObject FlamethrowerPrefab;
@@ -318,9 +319,8 @@ namespace RPGCharacterAnims.Actions
                     
                     GameObject statusConditionFX = Instantiate(context.condition, context.caller.transform);
                     statusConditionFX.name = context.myName;
-                    
-                    
                     activeStatusFX.Add(statusConditionFX);
+                    
                 }
                 else if (StatusEffectsOnQueue.TryGetValue(context.caller, out var queuedStatusFX)) //is the game object in the dictionary for queued status FX?
                 {

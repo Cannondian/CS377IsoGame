@@ -56,6 +56,11 @@ public class DamageCalculator : Singleton<DamageCalculator>
         Random random = new Random();
         return playerStats.tAttack * (1.2f + TileMastery.Instance.masteryOverIlsihre / 200 ) + random.Next((int)(playerStats.tAttack* -0.4), (int)(playerStats.tAttack* 0.4));
     }
+    public float PlayerMineSkillSH()
+    {
+        Random random = new Random();
+        return (int)(playerStats.tAttack * 0.8f * (1 + TileMastery.Instance.masteryOverShalharan / 200 ) + random.Next((int)(playerStats.tAttack* -0.2), (int)(playerStats.tAttack* 0.2)));
+    }
     public float PlayerFlamethrowerTick()
     {
         Random random = new Random();
@@ -72,6 +77,14 @@ public class DamageCalculator : Singleton<DamageCalculator>
     {
         Random random = new Random();
         return (int)(playerStats.tAttack / 17) + random.Next((int)(playerStats.tAttack / 4 * -0.15), (int)(playerStats.tAttack / 3 * 0.15));
+    }
+
+    public float PlayerFlamethrowerTickSH()
+    {
+        Random random = new Random();
+        return (int)((playerStats.tAttack / 7) +
+                     random.Next((int)(playerStats.tAttack / 4 * -0.15), (int)(playerStats.tAttack / 3 * 0.15)) *
+                     (1 + TileMastery.Instance.masteryOverShalharan / 100));
     }
 
     public float PlayerInnerFireExplosion()

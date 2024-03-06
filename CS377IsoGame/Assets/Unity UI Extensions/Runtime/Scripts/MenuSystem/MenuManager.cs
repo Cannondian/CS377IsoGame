@@ -12,8 +12,7 @@ namespace UnityEngine.UI.Extensions
     [DisallowMultipleComponent]
     public class MenuManager : MonoBehaviour
     {
-        [SerializeField]
-        private Menu[] menuScreens;
+        [SerializeField] private Menu[] menuScreens;
 
         public Menu[] MenuScreens
         {
@@ -21,8 +20,7 @@ namespace UnityEngine.UI.Extensions
             set { menuScreens = value; }
         }
 
-        [SerializeField]
-        private int startScreen = 0;
+        [SerializeField] private int startScreen = 0;
 
         public int StartScreen
         {
@@ -88,7 +86,7 @@ namespace UnityEngine.UI.Extensions
                 {
                     Canvas previousCanvas = menuStack.Peek().GetComponent<Canvas>();
 
-                    if(previousCanvas != null)
+                    if (previousCanvas != null)
                     {
                         topCanvas.sortingOrder = previousCanvas.sortingOrder + 1;
                     }
@@ -108,6 +106,7 @@ namespace UnityEngine.UI.Extensions
                     return MenuScreens[i].gameObject;
                 }
             }
+
             throw new MissingReferenceException("Prefab not found for " + PrefabName);
         }
 
@@ -148,22 +147,22 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        private void Update()
+        //private void Update()
+        //{
+        // On Android the back button is sent as Esc
+        //if (UIExtensionsInputManager.GetKeyDown(KeyCode.Escape) && menuStack.Count > 0)
+        //{
+        //   menuStack.Peek().OnBackPressed();
+        //}
+        //}
+        }
+
+        public static class MenuExtensions
         {
-            // On Android the back button is sent as Esc
-            if (UIExtensionsInputManager.GetKeyDown(KeyCode.Escape) && menuStack.Count > 0)
+            public static Menu GetMenu(this GameObject go)
             {
-                menuStack.Peek().OnBackPressed();
+                return go.GetComponent<Menu>();
             }
         }
-    }
 
-    public static class MenuExtensions
-    {
-        public static Menu GetMenu(this GameObject go)
-        {
-            return go.GetComponent<Menu>();
-        }
     }
-
-}

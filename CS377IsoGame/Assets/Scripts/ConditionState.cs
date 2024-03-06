@@ -230,6 +230,13 @@ public class ConditionState : MonoBehaviour
     private StatModifier glowingModifier;
 
     #endregion
+
+    #region TailwindBoost
+
+    private bool tailwindBoost;
+    private float tailwindBoostDuration;
+
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -356,6 +363,12 @@ public class ConditionState : MonoBehaviour
         if (chlorophyllInfusion)
         {
             ApplyChlorophyllInfusion();
+        }
+
+        if (tailwindBoost)
+        {
+           
+            ApplyTailwindBoost();
         }
         
     }
@@ -578,11 +591,13 @@ public class ConditionState : MonoBehaviour
                     if (smolderingStrikes)
                     {
                        RemoveCondition(StatusConditions.statusList.SmolderingStrikes);
+                       
                     }
 
                     if (slipperySteps)
                     {
                         RemoveCondition(StatusConditions.statusList.SlipperySteps);
+                        
                     }
                     
                     chlorophyllInfusion = true;
@@ -634,7 +649,7 @@ public class ConditionState : MonoBehaviour
                             new EventTypes.StatusConditionFXParam(FXhandler.SlipperyStepsFXPrefab, this.gameObject,
                                 nameof(StatusConditions.statusList.SlipperySteps)));
                     }
-
+                    slipperyStepsIntensity = intensity;
                     slipperyStepsSpeedModifier =
                         new StatModifier(intensity * 15, StatModifierType.Percent); //add new version
                     myStats.AddModifier(StatsTemplate.statsList.Speed, slipperyStepsSpeedModifier);
@@ -661,13 +676,42 @@ public class ConditionState : MonoBehaviour
                     }
                 }
 
-                slipperyStepsIntensity = intensity;
+                
                 slipperySteps = true;
                 slipperyStepsDuration = duration;
                 
                 break;
             //scales with attack but has fixed intensity
             //also increases attack minimally
+            case StatusConditions.statusList.TailwindBoost:
+                if (!enemy && !tailwindBoost)
+                {
+                    
+                    
+                    EventBus.TriggerEvent(EventTypes.Events.ON_NEW_STATUS_CONDITION, 
+                        new EventTypes.StatusConditionFXParam(FXhandler.TailwindBoostFXPrefab, this.gameObject, 
+                            nameof(StatusConditions.statusList.TailwindBoost)));
+                    if (!slipperySteps)
+                    {
+                        SetCondition(StatusConditions.statusList.SlipperySteps, duration, 2*(1 + TileMastery.Instance.ShalharanEffectIntensity()));
+                    }
+                    else
+                    {
+                        var oldIntensity = slipperyStepsIntensity;
+                        RemoveCondition(StatusConditions.statusList.SlipperySteps);
+                        SetCondition(StatusConditions.statusList.SlipperySteps, duration, oldIntensity*2);
+                    }
+                    tailwindBoost = true;
+                    tailwindBoostDuration = duration;
+                }
+                
+                if (duration > tailwindBoostDuration)
+                {
+                    tailwindBoostDuration = duration;
+                }
+                break;
+            
+            
             case StatusConditions.statusList.SmolderingStrikes:
                 if (!enemy)
                 {
@@ -677,6 +721,7 @@ public class ConditionState : MonoBehaviour
                         if (slipperySteps)
                         {
                             RemoveCondition(StatusConditions.statusList.SlipperySteps);
+                           
                         }
 
                         if (chlorophyllInfusion)
@@ -1114,7 +1159,10 @@ public class ConditionState : MonoBehaviour
             case StatusConditions.statusList.SlipperySteps:
                 if (slipperySteps)
                 {
-                   
+                    if (tailwindBoost)
+                    {
+                        RemoveCondition(StatusConditions.statusList.TailwindBoost);
+                    }
                     EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
                         new EventTypes.StatusConditionFXParam(FXhandler.SlipperyStepsFXPrefab, this.gameObject,
                             nameof(StatusConditions.statusList.SlipperySteps)));
@@ -1135,6 +1183,16 @@ public class ConditionState : MonoBehaviour
                     slipperySteps = false;
                 }
 
+                break;
+            case StatusConditions.statusList.TailwindBoost:
+                if (tailwindBoost)
+                {
+                    EventBus.TriggerEvent(EventTypes.Events.ON_EXPIRED_STATUS_CONDITION,
+                        new EventTypes.StatusConditionFXParam(FXhandler.TailwindBoostFXPrefab, this.gameObject,
+                            nameof(StatusConditions.statusList.TailwindBoost)));
+                    tailwindBoost = false;
+                    tailwindBoostDuration = 0;
+                }
                 break;
             //scales with attack but has fixed intensity
             //also increases attack minimally
@@ -1399,6 +1457,20 @@ public class ConditionState : MonoBehaviour
     private void ApplyGlowing()
     {
         // Insert logic for 'Glowing' state here
+    }
+
+    private void ApplyTailwindBoost()
+    {
+        
+        
+        tailwindBoostDuration -= Time.deltaTime;
+        slipperyStepsDuration = tailwindBoostDuration;
+       
+        if (tailwindBoostDuration <= 0)
+        {
+            
+            RemoveCondition(StatusConditions.statusList.TailwindBoost);
+        }
     }
 
     private void ApplyDefensiveTerrain()

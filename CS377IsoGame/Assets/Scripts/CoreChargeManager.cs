@@ -203,7 +203,7 @@ using UnityEngine.UI;
                     new EventTypes.Event8Param(coreChargeState, false, FXList.FXlist.ElectricityFX2));
             }
         }
-
+        
 
         private void OnEnable()
         {
