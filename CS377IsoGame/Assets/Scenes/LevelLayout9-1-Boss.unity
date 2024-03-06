@@ -60791,6 +60791,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1974450808728997244, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974450808728997244, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
@@ -60817,6 +60821,14 @@ PrefabInstance:
     - target: {fileID: 7105625444283657669, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355422006962617961, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 777719
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355422006962617961, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 270336
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
