@@ -19,7 +19,10 @@ public class DamageCalculator : Singleton<DamageCalculator>
     // Update is called once per frame
     void Update()
     {
-        
+        if (playerStats == null)
+        {
+            playerStats = FindObjectOfType(typeof(RPGCharacterController)).GameObject().GetComponent<StatsTemplate>();
+        }
     }
 
     public float PlayerShockStickCombo1()

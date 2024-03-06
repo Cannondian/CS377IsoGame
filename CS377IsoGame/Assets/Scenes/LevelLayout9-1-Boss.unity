@@ -60790,6 +60790,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1974450808728997244, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3402382260437377577, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3402382260437377577, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6440983640673563686, guid: 5719dab632ac7e1448eaaf22c3193524, type: 3}
       propertyPath: m_Name
       value: TankBoss
