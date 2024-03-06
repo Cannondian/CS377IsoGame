@@ -114,7 +114,7 @@ public class PlayerCombatCollisions : MonoBehaviour
                     {
                         // Debug.Log("collided");
                         EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
-                            new EventTypes.HitFXParam(GetHitPoint( other), attackNumber,
+                            new EventTypes.HitFXParam(other.ClosestPointOnBounds(transform.position), attackNumber,
                                 gameObject));
 
                         EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
@@ -155,11 +155,20 @@ public class PlayerCombatCollisions : MonoBehaviour
 
                             EventBus.TriggerEvent(EventTypes.Events.ON_LIFE_CURRENT_GAIN,
                                 new EventTypes.Event5Param(attackNumber, 0));
-
-                            EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
-                                new EventTypes.HitFXParam(GetHitPoint(other),
-                                    attackNumber,
-                                    gameObject));
+                            if (attackNumber != 5)
+                            {
+                                EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
+                                    new EventTypes.HitFXParam(GetHitPoint(other),
+                                        attackNumber,
+                                        gameObject));
+                            }
+                            else
+                            {
+                                EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
+                                    new EventTypes.HitFXParam(other.ClosestPoint(transform.position),
+                                        attackNumber,
+                                        gameObject));
+                            }
                             //EventBus.TriggerEvent(EventTypes.Events.ON_ENERGY_GAIN,
                             //CharacterEnergy.Instance.energyFromEnhancedBasic);
                             // Debug.Log("floating test");

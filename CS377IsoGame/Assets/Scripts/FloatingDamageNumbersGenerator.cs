@@ -32,16 +32,16 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
         switch (context.size)
         {
             case 1:
-                textSizeScale = 20f;
+                textSizeScale = 25f;
                 break;
             case 2:
-                textSizeScale = 28f;
+                textSizeScale = 32f;
                 break;
             case 3:
-                textSizeScale = 36f;
+                textSizeScale = 38f;
                 break;
             case 4:
-                textSizeScale = 40F;
+                textSizeScale = 45F;
                 break;
         }
 
@@ -66,7 +66,7 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
             quaternion.identity, canvas.transform);
         
         var text = damageText.GetComponent<TextMeshProUGUI>();
-        text.fontSize = textSizeScale;
+        text.fontSizeMax = textSizeScale;
         damageText.transform.position = RandomOffset(damageText.transform.position, false);
         text.text = context.damage.ToString();
 
@@ -80,7 +80,7 @@ public class FloatingDamageNumbers : Singleton<FloatingDamageNumbers>
                     damageText2.transform.position = RandomOffset(damageText2.transform.position, true);
                     var text2 = damageText2.GetComponent<TextMeshProUGUI>();
                     text2.text = context.additionalDamage.ToString();
-                    text2.fontSize = textSizeScale / 3;
+                    text2.fontSizeMax = textSizeScale / 3;
                     break;
                     
             }

@@ -17436,6 +17436,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 413476, guid: 4322256955695a94a84fec782ec10d7a, type: 3}
   m_PrefabInstance: {fileID: 1084593108}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &414699711 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9179358519415626559, guid: 1faf561b886404b4f937a446c39c949d, type: 3}
+  m_PrefabInstance: {fileID: 522536804}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &414699719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414699711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480d3ece0d8b243b081b8e1f49c56c42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  communicateWithUI:
+    m_PersistentCalls:
+      m_Calls: []
+  enemy: 0
+  burning: 0
+  poisoned: 0
+  bleeding: 0
+  confused: 0
+  stunned: 0
+  slowed: 0
+  exhausted: 0
+  blinded: 0
+  hacked: 0
+  radiationPoisoning: 0
+  rejuvenation: 0
+  energized: 0
+  slipperySteps: 0
+  smolderingStrikes: 0
+  evasive: 0
+  oneWithTheWorld: 0
+  unstoppable: 0
+  mutating: 0
+  glowing: 0
+  defensiveTerrain: 0
+  chlorophyllInfusion: 0
+  burningDuration: 0
+  burningCounter: 0
+  innerFire: 0
+  innerFireIntensity: 0
+  effectiveRejuvenationIntensityforFX: 0
+  rejuvinationCounter: 0
+  rejuvenationDuration: 0
 --- !u!1001 &414810523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21754,6 +21803,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Platform_Large_03 Variant (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7061234859335610974, guid: 52724f1830ee94910afa7bf25f91d9df, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21812,14 +21865,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5771962664885929970, guid: 1faf561b886404b4f937a446c39c949d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5771962664885929970, guid: 1faf561b886404b4f937a446c39c949d, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5771962664885929970, guid: 1faf561b886404b4f937a446c39c949d, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 761335
+      objectReference: {fileID: 0}
+    - target: {fileID: 5771962664885929970, guid: 1faf561b886404b4f937a446c39c949d, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 286720
+      objectReference: {fileID: 0}
+    - target: {fileID: 7754706838974887277, guid: 1faf561b886404b4f937a446c39c949d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9179358519415626559, guid: 1faf561b886404b4f937a446c39c949d, type: 3}
       propertyPath: m_Name
       value: MeleeEnemy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4892519544974064907, guid: 1faf561b886404b4f937a446c39c949d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9179358519415626559, guid: 1faf561b886404b4f937a446c39c949d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 414699719}
   m_SourcePrefab: {fileID: 100100000, guid: 1faf561b886404b4f937a446c39c949d, type: 3}
 --- !u!4 &526214169 stripped
 Transform:
