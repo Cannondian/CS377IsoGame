@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4060162986901558}
   - component: {fileID: 108229066507502698}
   - component: {fileID: 2506854708471350949}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: FX_ArtilleryStrike_Light01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 4201680176565710}
   - component: {fileID: 198052790354479880}
   - component: {fileID: 199083671624426556}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: FX_ArtilleryStrike_Flash_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4937,7 +4937,7 @@ GameObject:
   - component: {fileID: 4240342984182012}
   - component: {fileID: 198728342079076340}
   - component: {fileID: 199974351627727958}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: FX_ArtilleryStrike_Flash_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9750,7 +9750,7 @@ GameObject:
   - component: {fileID: 4407776777544067770}
   - component: {fileID: 5608561990451773855}
   - component: {fileID: 3810138077153850971}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: PlantMine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14683,7 +14683,7 @@ GameObject:
   - component: {fileID: 4870362744485820}
   - component: {fileID: 198076475838473914}
   - component: {fileID: 199071868289298196}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: FX_ArtilleryStrike_Smoke_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19320,7 +19320,7 @@ GameObject:
   - component: {fileID: 4360238353515392}
   - component: {fileID: 198112107408030894}
   - component: {fileID: 199156954799980446}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: FX_ArtilleryStrike_Debris_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24164,7 +24164,7 @@ GameObject:
   - component: {fileID: 4320113225321332}
   - component: {fileID: 198141293088612750}
   - component: {fileID: 199845568092436484}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: FX_ArtilleryStrike_Blast_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29008,7 +29008,7 @@ GameObject:
   - component: {fileID: 4788154734117292}
   - component: {fileID: 198694616014211956}
   - component: {fileID: 199661538376847526}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: FX_ArtilleryStrike_Smoke_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33752,6 +33752,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Hologram_Tree_02
       objectReference: {fileID: 0}
+    - target: {fileID: 8809970370589051343, guid: 3e8c4e3c57334ef4989c19edaf284c93, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33770,6 +33774,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4461216839316108}
     m_Modifications:
+    - target: {fileID: 3301859001294354502, guid: 12a56ee4630040c4eb17ae9707ed4cef, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3989901854192163758, guid: 12a56ee4630040c4eb17ae9707ed4cef, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4217862762997978641, guid: 12a56ee4630040c4eb17ae9707ed4cef, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 6211125795773073634, guid: 12a56ee4630040c4eb17ae9707ed4cef, type: 3}
       propertyPath: looping
       value: 0
@@ -33778,9 +33794,17 @@ PrefabInstance:
       propertyPath: lengthInSec
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7834758006639453087, guid: 12a56ee4630040c4eb17ae9707ed4cef, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 7986504087968017091, guid: 12a56ee4630040c4eb17ae9707ed4cef, type: 3}
       propertyPath: m_Name
       value: Healing circle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7986504087968017091, guid: 12a56ee4630040c4eb17ae9707ed4cef, type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 8037160467862551414, guid: 12a56ee4630040c4eb17ae9707ed4cef, type: 3}
       propertyPath: m_LocalPosition.x

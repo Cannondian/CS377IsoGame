@@ -140,7 +140,7 @@ public class PlayerCombatCollisions : MonoBehaviour
                                 new EventTypes.Event5Param(attackNumber, 0));
 
                             EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
-                                new EventTypes.HitFXParam(GetHitPoint(other),
+                                new EventTypes.HitFXParam(other.ClosestPointOnBounds(transform.position),
                                     10,
                                     gameObject));
                             EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT,

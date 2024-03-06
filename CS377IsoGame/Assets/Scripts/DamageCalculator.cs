@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RPGCharacterAnims;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
 
@@ -11,7 +13,7 @@ public class DamageCalculator : Singleton<DamageCalculator>
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerStats = FindObjectOfType(typeof(RPGCharacterController)).GameObject().GetComponent<StatsTemplate>();
     }
 
     // Update is called once per frame

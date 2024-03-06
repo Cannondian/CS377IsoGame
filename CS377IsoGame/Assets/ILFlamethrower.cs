@@ -32,7 +32,7 @@ public class ILFlamethrower : MonoBehaviour
             hitOnCurrentTick.Clear();
         }
 
-        if (!hitOnCurrentTick.Contains(other))
+        if (!hitOnCurrentTick.Contains(other) && other.gameObject.GetComponent<StatsTemplate>() != null)
         {
             hitOnCurrentTick.Add(other);
             var damage = DamageCalculator.Instance.PlayerFlamethrowerTickIL();

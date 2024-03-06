@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4060162986901558}
   - component: {fileID: 108229066507502698}
   - component: {fileID: 2506854708471350949}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FX_ArtilleryStrike_Light01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 4201680176565710}
   - component: {fileID: 198052790354479880}
   - component: {fileID: 199083671624426556}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FX_ArtilleryStrike_Flash_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4937,7 +4937,7 @@ GameObject:
   - component: {fileID: 4240342984182012}
   - component: {fileID: 198728342079076340}
   - component: {fileID: 199974351627727958}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FX_ArtilleryStrike_Flash_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9750,7 +9750,7 @@ GameObject:
   - component: {fileID: 4407776777544067770}
   - component: {fileID: 6601663957353152736}
   - component: {fileID: 2142151299540959198}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: WindMine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14684,7 +14684,7 @@ GameObject:
   - component: {fileID: 4870362744485820}
   - component: {fileID: 198076475838473914}
   - component: {fileID: 199071868289298196}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FX_ArtilleryStrike_Smoke_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19321,7 +19321,7 @@ GameObject:
   - component: {fileID: 4360238353515392}
   - component: {fileID: 198112107408030894}
   - component: {fileID: 199156954799980446}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FX_ArtilleryStrike_Debris_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24165,7 +24165,7 @@ GameObject:
   - component: {fileID: 4320113225321332}
   - component: {fileID: 198141293088612750}
   - component: {fileID: 199845568092436484}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FX_ArtilleryStrike_Blast_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29009,7 +29009,7 @@ GameObject:
   - component: {fileID: 4788154734117292}
   - component: {fileID: 198694616014211956}
   - component: {fileID: 199661538376847526}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FX_ArtilleryStrike_Smoke_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33643,6 +33643,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4461216839316108}
     m_Modifications:
+    - target: {fileID: 7218374379570007268, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 8844613807067360555, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -33688,8 +33692,48 @@ PrefabInstance:
       value: LootBeam_Generic_Common
       objectReference: {fileID: 0}
     - target: {fileID: 8844613807067360556, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8844613807067360556, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8844613807323754675, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8844613807550465548, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8844613807728187208, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8844613807967314257, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8844613808399954260, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8844613808535158187, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8844613808701101645, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8844613808807742968, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8844613808888007390, guid: e22b1f19b1909f54e85097e1cecd4085, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33762,6 +33806,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Dust_Big_01
       objectReference: {fileID: 0}
+    - target: {fileID: 4002450202762155120, guid: 1a4901d1baa256b4992008d4a944259f, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 4007226818035496374, guid: 1a4901d1baa256b4992008d4a944259f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -33823,6 +33871,10 @@ PrefabInstance:
     - target: {fileID: 1699914565062994, guid: b72bef528f099a14d8eab50350452f58, type: 3}
       propertyPath: m_Name
       value: FX_Fog_Small_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699914565062994, guid: b72bef528f099a14d8eab50350452f58, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1699914565062994, guid: b72bef528f099a14d8eab50350452f58, type: 3}
       propertyPath: m_IsActive

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4648566557669046}
   - component: {fileID: 198472181072034606}
   - component: {fileID: 199623512188675084}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FX_FlameThrower_Embers_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4592,7 +4592,7 @@ GameObject:
   - component: {fileID: 199378252207973648}
   - component: {fileID: 3934652231146962920}
   - component: {fileID: 4381459320766445642}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: PlantFlamethrower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
