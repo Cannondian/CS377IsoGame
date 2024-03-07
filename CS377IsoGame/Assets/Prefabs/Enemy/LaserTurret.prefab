@@ -859,7 +859,7 @@ MonoBehaviour:
   walkPointSet: 0
   walkPointRange: 0
   sightRange: 20
-  attackRange: 15
+  attackRange: 12
   playerInSightRange: 0
   playerInAttackRange: 0
   stunned: 0

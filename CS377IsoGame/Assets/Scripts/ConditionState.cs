@@ -1409,7 +1409,7 @@ public class ConditionState : MonoBehaviour
         {
             rejuvenationDuration -= rejuvinationCounter;
             rejuvinationCounter = 0;
-            int heal = (int)rej.intensity / 20 + 2;
+            int heal = (int)rej.intensity / 15 + 4;
             myStats.RestoreHealth(heal);
         }
     }
