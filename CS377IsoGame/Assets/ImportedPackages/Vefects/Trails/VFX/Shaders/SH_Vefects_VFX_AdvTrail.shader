@@ -415,7 +415,7 @@ Shader "Vefects/SH_Vefects_VFX_AdvTrail"
 				float Distortion64 = ( ( tex2D( _Distortion, panner79 ).r * 0.1 ) * _Distortion_Amount );
 				float2 texCoord216 = IN.ase_texcoord3.xy * _Mask_Scale + float2( 0.28,0 );
 				float2 panner377 = ( windSpeed200 * _Mask_Speed + texCoord216);
-				float clampResult373 = clamp( ( pow( tex2D( _Mask, ( ( Distortion64 * _DistortionMaskIntensity ) + panner377 ) ).r , _Mask_Power ) * _Mask_Multiply ) , 0.0 , 1.0 );
+				float clampResult373 = clamp( ( pow( abs(tex2D( _Mask, ( ( Distortion64 * _DistortionMaskIntensity ) + panner377 ) ).r) , _Mask_Power ) * _Mask_Multiply ) , 0.0 , 1.0 );
 				float2 texCoord317 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 panner320 = ( windSpeed200 * _Color_Speed + ( texCoord317 * _Color_Scale ));
 				float4 lerpResult285 = lerp( _Color_01 , _Color_02 , tex2D( _Color, panner320 ).r);
@@ -423,7 +423,7 @@ Shader "Vefects/SH_Vefects_VFX_AdvTrail"
 				
 				float2 texCoord26 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 panner78 = ( windSpeed200 * _Erosion_Speed + ( texCoord26 * _Erosion_Scale ));
-				float noises205 = saturate( ( pow( tex2D( _Erosion, ( panner78 + Distortion64 ) ).r , _Erosion_Power ) * _Erosion_Multiply ) );
+				float noises205 = saturate( ( pow( abs(tex2D( _Erosion, ( panner78 + Distortion64 ) ).r) , _Erosion_Power ) * _Erosion_Multiply ) );
 				float clampResult419 = clamp( ( clampResult373 - ( noises205 - ( 1.0 - IN.ase_color.a ) ) ) , 0.0 , 1.0 );
 				float temp_output_308_0 = ( clampResult419 * clampResult373 );
 				
@@ -695,10 +695,10 @@ Shader "Vefects/SH_Vefects_VFX_AdvTrail"
 				float Distortion64 = ( ( tex2D( _Distortion, panner79 ).r * 0.1 ) * _Distortion_Amount );
 				float2 texCoord216 = IN.ase_texcoord2.xy * _Mask_Scale + float2( 0.28,0 );
 				float2 panner377 = ( windSpeed200 * _Mask_Speed + texCoord216);
-				float clampResult373 = clamp( ( pow( tex2D( _Mask, ( ( Distortion64 * _DistortionMaskIntensity ) + panner377 ) ).r , _Mask_Power ) * _Mask_Multiply ) , 0.0 , 1.0 );
+				float clampResult373 = clamp( ( pow( abs(tex2D( _Mask, ( ( Distortion64 * _DistortionMaskIntensity ) + panner377 ) ).r) , _Mask_Power ) * _Mask_Multiply ) , 0.0 , 1.0 );
 				float2 texCoord26 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 panner78 = ( windSpeed200 * _Erosion_Speed + ( texCoord26 * _Erosion_Scale ));
-				float noises205 = saturate( ( pow( tex2D( _Erosion, ( panner78 + Distortion64 ) ).r , _Erosion_Power ) * _Erosion_Multiply ) );
+				float noises205 = saturate( ( pow( abs(tex2D( _Erosion, ( panner78 + Distortion64 ) ).r) , _Erosion_Power ) * _Erosion_Multiply ) );
 				float clampResult419 = clamp( ( clampResult373 - ( noises205 - ( 1.0 - IN.ase_color.a ) ) ) , 0.0 , 1.0 );
 				float temp_output_308_0 = ( clampResult419 * clampResult373 );
 				

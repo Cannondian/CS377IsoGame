@@ -588,7 +588,7 @@ Shader "Piloto Studio/UberFX"
 				ase_worldViewDir = normalize(ase_worldViewDir);
 				float3 ase_worldNormal = IN.ase_texcoord6.xyz;
 				float fresnelNdotV406 = dot( ase_worldNormal, ase_worldViewDir );
-				float fresnelNode406 = ( 0.0 + _FresnelScale * pow( 1.0 - fresnelNdotV406, _FresnelPower ) );
+				float fresnelNode406 = ( 0.0 + _FresnelScale * pow( abs(1.0 - fresnelNdotV406), _FresnelPower ) );
 				float4 lerpResult410 = lerp( temp_output_39_0 , _FresnelColor , fresnelNode406);
 				#ifdef _FRESNEL_ON
 				float4 staticSwitch403 = ( temp_output_396_0 * lerpResult410 );
