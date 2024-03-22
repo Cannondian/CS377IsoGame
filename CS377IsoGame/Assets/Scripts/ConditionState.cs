@@ -1421,7 +1421,11 @@ public class ConditionState : MonoBehaviour
 
     private void ApplySlipperySteps()
     {
-        // Insert logic for 'SlipperySteps' state here
+        slipperyStepsDuration -= Time.deltaTime;
+        if (slipperyStepsDuration <= 0)
+        {
+            RemoveCondition(StatusConditions.statusList.SlipperySteps);
+        }
     }
 
     private void ApplySmolderingStrikes()
