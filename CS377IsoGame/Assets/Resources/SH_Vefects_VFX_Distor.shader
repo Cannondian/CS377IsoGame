@@ -447,7 +447,7 @@ Shader "/_Vefects_/T/SH_Vefects_VFX_Distor"
 				float4 texCoord24 = IN.ase_texcoord3;
 				texCoord24.xy = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
 				float temp_output_50_0 = ( saturate( dotResult38 ) * ( saturate( lerpResult22 ) + texCoord24.z ) );
-				float temp_output_73_0 = ( IN.ase_color.a * saturate( ( ( temp_output_50_0 * _GlowIntensity ) + ( pow( temp_output_50_0 , _CorePower ) * _CoreIntensity ) ) ) );
+				float temp_output_73_0 = ( IN.ase_color.a * saturate( ( ( temp_output_50_0 * _GlowIntensity ) + ( pow( abs(temp_output_50_0), _CorePower ) * _CoreIntensity ) ) ) );
 				float eyeDepth = IN.ase_texcoord4.z;
 				float4 screenPos = IN.ase_texcoord5;
 				float4 ase_screenPosNorm = screenPos / screenPos.w;
@@ -776,7 +776,7 @@ Shader "/_Vefects_/T/SH_Vefects_VFX_Distor"
 				float4 texCoord24 = IN.ase_texcoord2;
 				texCoord24.xy = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
 				float temp_output_50_0 = ( saturate( dotResult38 ) * ( saturate( lerpResult22 ) + texCoord24.z ) );
-				float temp_output_73_0 = ( IN.ase_color.a * saturate( ( ( temp_output_50_0 * _GlowIntensity ) + ( pow( temp_output_50_0 , _CorePower ) * _CoreIntensity ) ) ) );
+				float temp_output_73_0 = ( IN.ase_color.a * saturate( ( ( temp_output_50_0 * _GlowIntensity ) + ( pow( abs(temp_output_50_0) , _CorePower ) * _CoreIntensity ) ) ) );
 				
 				float Alpha = temp_output_73_0;
 				float AlphaClipThreshold = 0.5;
@@ -1061,7 +1061,7 @@ Shader "/_Vefects_/T/SH_Vefects_VFX_Distor"
 				float4 texCoord24 = IN.ase_texcoord2;
 				texCoord24.xy = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
 				float temp_output_50_0 = ( saturate( dotResult38 ) * ( saturate( lerpResult22 ) + texCoord24.z ) );
-				float temp_output_73_0 = ( IN.ase_color.a * saturate( ( ( temp_output_50_0 * _GlowIntensity ) + ( pow( temp_output_50_0 , _CorePower ) * _CoreIntensity ) ) ) );
+				float temp_output_73_0 = ( IN.ase_color.a * saturate( ( ( temp_output_50_0 * _GlowIntensity ) + ( pow( abs(temp_output_50_0) , _CorePower ) * _CoreIntensity ) ) ) );
 				
 				float Alpha = temp_output_73_0;
 				float AlphaClipThreshold = 0.5;

@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4304877395670540235
 Transform:
   m_ObjectHideFlags: 0
@@ -4845,7 +4845,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8134810039379226067
 Transform:
   m_ObjectHideFlags: 0
@@ -9673,7 +9673,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6577210439082718772
 Transform:
   m_ObjectHideFlags: 0
@@ -14639,6 +14639,22 @@ PrefabInstance:
     - target: {fileID: 208857107611892313, guid: 16ed84567f8a047edaa60b5613a8c7e8, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.m_ColorSpace
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901023235442564082, guid: 16ed84567f8a047edaa60b5613a8c7e8, type: 3}
+      propertyPath: m_Color.a
+      value: 0.50980395
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901023235442564082, guid: 16ed84567f8a047edaa60b5613a8c7e8, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6034853
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901023235442564082, guid: 16ed84567f8a047edaa60b5613a8c7e8, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9433962
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901023235442564082, guid: 16ed84567f8a047edaa60b5613a8c7e8, type: 3}
+      propertyPath: m_Color.r
+      value: 0.29814878
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
