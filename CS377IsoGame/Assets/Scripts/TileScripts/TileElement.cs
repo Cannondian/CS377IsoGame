@@ -15,7 +15,7 @@ public class TileElement : MonoBehaviour
     
     
     
-    public enum ElementType {Zulzara,Velheret,Ilsihre,Shalharan,Obhalas,Dust,Radioactive, None}
+    public enum ElementType {Velheret,Ilsihre,Shalharan,None}
     [SerializeField] public ElementType elementType;
 
     public Renderer tileRender;
@@ -27,39 +27,7 @@ public class TileElement : MonoBehaviour
 
     // Update is called once per frame
     
-    void Update()
-    {
-        //good design to have this in the update, this way we can change tile in response to player actions,
-        //that being said, maybe we can have a switch statement?
-        if (elementType == ElementType.Zulzara)
-        {
-            //tileRender.material.color = Color.black;
-        }
-        else if (elementType == ElementType.Velheret)
-        {
-            //tileRender.material.color = Color.green;
-        }
-        else if (elementType == ElementType.Ilsihre)
-        {
-            
-        }
-        else if (elementType == ElementType.Shalharan)
-        {
-            //tileRender.material.color = Color.white;
-        }
-        else if (elementType == ElementType.Obhalas)
-        {
-            //tileRender.material.color = Color.cyan;
-        }
-        else if (elementType == ElementType.Dust)
-        {
-           // tileRender.material.color = Color.magenta;
-        }
-        else if (elementType == ElementType.Radioactive)
-        {
-            //tileRender.material.color = Color.yellow;
-        }
-    }
+    
     
 }
 

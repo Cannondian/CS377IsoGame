@@ -35,7 +35,11 @@ namespace RPGCharacterAnims.Actions
 
         private UnityAction<EventTypes.HighlightFXParam> NewHighlightListener;
         private UnityAction<EventTypes.HighlightFXParam> ExpiredHighlightListener;
-        #endregion
+        private UnityAction<EventTypes.BackLashHitParam> BacklashHitListener; 
+
+        private UnityAction<bool> EnhancedVHAuraListener;
+
+    #endregion
 
         #region Fields
 
@@ -86,6 +90,7 @@ namespace RPGCharacterAnims.Actions
         public GameObject ZZFlamethrowerPrefab;
         public GameObject VHFlamethrowerPrefab;
         public GameObject OBFlamethrowerPrefab;
+        public GameObject BackLashHitFXPrefab;
         
         
         public GameObject ILMinePrefab;
@@ -102,7 +107,10 @@ namespace RPGCharacterAnims.Actions
         [FormerlySerializedAs("Fire")] public HighlightProfile Ilsihre;
         [FormerlySerializedAs("Air")] public HighlightProfile Shalharan;
         [FormerlySerializedAs("Plant")] public HighlightProfile Velheret;
+        public HighlightProfile VelheretCharged;
         [FormerlySerializedAs("Stone")] public HighlightProfile Obhalas;
+
+        [SerializeField]private HighlightProfile originalVelheret;
 
         #endregion
         
@@ -148,13 +156,17 @@ namespace RPGCharacterAnims.Actions
             EventBus.StartListening(EventTypes.Events.ON_HIGHLIGHT_FX_TRIGGERED, NewHighlightListener);
             ExpiredHighlightListener += KillTileStateHighlight;
             EventBus.StartListening(EventTypes.Events.ON_HIGHLIGHT_FX_EXPIRED, ExpiredHighlightListener);
+            EnhancedVHAuraListener += SuperchargeVelheret;
+            EventBus.StartListening(EventTypes.Events.ON_VH_FLAMETHROWER_ENABLED, EnhancedVHAuraListener);
+            BacklashHitListener += InitializeBacklashHitFX;
+            EventBus.StartListening(EventTypes.Events.ON_VH_BACKLASH_HIT, BacklashHitListener);
         }
 
         private void OnDisable()
         {
            EventBus.StopListeningAll<EventTypes.Events>();
         }
-        // PH is for placeholder
+        
         private void SetFlags(string color, Vector3 pos, FXList.FXlist effect, float duration)
         {
 
@@ -274,6 +286,39 @@ namespace RPGCharacterAnims.Actions
 
         }
 
+        private void InitializeBacklashHitFX(EventTypes.BackLashHitParam context)
+        {
+            GameObject backlashHitFX = Instantiate(BackLashHitFXPrefab, context.transform);
+            StartCoroutine(DelayedTerminateFX(1, backlashHitFX));
+        }
+
+        private void SuperchargeVelheret(bool on)
+        {
+            if (on)
+            {
+                KillTileStateHighlight(Velheret);
+                Velheret = VelheretCharged;
+                InitializeTileStateHighlight(Velheret);
+                
+            }
+            else
+            {
+                Velheret = originalVelheret;
+                if (activeHighlight == VelheretCharged)
+                {
+                    KillTileStateHighlight(VelheretCharged);
+                    InitializeTileStateHighlight(originalVelheret);
+                }
+            }
+        }
+
+        private void InitializeTileStateHighlight(HighlightProfile newHighlight)
+        {
+            activeHighlight = newHighlight;
+            playerHighlightComponent.profile = newHighlight;
+            playerHighlightComponent.highlighted = true;
+            playerHighlightComponent.ProfileReload();
+        }
         private void InitializeTileStateHighlight(EventTypes.HighlightFXParam context)
         {
             
@@ -293,7 +338,17 @@ namespace RPGCharacterAnims.Actions
         {
             if (context.tileHighlight == activeHighlight)
             {
-               
+                activeHighlight = null;
+                playerHighlightComponent.highlighted = false;
+                playerHighlightComponent.ProfileReload();
+                
+            }
+        }
+        private void KillTileStateHighlight(HighlightProfile context)
+        {
+            if (context == activeHighlight)
+            {
+                activeHighlight = null;
                 playerHighlightComponent.highlighted = false;
                 playerHighlightComponent.ProfileReload();
                 
@@ -453,15 +508,11 @@ namespace RPGCharacterAnims.Actions
                 case TileElement.ElementType.Shalharan:
                     flamethrowerInstance = Instantiate(SHFlamethrowerPrefab, context.transform);
                     break;
-                case TileElement.ElementType.Zulzara:
-                    flamethrowerInstance = Instantiate(ZZFlamethrowerPrefab, context.transform);
-                    break;
+                
                 case TileElement.ElementType.Velheret:
                     flamethrowerInstance = Instantiate(VHFlamethrowerPrefab, context.transform);
                     break;
-                case TileElement.ElementType.Obhalas:
-                    flamethrowerInstance = Instantiate(OBFlamethrowerPrefab, context.transform);
-                    break;
+                
                 case TileElement.ElementType.None:
                     flamethrowerInstance = Instantiate(FlamethrowerPrefab, context.transform);
                     break;

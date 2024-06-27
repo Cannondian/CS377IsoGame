@@ -28011,7 +28011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65f034e572cd40c8ab155778207a547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementType: 3
+  elementType: 2
   tileRender: {fileID: 0}
 --- !u!1001 &1225157605
 PrefabInstance:
@@ -39166,7 +39166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65f034e572cd40c8ab155778207a547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementType: 3
+  elementType: 2
   tileRender: {fileID: 0}
 --- !u!4 &1722459515 stripped
 Transform:
@@ -41792,7 +41792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65f034e572cd40c8ab155778207a547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementType: 3
+  elementType: 2
   tileRender: {fileID: 0}
 --- !u!1001 &1854802966
 PrefabInstance:
@@ -46552,7 +46552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65f034e572cd40c8ab155778207a547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementType: 3
+  elementType: 2
   tileRender: {fileID: 0}
 --- !u!4 &2059910750 stripped
 Transform:

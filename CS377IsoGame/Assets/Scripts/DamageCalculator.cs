@@ -64,7 +64,7 @@ public class DamageCalculator : Singleton<DamageCalculator>
     public float PlayerMineSkillSH()
     {
         Random random = new Random();
-        return (int)(playerStats.tAttack * 0.8f * (1 + TileMastery.Instance.masteryOverShalharan / 200 ) + random.Next((int)(playerStats.tAttack* -0.2), (int)(playerStats.tAttack* 0.2)));
+        return (int)(playerStats.tAttack * 0.8f * (1 + TileMastery.Instance._masteryOverShalharan / 200 ) + random.Next((int)(playerStats.tAttack* -0.2), (int)(playerStats.tAttack* 0.2)));
     }
     public float PlayerFlamethrowerTick()
     {
@@ -89,12 +89,19 @@ public class DamageCalculator : Singleton<DamageCalculator>
         Random random = new Random();
         return (int)((playerStats.tAttack / 7) +
                      random.Next((int)(playerStats.tAttack / 4 * -0.15), (int)(playerStats.tAttack / 3 * 0.15)) *
-                     (1 + TileMastery.Instance.masteryOverShalharan / 100));
+                     (1 + TileMastery.Instance._masteryOverShalharan / 100));
     }
 
     public float PlayerInnerFireExplosion()
     {
-        return playerStats.tAttack / 2 * (1 + TileMastery.Instance.masteryOverIlsihre / 100) *
-                (1 + (playerStats.ceHP - playerStats.myCurrentHealth) / (playerStats.ceHP * 1.7f));
+        int damage = 10 + (int) (playerStats.tAttack / 2 * (1 + TileMastery.Instance.masteryOverIlsihre / 100) *
+                     (1 + (playerStats.ceHP - playerStats.myCurrentHealth) / (playerStats.ceHP * 1.7f)));
+        return damage;
+    }
+
+    public float VHBacklashDamage()
+    {
+        float damage = 2 + TileMastery.Instance.masteryOverVelheret / 25;
+        return damage;
     }
 }

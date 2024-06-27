@@ -34,15 +34,21 @@ public class MineVH: MonoBehaviour {
         var controller = other.gameObject.GetComponent<RPGCharacterController>();
         if (!hitThisCast.Contains(other.gameObject))
         {
-            if (controller != null) {
+            if (controller != null && !TileMastery.Instance.VelheretMod1) {
                 other.GetComponent<ConditionState>().SetCondition(StatusConditions.statusList.Rejuvenation, 
                 4  + TileMastery.Instance.masteryOverVelheret / 20, 1+TileMastery.Instance.masteryOverVelheret);
                 
             }
+            
             hitThisCast.Add(other.gameObject);
             var damage = DamageCalculator.Instance.PlayerMineSkillVH();
             DamageEnemy(other, damage);
             isDamageDealt = true;
+            if (TileMastery.Instance.VelheretMod1)
+            {
+                other.GetComponent<ConditionState>().SetCondition(StatusConditions.statusList.Poisoned, 6, 
+                    30 + TileMastery.Instance.masteryOverVelheret / 3);
+            }
         }
         
     }

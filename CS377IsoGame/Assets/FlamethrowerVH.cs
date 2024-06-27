@@ -1,18 +1,38 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 public class FlamethrowerVH: MonoBehaviour {
     private float tickRate;
     private bool firstTick;
     private float startTime;
     private List<Collider> hitOnCurrentTick = new List<Collider>();
+   
     
     // Start is called before the first frame update
     void Start()
     {
         firstTick = true;
         tickRate = 0.2f;
-        
+
+    }
+
+    private void OnEnable()
+    {
+        if (TileMastery.Instance.VelheretMod2)
+        {
+            EventBus.TriggerEvent(EventTypes.Events.ON_VH_FLAMETHROWER_ENABLED, true);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (TileMastery.Instance.VelheretMod2)
+        {
+            EventBus.TriggerEvent(EventTypes.Events.ON_VH_FLAMETHROWER_ENABLED, false);
+        }
     }
 
     private void OnTriggerStay(Collider other)

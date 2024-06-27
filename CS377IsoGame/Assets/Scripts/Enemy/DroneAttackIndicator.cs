@@ -6,10 +6,12 @@ public class DroneAttackIndicator : MonoBehaviour
 {
     public Collider droneAttackCollider;
     private float AttackDamage;
+    private EnemyAI myAI;
 
     private void Awake()
     {
         EnemyAI enemyAI = GetComponentInParent<EnemyAI>(); // Searches up the hierarchy
+        myAI = enemyAI;
         if (enemyAI == null)
         {
             Debug.LogError("EnemyAI component not found in any parent GameObjects.");
@@ -25,6 +27,7 @@ public class DroneAttackIndicator : MonoBehaviour
         {
             Debug.Log("Drone HIT Player!");
             EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, AttackDamage);
+            EnemyAI.CallPlayerHit(myAI);
         }
 
     }

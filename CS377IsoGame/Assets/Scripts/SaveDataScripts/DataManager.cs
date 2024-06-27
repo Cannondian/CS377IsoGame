@@ -22,7 +22,7 @@ public class DataManager : MonoBehaviour
     // note that data is assigned to player in stats template
     private void OnApplicationQuit()
     {
-        SaveSystem.ClearPlayerStats();
+        SaveSystem.ClearStats();
     }
 
 }

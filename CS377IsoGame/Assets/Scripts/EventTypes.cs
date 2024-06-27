@@ -28,7 +28,11 @@ public class EventTypes
       ON_SKILL_USED,
       ON_ULTIMATE_USED,
       ON_HIGHLIGHT_FX_TRIGGERED,
-      ON_HIGHLIGHT_FX_EXPIRED
+      ON_HIGHLIGHT_FX_EXPIRED,
+      ON_BUFF_ORB_PICKED_UP,
+      ON_VH_FLAMETHROWER_ENABLED,
+      ON_VH_BACKLASH_HIT
+      
 
       
    }
@@ -169,6 +173,16 @@ public class EventTypes
          tileHighlight = profile;
           highlightIntensity = intensity;
           isWeaponIncluded = weapon;
+      }
+   }
+
+   public class BackLashHitParam
+   {
+      public Transform transform;
+
+      public BackLashHitParam(Transform enemyTransform)
+      {
+         transform = enemyTransform;
       }
    }
 }

@@ -253,6 +253,33 @@ namespace RPGCharacterAnims
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Mod1"",
+                    ""type"": ""Button"",
+                    ""id"": ""8fe5117b-6b54-466a-aed5-c9d005ddc0e8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Mod2"",
+                    ""type"": ""Button"",
+                    ""id"": ""1ba1c8ef-ac20-49f2-802e-0ea56624776b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Mod3"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ae287af-6876-410b-9ecd-d101d2d2bc24"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -629,6 +656,39 @@ namespace RPGCharacterAnims
                     ""action"": ""Skill2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f409b8db-7a99-4245-8965-83112e46ced7"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mod1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11c9e61b-ba89-4f59-af34-0febef022cf3"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mod2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a3fb888-1558-4c71-a5d1-755e29f0abcc"",
+                    ""path"": ""<Keyboard>/9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mod3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -684,6 +744,9 @@ namespace RPGCharacterAnims
             m_RPGCharacter_ToggleSlowTime = m_RPGCharacter.FindAction("ToggleSlowTime", throwIfNotFound: true);
             m_RPGCharacter_Skill1 = m_RPGCharacter.FindAction("Skill1", throwIfNotFound: true);
             m_RPGCharacter_Skill2 = m_RPGCharacter.FindAction("Skill2", throwIfNotFound: true);
+            m_RPGCharacter_Mod1 = m_RPGCharacter.FindAction("Mod1", throwIfNotFound: true);
+            m_RPGCharacter_Mod2 = m_RPGCharacter.FindAction("Mod2", throwIfNotFound: true);
+            m_RPGCharacter_Mod3 = m_RPGCharacter.FindAction("Mod3", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -770,6 +833,9 @@ namespace RPGCharacterAnims
         private readonly InputAction m_RPGCharacter_ToggleSlowTime;
         private readonly InputAction m_RPGCharacter_Skill1;
         private readonly InputAction m_RPGCharacter_Skill2;
+        private readonly InputAction m_RPGCharacter_Mod1;
+        private readonly InputAction m_RPGCharacter_Mod2;
+        private readonly InputAction m_RPGCharacter_Mod3;
         public struct RPGCharacterActions
         {
             private @RPGInputs m_Wrapper;
@@ -799,6 +865,9 @@ namespace RPGCharacterAnims
             public InputAction @ToggleSlowTime => m_Wrapper.m_RPGCharacter_ToggleSlowTime;
             public InputAction @Skill1 => m_Wrapper.m_RPGCharacter_Skill1;
             public InputAction @Skill2 => m_Wrapper.m_RPGCharacter_Skill2;
+            public InputAction @Mod1 => m_Wrapper.m_RPGCharacter_Mod1;
+            public InputAction @Mod2 => m_Wrapper.m_RPGCharacter_Mod2;
+            public InputAction @Mod3 => m_Wrapper.m_RPGCharacter_Mod3;
             public InputActionMap Get() { return m_Wrapper.m_RPGCharacter; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -883,6 +952,15 @@ namespace RPGCharacterAnims
                 @Skill2.started += instance.OnSkill2;
                 @Skill2.performed += instance.OnSkill2;
                 @Skill2.canceled += instance.OnSkill2;
+                @Mod1.started += instance.OnMod1;
+                @Mod1.performed += instance.OnMod1;
+                @Mod1.canceled += instance.OnMod1;
+                @Mod2.started += instance.OnMod2;
+                @Mod2.performed += instance.OnMod2;
+                @Mod2.canceled += instance.OnMod2;
+                @Mod3.started += instance.OnMod3;
+                @Mod3.performed += instance.OnMod3;
+                @Mod3.canceled += instance.OnMod3;
             }
 
             private void UnregisterCallbacks(IRPGCharacterActions instance)
@@ -962,6 +1040,15 @@ namespace RPGCharacterAnims
                 @Skill2.started -= instance.OnSkill2;
                 @Skill2.performed -= instance.OnSkill2;
                 @Skill2.canceled -= instance.OnSkill2;
+                @Mod1.started -= instance.OnMod1;
+                @Mod1.performed -= instance.OnMod1;
+                @Mod1.canceled -= instance.OnMod1;
+                @Mod2.started -= instance.OnMod2;
+                @Mod2.performed -= instance.OnMod2;
+                @Mod2.canceled -= instance.OnMod2;
+                @Mod3.started -= instance.OnMod3;
+                @Mod3.performed -= instance.OnMod3;
+                @Mod3.canceled -= instance.OnMod3;
             }
 
             public void RemoveCallbacks(IRPGCharacterActions instance)
@@ -1024,6 +1111,9 @@ namespace RPGCharacterAnims
             void OnToggleSlowTime(InputAction.CallbackContext context);
             void OnSkill1(InputAction.CallbackContext context);
             void OnSkill2(InputAction.CallbackContext context);
+            void OnMod1(InputAction.CallbackContext context);
+            void OnMod2(InputAction.CallbackContext context);
+            void OnMod3(InputAction.CallbackContext context);
         }
     }
 }

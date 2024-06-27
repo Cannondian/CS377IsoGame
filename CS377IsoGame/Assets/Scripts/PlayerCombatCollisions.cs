@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
+
 public class PlayerCombatCollisions : MonoBehaviour
 {
     
@@ -18,6 +19,7 @@ public class PlayerCombatCollisions : MonoBehaviour
         [SerializeField] private BoxCollider legOriginalCollider;
         [SerializeField] private Animator staffAnimator;
         [SerializeField] private Animator legAnimator;
+        [SerializeField] private GameObject innerFireExplosion;
         public GameObject player;
 
         private Rigidbody staffBody;
@@ -31,13 +33,14 @@ public class PlayerCombatCollisions : MonoBehaviour
         private int legExtending;
         private float legExtendingDuration;
         
-        private int attackNumber;
+        public int attackNumber;
         private bool isNewAttack;
         private float attackTimer;
         private bool attackDone;
 
         private List<GameObject> hitByCurrentAttack  = new List<GameObject>();
         public DamageCalculator calculator;
+        
         void Start()
         {
             
@@ -110,7 +113,7 @@ public class PlayerCombatCollisions : MonoBehaviour
         {
                 
                
-            if (attackNumber == 3)
+                    if (attackNumber == 3)
                     {
                         // Debug.Log("collided");
                         EventBus.TriggerEvent(EventTypes.Events.ON_BASIC_ATTACK_HIT,
@@ -133,9 +136,10 @@ public class PlayerCombatCollisions : MonoBehaviour
                         if (enemyStats.innerFire)
                         {
                             damageAmount = DamageCalculator.Instance.PlayerInnerFireExplosion();
+                            print("calling twice:" + gameObject.name);
                             DamageEnemy(other, damageAmount);
                             hitByCurrentAttack.Add(other.gameObject);
-
+                            InnerFireSplash(other, damageAmount);
                             EventBus.TriggerEvent(EventTypes.Events.ON_LIFE_CURRENT_GAIN,
                                 new EventTypes.Event5Param(attackNumber, 0));
 
@@ -191,6 +195,11 @@ public class PlayerCombatCollisions : MonoBehaviour
                             {
                                 damageAmount = calculator.PlayerShockStickCombo3();
                                 DamageEnemy(other, damageAmount);
+                                if (TileMastery.Instance.IlsihreMod1)
+                                {
+                                    print("test dummy, who no explode");
+                                    other.GetComponent<ConditionState>().SetCondition(StatusConditions.statusList.InnerFire, 4, TileMastery.Instance.IlsihreEffectIntensity());
+                                }
                             }
 
                             if (PlayerHitEffects.Instance.AnyHitEffects())
@@ -206,10 +215,10 @@ public class PlayerCombatCollisions : MonoBehaviour
                                         hitEffect._additionalEffect.Invoke(player, other.gameObject);
 
                                     }
-
-                                    if (hitEffect._additionalEffect == null)
+                                    else
                                     {
-                                        // Debug.Log("are we getting here?");
+                                       
+                                        hitEffect._additionalEffect.Invoke( this.gameObject, other.gameObject);
                                     }
 
                                 }
@@ -253,6 +262,29 @@ public class PlayerCombatCollisions : MonoBehaviour
             if (enemyStats.amIEnemy)
             {
                 enemyStats.TakeDamage(damage);
+            }
+        }
+
+        void InnerFireSplash(Collider contact, float damage)
+        {
+            LayerMask enemyLayer = 1 << 15;
+            Collider[] objectsInRadius = Physics.OverlapSphere(transform.position, 20, enemyLayer);
+            bool modActive = TileMastery.Instance.IlsihreMod2;
+            foreach (Collider c in objectsInRadius)
+            {
+                if (c != contact && c.GetComponent<EnemyAI>() != null)
+                {
+                    DamageEnemy(c, DamageCalculator.Instance.PlayerInnerFireExplosion());
+                    print("how many times?");
+                    if (TileMastery.Instance.IlsihreMod2)
+                    {
+                        c.gameObject.GetComponent<ConditionState>().SetCondition(StatusConditions.statusList.InnerFire,
+                            4, TileMastery.Instance.IlsihreEffectIntensity());
+                    }
+
+                    EventBus.TriggerEvent(EventTypes.Events.ON_ENEMY_HIT,
+                        new EventTypes.FloatingDamageParam(contact.gameObject, damage, 4, Damage.Types.Fire));
+                }
             }
         }
 }

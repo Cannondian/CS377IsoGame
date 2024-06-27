@@ -7,11 +7,13 @@ public class AttackIndicator : MonoBehaviour
     public GameObject explosionPrefab;
     public Collider attackCollider;
     private float AttackDamage;
+    private EnemyAI myAI;
 
 
     private void Awake()
     {
         EnemyAI enemyAI = GetComponentInParent<EnemyAI>(); // Searches up the hierarchy
+        myAI = enemyAI;
         if (enemyAI == null)
         {
             Debug.LogError("EnemyAI component not found in any parent GameObjects.");
@@ -48,7 +50,7 @@ public class AttackIndicator : MonoBehaviour
         {
             Debug.Log("Player HIT by the BIG FAT");
             EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, AttackDamage);
-
+            EnemyAI.CallPlayerHit(myAI);
         }
     }
 }

@@ -71,9 +71,7 @@ public class TileEffects : MonoBehaviour
             float intensity = 1;
             switch (currentTile)
             {
-                case TileElement.ElementType.Zulzara:
-                    myState.SetCondition(StatusConditions.statusList.Hacked);
-                    break;
+                
                 case TileElement.ElementType.Velheret:
                     
                     myState.SetCondition(StatusConditions.statusList.ChlorophyllInfusion, 8, 1);
@@ -97,15 +95,7 @@ public class TileEffects : MonoBehaviour
                     }
                     myState.SetCondition(StatusConditions.statusList.SlipperySteps, 8, intensity);
                     break;
-                case TileElement.ElementType.Obhalas:
-                    myState.SetCondition(StatusConditions.statusList.Corrosive);
-                    break;
-                case TileElement.ElementType.Dust:
-                    myState.SetCondition(StatusConditions.statusList.Blinded);
-                    break;
-                case TileElement.ElementType.Radioactive:
-                    myState.SetCondition(StatusConditions.statusList.RadiationPoisoning);
-                    break;
+                
             }
         }
     }

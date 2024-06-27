@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,8 @@ public class WindMineBuff : MonoBehaviour
         
     }
 
+    
+
     // Update is called once per frame
     void Update()
     {
@@ -22,7 +25,7 @@ public class WindMineBuff : MonoBehaviour
         if (playerCondition != null)
         {
             playerCondition.SetCondition(StatusConditions.statusList.TailwindBoost, 8);
-            
+            EventBus.TriggerEvent(EventTypes.Events.ON_BUFF_ORB_PICKED_UP, true);
             gameObject.SetActive(false);
         }
     }

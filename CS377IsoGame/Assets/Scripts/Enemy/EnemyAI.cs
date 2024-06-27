@@ -1,6 +1,9 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public abstract class EnemyAI : MonoBehaviour
 {
@@ -27,6 +30,8 @@ public abstract class EnemyAI : MonoBehaviour
     public Slider healthBar;
     public Slider poisonBar;
 
+    //Events
+    public static event Action<EnemyAI> OnPlayerHit;
     protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -115,5 +120,10 @@ public abstract class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
+    }
+
+    public static void CallPlayerHit(EnemyAI enemyAI)
+    {
+        OnPlayerHit?.Invoke(enemyAI);
     }
 }

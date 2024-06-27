@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RollManager : Singleton<RollManager>
 {
@@ -10,6 +12,8 @@ public class RollManager : Singleton<RollManager>
     public float roll2ReadyIn;
     public float rollCooldown;
     public bool invulnerable;
+    public UnityAction<bool> ResetListener;
+    public GameObject RollHealthShader;
     
     // Start is called before the first frame update
     void Start()
@@ -17,6 +21,11 @@ public class RollManager : Singleton<RollManager>
         roll1Ready = true;
         roll2Ready = true;
         rollCooldown = 5;
+        ResetListener += ResetRolls;
+        EventBus.StartListening(EventTypes.Events.ON_BUFF_ORB_PICKED_UP, ResetListener);
+        //the coroutine is here to ensure that RollCD is updates even if start functions are called in the wrong order
+        StartCoroutine(RescaleRollCD());
+        
         roll1ReadyIn = rollCooldown;
         roll2ReadyIn = rollCooldown;
     }
@@ -79,7 +88,29 @@ public class RollManager : Singleton<RollManager>
     private IEnumerator Invulnerability()
     {
         invulnerable = true;
-        yield return new WaitForSeconds(0.5f);
+        RollHealthShader.SetActive(true);
+        
+        yield return new WaitForSeconds(0.9f);
         invulnerable = false;
+        RollHealthShader.SetActive(false);
     }
+
+    private void ResetRolls(bool ph)
+    {
+        roll1Ready = true;
+        roll2Ready = true;
+        roll1ReadyIn = rollCooldown;
+        roll2ReadyIn = rollCooldown;
+    }
+
+    private IEnumerator RescaleRollCD()
+    {
+        yield return new WaitForSeconds(1);
+        if (TileMastery.Instance._ShalharanMod2) {
+            rollCooldown = 5 - TileMastery.Instance.ShalharanEffectIntensity() / 5;
+            roll1ReadyIn = rollCooldown; 
+            roll2ReadyIn = rollCooldown;
+        }
+    }
+    
 }

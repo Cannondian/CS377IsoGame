@@ -90,7 +90,7 @@ public class PlayerStatsUI : MonoBehaviour
             StartCoroutine(DrawIndicators1(false));
         }
     }
-
+    
     private IEnumerator DrawIndicators1(bool mode)
     {
         

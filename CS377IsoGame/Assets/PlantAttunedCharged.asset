@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e9253636bf2648bd813257f451f8486, type: 3}
+  m_Name: PlantAttunedCharged
+  m_EditorClassIdentifier: 
+  effectGroup: 0
+  effectGroupLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  effectNameFilter: 
+  combineMeshes: 0
+  alphaCutOff: 0
+  cullBackFaces: 1
+  normalsOption: 0
+  fadeInDuration: 0
+  fadeOutDuration: 0
+  cameraDistanceFade: 0
+  cameraDistanceFadeNear: 0
+  cameraDistanceFadeFar: 1000
+  constantWidth: 1
+  overlay: 0
+  overlayMode: 0
+  overlayColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  overlayAnimationSpeed: 1
+  overlayMinIntensity: 0.5
+  overlayBlending: 1
+  overlayTexture: {fileID: 0}
+  overlayTextureUVSpace: 0
+  overlayTextureScale: 1
+  overlayTextureScrolling: {x: 0, y: 0}
+  overlayVisibility: 0
+  outline: 0.644
+  outlineColor: {r: 0.15699537, g: 1.5849056, b: 0.25084692, a: 1}
+  outlineColorStyle: 1
+  outlineGradient:
+    serializedVersion: 2
+    key0: {r: 0.32724366, g: 1.7358493, b: 0.07270577, a: 1}
+    key1: {r: 0.11373104, g: 1.6193273, b: 0.3725355, a: 1}
+    key2: {r: 0.48931068, g: 0.96878, b: 0, a: 0}
+    key3: {r: 0.1897851, g: 1.4546064, b: 0.44361508, a: 0}
+    key4: {r: 0, g: 0.21698111, b: 0.011897711, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 8481
+    ctime1: 23130
+    ctime2: 40092
+    ctime3: 57632
+    ctime4: 49151
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 18119
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: 1
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 2
+  outlineGradientInLocalSpace: 1
+  outlineBlurPasses: 2
+  outlineWidth: 0.15
+  outlineQuality: 1
+  outlineEdgeMode: 0
+  outlineEdgeThreshold: 0.995
+  outlineSharpness: 1
+  outlineDownsampling: 1
+  outlineContourStyle: 0
+  outlineVisibility: 0
+  outlineIndependent: 0
+  outlineMaskMode: 0
+  glow: 3.01
+  glowWidth: 0.4
+  glowQuality: 1
+  glowBlurMethod: 0
+  glowDownsampling: 2
+  glowHQColor: {r: 0.64, g: 1, b: 0, a: 1}
+  glowDithering: 0.238
+  glowDitheringStyle: 0
+  glowMagicNumber1: 10
+  glowMagicNumber2: 0.01
+  glowAnimationSpeed: 1
+  glowVisibility: 0
+  glowBlendMode: 0
+  glowBlendPasses: 1
+  glowPasses:
+  - offset: 4
+    alpha: 0.5
+    color: {r: 0.86509925, g: 0.31835172, b: 0.9245283, a: 1}
+  - offset: 3
+    alpha: 0.2
+    color: {r: 0.012677431, g: 1, b: 0, a: 1}
+  - offset: 2
+    alpha: 0.2
+    color: {r: 0.7234583, g: 0, b: 1, a: 1}
+  - offset: 1
+    alpha: 0.4
+    color: {r: 0.7103927, g: 1, b: 0, a: 1}
+  glowMaskMode: 0
+  innerGlow: 1.8
+  innerGlowWidth: 0.855
+  innerGlowBlendMode: 0
+  innerGlowColor: {r: 0.03444285, g: 0.8113208, b: 0.077391975, a: 1}
+  innerGlowVisibility: 0
+  targetFX: 0
+  targetFXTexture: {fileID: 0}
+  targetFXColor: {r: 1, g: 1, b: 1, a: 1}
+  targetFXRotationSpeed: 50
+  targetFXInitialScale: 4
+  targetFXEndScale: 1.5
+  targetFXScaleToRenderBounds: 0
+  targetFXAlignToGround: 0
+  targetFXGroundMaxDistance: 15
+  targetFXGroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  targetFXFadePower: 32
+  targetFXUseEnclosingBounds: 0
+  targetFXOffset: {x: 0, y: 0, z: 0}
+  targetFXTransitionDuration: 0.5
+  targetFXStayDuration: 1.5
+  targetFXVisibility: 1
+  seeThrough: 2
+  seeThroughOccluderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  seeThroughOccluderMaskAccurate: 0
+  seeThroughOccluderThreshold: 0.4
+  seeThroughOccluderCheckInterval: 1
+  seeThroughOccluderCheckIndividualObjects: 0
+  seeThroughDepthOffset: 0
+  seeThroughMaxDepth: 0
+  seeThroughIntensity: 0.8
+  seeThroughTintAlpha: 0.5
+  seeThroughTintColor: {r: 1, g: 0, b: 0, a: 1}
+  seeThroughNoise: 1
+  seeThroughBorder: 0
+  seeThroughBorderColor: {r: 0, g: 0, b: 0, a: 1}
+  seeThroughBorderWidth: 0.45
+  seeThroughBorderOnly: 0
+  seeThroughOrdered: 0
+  seeThroughTexture: {fileID: 0}
+  seeThroughTextureUVSpace: 0
+  seeThroughTextureScale: 1
+  seeThroughChildrenSortingMode: 0
+  hitFxInitialIntensity: 0
+  hitFxMode: 0
+  hitFxFadeOutDuration: 0.25
+  hitFxColor: {r: 1, g: 1, b: 1, a: 1}
+  hitFxRadius: 0.5

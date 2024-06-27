@@ -257,6 +257,7 @@ public class LaserDroneController : EnemyAI
         {
             // Call the player's take damage event, deal damage per physics tick if it hits player
             EventBus.TriggerEvent(EventTypes.Events.ON_PLAYER_DAMAGE_TAKEN, AttackDamage);
+            EnemyAI.CallPlayerHit(this);
         }
     }
 

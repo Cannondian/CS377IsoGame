@@ -13,6 +13,7 @@ using System.Reflection;
 using UnityEngine.InputSystem;
 using System;
 using System.Drawing;
+using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
 namespace RPGCharacterAnims
@@ -30,6 +31,9 @@ namespace RPGCharacterAnims
 
 		private GameObject rangeCircle;
 
+		public UnityEvent<int> ModificationChosen; //modification choice input is pressed
+		
+		
 		//InputSystem
 		public @RPGInputs rpgInputs;
 
@@ -55,6 +59,9 @@ namespace RPGCharacterAnims
 		private bool inputSwitchDown;
 		private bool inputSwitchLeft;
 		private bool inputSwitchRight;
+		private bool inputChoice1;
+		private bool inputChoice2;
+		private bool inputChoice3;
 
 		// Variables.
 		private Vector3 moveInput;
@@ -119,6 +126,29 @@ namespace RPGCharacterAnims
 				Inputs();
 			}
 
+			if (_canModifierInput)
+			{
+				if (inputChoice1 ^ inputChoice2 ^ inputChoice3)
+				{
+					if (inputChoice1)
+					{
+						ModificationChosen.Invoke(1);
+					}
+
+					if (inputChoice2)
+					{
+						ModificationChosen.Invoke(2);
+					}
+
+					if (inputChoice3)
+					{
+						ModificationChosen.Invoke(3);
+					}
+
+					_canModifierInput = false;
+				}
+			}
+				
 			Blocking();
 			Moving();
 			Jumping();
@@ -138,6 +168,12 @@ namespace RPGCharacterAnims
 			}
 		}
 
+		public void ModifierInputUnlock()
+		{
+			_canModifierInput = true;
+		}
+
+		public bool _canModifierInput;
 		/// <summary>
 		/// Pause input for a number of seconds.
 		/// </summary>
@@ -176,6 +212,10 @@ namespace RPGCharacterAnims
 				inputSwitchLeft = rpgInputs.RPGCharacter.WeaponLeft.WasPressedThisFrame();
 				inputSwitchRight = rpgInputs.RPGCharacter.WeaponRight.WasPressedThisFrame();
 				inputSwitchUp = rpgInputs.RPGCharacter.WeaponUp.WasPressedThisFrame();
+				inputChoice1 = rpgInputs.RPGCharacter.Mod1.WasPressedThisFrame();
+				inputChoice2 = rpgInputs.RPGCharacter.Mod2.WasPressedThisFrame();
+				inputChoice3 = rpgInputs.RPGCharacter.Mod3.WasPressedThisFrame();
+				
 
 				// Headlook toggle.
 				if (rpgInputs.RPGCharacter.ToggleHeadLook.IsPressed())
