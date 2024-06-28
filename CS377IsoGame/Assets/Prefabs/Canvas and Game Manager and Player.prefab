@@ -32,10 +32,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4303730850685767364}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 588.2554, y: 273.67}
-  m_SizeDelta: {x: 591.723, y: 66.664}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 589.3623, y: -1888.254}
+  m_SizeDelta: {x: 590.795, y: 46.987}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2828725705591122536
 CanvasRenderer:
@@ -55595,10 +55595,10 @@ PrefabInstance:
       addedObject: {fileID: 563729265706498229}
     - targetCorrespondingSourceObject: {fileID: 1728590151726166586, guid: 944b4c437fedf3a4ea6c307db857d3a6, type: 3}
       insertIndex: 6
-      addedObject: {fileID: 2254554067021625626}
-    - targetCorrespondingSourceObject: {fileID: 1728590151726166586, guid: 944b4c437fedf3a4ea6c307db857d3a6, type: 3}
-      insertIndex: 7
       addedObject: {fileID: 3338732393600770039}
+    - targetCorrespondingSourceObject: {fileID: 1728590151726166586, guid: 944b4c437fedf3a4ea6c307db857d3a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2254554067021625626}
     - targetCorrespondingSourceObject: {fileID: 1728590151726166586, guid: 944b4c437fedf3a4ea6c307db857d3a6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8336965356218017255}

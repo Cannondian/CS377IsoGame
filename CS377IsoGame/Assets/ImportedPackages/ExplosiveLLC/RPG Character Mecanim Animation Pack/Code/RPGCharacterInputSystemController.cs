@@ -132,17 +132,17 @@ namespace RPGCharacterAnims
 				{
 					if (inputChoice1)
 					{
-						ModificationChosen.Invoke(1);
+						ModificationChosen?.Invoke(1);
 					}
 
 					if (inputChoice2)
 					{
-						ModificationChosen.Invoke(2);
+						ModificationChosen?.Invoke(2);
 					}
 
 					if (inputChoice3)
 					{
-						ModificationChosen.Invoke(3);
+						ModificationChosen?.Invoke(3);
 					}
 
 					_canModifierInput = false;

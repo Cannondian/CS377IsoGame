@@ -651,14 +651,14 @@ public class ConditionState : MonoBehaviour
                     }
                     slipperyStepsIntensity = intensity;
                     slipperyStepsSpeedModifier =
-                        new StatModifier(intensity * 15, StatModifierType.Percent); //add new version
+                        new StatModifier(intensity * 10, StatModifierType.Percent); //add new version
                     myStats.AddModifier(StatsTemplate.statsList.Speed, slipperyStepsSpeedModifier);
                     slipperyStepsResistanceModifier = new StatModifier(100 * intensity, StatModifierType.Flat);
                     myStats.AddModifier(StatsTemplate.statsList.Resistance, slipperyStepsResistanceModifier);
                     Debug.Log("slippery");
                     if (!enemy)
                     {
-                        slipperyStepsAttackSpeedModifier = new StatModifier(0.2f * intensity, StatModifierType.Flat);
+                        slipperyStepsAttackSpeedModifier = new StatModifier(0.15f * intensity, StatModifierType.Flat);
                         myStats.AddModifier(StatsTemplate.statsList.AttackSpeed, slipperyStepsAttackSpeedModifier);
                     }
 

@@ -97,7 +97,7 @@ public class TileMastery : Singleton<TileMastery>
             VelheretMod2 = data.VelheretMod2;
             ShalharanMod1 = data.ShalharanMod1;
             _ShalharanMod2 = data.ShalharanMod2;
-            appliedTEE = data.TEEList;
+            appliedTEE = data.TEEList == null ? new List<ModifierVault.IModifier>() : data.TEEList ;
             
             foreach (ModifierVault.TileEffectEnhancement mod in appliedTEE)
             {
@@ -123,7 +123,7 @@ public class TileMastery : Singleton<TileMastery>
 
     public float ShalharanEffectIntensity()
     {
-        return _masteryOverShalharan * 0.1f;
+        return _masteryOverShalharan * 0.02f;
     }
 
     

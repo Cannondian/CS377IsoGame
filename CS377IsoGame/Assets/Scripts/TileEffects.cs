@@ -91,7 +91,7 @@ public class TileEffects : MonoBehaviour
                 case TileElement.ElementType.Shalharan:
                     if (player)
                     {
-                        intensity = 1.5f + myMastery.ShalharanEffectIntensity();
+                        intensity = 1 + myMastery.ShalharanEffectIntensity();
                     }
                     myState.SetCondition(StatusConditions.statusList.SlipperySteps, 8, intensity);
                     break;

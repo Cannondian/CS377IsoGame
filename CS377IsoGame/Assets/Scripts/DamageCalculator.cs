@@ -59,7 +59,7 @@ public class DamageCalculator : Singleton<DamageCalculator>
     public float PlayerMineSkillVH()
     {
         Random random = new Random();
-        return playerStats.tAttack * (1.2f + TileMastery.Instance.masteryOverIlsihre / 200 ) + random.Next((int)(playerStats.tAttack* -0.4), (int)(playerStats.tAttack* 0.4));
+        return playerStats.tAttack * (0.8f + TileMastery.Instance.masteryOverIlsihre / 250 ) + random.Next((int)(playerStats.tAttack* -0.4), (int)(playerStats.tAttack* 0.4));
     }
     public float PlayerMineSkillSH()
     {
@@ -94,7 +94,7 @@ public class DamageCalculator : Singleton<DamageCalculator>
 
     public float PlayerInnerFireExplosion()
     {
-        int damage = 10 + (int) (playerStats.tAttack / 2 * (1 + TileMastery.Instance.masteryOverIlsihre / 100) *
+        int damage = 10 + (int) (playerStats.tAttack / 5 * (1 + TileMastery.Instance.masteryOverIlsihre / 100) *
                      (1 + (playerStats.ceHP - playerStats.myCurrentHealth) / (playerStats.ceHP * 1.7f)));
         return damage;
     }
